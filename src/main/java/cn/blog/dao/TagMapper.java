@@ -1,4 +1,4 @@
-package cn.pojo.dao;
+package cn.blog.dao;
 
 import cn.blog.pojo.Tag;
 

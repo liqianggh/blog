@@ -249,7 +249,7 @@
     </dependency>
   </dependencies>
 
-
+<!--mybatis自动生成代码插件-->
   <build>
     <finalName>blog</finalName>
     <plugins>
