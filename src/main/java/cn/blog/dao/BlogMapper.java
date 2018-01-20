@@ -1,7 +1,10 @@
 package cn.blog.dao;
 
 import cn.blog.pojo.Blog;
+import org.springframework.stereotype.Repository;
 
+
+@Repository
 public interface BlogMapper {
     int deleteByPrimaryKey(Integer blogid);
 

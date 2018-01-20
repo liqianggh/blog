@@ -8,13 +8,12 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
-<!--扫描com.包下的注解-->
-<context:component-scan base-package="cn.blog" annotation-config="true"/>
+        <!--扫描cn.包下的注解-->
+        <context:component-scan base-package="cn.blog" annotation-config="true"/>
 
         <!--<context:annotation-config/>-->
         <aop:aspectj-autoproxy/>
 
-
-<import resource="applicationContext-datasource.xml"/>
+        <import resource="applicationContext-datasource.xml"/>
 
         </beans>

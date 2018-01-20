@@ -2,6 +2,8 @@ package cn.blog.dao;
 
 import cn.blog.pojo.Category;
 
+import java.util.List;
+
 public interface CategoryMapper {
     int deleteByPrimaryKey(Integer categoryid);
 
@@ -14,4 +16,8 @@ public interface CategoryMapper {
     int updateByPrimaryKeySelective(Category record);
 
     int updateByPrimaryKey(Category record);
+
+    List<Category> selectAll();
+
+    List<Category> selectAllSimple();
 }

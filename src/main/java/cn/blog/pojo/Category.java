@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.codehaus.jackson.map.annotate.JacksonInject;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+import java.io.Serializable;
 import java.util.Date;
  /**
   * @Description: 博客分类，使用lombok简化代码
@@ -14,15 +17,16 @@ import java.util.Date;
  @Getter
  @NoArgsConstructor
  @AllArgsConstructor
+ @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class Category {
-    private Integer categoryid;
+    private Integer categoryId;
 
-    private String categoryname;
+    private String categoryName;
 
-    private String categorydesc;
+    private String categoryDesc;
 
-    private Date createtime;
+    private Date createTime;
 
-    private Date updatetime;
+    private Date updateTime;
 
 }

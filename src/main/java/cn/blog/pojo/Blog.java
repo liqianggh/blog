@@ -1,19 +1,17 @@
 package cn.blog.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Blog {
-    private Integer blogid;
+    private Integer blogId;
 
-    private Integer categoryid;
+    private Integer categoryId;
 
     private Integer code;
 
@@ -24,16 +22,16 @@ public class Blog {
     private String content;
 
     //浏览量，点赞次数，分享次数，评论次数
-    private Integer viewcount;
-    private Integer likecount;
-    private Integer sharecount;
-    private Integer commentcount;
+    private Integer viewCount;
+    private Integer likeCount;
+    private Integer shareCount;
+    private Integer commentCount;
 
-    private String imguri;
+    private String imgUri;
 
-    private Date createtime;
+    private Date createTime;
 
-    private Date updatetime;
+    private Date updateTime;
 
     private String tags;
 

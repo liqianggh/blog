@@ -16,69 +16,87 @@
     select 
     <include refid="Base_Column_List" />
     from tag
-    where tagId = #{tagid,jdbcType=INTEGER}
+    where tagId = #{tagId,jdbcType=INTEGER}
   </select>
+
+
+  <select id="findALl" resultType="cn.blog.pojo.Tag">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from tag
+  </select>
+  <select id="findAllSimple" resultType="cn.blog.pojo.Tag">
+    SELECT tagId,tagName
+    from tag;
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tag
-    where tagId = #{tagid,jdbcType=INTEGER}
+    where tagId = #{tagId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.blog.pojo.Tag" >
     insert into tag (tagId, tagName, createTime, 
       updateTime)
-    values (#{tagid,jdbcType=INTEGER}, #{tagname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{updatetime,jdbcType=TIMESTAMP})
+    values (#{tagId,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}, now(),
+    now())
   </insert>
   <insert id="insertSelective" parameterType="cn.blog.pojo.Tag" >
     insert into tag
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="tagid != null" >
+      <if test="tagId != null" >
         tagId,
       </if>
-      <if test="tagname != null" >
+      <if test="tagName != null" >
         tagName,
       </if>
-      <if test="createtime != null" >
-        createTime,
-      </if>
-      <if test="updatetime != null" >
-        updateTime,
-      </if>
+      <!--<if test="createTime != null" >-->
+        <!--createTime,-->
+      <!--</if>-->
+      <!--<if test="updateTime != null" >-->
+        <!--updateTime,-->
+      <!--</if>-->
+    createTime,
+    updateTime,
     </trim>
+
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="tagid != null" >
-        #{tagid,jdbcType=INTEGER},
+      <if test="tagId != null" >
+        #{tagId,jdbcType=INTEGER},
       </if>
-      <if test="tagname != null" >
-        #{tagname,jdbcType=VARCHAR},
+      <if test="tagName != null" >
+        #{tagName,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatetime != null" >
-        #{updatetime,jdbcType=TIMESTAMP},
-      </if>
+      <!--<if test="createTime != null" >-->
+        <!--#{createTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="updateTime != null" >-->
+        <!--#{updateTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      now(),
+      now(),
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="cn.blog.pojo.Tag" >
     update tag
     <set >
-      <if test="tagname != null" >
-        tagName = #{tagname,jdbcType=VARCHAR},
+      <if test="tagName != null" >
+        tagName = #{tagName,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null" >
-        createTime = #{createtime,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatetime != null" >
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
-      </if>
+      <!--<if test="updateTime != null" >-->
+        <!--updateTime = #{updateTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      updateTime=now(),
     </set>
-    where tagId = #{tagid,jdbcType=INTEGER}
+    where tagId = #{tagId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.blog.pojo.Tag" >
     update tag
-    set tagName = #{tagname,jdbcType=VARCHAR},
-      createTime = #{createtime,jdbcType=TIMESTAMP},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP}
-    where tagId = #{tagid,jdbcType=INTEGER}
+    set tagName = #{tagName,jdbcType=VARCHAR},
+      updateTime = now()
+    where tagId = #{tagId,jdbcType=INTEGER}
   </update>
 </mapper>

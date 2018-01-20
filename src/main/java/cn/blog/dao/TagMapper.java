@@ -2,6 +2,8 @@ package cn.blog.dao;
 
 import cn.blog.pojo.Tag;
 
+import java.util.List;
+
 public interface TagMapper {
     int deleteByPrimaryKey(Integer tagid);
 
@@ -14,4 +16,8 @@ public interface TagMapper {
     int updateByPrimaryKeySelective(Tag record);
 
     int updateByPrimaryKey(Tag record);
+
+    List<Tag> findALl();
+
+    List<Tag> findAllSimple();
 }

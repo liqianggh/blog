@@ -11,12 +11,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tag {
-    private Integer tagid;
+    private Integer tagId;
 
-    private String tagname;
+    private String tagName;
 
-    private Date createtime;
+    private Date createTime;
 
-    private Date updatetime;
+    private Date updateTime;
 
 }

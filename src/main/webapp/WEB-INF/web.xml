@@ -39,6 +39,7 @@
             classpath:applicationContext.xml
         </param-value>
     </context-param>
+
     <!--springmvc的配置-->
     <servlet>
         <servlet-name>dispatcher</servlet-name>

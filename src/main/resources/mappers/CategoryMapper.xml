@@ -17,79 +17,93 @@
     select 
     <include refid="Base_Column_List" />
     from category
-    where categoryId = #{categoryid,jdbcType=INTEGER}
+    where categoryId = #{categoryId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllSimple" resultType="cn.blog.pojo.Category">
+    select categoryId,categoryName
+    from category
+  </select>
+  <select id="selectAll" resultType="cn.blog.pojo.Category">
+    select
+    <include refid="Base_Column_List"/>
+    from category
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from category
-    where categoryId = #{categoryid,jdbcType=INTEGER}
+    where categoryId = #{categoryId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.blog.pojo.Category" >
     insert into category (categoryId, categoryName, categoryDesc, 
       createTime, updateTime)
-    values (#{categoryid,jdbcType=INTEGER}, #{categoryname,jdbcType=VARCHAR}, #{categorydesc,jdbcType=VARCHAR}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+    values (#{categoryId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{categoryDesc,jdbcType=VARCHAR}, 
+      now(),now())
   </insert>
   <insert id="insertSelective" parameterType="cn.blog.pojo.Category" >
     insert into category
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="categoryid != null" >
+      <if test="categoryId != null" >
         categoryId,
       </if>
-      <if test="categoryname != null" >
+      <if test="categoryName != null" >
         categoryName,
       </if>
-      <if test="categorydesc != null" >
+      <if test="categoryDesc != null" >
         categoryDesc,
       </if>
-      <if test="createtime != null" >
+      <!--<if test="createTime != null" >-->
         createTime,
-      </if>
-      <if test="updatetime != null" >
+      <!--</if>-->
+      <!--<if test="updateTime != null" >-->
         updateTime,
-      </if>
+      <!--</if>-->
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="categoryid != null" >
-        #{categoryid,jdbcType=INTEGER},
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
       </if>
-      <if test="categoryname != null" >
-        #{categoryname,jdbcType=VARCHAR},
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
       </if>
-      <if test="categorydesc != null" >
-        #{categorydesc,jdbcType=VARCHAR},
+      <if test="categoryDesc != null" >
+        #{categoryDesc,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatetime != null" >
-        #{updatetime,jdbcType=TIMESTAMP},
-      </if>
+      <!--<if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+        </if>
+      -->
+        now(),
+      <!--<if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+         </if>
+      -->
+      now(),
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="cn.blog.pojo.Category" >
     update category
     <set >
-      <if test="categoryname != null" >
-        categoryName = #{categoryname,jdbcType=VARCHAR},
+      <if test="categoryName != null" >
+        categoryName = #{categoryName,jdbcType=VARCHAR},
       </if>
-      <if test="categorydesc != null" >
-        categoryDesc = #{categorydesc,jdbcType=VARCHAR},
+      <if test="categoryDesc != null" >
+        categoryDesc = #{categoryDesc,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null" >
-        createTime = #{createtime,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatetime != null" >
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
-      </if>
+      <!--<if test="updateTime != null" >-->
+        <!--updateTime = #{updateTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+        updateTime=now(),
     </set>
-    where categoryId = #{categoryid,jdbcType=INTEGER}
+    where categoryId = #{categoryId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.blog.pojo.Category" >
     update category
-    set categoryName = #{categoryname,jdbcType=VARCHAR},
-      categoryDesc = #{categorydesc,jdbcType=VARCHAR},
-      createTime = #{createtime,jdbcType=TIMESTAMP},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP}
-    where categoryId = #{categoryid,jdbcType=INTEGER}
+    set categoryName = #{categoryName,jdbcType=VARCHAR},
+      categoryDesc = #{categoryDesc,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      updateTime = now()
+    where categoryId = #{categoryId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -7,9 +7,11 @@ package cn.blog.common;
 public enum ResponseCode {
     SUCCESS(0,"SUCCESS"),
     ERROR(1,"ERROR"),
-    ILLEGAL_ARGUMENT(2,"ILLEGAL_ARGUMENT");
+    ILLEGAL_ARGUMENT(2,"ILLEGAL_ARGUMENT"),
+     NULL_ARGUMENT(3,"NULL_ARGUMENT");
 
-    private final int code;
+
+     private final int code;
     private final String desc;
     ResponseCode(int code, String desc) {
         this.code = code;

@@ -1,10 +1,11 @@
-package com.OnlineShop.util;
+package cn.blog.util;
 
 import java.security.MessageDigest;
 
-/**
- * Created by geely
- */
+  /**
+   * @Description: md5加密工具类
+   * Created by Jann Lee on 2018/1/20  0:06.
+   */
 public class MD5Util {
 
     private static String byteArrayToHexString(byte b[]) {
