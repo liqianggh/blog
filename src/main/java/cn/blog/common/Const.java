@@ -5,5 +5,6 @@ public interface Const {
           int PUBLIC = 0;
           int PRIVATE = 1;
           int RECOMMENDED = 2;
+
     }
 }
