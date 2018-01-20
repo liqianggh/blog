@@ -27,7 +27,7 @@
   </select>
   <select id="findAllSimple" resultType="cn.blog.vo.TagVo">
     SELECT tagId,tagName
-    from tag;
+    from tag
   </select>
 
 

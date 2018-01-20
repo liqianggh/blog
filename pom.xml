@@ -247,6 +247,11 @@
       <artifactId>lombok</artifactId>
       <version>1.16.18</version>
     </dependency>
+      <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
+          <version>2.4</version>
+      </dependency>
   </dependencies>
 
 <!--mybatis自动生成代码插件-->

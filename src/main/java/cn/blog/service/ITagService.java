@@ -3,6 +3,7 @@ package cn.blog.service;
 import cn.blog.common.ServerResponse;
 import cn.blog.pojo.Tag;
 import cn.blog.vo.TagVo;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -12,9 +13,9 @@ public interface ITagService {
 
     ServerResponse delete(Integer tagId);
 
-    ServerResponse<List<TagVo>> listAllSimple();
+    ServerResponse<PageInfo> listAllSimple(Integer pageNum,Integer pageSize);
 
-    ServerResponse<List<TagVo>> listAll();
+    ServerResponse<PageInfo> listAll(Integer pageNum, Integer pageSize);
 
 
 }

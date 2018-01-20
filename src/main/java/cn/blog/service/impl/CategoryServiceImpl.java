@@ -8,6 +8,8 @@ import cn.blog.service.ICategoryService;
 import cn.blog.util.DateCalUtils;
 import cn.blog.util.DateTimeUtil;
 import cn.blog.vo.CategoryVo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -35,10 +37,12 @@ public class CategoryServiceImpl implements ICategoryService{
      public ServerResponse saveOrUpdate(Category category) {
          //校验数据是否为空
          if(category==null){
-             return  ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(),ResponseCode.NULL_ARGUMENT.getDesc());
+             return  ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(),
+                     ResponseCode.NULL_ARGUMENT.getDesc());
          }
          if(StringUtils.isEmpty(category.getCategoryName())){
-             return ServerResponse.createByErrorCodeAndMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+             return ServerResponse.createByErrorCodeAndMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),
+                     ResponseCode.ILLEGAL_ARGUMENT.getDesc());
          }
          int rowCount=0;
          if(category.getCategoryId()==null){
@@ -58,7 +62,8 @@ public class CategoryServiceImpl implements ICategoryService{
      @Override
      public ServerResponse delete(Integer categoryId) {
          if(categoryId==null){
-             return  ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(),ResponseCode.NULL_ARGUMENT.getDesc());
+             return  ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(),
+                     ResponseCode.NULL_ARGUMENT.getDesc());
          }
          //存在性检验
          Category result = categoryMapper.selectByPrimaryKey(categoryId);
@@ -78,18 +83,26 @@ public class CategoryServiceImpl implements ICategoryService{
      * @return
      */
      @Override
-     public ServerResponse<List<CategoryVo>> listAllSimple() {
+     public ServerResponse  listAllSimple(Integer pageNum,Integer pageSize) {
+         PageHelper.startPage(pageNum,pageSize);
          List<CategoryVo> categoryList = categoryMapper.selectAllSimple();
-         return createBySuccess(categoryList);
+         PageInfo  pageInfo= new PageInfo(categoryList);
+         return  ServerResponse.createBySuccess(pageInfo);
      }
     /**
      * 查找完整的cagegory
      * @return
      */
     @Override
-    public ServerResponse<List<CategoryVo>> listAll() {
+    public ServerResponse<PageInfo> listAll(Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+
         List<Category> categoryList = categoryMapper.selectAll();
         List<CategoryVo> categoryVoList = Lists.newArrayList();
+
+        PageInfo pageInfo = new PageInfo(categoryList);
+
+
         for(Category category : categoryList){
             CategoryVo categoryVo = new CategoryVo();
             BeanUtils.copyProperties(category,categoryVo);
@@ -97,7 +110,8 @@ public class CategoryServiceImpl implements ICategoryService{
             categoryVo.setUpdateTimeStr(DateTimeUtil.dateToStr(category.getCreateTime()));
             categoryVoList.add(categoryVo);
         }
-        return  ServerResponse.createBySuccess(categoryVoList);
+        pageInfo.setList(categoryVoList);
+        return  ServerResponse.createBySuccess(pageInfo);
     }
 
     @Override

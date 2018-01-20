@@ -4,9 +4,11 @@ import cn.blog.common.ServerResponse;
 import cn.blog.pojo.Tag;
 import cn.blog.service.ITagService;
 import cn.blog.vo.TagVo;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -30,14 +32,16 @@ public class TagController {
 
     @RequestMapping("listAll.do")
     @ResponseBody
-    public ServerResponse<List<TagVo>> listAll(){
-        return iTagService.listAll();
+    public ServerResponse<PageInfo> listAll(@RequestParam(value="pageNum",defaultValue = "1")Integer pageNum,
+                                                   @RequestParam(value="pageSize",defaultValue = "10")Integer pageSize){
+        return iTagService.listAll(pageNum,pageSize);
     }
 
     @RequestMapping("listAllSimple.do")
     @ResponseBody
-    public ServerResponse listAllSimple(){
-        return iTagService.listAllSimple();
+    public ServerResponse<PageInfo> listAllSimple(@RequestParam(value="pageNum",defaultValue = "1")Integer pageNum,
+                                                       @RequestParam(value="pageSize",defaultValue = "10")Integer pageSize){
+        return iTagService.listAllSimple(pageNum,pageSize);
     }
 
     @RequestMapping("delete.do")

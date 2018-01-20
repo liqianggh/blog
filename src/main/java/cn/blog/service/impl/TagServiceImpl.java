@@ -8,6 +8,8 @@ import cn.blog.service.ITagService;
 import cn.blog.util.DateCalUtils;
 import cn.blog.util.DateTimeUtil;
 import cn.blog.vo.TagVo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
@@ -76,14 +78,20 @@ public class TagServiceImpl implements ITagService{
 
 
      @Override
-     public ServerResponse<List<TagVo>> listAllSimple() {
-        List<TagVo> tagList = tagMapper.findAllSimple();
-         return ServerResponse.createBySuccess(tagList);
+     public ServerResponse<PageInfo> listAllSimple(Integer pageNum,Integer pageSize) {
+         PageHelper.startPage(pageNum,pageSize);
+        List<TagVo> tagVoList = tagMapper.findAllSimple();
+        //todo
+        PageInfo  pageInfo = new PageInfo (tagVoList);
+        return ServerResponse.createBySuccess(pageInfo);
      }
 
      @Override
-     public ServerResponse<List<TagVo>> listAll() {
+     public ServerResponse<PageInfo> listAll(Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
          List<Tag> tagList = tagMapper.findALl();
+
+         PageInfo  pageInfo = new PageInfo (tagList);
          List<TagVo> tagVOList = Lists.newArrayList();
          for(Tag tagItem:tagList){
              TagVo tagVo = new TagVo();
@@ -93,7 +101,8 @@ public class TagServiceImpl implements ITagService{
 
              tagVOList.add(tagVo);
          }
-         return ServerResponse.createBySuccess(tagVOList);
+         pageInfo.setList(tagVOList);
+         return ServerResponse.createBySuccess(pageInfo);
      }
 
 }

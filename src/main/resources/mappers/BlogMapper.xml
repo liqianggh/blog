@@ -8,7 +8,7 @@
       <arg column="code" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="author" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="likeCount" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="viewCount" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="likeCount" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="shareCount" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="commentCount" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -25,7 +25,7 @@
       <arg column="code" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="author" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="likeCount" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="viewCount" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="likeCount" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="shareCount" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="commentCount" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -37,43 +37,43 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    blogId, categoryId, code, title, author, likeCount, likeCount, shareCount, commentCount, 
+    blogId, categoryId, code, title, author, viewCount, likeCount, shareCount, commentCount,
     imgUri, createTime, updateTime, tags
   </sql>
   <sql id="Blob_Column_List" >
     content
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from blog
-    where blogId = #{blogId,jdbcType=INTEGER}
+    where blogId = #{blogid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from blog
-    where blogId = #{blogId,jdbcType=INTEGER}
+    where blogId = #{blogid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.blog.pojo.Blog" >
-    insert into blog (blogId, categoryId, code, 
-      title, author, likeCount, 
-      likeCount, shareCount, commentCount, 
-      imgUri, createTime, updateTime, 
+    insert into blog (blogId, categoryId, code,
+      title, author, viewCount,
+      likeCount, shareCount, commentCount,
+      imgUri, createTime, updateTime,
       tags, content)
-    values (#{blogId,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{code,jdbcType=INTEGER}, 
-      #{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{likeCount,jdbcType=INTEGER}, 
-      #{likecount,jdbcType=INTEGER}, #{shareCount,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, 
-      #{imgUri,jdbcType=VARCHAR}, now(), now(),
+    values (#{blogid,jdbcType=INTEGER}, #{categoryid,jdbcType=INTEGER}, #{code,jdbcType=INTEGER},
+      #{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{viewcount,jdbcType=INTEGER},
+      #{likecount,jdbcType=INTEGER}, #{sharecount,jdbcType=INTEGER}, #{commentcount,jdbcType=INTEGER},
+      #{imguri,jdbcType=VARCHAR}, now(), now(),
       #{tags,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.blog.pojo.Blog" >
     insert into blog
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="blogId != null" >
+      <if test="blogid != null" >
         blogId,
       </if>
-      <if test="categoryId != null" >
+      <if test="categoryid != null" >
         categoryId,
       </if>
       <if test="code != null" >
@@ -85,25 +85,25 @@
       <if test="author != null" >
         author,
       </if>
-      <if test="likeCount != null" >
-        likeCount,
+      <if test="viewcount != null" >
+        viewCount,
       </if>
       <if test="likecount != null" >
         likeCount,
       </if>
-      <if test="shareCount != null" >
+      <if test="sharecount != null" >
         shareCount,
       </if>
-      <if test="commentCount != null" >
+      <if test="commentcount != null" >
         commentCount,
       </if>
-      <if test="imgUri != null" >
+      <if test="imguri != null" >
         imgUri,
       </if>
-      <if test="createTime != null" >
+      <if test="createtime != null" >
         createTime,
       </if>
-      <!--<if test="updateTime != null" >-->
+      <!--<if test="updatetime != null" >-->
         updateTime,
       <!--</if>-->
       <if test="tags != null" >
@@ -114,11 +114,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="blogId != null" >
-        #{blogId,jdbcType=INTEGER},
+      <if test="blogid != null" >
+        #{blogid,jdbcType=INTEGER},
       </if>
-      <if test="categoryId != null" >
-        #{categoryId,jdbcType=INTEGER},
+      <if test="categoryid != null" >
+        #{categoryid,jdbcType=INTEGER},
       </if>
       <if test="code != null" >
         #{code,jdbcType=INTEGER},
@@ -129,25 +129,25 @@
       <if test="author != null" >
         #{author,jdbcType=VARCHAR},
       </if>
-      <if test="likeCount != null" >
-        #{likeCount,jdbcType=INTEGER},
+      <if test="viewcount != null" >
+        #{viewcount,jdbcType=INTEGER},
       </if>
       <if test="likecount != null" >
         #{likecount,jdbcType=INTEGER},
       </if>
-      <if test="shareCount != null" >
-        #{shareCount,jdbcType=INTEGER},
+      <if test="sharecount != null" >
+        #{sharecount,jdbcType=INTEGER},
       </if>
-      <if test="commentCount != null" >
-        #{commentCount,jdbcType=INTEGER},
+      <if test="commentcount != null" >
+        #{commentcount,jdbcType=INTEGER},
       </if>
-      <if test="imgUri != null" >
-        #{imgUri,jdbcType=VARCHAR},
+      <if test="imguri != null" >
+        #{imguri,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
-      <!--<if test="updateTime != null" >-->
+      <!--<if test="updatetime != null" >-->
         now(),
       <!--</if>-->
       <if test="tags != null" >
@@ -161,8 +161,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.blog.pojo.Blog" >
     update blog
     <set >
-      <if test="categoryId != null" >
-        categoryId = #{categoryId,jdbcType=INTEGER},
+      <if test="categoryid != null" >
+        categoryId = #{categoryid,jdbcType=INTEGER},
       </if>
       <if test="code != null" >
         code = #{code,jdbcType=INTEGER},
@@ -173,25 +173,25 @@
       <if test="author != null" >
         author = #{author,jdbcType=VARCHAR},
       </if>
-      <if test="likeCount != null" >
-        likeCount = #{likeCount,jdbcType=INTEGER},
+      <if test="viewcount != null" >
+        viewCount = #{viewcount,jdbcType=INTEGER},
       </if>
       <if test="likecount != null" >
         likeCount = #{likecount,jdbcType=INTEGER},
       </if>
-      <if test="shareCount != null" >
-        shareCount = #{shareCount,jdbcType=INTEGER},
+      <if test="sharecount != null" >
+        shareCount = #{sharecount,jdbcType=INTEGER},
       </if>
-      <if test="commentCount != null" >
-        commentCount = #{commentCount,jdbcType=INTEGER},
+      <if test="commentcount != null" >
+        commentCount = #{commentcount,jdbcType=INTEGER},
       </if>
-      <if test="imgUri != null" >
-        imgUri = #{imgUri,jdbcType=VARCHAR},
+      <if test="imguri != null" >
+        imgUri = #{imguri,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        createTime = #{createTime,jdbcType=TIMESTAMP},
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
-      <!--<if test="updateTime != null" >-->
+      <!--<if test="updatetime != null" >-->
         updateTime = now(),
       <!--</if>-->
       <if test="tags != null" >
@@ -201,39 +201,39 @@
         content = #{content,jdbcType=VARCHAR},
       </if>
     </set>
-    where blogId = #{blogId,jdbcType=INTEGER}
+    where blogId = #{blogid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.blog.pojo.Blog" >
     update blog
-    set categoryId = #{categoryId,jdbcType=INTEGER},
+    set categoryId = #{categoryid,jdbcType=INTEGER},
       code = #{code,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
       author = #{author,jdbcType=VARCHAR},
-      likeCount = #{likeCount,jdbcType=INTEGER},
+      viewCount = #{viewcount,jdbcType=INTEGER},
       likeCount = #{likecount,jdbcType=INTEGER},
-      shareCount = #{shareCount,jdbcType=INTEGER},
-      commentCount = #{commentCount,jdbcType=INTEGER},
-      imgUri = #{imgUri,jdbcType=VARCHAR},
-      createTime = #{createTime,jdbcType=TIMESTAMP},
+      shareCount = #{sharecount,jdbcType=INTEGER},
+      commentCount = #{commentcount,jdbcType=INTEGER},
+      imgUri = #{imguri,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
       updateTime = now(),
       tags = #{tags,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR}
-    where blogId = #{blogId,jdbcType=INTEGER}
+    where blogId = #{blogid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.blog.pojo.Blog" >
     update blog
-    set categoryId = #{categoryId,jdbcType=INTEGER},
+    set categoryId = #{categoryid,jdbcType=INTEGER},
       code = #{code,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
       author = #{author,jdbcType=VARCHAR},
-      likeCount = #{likeCount,jdbcType=INTEGER},
+      viewCount = #{viewcount,jdbcType=INTEGER},
       likeCount = #{likecount,jdbcType=INTEGER},
-      shareCount = #{shareCount,jdbcType=INTEGER},
-      commentCount = #{commentCount,jdbcType=INTEGER},
-      imgUri = #{imgUri,jdbcType=VARCHAR},
-      createTime = #{createTime,jdbcType=TIMESTAMP},
-      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      shareCount = #{sharecount,jdbcType=INTEGER},
+      commentCount = #{commentcount,jdbcType=INTEGER},
+      imgUri = #{imguri,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
       tags = #{tags,jdbcType=VARCHAR}
-    where blogId = #{blogId,jdbcType=INTEGER}
+    where blogId = #{blogid,jdbcType=INTEGER}
   </update>
 </mapper>

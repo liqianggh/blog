@@ -19,5 +19,4 @@ import java.util.Date;
     private Date createTime;
 
     private Date updateTime;
-
 }
