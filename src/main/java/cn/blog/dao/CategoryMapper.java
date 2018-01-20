@@ -1,6 +1,8 @@
 package cn.blog.dao;
 
+import cn.blog.common.ServerResponse;
 import cn.blog.pojo.Category;
+import cn.blog.vo.CategoryVo;
 
 import java.util.List;
 
@@ -19,5 +21,5 @@ public interface CategoryMapper {
 
     List<Category> selectAll();
 
-    List<Category> selectAllSimple();
+    List<CategoryVo> selectAllSimple();
 }

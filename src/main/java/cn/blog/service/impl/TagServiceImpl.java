@@ -5,10 +5,17 @@ import cn.blog.common.ServerResponse;
 import cn.blog.dao.TagMapper;
 import cn.blog.pojo.Tag;
 import cn.blog.service.ITagService;
+import cn.blog.util.DateCalUtils;
+import cn.blog.util.DateTimeUtil;
+import cn.blog.vo.TagVo;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 import static cn.blog.common.ServerResponse.createBySuccess;
@@ -23,6 +30,7 @@ public class TagServiceImpl implements ITagService{
 
     @Autowired
     private TagMapper tagMapper;
+    //todo  更新时日期转换
     @Override
     public ServerResponse saveOrUpdate(Tag tag) {
         //校验数据是否为空
@@ -68,16 +76,24 @@ public class TagServiceImpl implements ITagService{
 
 
      @Override
-     public ServerResponse<List<Tag>> listAllSimple() {
-        List<Tag> tagList = tagMapper.findAllSimple();
-
+     public ServerResponse<List<TagVo>> listAllSimple() {
+        List<TagVo> tagList = tagMapper.findAllSimple();
          return ServerResponse.createBySuccess(tagList);
      }
 
      @Override
-     public ServerResponse<List<Tag>> listAll() {
+     public ServerResponse<List<TagVo>> listAll() {
          List<Tag> tagList = tagMapper.findALl();
+         List<TagVo> tagVOList = Lists.newArrayList();
+         for(Tag tagItem:tagList){
+             TagVo tagVo = new TagVo();
+             BeanUtils.copyProperties(tagItem,tagVo);
+             tagVo.setCreateTimeStr(DateTimeUtil.dateToStr(tagItem.getCreateTime()));
+             tagVo.setUpdateTimeStr(DateTimeUtil.dateToStr(tagItem.getUpdateTime()));
 
-         return ServerResponse.createBySuccess(tagList);
+             tagVOList.add(tagVo);
+         }
+         return ServerResponse.createBySuccess(tagVOList);
      }
+
 }

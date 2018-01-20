@@ -2,6 +2,7 @@ package cn.blog.service;
 
 import cn.blog.common.ServerResponse;
 import cn.blog.pojo.Category;
+import cn.blog.vo.CategoryVo;
 
 import java.util.List;
 
@@ -11,10 +12,10 @@ public interface ICategoryService {
 
     ServerResponse delete(Integer categoryId);
 
-    ServerResponse<List<Category>> listAllSimple();
+    ServerResponse<List<CategoryVo>> listAllSimple();
 
-    ServerResponse<List<Category>> listAll();
+    ServerResponse<List<CategoryVo>> listAll();
 
-    ServerResponse<Category> findById(Integer categoryId);
+    ServerResponse<CategoryVo> findById(Integer categoryId);
 
 }

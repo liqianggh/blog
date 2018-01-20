@@ -2,6 +2,7 @@ package cn.blog.service;
 
 import cn.blog.common.ServerResponse;
 import cn.blog.pojo.Tag;
+import cn.blog.vo.TagVo;
 
 import java.util.List;
 
@@ -11,9 +12,9 @@ public interface ITagService {
 
     ServerResponse delete(Integer tagId);
 
-    ServerResponse<List<Tag>> listAllSimple();
+    ServerResponse<List<TagVo>> listAllSimple();
 
-    ServerResponse<List<Tag>> listAll();
+    ServerResponse<List<TagVo>> listAll();
 
 
 }

@@ -1,6 +1,7 @@
 package cn.blog.dao;
 
 import cn.blog.pojo.Tag;
+import cn.blog.vo.TagVo;
 
 import java.util.List;
 
@@ -19,5 +20,5 @@ public interface TagMapper {
 
     List<Tag> findALl();
 
-    List<Tag> findAllSimple();
+    List<TagVo> findAllSimple();
 }

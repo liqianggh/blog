@@ -40,7 +40,6 @@ public class PropertiesUtil {
         if(org.apache.commons.lang.StringUtils.isBlank(value)){
             value = defaultValue;
         }
-
         return value.trim();
     }
 }

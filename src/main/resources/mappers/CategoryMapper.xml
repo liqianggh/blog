@@ -19,7 +19,7 @@
     from category
     where categoryId = #{categoryId,jdbcType=INTEGER}
   </select>
-  <select id="selectAllSimple" resultType="cn.blog.pojo.Category">
+  <select id="selectAllSimple" resultType="cn.blog.vo.CategoryVo">
     select categoryId,categoryName
     from category
   </select>

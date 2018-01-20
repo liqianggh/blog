@@ -25,7 +25,7 @@
     <include refid="Base_Column_List"/>
     from tag
   </select>
-  <select id="findAllSimple" resultType="cn.blog.pojo.Tag">
+  <select id="findAllSimple" resultType="cn.blog.vo.TagVo">
     SELECT tagId,tagName
     from tag;
   </select>

@@ -3,10 +3,13 @@ package cn.blog.controller.backend;
 import cn.blog.common.ServerResponse;
 import cn.blog.pojo.Category;
 import cn.blog.service.ICategoryService;
+import cn.blog.vo.CategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
   * @Description: 后台 分类的Controller
@@ -27,7 +30,7 @@ public class CategoryController {
 
      @RequestMapping("listAll.do")
      @ResponseBody
-     public ServerResponse listAll(){
+     public ServerResponse<List<CategoryVo>> listAll(){
          return iCategoryService.listAll();
      }
 
@@ -39,7 +42,7 @@ public class CategoryController {
 
      @RequestMapping("delete.do")
      @ResponseBody
-     public ServerResponse listAll(Integer categoryId){
+     public ServerResponse delete(Integer categoryId){
          return iCategoryService.delete(categoryId);
      }
 

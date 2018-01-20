@@ -3,12 +3,15 @@ package cn.blog.controller.backend;
 import cn.blog.common.ServerResponse;
 import cn.blog.pojo.Tag;
 import cn.blog.service.ITagService;
+import cn.blog.vo.TagVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
- /**
+import java.util.List;
+
+/**
   * @Description: 后台 标签Controlelr
   * Created by Jann Lee on 2018/1/20  15:54.
   */
@@ -27,7 +30,7 @@ public class TagController {
 
     @RequestMapping("listAll.do")
     @ResponseBody
-    public ServerResponse listAll(){
+    public ServerResponse<List<TagVo>> listAll(){
         return iTagService.listAll();
     }
 
