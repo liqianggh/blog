@@ -11,7 +11,7 @@
     </appender>
 
     <!--日志地址-->
-    <appender name="OnlineShop" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="blog" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>D:/develop/logs/blog.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>D:/develop/logs/blog.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
@@ -41,8 +41,8 @@
         </filter>
     </appender>
 
-    <logger name="com.OnlineShop" additivity="false" level="INFO" >
-        <appender-ref ref="OnlineShop" />
+    <logger name="com.blog" additivity="false" level="INFO" >
+        <appender-ref ref="blog" />
         <appender-ref ref="console"/>
     </logger>
 
@@ -50,7 +50,7 @@
 
     <!-- geelynote mybatis log 日志  可以通过日志查看sql语句 -->
 
-    <logger name="com.OnlineShop.dao" level="DEBUG"/>
+    <logger name="com.blog.dao" level="DEBUG"/>
 
     <!--<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" >-->
         <!--<appender-ref ref="console"/>-->

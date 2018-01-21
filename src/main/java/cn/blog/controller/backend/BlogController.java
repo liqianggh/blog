@@ -1,15 +1,18 @@
 package cn.blog.controller.backend;
 
+import cn.blog.bo.BlogBo;
+import cn.blog.bo.TagsAndBlog;
 import cn.blog.common.Const;
 import cn.blog.common.ServerResponse;
 import cn.blog.pojo.Blog;
 import cn.blog.service.IBlogService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static cn.blog.common.Const.BlogCodeType.PUBLIC;
 
@@ -32,7 +35,7 @@ public class BlogController {
      *              [commentCount],[updateTime],[tags],[imgUri])}
      * @return
      */
-    @RequestMapping(value = "add.do", method = RequestMethod.POST)
+    @RequestMapping(value = "saveOrUpdate.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse add(Blog blog) {
         return iBlogService.saveOrUpdate(blog);
@@ -48,14 +51,27 @@ public class BlogController {
      */
     @RequestMapping("list.do")
     @ResponseBody
-    public ServerResponse list(@RequestParam(value="code",defaultValue = ""+Const.BlogCodeType.PUBLIC+"") Integer code,
-                               String title,
-                               String tagId,
-                               String categoryId,
-                               @RequestParam(value="pageNum",defaultValue = "1")int pageNum,
-                               @RequestParam(value = "pageSize",defaultValue = "10")int pageSize) {
-        return iBlogService.saveOrUpdate(null);
+    public ServerResponse<PageInfo> list(//@RequestParam(value="code",defaultValue = ""+Const.BlogCodeType.PUBLIC+"") Integer code,
+                                         Integer code,
+                                         String title,
+                                         Integer tagId,
+                                         Integer categoryId,
+                                         @RequestParam(value="pageNum",defaultValue = "1")int pageNum,
+                                         @RequestParam(value = "pageSize",defaultValue = "10")int pageSize) {
+        return  iBlogService.listByCodeTitleTagCategory(code,title,tagId,categoryId,pageNum,pageSize);
     }
 
+    /**
+     * 给博客添加标签
+     * @param blogId 博客id
+     * @param tagId  标签id
+     * @return
+     */
+    @RequestMapping("addTag.do")
+    @ResponseBody
+    public ServerResponse addTagsToBlog(Integer blogId ,Integer tagId){
+
+        return iBlogService.addTagsToBlog(blogId,tagId);
+    }
 
 }

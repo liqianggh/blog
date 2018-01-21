@@ -1,8 +1,11 @@
 package cn.blog.dao;
 
+import cn.blog.bo.TagsAndBlog;
 import cn.blog.pojo.Tag;
 import cn.blog.vo.TagVo;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.HashSet;
 import java.util.List;
 
 public interface TagMapper {
@@ -21,4 +24,10 @@ public interface TagMapper {
     List<Tag> findALl();
 
     List<TagVo> findAllSimple();
+
+//    int insertBatch(TagsAndBlog tagsAndBlog);
+
+    List<String> findByIds(@Param("tagIdList")List<Integer> tagIdList);
+
+    int selectCount(Integer tagId);
 }

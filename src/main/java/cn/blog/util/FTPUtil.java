@@ -89,7 +89,7 @@ public class FTPUtil {
     public static boolean uploadFile(List<File> fileList) throws IOException {
         FTPUtil ftpUtil = new FTPUtil(ftpIp,21,ftpUsername,ftpPassword);
         log.info("开始连接服务器");
-        boolean result = ftpUtil.uploadFile(fileList,"img");
+        boolean result = ftpUtil.uploadFile(fileList,"blog");
         log.info("开始链接ftp服务器，结束上传，上传结果{}",result);
         return result;
     }

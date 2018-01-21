@@ -20,6 +20,9 @@ public class DateCalUtils {
     private static final String ONE_YEAR_AGO = "年前";
 
     public static String format(Date date) {
+        if(date==null){
+            return "";
+        }
         long delta = new Date().getTime() - date.getTime();
         if (delta < 1L * ONE_MINUTE) {
             long seconds = toSeconds(delta);

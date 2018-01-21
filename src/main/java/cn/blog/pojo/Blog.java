@@ -20,6 +20,7 @@ public class Blog {
     private String author;
 
     private String content;
+    private String summary;
 
     //浏览量，点赞次数，分享次数，评论次数
     private Integer viewCount;

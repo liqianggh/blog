@@ -29,6 +29,18 @@
     SELECT tagId,tagName
     from tag
   </select>
+  <!--根据id集合查询tagNames-->
+  <select id="findByIds" resultType="string" parameterType="list">
+    select tagName from tag
+    where tagId IN
+    <foreach collection="tagIdList" open="(" close=")" separator="," item="item" index="index">
+      #{item}
+    </foreach>
+  </select>
+
+  <select id="selectCount" resultType="int">
+    select count(1) from tag where tagId=#{tagId}
+  </select>
 
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -77,6 +89,14 @@
       now(),
     </trim>
   </insert>
+  <!--批量插入-->
+  <!--<insert id="insertBatch" parameterType="cn.blog.bo.TagsAndBlog" >-->
+    <!--INSERT into blogAndTags(blogId,tagId)-->
+    <!--values-->
+    <!--<foreach collection="tagIdList" open="("   close=")" separator="),("  index="index" item="tagId">-->
+    <!--#{blogId},  #{tagId}-->
+    <!--</foreach>-->
+  <!--</insert>-->
   <update id="updateByPrimaryKeySelective" parameterType="cn.blog.pojo.Tag" >
     update tag
     <set >

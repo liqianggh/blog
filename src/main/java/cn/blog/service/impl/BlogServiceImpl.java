@@ -1,53 +1,169 @@
 package cn.blog.service.impl;
 
+import cn.blog.bo.BlogBo;
+import cn.blog.bo.TagsAndBlog;
 import cn.blog.common.ResponseCode;
 import cn.blog.common.ServerResponse;
 import cn.blog.dao.BlogMapper;
+import cn.blog.dao.TagMapper;
 import cn.blog.pojo.Blog;
+import cn.blog.pojo.Tag;
 import cn.blog.service.IBlogService;
+import cn.blog.util.DateCalUtils;
+import cn.blog.util.DateTimeUtil;
+import cn.blog.util.PropertiesUtil;
+import cn.blog.vo.BlogVo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.mysql.jdbc.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.schema.Server;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
+
 /**
-  * @Description: 博客模块业务逻辑处理
-  * Created by Jann Lee on 2018/1/20  0:51.
-  */
+ * @Description: 博客模块业务逻辑处理
+ * Created by Jann Lee on 2018/1/20  0:51.
+ */
 @Slf4j
 @Service("iBlogService")
 public class BlogServiceImpl implements IBlogService {
 
     @Autowired
     private BlogMapper blogMapper;
+    @Autowired
+    private TagMapper tagMapper;
 
-     /**
-       * @Description:添加或修改（高复用）
-       * Created by Jann Lee on 2018/1/18  18:54.
-       */
-     //todo 更新时候日期转换
+    /**
+     * @Description:添加或修改（高复用） Created by Jann Lee on 2018/1/18  18:54.
+     */
+    //todo 更新时候日期转换
     @Override
-    public ServerResponse saveOrUpdate(Blog blog) {
+    public ServerResponse<BlogVo> saveOrUpdate(Blog blog) {
         int rowCount = 0;
-        if(blog==null){
-            return ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(),ResponseCode.NULL_ARGUMENT.getDesc());
-        }else if(blog.getBlogId()!=null){
+        if (blog == null) {
+            return ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(), ResponseCode.NULL_ARGUMENT.getDesc());
+        } else if (blog.getBlogId() != null) {
             //如果有id就更新
             //todo 校验管理员是否登录
             rowCount = blogMapper.updateByPrimaryKeySelective(blog);
-        }else{
+        } else {
             //没有id就添加
             //校验参数
-            if(StringUtils.isNullOrEmpty(blog.getTitle())||StringUtils.isNullOrEmpty(blog.getContent())){
-                return ServerResponse.createByErrorCodeAndMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+            if (StringUtils.isNullOrEmpty(blog.getTitle()) || StringUtils.isNullOrEmpty(blog.getContent())) {
+                return ServerResponse.createByErrorCodeAndMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+            }
+            if (blog.getCategoryId() == null) {
+                blog.setCategoryId(1);
             }
             log.info(blog.toString());
-            blog.setCategoryId(1);
-            rowCount=blogMapper.insertSelective(blog);
+            rowCount = blogMapper.insertSelective(blog);
         }
-        if(rowCount>0){
-            return ServerResponse.createBySuccess();
+        //插入成功返回Vo
+        if (rowCount > 0) {
+            BlogBo blogBo = blogMapper.selectBoById(blog.getBlogId());
+            if (blogBo != null) {
+                return ServerResponse.createBySuccess(changeBlogToVo(blogBo));
+            }
         }
         return ServerResponse.createByErrorMessage("修改/新增失败！");
     }
+
+
+    /**
+     * 复用的博客查询列表
+     *
+     * @param code       博客类型码（0 public ,1.private ,2 recommenmed）
+     * @param title      博客标题
+     * @param tagId      标签id
+     * @param categoryId 分类id
+     * @param pageNum    页数
+     * @param pageSize   每页显示数量
+     * @return ServerResponse<PageInfo>
+     */
+    @Override
+    public ServerResponse<PageInfo> listByCodeTitleTagCategory(Integer code, String title,
+                                                               Integer tagId, Integer categoryId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+
+        List<BlogBo> blogBoList = blogMapper.selectByCodeTitleTagCategory(code, title, tagId, categoryId);
+        PageInfo pageInfo = new PageInfo(blogBoList);
+        List<BlogVo> blogVoList = Lists.newArrayList();
+        for (BlogBo blogBo : blogBoList) {
+            blogVoList.add(changeBlogToVo(blogBo));
+        }
+        pageInfo.setList(blogVoList);
+
+        return ServerResponse.createBySuccess(pageInfo);
+    }
+
+    /**
+     * 给博客添加标签
+     *
+     * @param blogId
+     * @param tagId
+     * @return ServerResponse
+     */
+    @Override
+    public ServerResponse addTagsToBlog(Integer blogId, Integer tagId) {
+        if (blogId == null || tagId == null) {
+            return ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode()
+                    , ResponseCode.NULL_ARGUMENT.getDesc());
+        }
+        //检验是否存在
+        Blog blog = blogMapper.selectTagsByblogId(blogId);
+        Tag tag = tagMapper.selectByPrimaryKey(tagId);
+        TagsAndBlog tagsAndBlog = blogMapper.selectTagAndBlog(blogId, tagId);
+        if (blog == null) {
+            return ServerResponse.createByErrorMessage("该博客不存在！");
+        } else if (tag == null) {
+            return ServerResponse.createByErrorMessage("该标签不存在！");
+        } else if (tagsAndBlog != null) {
+            return ServerResponse.createByErrorMessage("标签已经被添加过，无需重复添加!");
+        }
+
+        int result = blogMapper.addTagToBlog(blogId, tagId);
+        String newTag = tag.getTagName();
+
+        StringBuilder tags = new StringBuilder(""+blog.getTags());
+        if(tags.length()==0){
+            tags.append(newTag);
+        }else{
+            tags.append("_"+newTag);
+        }
+        blog.setTags(tags.toString());
+        //todo 插入数据库
+        int rowCont = blogMapper.updateByPrimaryKeySelective(blog);
+        if (result > 0&&rowCont>0) {
+            return ServerResponse.createBySuccessMessage("添加成功！");
+        }
+        return ServerResponse.createByErrorMessage("添加失败！");
+    }
+
+    private BlogVo changeBlogToVo(BlogBo blogBo) {
+        if (blogBo == null) {
+            return null;
+        }
+        BlogVo blogVo = new BlogVo();
+        BeanUtils.copyProperties(blogBo, blogVo);
+        blogVo.setUpdateTimeStr(DateTimeUtil.dateToStr(blogBo.getUpdateTime()));
+        blogVo.setCreateTimeStr(DateCalUtils.format(blogBo.getCreateTime()));
+        blogVo.setImgHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
+        blogVo.setCategoryName(blogBo.getCategoryName());
+        blogVo.setTags(null);
+        String str = blogBo.getTags();
+        if(str!=null&&str.length()>0){
+            String []tags = str.split("_");
+            List<String> tagList=Arrays.asList(tags);
+            blogVo.setTagsList(tagList);
+        }
+
+        return blogVo;
+    }
+
+
 }
