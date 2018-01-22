@@ -14,8 +14,13 @@ public interface ITagService {
     ServerResponse delete(Integer tagId);
 
     ServerResponse<PageInfo> listAllSimple(Integer pageNum,Integer pageSize);
+    List<TagVo> listAllSimple();
+
+
 
     ServerResponse<PageInfo> listAll(Integer pageNum, Integer pageSize);
+    List<Tag> listAll();
+
 
 
 }

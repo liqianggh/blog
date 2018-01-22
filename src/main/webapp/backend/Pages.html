@@ -10,8 +10,8 @@
     <link rel="apple-touch-icon" sizes="72x72" href="images/icons/favicon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="images/icons/favicon-114x114.png">
     <!--Loading bootstrap css-->
-    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">
-    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
+    <!--<link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">-->
+    <!--<link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">-->
     <link type="text/css" rel="stylesheet" href="styles/jquery-ui-1.10.4.custom.min.css">
     <link type="text/css" rel="stylesheet" href="styles/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
@@ -320,9 +320,10 @@
                     <div id="my-mdeditor">
                         
                     </div>
-                     	<div style="height: 800px" id="editormd">
+                     	<div  id="editormd">
 						<textarea style="display:none;">### Hello Editor.md !</textarea>
 					</div>
+                    <button style="height: 50px;" id="submit_btn"  value="提交"/>
                 </div>
 
                 <!--END CONTENT-->
@@ -350,11 +351,11 @@
     <script src="script/icheck.min.js"></script>
     <script src="script/custom.min.js"></script>
     <script src="script/jquery.news-ticker.js"></script>
-     <!-- <script src="mdeditor/jquery.min.js"></script> -->
+      <script src="mdeditor/jquery.min1.js"></script>
 	<script type="text/javascript">
     $(function() {
         var editor = editormd("editormd", {
-        	height:"800px",
+        	height:"300px",
         	theme:"dark",
             path : "mdeditor/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
 
@@ -362,6 +363,19 @@
             imageUpload    : true,
 		    imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
 		    imageUploadURL : "http://localhost:8080/common/upload.do",
+
+            /*上传图片成功后可以做一些自己的处理*/
+            onload: function (data) {
+                alert(data.url);
+                alert(111);
+                //console.log('onload', this);
+                this.fullscreen();
+                //this.unwatch();
+                //this.watch().fullscreen();
+                //this.width("100%");
+                //this.height(480);
+                //this.resize("100%", 640);
+            },
         });
 
         /*
@@ -371,13 +385,18 @@
             path : "../lib/"
         });
         */
+
+        $("#submit_btn").bind('click', function() {
+            alert(editor.getHTML());
+        })
     });
+
 </script>
      <script src="script/jquery.menu.js"></script>
   <script src="script/pace.min.js"></script>
      <script src="script/holder.js"></script>
    <script src="script/responsive-tabs.js"></script>
-    <script src="script/jquery.flot.js"></script>
+    <!--<script src="script/jquery.flot.js"></script>-->
     <script src="script/jquery.flot.categories.js"></script>
     <script src="script/jquery.flot.pie.js"></script>
     <script src="script/jquery.flot.tooltip.js"></script>
@@ -400,7 +419,8 @@
     <!--mdEditor-->
 
     <script src="mdeditor/editormd.min.js"></script>
-   
-   
+
+
+
 </body>
 </html>

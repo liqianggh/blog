@@ -89,6 +89,12 @@ public class CategoryServiceImpl implements ICategoryService{
          PageInfo  pageInfo= new PageInfo(categoryList);
          return  ServerResponse.createBySuccess(pageInfo);
      }
+
+    @Override
+    public List<CategoryVo> listAllSimple() {
+        return categoryMapper.selectAllSimple();
+    }
+
     /**
      * 查找完整的cagegory
      * @return
@@ -112,6 +118,11 @@ public class CategoryServiceImpl implements ICategoryService{
         }
         pageInfo.setList(categoryVoList);
         return  ServerResponse.createBySuccess(pageInfo);
+    }
+
+    @Override
+    public List<Category> listAll() {
+        return categoryMapper.selectAll();
     }
 
     @Override

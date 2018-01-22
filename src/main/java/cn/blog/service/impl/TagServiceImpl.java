@@ -86,7 +86,17 @@ public class TagServiceImpl implements ITagService{
         return ServerResponse.createBySuccess(pageInfo);
      }
 
-     @Override
+    @Override
+    public List<TagVo> listAllSimple() {
+        return tagMapper.findAllSimple();
+    }
+
+    @Override
+    public List<Tag> listAll() {
+        return tagMapper.findALl();
+    }
+
+    @Override
      public ServerResponse<PageInfo> listAll(Integer pageNum,Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
          List<Tag> tagList = tagMapper.findALl();
@@ -103,6 +113,8 @@ public class TagServiceImpl implements ITagService{
          }
          pageInfo.setList(tagVOList);
          return ServerResponse.createBySuccess(pageInfo);
-     }
+}
+
+
 
 }

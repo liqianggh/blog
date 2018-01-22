@@ -1,7 +1,14 @@
 package cn.blog.controller.backend;
 
+import cn.blog.common.ServerResponse;
+import cn.blog.pojo.Category;
+import cn.blog.service.ICategoryService;
 import cn.blog.service.IFileService;
+import cn.blog.service.ITagService;
 import cn.blog.util.PropertiesUtil;
+import cn.blog.vo.CategoryAndTags;
+import cn.blog.vo.CategoryVo;
+import cn.blog.vo.TagVo;
 import cn.blog.vo.UploadResult;
 import org.omg.CORBA.Object;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -21,6 +29,10 @@ public class CommonController {
 
     @Autowired
     private IFileService iFileService;
+    @Autowired
+    private ICategoryService iCategoryService;
+    @Autowired
+    private ITagService iTagService;
 
     @RequestMapping("upload.do")
     @ResponseBody
@@ -40,4 +52,18 @@ public class CommonController {
         return  uploadResult;
     }
 
+    @RequestMapping("load_category_tags.do")
+    @ResponseBody
+    public ServerResponse<CategoryAndTags> loadCategorysAndTags(){
+
+        List<CategoryVo> categoryList = iCategoryService.listAllSimple();
+
+        List<TagVo> tagVoList = iTagService.listAllSimple();
+
+        CategoryAndTags categoryAndTags = new CategoryAndTags();
+        categoryAndTags.setCategoryList(categoryList);
+        categoryAndTags.setTagList(tagVoList);
+
+        return ServerResponse.createBySuccess(categoryAndTags);
+    }
 }

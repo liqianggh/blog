@@ -14,8 +14,11 @@ public interface ICategoryService {
     ServerResponse delete(Integer categoryId);
 
     ServerResponse<PageInfo> listAllSimple(Integer pageNum,Integer pageSize);
+    List<CategoryVo> listAllSimple();
 
     ServerResponse<PageInfo> listAll(Integer pageNum, Integer pageSize);
+
+    List<Category> listAll();
 
     ServerResponse<CategoryVo> findById(Integer categoryId);
 
