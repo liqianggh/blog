@@ -10,9 +10,6 @@
     <link rel="apple-touch-icon" sizes="72x72" href="images/icons/favicon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="images/icons/favicon-114x114.png">
     <!--Loading bootstrap css-->
-    <!--<link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">-->
-    <!--<link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">-->
-    <link type="text/css" rel="stylesheet" href="styles/jquery-ui-1.10.4.custom.min.css">
     <link type="text/css" rel="stylesheet" href="styles/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="styles/animate.css">
@@ -27,6 +24,12 @@
     <link rel="stylesheet" href="mdeditor/css/editormd.min.css" />
 
 </head>
+	<style type="text/css">
+		.form-group{
+			padding-bottom: 2px;
+			margin-bottom: 2px;
+		}
+	</style>
 <body>
     <div>
         <!--BEGIN THEME SETTING-->
@@ -195,148 +198,123 @@
             <div id="page-wrapper">
                 <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                      <ol class="breadcrumb page-breadcrumb pull-left">
-                        <li><i class="fa fa-home"></i>&nbsp;<a href="dashboard.html">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li class="hidden"><a href="#">Pages</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li class="active">Pages</li>
+                        <li><i class="fa fa-home"></i>&nbsp;<a href="dashboard.html">主页</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                        <li class="hidden"><a href="#">博客编辑</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                        <li class="active">博客编辑</li>
                     </ol>
                     <div class="page-header pull-right">
                         <div class="page-title">
-                            Pages</div>
+                            Pages计时器</div>
                     </div>
                    
                     <div class="clearfix">
 
                     </div>
-                </div>
-                <!--END TITLE & BREADCRUMB PAGE-->
-                <!--BEGIN CONTENT-->
-               <!--  <div class="page-content">
-                    <div id="tab-general">
-                        <div class="row mbl">
-                            <div class="col-lg-12">
-                                
-                                            <div class="col-md-12">
-                                                <div id="area-chart-spline" style="width: 100%; height: 300px; display: none;">
-                                                </div>
-                                            </div>
-                                
-                            </div>
+        		</div>
 
-                            <div class="col-lg-12">
-                              <div class="col-lg-6">
-                                        <iframe src="http://player.vimeo.com/video/22439234" style="width: 100%; height:340px; border:0"></iframe>
-                                    </div>
-                                    <div class="col-lg-6"><p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et
-                                        expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
-                                        Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-                                        <ol class="pll">
-                                            <li>Lorem ipsum dolor sit amet</li>
-                                            <li>Consectetur adipiscing elit</li>
-                                            <li>Integer molestie lorem at massa</li>
-                                            <li>Facilisis in pretium nisl aliquet</li>
-                                            <li>Nulla volutpat aliquam velit</li>
-                                            <li>Faucibus porta lacus fringilla vel</li>
-                                            <li>Aenean sit amet erat nunc</li>
-                                            <li>Eget porttitor lorem</li>
-                                        </ol>
+		        <div class="page-content" style="border: solid red 1px">
+				  	<div class="panel "> 
+                        <div class="panel-body pan">
+                            <form action="#">
+                                <div class="form-group col-md-4">
+                                    <label for="inputSubject" class="control-label">
+                                        标题</label>
+                                    <div class="input-icon right">
+                                        <i class="fa fa-tag"></i>
+                                        <input id="blog-title-input" type="text" placeholder="请输入标题..." class="form-control" />
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-12"><h2 class="mbxl">Our Team</h2>
-
-                                        <div class="row">
-                                            <div class="col-lg-3">
-                                                <div class="member-team"><img src="http://lorempixel.com/640/480/business/1/" class="img-responsive"/>
-
-                                                    <h3>Michelle Bates
-                                                        <small>CEO</small>
-                                                    </h3>
-                                                    <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae.</p>
-                                                    <ul class="social-icons list-unstyled list-inline mbl mtl">
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="facebook" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="google Plus" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="skype" class="skype"><i class="fa fa-skype"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="twitter" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="member-team"><img src="http://lorempixel.com/640/480/business/7/" class="img-responsive"/>
-
-                                                    <h3>Nathan Murray
-                                                        <small>Project Manager</small>
-                                                    </h3>
-                                                    <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae.</p>
-                                                    <ul class="social-icons list-unstyled list-inline mbl mtl">
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="facebook" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="google Plus" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="skype" class="skype"><i class="fa fa-skype"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="twitter" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="member-team"><img src="http://lorempixel.com/640/480/business/1/" class="img-responsive"/>
-
-                                                    <h3>Rachel Jordan
-                                                        <small>Designer</small>
-                                                    </h3>
-                                                    <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae.</p>
-                                                    <ul class="social-icons list-unstyled list-inline mbl mtl">
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="facebook" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="google Plus" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="skype" class="skype"><i class="fa fa-skype"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="twitter" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="member-team"><img src="http://lorempixel.com/640/480/business/7/" class="img-responsive"/>
-
-                                                    <h3>Margaret Adams
-                                                        <small>Developer</small>
-                                                    </h3>
-                                                    <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae.</p>
-                                                    <ul class="social-icons list-unstyled list-inline mbl mtl">
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="facebook" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="google Plus" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="skype" class="skype"><i class="fa fa-skype"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="twitter" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="form-group col-md-1">
+                                    <label for="inputSubject" class="control-label">
+                                        类型</label>
+                                    <div class="input-icon">
+                                        <select name="code" id="blog-code-select" class="form-control">
+									 	  <option selected="selected" value="0">私有</option>
+										  <option value="1">公开</option>
+										  <option value="2">推荐</option>
+										</select>
                                     </div>
+                            	</div>
+                            	     <div class="form-group col-md-1">
+                                    <label for="inputSubject" class="control-label">
+                                        分类</label>
+                                    <div class="input-icon">
+                                        <select name="categoryId" id="blog-categoryId-select" class="form-control">
+										  <option selected="selected" value="0">没有分类</option>
+										</select>
+                                    </div>
+                            	</div>
+ 
+ 								<div class="form-group col-md-1"  style="min-width: 170px">
+                                    <label for="inputSubject" class="control-label">
+                                        标签</label>
+                                        <div  id="tagsofblog" style="min-height: 20px;min-width: 150px">
+
+                                    	</div>
+                                         
+                            	</div>
+                    	    	
+                    	    	 <div id="add-tag-div" style="display: none;" class="form-group col-md-2">
+                                    <label for="inputSubject" class="control-label">
+                                        添加标签</label>
+                                        <input id="blog-add-input" type="text" placeholder="请输入标签..." class="form-control" /> 
+                                        <button id="blog-add-tag">添加</button> <button id="hinder-add-tag" >隐藏</button>
+                            	</div>
+
+                    	        <div class="form-group">
+                                    <label for="inputSubject" class="control-label">
+                                        已有标签
+                                    </label>
+                                     &nbsp;&nbsp;&nbsp;<a href="javascript:addTagToSystem();" id="a-add-tag"><i id="addIcon" class="fa fa-plus-square-o"></i></a>
+
+                                    <div id="blog-tags">
+                                    	<!--the place of tags -->
+                                    </div>
+                            	</div>
+
+                         		<div class="form-group col-md-4">
+	                                <label for="inputSubject" class="control-label">
+	                                    标题图片</label>
+	                                <div class="input-icon right">
+	                                    <input id="blog-uri-input" type="text" placeholder="请输入uri或者上传" class="form-control" />
+                               		 </div>
                                 </div>
-                            
-                            
-                            </div>
-                            
+
+                                <div class="form-group col-md-4">
+	                                <label for="inputSubject" class="control-label">
+	                                    点击上传图片</label>
+	                                    <form id="uploadForm">
+                                        	<input  type="file" name="uploadImgUri" id="upload-img-input">
+	                                    </form>
+                                </div>
+
+                                <div class="form-group">
+					                </div id="mdtextareaDiv">
+					                 	<div id="editormd">
+										<textarea id="mdtextarea" style="display:none;"></textarea>
+										</div>
+                          			</div>
+                                	<div class="form-actions text-right pbl ptn">
+                                		<button type="button" id="btn-submit-blog" class="btn btn-primary btn-lg active">写完了我要上传</button>
+                               		 </div>
+                            	</div>
+                            </form>
                         </div>
-                    </div> 
-                </div> -->
-
-                <div class="page-content" style="border: solid red 1px">
-                    <div id="my-mdeditor">
-                        
                     </div>
-                     	<div  id="editormd">
-						<textarea style="display:none;">### Hello Editor.md !</textarea>
-					</div>
-                    <button style="height: 50px;" id="submit_btn"  value="提交"/>
-                </div>
-
-                <!--END CONTENT-->
-                <!--BEGIN FOOTER-->
-                <div id="footer">
-                    <div class="copyright">
-                        <a href="#">2014 © KAdmin Responsive Multi-Purpose Template</a></div>
-                </div>
-                <!--END FOOTER-->
             </div>
-            <!--END PAGE WRAPPER-->
+
+            <!--END CONTENT-->
+            <!--BEGIN FOOTER-->
+            <div id="footer">
+                <div class="copyright">
+                    <a href="#">2018 © Jann Lee All rights reserved!</a>
+                </div>
+            </div>
+            <!--END FOOTER-->
         </div>
+        <!--END PAGE WRAPPER-->
     </div>
+</div>
 <script src="script/jquery-1.10.2.min.js"></script>
   
     <script src="script/jquery-migrate-1.2.1.min.js"></script>
@@ -351,61 +329,86 @@
     <script src="script/icheck.min.js"></script>
     <script src="script/custom.min.js"></script>
     <script src="script/jquery.news-ticker.js"></script>
-      <script src="mdeditor/jquery.min1.js"></script>
+     <!-- <script src="mdeditor/jquery.min1.js"></script> -->
 	<script type="text/javascript">
+	var editor;
+
+
     $(function() {
-        var editor = editormd("editormd", {
-        	height:"300px",
-        	theme:"dark",
+          editor = editormd("editormd", {
+    	    // autoHeight : true,	
+        	height:"800px",
             path : "mdeditor/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
+            
+			//theme : "dark",
+			// previewTheme : "dark",
+			// editorTheme : "pastel-on-dark",
+			//markdown : md,
+  			 //syncScrolling : false,
+            saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
+
+            codeFold:true,
+            searchReplace:true,
+			htmlDecode : "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启    
+			//toolbar:false;
+			//previewCodeHighlight : false, // 关闭预览 HTML 的代码块高亮，默认开启
+
+			emoji : true,//表情
+            taskList : true,
+            tocm            : true,         // Using [TOCM]
+            tex : true,                   // 开启科学公式TeX语言支持，默认关闭
+            flowChart : true,             // 开启流程图支持，默认关闭
+            sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
+            //dialogLockScreen : false,   // 设置弹出层对话框不锁屏，全局通用，默认为true
+            //dialogShowMask : false,     // 设置弹出层对话框显示透明遮罩层，全局通用，默认为true
+            //dialogDraggable : false,    // 设置弹出层对话框不可拖动，全局通用，默认为true
+            //dialogMaskOpacity : 0.4,    // 设置透明遮罩层的透明度，全局通用，默认值为0.1
+            //dialogMaskBgColor : "#000", // 设置透明遮罩层的背景颜色，全局通用，默认为#fff
+
 
             //图片上传
             imageUpload    : true,
 		    imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
 		    imageUploadURL : "http://localhost:8080/common/upload.do",
+            onload : function() {
+                            console.log('onload', this);
+                            //this.fullscreen();
+                            //this.unwatch();
+                            //this.watch().fullscreen();
 
-            /*上传图片成功后可以做一些自己的处理*/
-            onload: function (data) {
-                alert(data.url);
-                alert(111);
-                //console.log('onload', this);
-                this.fullscreen();
-                //this.unwatch();
-                //this.watch().fullscreen();
-                //this.width("100%");
-                //this.height(480);
-                //this.resize("100%", 640);
-            },
+                            //this.setMarkdown("#PHP");
+                            //this.width("100%");
+                            //this.height(480);
+                            //this.resize("100%", 640);
+       	    }
+
         });
 
-        /*
-        // or
-        var editor = editormd({
-            id   : "editormd",
-            path : "../lib/"
-        });
-        */
 
+    });
+
+ 
         $("#submit_btn").bind('click', function() {
+            var summary =$("#mdtextarea").text();
+            alert(summary);
             alert(editor.getHTML());
         })
-    });
 
 </script>
      <script src="script/jquery.menu.js"></script>
   <script src="script/pace.min.js"></script>
      <script src="script/holder.js"></script>
    <script src="script/responsive-tabs.js"></script>
-    <!--<script src="script/jquery.flot.js"></script>-->
-    <script src="script/jquery.flot.categories.js"></script>
+   <!--  <script src="script/jquery.flot.js"></script>
+  <script src="script/jquery.flot.categories.js"></script>
     <script src="script/jquery.flot.pie.js"></script>
     <script src="script/jquery.flot.tooltip.js"></script>
     <script src="script/jquery.flot.resize.js"></script>
     <script src="script/jquery.flot.fillbetween.js"></script>
     <script src="script/jquery.flot.stack.js"></script>
     <script src="script/jquery.flot.spline.js"></script>
-    <script src="script/zabuto_calendar.min.js"></script> -->
-    <script src="script/index.js"></script>
+    <script src="script/zabuto_calendar.min.js"></script> 
+    <script src="script/index.js"></script>-->
     <!--LOADING SCRIPTS FOR CHARTS
     <script src="script/highcharts.js"></script>
     <script src="script/data.js"></script>
@@ -415,11 +418,15 @@
     <script src="script/charts-highchart-pie.js"></script>
     <script src="script/charts-highchart-more.js"></script> -->
     <!--CORE JAVASCRIPT-->
-    <script src="script/main.js"></script>
-    <!--mdEditor-->
+<!--     <script src="script/main.js"></script>
+ -->    <!--mdEditor-->
+
+
 
     <script src="mdeditor/editormd.min.js"></script>
 
+
+    <script src="styles/editBlog.js"></script>
 
 
 </body>

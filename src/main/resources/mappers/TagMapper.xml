@@ -41,6 +41,9 @@
   <select id="selectCount" resultType="int">
     select count(1) from tag where tagId=#{tagId}
   </select>
+  <select id="findALlWithCount" resultType="cn.blog.vo.TagVo">
+   select count(*) as tagCount,tagName,tagId from tag group by tagName;
+  </select>
 
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

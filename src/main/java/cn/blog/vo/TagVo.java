@@ -20,6 +20,8 @@ public class TagVo {
 
     private String tagName;
 
+    private Integer tagCount;
+
     private String createTimeStr;
 
     private String updateTimeStr;

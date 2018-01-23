@@ -45,4 +45,6 @@ public interface BlogMapper {
     BlogBo selectBoByIdWithBlobs(Integer blogId);
 
     BlogBo selectBoByIdWithBlobsNoSummary(Integer blogId);
+
+    int addTagsToBlog(@Param("blogId") Integer blogId, @Param("idList") List<Integer> idList);
 }

@@ -1,47 +1,30 @@
-package cn.blog.controller.backend;
+package cn.blog.controller.potral;
 
-import cn.blog.bo.BlogBo;
-import cn.blog.bo.TagsAndBlog;
-import cn.blog.common.Const;
 import cn.blog.common.ServerResponse;
 import cn.blog.pojo.Blog;
 import cn.blog.service.IBlogService;
+import cn.blog.service.ITagService;
+import cn.blog.vo.IndexVo;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.List;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @Description: 后台 博客contrller
- * Created by Jann Lee on 2018/1/20  0:34.
+ * @Description: 用户 博客contrller
+ * Created by Jann Lee on 2018/1/22  19:34.
  */
 @Controller
-@RequestMapping("/manage/blog")
+@RequestMapping("/user/blog")
 @Slf4j
-public class BlogController {
+public class UserBlogController {
 
     @Autowired
     private IBlogService iBlogService;
-
-    /**
-     * 新增/修改博客
-     * @param   blog{title,content,categoryId,
-     *              [id],[createTime],[code],[author],
-     *              [viewCount],[likeCount],[shareCount],
-     *              [commentCount],[updateTime],[tags],[imgUri])}
-     * @return
-     */
-    @RequestMapping(value = "saveOrUpdate.do", method = RequestMethod.POST)
-    @ResponseBody
-    public ServerResponse add( Blog  blog,@RequestParam("tagIds")String tagIds) {
-        log.info("接受到的参数："+blog);
-        return iBlogService.saveOrUpdate(blog,tagIds);
-    }
 
     /**
      * 高复用查询博客列表,
@@ -63,17 +46,17 @@ public class BlogController {
         return  iBlogService.listByCodeTitleTagCategory(code,title,orderBy,tagId,categoryId,pageNum,pageSize);
     }
 
-    /**
-     * 给博客添加标签
-     * @param blogId 博客id
-     * @param tagId  标签id
-     * @return
-     */
-    @RequestMapping("addTag.do")
-    @ResponseBody
-    public ServerResponse addTagsToBlog(Integer blogId ,Integer tagId){
 
-        return iBlogService.addTagToBlog(blogId,tagId);
-    }
+     /**
+      * @Description: 首页初始化
+      * Created by Jann Lee on 2018/1/23  19:59.
+      */
+     @RequestMapping("load_index.do")
+     @ResponseBody
+     public ServerResponse<IndexVo> loadIndex() {
+
+         return  iBlogService.indexInitial();
+     }
+
 
 }

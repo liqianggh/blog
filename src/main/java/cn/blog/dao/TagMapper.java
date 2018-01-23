@@ -30,4 +30,6 @@ public interface TagMapper {
     List<String> findByIds(@Param("tagIdList")List<Integer> tagIdList);
 
     int selectCount(Integer tagId);
+
+    List<TagVo> findALlWithCount();
 }

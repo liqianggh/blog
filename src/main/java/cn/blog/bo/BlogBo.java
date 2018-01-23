@@ -1,9 +1,6 @@
 package cn.blog.bo;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.util.Date;
@@ -18,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@ToString
 public class BlogBo {
     private Integer blogId;
 
@@ -48,5 +46,4 @@ public class BlogBo {
     private  String categoryName;
 
     private String tags;
-
 }

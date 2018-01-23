@@ -253,6 +253,13 @@
             </if>
         </trim>
     </insert>
+    <insert id="addTagsToBlog" parameterType="map" >
+        insert into blogandtags(tagId,blogId)
+        VALUES
+        <foreach collection="idList" open="(" close=")" separator="),(" index="index" item="tagId">
+            #{tagId,blogId},
+        </foreach>
+    </insert>
     <update id="updateByPrimaryKeySelective" parameterType="cn.blog.pojo.Blog">
         update blog
         <set>

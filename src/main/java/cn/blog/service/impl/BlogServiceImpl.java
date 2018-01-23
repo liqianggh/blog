@@ -2,6 +2,7 @@ package cn.blog.service.impl;
 
 import cn.blog.bo.BlogBo;
 import cn.blog.bo.TagsAndBlog;
+import cn.blog.common.Const;
 import cn.blog.common.ResponseCode;
 import cn.blog.common.ServerResponse;
 import cn.blog.dao.BlogMapper;
@@ -13,6 +14,8 @@ import cn.blog.util.DateCalUtils;
 import cn.blog.util.DateTimeUtil;
 import cn.blog.util.PropertiesUtil;
 import cn.blog.vo.BlogVo;
+import cn.blog.vo.IndexVo;
+import cn.blog.vo.TagVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
@@ -43,7 +46,7 @@ public class BlogServiceImpl implements IBlogService {
      */
     //todo 更新时候日期转换
     @Override
-    public ServerResponse<BlogVo> saveOrUpdate(Blog blog) {
+    public ServerResponse<BlogVo> saveOrUpdate(Blog  blog,String tagIds) {
         int rowCount = 0;
         if (blog == null) {
             return ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(), ResponseCode.NULL_ARGUMENT.getDesc());
@@ -61,8 +64,23 @@ public class BlogServiceImpl implements IBlogService {
                 blog.setCategoryId(1);
             }
             log.info(blog.toString());
+
             rowCount = blogMapper.insertSelective(blog);
         }
+
+//        //todo  处理标签
+//        String[] ids = null;
+//        //插入这些标签
+//        if(rowCount>0&&tagIds!=null&&tagIds.trim().length()>0){
+//            rowCount=0;
+//            ids = tagIds.split(" ");
+//            List<Integer> idList = Lists.newArrayList();
+//            for(String str:ids){
+//                idList.add(Integer.parseInt(str));
+//            }
+//            rowCount = blogMapper.addTagsToBlog(blog.getBlogId(),idList);
+//        }
+
         //插入成功返回Vo
         if (rowCount > 0) {
             BlogBo blogBo = blogMapper.selectBoById(blog.getBlogId());
@@ -86,10 +104,22 @@ public class BlogServiceImpl implements IBlogService {
      * @return ServerResponse<PageInfo>
      */
     @Override
-    public ServerResponse<PageInfo> listByCodeTitleTagCategory(Integer code, String title,
+    public ServerResponse<PageInfo> listByCodeTitleTagCategory(Integer code, String title,String orderBy,
                                                                Integer tagId, Integer categoryId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-
+        //排序处理
+        if(org.apache.commons.lang3.StringUtils.isNotBlank(orderBy)){
+            //如果包含处理结果 就进行处理
+            if(Const.BlogListOrderBy.VIEWCOUNT_ASC_DESC.contains(orderBy)||
+                    Const.BlogListOrderBy.SHARECOUNT_ASC_DESC.contains(orderBy)||
+                    Const.BlogListOrderBy.LIKECOUNT_ASC_DESC.contains(orderBy)||
+                    Const.BlogListOrderBy.COMMENTCOUNT_ASC_DESC.contains(orderBy)||
+                    Const.BlogListOrderBy.CREATETIME_ASC_DESC.contains(orderBy)
+                    ){
+                String [] orderByArray = orderBy.split("_");
+                PageHelper.orderBy(orderByArray[0]+" "+orderByArray[1]);
+            }
+        }
         List<BlogBo> blogBoList = blogMapper.selectByCodeTitleTagCategory(code, title, tagId, categoryId);
         PageInfo pageInfo = new PageInfo(blogBoList);
         List<BlogVo> blogVoList = Lists.newArrayList();
@@ -97,6 +127,7 @@ public class BlogServiceImpl implements IBlogService {
             blogVoList.add(changeBlogToVo(blogBo));
         }
         pageInfo.setList(blogVoList);
+
 
         return ServerResponse.createBySuccess(pageInfo);
     }
@@ -109,7 +140,7 @@ public class BlogServiceImpl implements IBlogService {
      * @return ServerResponse
      */
     @Override
-    public ServerResponse addTagsToBlog(Integer blogId, Integer tagId) {
+    public ServerResponse addTagToBlog(Integer blogId, Integer tagId) {
         if (blogId == null || tagId == null) {
             return ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode()
                     , ResponseCode.NULL_ARGUMENT.getDesc());
@@ -142,6 +173,54 @@ public class BlogServiceImpl implements IBlogService {
             return ServerResponse.createBySuccessMessage("添加成功！");
         }
         return ServerResponse.createByErrorMessage("添加失败！");
+    }
+
+    /**
+     * 首页初始化
+     * @return
+     */
+    @Override
+    public ServerResponse<IndexVo> indexInitial() {
+        IndexVo indexVo = new IndexVo();
+        //todo 优化
+        PageHelper.orderBy("createTime"+" "+"desc");
+        PageHelper.startPage(1,Const.IndexConst.BLOG_NUM);
+        List<BlogBo> blogBoList = blogMapper.selectByCodeTitleTagCategory(1, null, null, null);
+        PageInfo pageInfo = new PageInfo(blogBoList);
+        List<BlogVo> blogVoList = Lists.newArrayList();
+        for (BlogBo blogBo : blogBoList) {
+            blogVoList.add(changeBlogToVo(blogBo));
+        }
+        pageInfo.setList(blogVoList);
+
+        //热门
+        PageHelper.startPage(1,Const.IndexConst.HOT_NUM);
+        //todo 优化
+        PageHelper.orderBy("viewCount"+" "+"desc");
+        List<BlogBo>    hot = blogMapper.selectByCodeTitleTagCategory(1, null, null, null);
+        List<BlogVo> hostVoList = Lists.newArrayList();
+        for (BlogBo blogBo : hot) {
+            hostVoList.add(changeBlogToVo(blogBo));
+        }
+        //推荐
+        PageHelper.startPage(1,Const.IndexConst.RECOMMENDED);
+        //todo 优化
+        PageHelper.orderBy("createTime"+" "+"desc");
+        List<BlogBo>    rec = blogMapper.selectByCodeTitleTagCategory(2, null, null, null);
+        List<BlogVo> recVoList = Lists.newArrayList();
+        for (BlogBo blogBo : rec) {
+            recVoList.add(changeBlogToVo(blogBo));
+        }
+
+        //标签云
+        List<TagVo> tagVoList = tagMapper.findALlWithCount();
+
+        indexVo.setBlogPageInfo(pageInfo);
+        indexVo.setHotBlogs(hostVoList);
+        indexVo.setRecommendBlog(recVoList);
+        indexVo.setTagVoList(tagVoList);
+
+        return ServerResponse.createBySuccess(indexVo);
     }
 
     private BlogVo changeBlogToVo(BlogBo blogBo) {
