@@ -1,5 +1,6 @@
 package cn.blog.vo;
 
+import cn.blog.pojo.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class BlogVo {
     private Integer blogId;
 
@@ -55,5 +56,5 @@ public class BlogVo {
 
     private String tags;
 
-    private List<String> tagsList;
+   private List<Tag> tagsList;
 }

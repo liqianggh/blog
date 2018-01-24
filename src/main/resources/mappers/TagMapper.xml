@@ -42,9 +42,24 @@
     select count(1) from tag where tagId=#{tagId}
   </select>
   <select id="findALlWithCount" resultType="cn.blog.vo.TagVo">
-   select count(*) as tagCount,tagName,tagId from tag group by tagName;
+   select count(1) as tagCount,tagName,tagId from tag group by tagName;
   </select>
-
+  <select id="selectCountOfTagsAndBlog" parameterType="map" resultType="int">
+    select count(1) from blogAndTags
+    <where>
+        <if test="blogId !=null">
+          and blogId=#{blogId}
+        </if>
+        <if test="tagId !=null">
+          and tagId = #{tagId}
+        </if>
+    </where>
+  </select>
+  <select id="selectTagsOfBlog" parameterType="int" resultType="cn.blog.pojo.Tag">
+   select t.tagName,t.tagId
+   from blogAndTags bat,tag t
+   where bat.tagId=t.tagId  and bat.blogId =#{blogId}
+  </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tag

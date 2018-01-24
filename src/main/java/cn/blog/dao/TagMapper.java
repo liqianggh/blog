@@ -32,4 +32,8 @@ public interface TagMapper {
     int selectCount(Integer tagId);
 
     List<TagVo> findALlWithCount();
+
+    int selectCountOfTagsAndBlog(@Param("tagId") Integer tagId, @Param("blogId") Integer blogId);
+
+    List<Tag> selectTagsOfBlog(Integer blogId);
 }

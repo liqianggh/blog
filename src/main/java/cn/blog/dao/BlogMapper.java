@@ -3,7 +3,6 @@ package cn.blog.dao;
 import cn.blog.bo.BlogBo;
 import cn.blog.bo.TagsAndBlog;
 import cn.blog.pojo.Blog;
-import cn.blog.vo.BlogVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -47,4 +46,8 @@ public interface BlogMapper {
     BlogBo selectBoByIdWithBlobsNoSummary(Integer blogId);
 
     int addTagsToBlog(@Param("blogId") Integer blogId, @Param("idList") List<Integer> idList);
+
+    List<BlogBo> selectTheSameTagByBlogId(Integer blogId);
+
+    List<BlogBo> selectSameCategoryByBlogId(Integer blogId);
 }

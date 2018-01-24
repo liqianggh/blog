@@ -3,7 +3,9 @@ package cn.blog.service;
 import cn.blog.bo.TagsAndBlog;
 import cn.blog.common.ServerResponse;
 import cn.blog.pojo.Blog;
+import cn.blog.vo.BlogVo;
 import cn.blog.vo.IndexVo;
+import cn.blog.vo.TagVo;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +19,10 @@ public interface IBlogService {
     ServerResponse addTagToBlog(Integer blogId,Integer  tagId);
     //首页初始化
     ServerResponse<IndexVo> indexInitial();
+
+    BlogVo  descVo(Integer blogId);
+
+    boolean isExists(Integer blogId);
+    List<BlogVo> guessYouLike(Integer blogId);
+
 }

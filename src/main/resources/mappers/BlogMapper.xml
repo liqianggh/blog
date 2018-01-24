@@ -120,7 +120,7 @@
         b.title, b.author, b.viewCount,
         b.likeCount, b.shareCount, b.commentCount,
         b.imgUri, b.createTime, b.updateTime,
-        b.tags, b.content,c.categoryName,c.summary
+        b.tags, b.content,c.categoryName,b.summary
         from blog b,category c
         where b.categoryId=c.categoryId  and blogId=#{blogId}
     </select>
@@ -133,6 +133,18 @@
         b.tags, b.content,c.categoryName
         from blog b,category c
         where b.categoryId=c.categoryId  and blogId=#{blogId}
+    </select>
+    <select id="selectTheSameTagByBlogId" parameterType="int" resultType="cn.blog.bo.BlogBo">
+       select b.blogId,b.title,b.commentCount,b.createTime,b.imgUri
+             from blog b ,blogAndTags bt
+             where b.blogId = bt.blogId
+             and bt.blogId != #{blogId}
+             and  bt.tagId
+             in (select tagId from blogAndTags bat where bat.blogId = #{blogId} )
+    </select>
+    <select id="selectSameCategoryByBlogId" parameterType="int" resultType="cn.blog.bo.BlogBo">
+        select title,commentCount,createTime,imgUri
+        from blog where blogId=#{blogId}
     </select>
     <insert id="addTagToBlog" parameterType="map">
     insert into blogAndTags(blogId,tagId) values (#{blogId},#{tagId})
