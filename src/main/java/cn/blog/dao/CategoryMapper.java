@@ -22,4 +22,6 @@ public interface CategoryMapper {
     List<Category> selectAll();
 
     List<CategoryVo> selectAllSimple();
+
+    List<CategoryVo> selectAllWithBlogCount();
 }

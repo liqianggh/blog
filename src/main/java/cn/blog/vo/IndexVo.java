@@ -29,7 +29,8 @@ public class IndexVo {
     //标签云
     private List<TagVo> tagVoList;
 
-
+    //分类
+    private List<CategoryVo> categoryVoList;
 
 
 }

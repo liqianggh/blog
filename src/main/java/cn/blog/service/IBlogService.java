@@ -17,8 +17,10 @@ public interface IBlogService {
     ServerResponse<PageInfo> listByCodeTitleTagCategory(Integer code, String title,String orderBy, Integer tagId, Integer categoryId, int pageNum, int pageSize);
 
     ServerResponse addTagToBlog(Integer blogId,Integer  tagId);
-    //首页初始化
-    ServerResponse<IndexVo> indexInitial();
+
+    PageInfo findBlogVoPageInfo(Integer code,Integer categoryId,Integer tagId,String orderBy,String title,Integer pageNum,Integer pageSize);
+
+    List<BlogVo> findBlogVoList(Integer code,Integer categoryId,Integer tagId,String orderBy,String title,Integer pageNum,Integer pageSize);
 
     BlogVo  descVo(Integer blogId);
 

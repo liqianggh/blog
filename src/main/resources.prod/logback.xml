@@ -27,7 +27,7 @@
     <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>/develop/logs/error.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/develop/logs/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>/develop//erlogsror.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <append>true</append>
             <maxHistory>10</maxHistory>
         </rollingPolicy>
@@ -48,25 +48,24 @@
 
 
 
-    <!-- geelynote mybatis log 日志  可以通过日志查看sql语句 -->
+    <!--  mybatis log 日志  可以通过日志查看sql语句 -->
 
     <logger name="com.blog.dao" level="DEBUG"/>
 
-    <!--<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" >-->
-        <!--<appender-ref ref="console"/>-->
-    <!--</logger>-->
+    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" >
+        <appender-ref ref="console"/>
+    </logger>
 
-    <!--<logger name="java.sql.Connection" level="DEBUG">-->
-        <!--<appender-ref ref="console"/>-->
-    <!--</logger>-->
-    <!--<logger name="java.sql.Statement" level="DEBUG">-->
-        <!--<appender-ref ref="console"/>-->
-    <!--</logger>-->
+    <logger name="java.sql.Connection" level="DEBUG">
+        <appender-ref ref="console"/>
+    </logger>
+    <logger name="java.sql.Statement" level="DEBUG">
+        <appender-ref ref="console"/>
+    </logger>
 
-    <!--<logger name="java.sql.PreparedStatement" level="DEBUG">-->
-        <!--<appender-ref ref="console"/>-->
-    <!--</logger>-->
-
+    <logger name="java.sql.PreparedStatement" level="DEBUG">
+        <appender-ref ref="console"/>
+    </logger>
 
     <root level="DEBUG">
         <appender-ref ref="console"/>

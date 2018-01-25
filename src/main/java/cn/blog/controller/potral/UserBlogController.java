@@ -1,13 +1,12 @@
 package cn.blog.controller.potral;
 
+import cn.blog.common.Const;
 import cn.blog.common.ResponseCode;
 import cn.blog.common.ServerResponse;
 import cn.blog.service.IBlogService;
+import cn.blog.service.ICategoryService;
 import cn.blog.service.ITagService;
-import cn.blog.vo.ArticleVo;
-import cn.blog.vo.BlogVo;
-import cn.blog.vo.IndexVo;
-import cn.blog.vo.TagVo;
+import cn.blog.vo.*;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,8 @@ public class UserBlogController {
     private IBlogService iBlogService;
     @Autowired
     private ITagService iTagService;
+    @Autowired
+    private ICategoryService iCategoryService;
 
     /**
      * 高复用查询博客列表,
@@ -59,9 +60,19 @@ public class UserBlogController {
       */
      @RequestMapping("load_index.do")
      @ResponseBody
-     public ServerResponse<IndexVo> loadIndex() {
-
-         return  iBlogService.indexInitial();
+     public ServerResponse<IndexVo> loadIndex(@RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,@RequestParam(value="pageSize",defaultValue = "10")Integer pageSize) {
+         IndexVo indexVo = new IndexVo();
+         List<BlogVo> hotBlog = iBlogService.findBlogVoList(1,null,null,"viewCount desc",null,1,Const.IndexConst.HOT_NUM);
+         PageInfo pageInfo = iBlogService.findBlogVoPageInfo(1,null,null,"createTime desc",null,1,Const.IndexConst.BLOG_NUM);
+         List<BlogVo> recommendedBlog = iBlogService.findBlogVoList(2,null,null,"createTime desc",null,1,Const.IndexConst.RECOMMENDED);
+         List<TagVo> tagVoList = iTagService.listAllSimpleWithCount();
+         List<CategoryVo> categoryVoList = iCategoryService.findAllWithCount();
+         indexVo.setTagVoList(tagVoList);
+         indexVo.setRecommendBlog(recommendedBlog);
+         indexVo.setHotBlogs(hotBlog);
+         indexVo.setCategoryVoList(categoryVoList);
+         indexVo.setBlogPageInfo(pageInfo);
+         return ServerResponse.createBySuccess(indexVo);
      }
      /**
       * @Param :blogId 文章id
@@ -91,6 +102,35 @@ public class UserBlogController {
         return ServerResponse.createBySuccess(articleVo);
     }
 
+    @RequestMapping("list_by_category.do")
+    @ResponseBody
+    public ServerResponse<PageInfo> listByCategory(Integer categoryId, @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,@RequestParam(value="pageSize",defaultValue = "10")Integer pageSize){
+        //todo 校验参数合法性
+        if(categoryId==null){
+            return ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(),ResponseCode.NULL_ARGUMENT.getDesc());
+        }
+        ArticleVo articleVo = new ArticleVo();
+       ServerResponse<PageInfo> blogVoList = iBlogService.listByCodeTitleTagCategory(
+                Const.BlogCodeType.PUBLIC_BLOG,null,
+                "createTime desc",null,categoryId,pageNum,pageSize);
+        return blogVoList;
+
+    }
+
+    @RequestMapping("list_by_tag.do")
+    @ResponseBody
+    public ServerResponse<PageInfo> listByTag(Integer tagId, @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,@RequestParam(value="pageSize",defaultValue = "10")Integer pageSize){
+        //todo 校验参数合法性
+        if(tagId==null){
+            return ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(),ResponseCode.NULL_ARGUMENT.getDesc());
+        }
+        ArticleVo articleVo = new ArticleVo();
+        ServerResponse<PageInfo> blogVoList = iBlogService.listByCodeTitleTagCategory(
+                Const.BlogCodeType.PUBLIC_BLOG,null,
+                "createTime desc",tagId,null,pageNum,pageSize);
+        return blogVoList;
+
+    }
 
 
 

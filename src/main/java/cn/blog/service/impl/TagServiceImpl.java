@@ -97,6 +97,12 @@ public class TagServiceImpl implements ITagService{
     }
 
     @Override
+    public List<TagVo> listAllSimpleWithCount() {
+
+        return tagMapper.findALlWithCount();
+    }
+
+    @Override
      public ServerResponse<PageInfo> listAll(Integer pageNum,Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
          List<Tag> tagList = tagMapper.findALl();

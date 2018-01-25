@@ -22,4 +22,6 @@ public interface ICategoryService {
 
     ServerResponse<CategoryVo> findById(Integer categoryId);
 
+    List<CategoryVo> findAllWithCount();
+
 }

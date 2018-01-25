@@ -21,5 +21,7 @@ public interface ITagService {
     ServerResponse<PageInfo> listAll(Integer pageNum, Integer pageSize);
     List<Tag> listAll();
 
+    List<TagVo> listAllSimpleWithCount();
+
 
 }

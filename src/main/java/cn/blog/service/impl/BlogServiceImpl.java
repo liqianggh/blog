@@ -132,13 +132,7 @@ public class BlogServiceImpl implements IBlogService {
         return ServerResponse.createBySuccess(pageInfo);
     }
 
-    /**
-     * 给博客添加标签
-     *
-     * @param blogId
-     * @param tagId
-     * @return ServerResponse
-     */
+     //给博客添加标签
     @Override
     public ServerResponse addTagToBlog(Integer blogId, Integer tagId) {
         if (blogId == null || tagId == null) {
@@ -175,53 +169,74 @@ public class BlogServiceImpl implements IBlogService {
         return ServerResponse.createByErrorMessage("添加失败！");
     }
 
-    /**
-     * 首页初始化
-     * @return
-     */
     @Override
-    public ServerResponse<IndexVo> indexInitial() {
-        IndexVo indexVo = new IndexVo();
-        //todo 优化
-        PageHelper.orderBy("createTime"+" "+"desc");
-        PageHelper.startPage(1,Const.IndexConst.BLOG_NUM);
-        List<BlogBo> blogBoList = blogMapper.selectByCodeTitleTagCategory(1, null, null, null);
+    public PageInfo findBlogVoPageInfo(Integer code,Integer categoryId,Integer tagId,
+                                     String orderBy,String title,Integer pageNum,Integer pageSize){
+        //排序处理
+        if(org.apache.commons.lang3.StringUtils.isNotBlank(orderBy)){
+            //如果包含处理结果 就进行处理
+            if(Const.BlogListOrderBy.VIEWCOUNT_ASC_DESC.contains(orderBy)||
+                    Const.BlogListOrderBy.SHARECOUNT_ASC_DESC.contains(orderBy)||
+                    Const.BlogListOrderBy.LIKECOUNT_ASC_DESC.contains(orderBy)||
+                    Const.BlogListOrderBy.COMMENTCOUNT_ASC_DESC.contains(orderBy)||
+                    Const.BlogListOrderBy.CREATETIME_ASC_DESC.contains(orderBy)
+                    ){
+                String [] orderByArray = orderBy.split("_");
+                PageHelper.orderBy(orderByArray[0]+" "+orderByArray[1]);
+            }
+        }else{
+            PageHelper.orderBy("createTime"+" "+"desc");
+        }
+        if(pageNum==null||pageSize==null){
+            PageHelper.startPage(1,Const.IndexConst.BLOG_NUM);
+        }
+        PageHelper.startPage(pageNum,pageSize);
+
+        List<BlogBo> blogBoList = blogMapper.selectByCodeTitleTagCategory(code, title, tagId, categoryId);
         PageInfo pageInfo = new PageInfo(blogBoList);
         List<BlogVo> blogVoList = Lists.newArrayList();
         for (BlogBo blogBo : blogBoList) {
             blogVoList.add(chageBoToVo(blogBo,null,true));
         }
         pageInfo.setList(blogVoList);
-
-        //热门
-        PageHelper.startPage(1,Const.IndexConst.HOT_NUM);
-        //todo 优化
-        PageHelper.orderBy("viewCount"+" "+"desc");
-        List<BlogBo>    hot = blogMapper.selectByCodeTitleTagCategory(1, null, null, null);
-        List<BlogVo> hostVoList = Lists.newArrayList();
-        for (BlogBo blogBo : hot) {
-            hostVoList.add(chageBoToVo(blogBo,null,false));
-        }
-        //推荐
-        PageHelper.startPage(1,Const.IndexConst.RECOMMENDED);
-        //todo 优化
-        PageHelper.orderBy("createTime"+" "+"desc");
-        List<BlogBo>    rec = blogMapper.selectByCodeTitleTagCategory(2, null, null, null);
-        List<BlogVo> recVoList = Lists.newArrayList();
-        for (BlogBo blogBo : rec) {
-            recVoList.add(chageBoToVo(blogBo,null,false));
-        }
-
-        //标签云
-        List<TagVo> tagVoList = tagMapper.findALlWithCount();
-
-        indexVo.setBlogPageInfo(pageInfo);
-        indexVo.setHotBlogs(hostVoList);
-        indexVo.setRecommendBlog(recVoList);
-        indexVo.setTagVoList(tagVoList);
-
-        return ServerResponse.createBySuccess(indexVo);
+        return pageInfo;
     }
+    @Override
+    public  List<BlogVo> findBlogVoList(Integer code,Integer categoryId,Integer tagId,
+                                     String orderBy,String title,Integer pageNum,Integer pageSize){
+
+        log.info("这是排序方式："+orderBy);
+
+        if(pageNum==null||pageSize==null){
+            PageHelper.startPage(1,Const.IndexConst.BLOG_NUM);
+        }
+        PageHelper.startPage(pageNum,pageSize);
+        //排序处理
+        if(org.apache.commons.lang3.StringUtils.isNotBlank(orderBy)){
+            //如果包含处理结果 就进行处理
+            if(Const.BlogListOrderBy.VIEWCOUNT_ASC_DESC.contains(orderBy)||
+                    Const.BlogListOrderBy.SHARECOUNT_ASC_DESC.contains(orderBy)||
+                    Const.BlogListOrderBy.LIKECOUNT_ASC_DESC.contains(orderBy)||
+                    Const.BlogListOrderBy.COMMENTCOUNT_ASC_DESC.contains(orderBy)||
+                    Const.BlogListOrderBy.CREATETIME_ASC_DESC.contains(orderBy)
+                    ){
+                String [] orderByArray = orderBy.split("_");
+                PageHelper.orderBy(orderByArray[0]+" "+orderByArray[1]);
+
+            }
+        }else{
+            PageHelper.orderBy("createTime"+" "+"desc");
+        }
+        log.info("这是pageInfo"+PageHelper.getOrderBy());
+        List<BlogBo> blogBoList = blogMapper.selectByCodeTitleTagCategory(code, title, tagId, categoryId);
+        List<BlogVo> blogVoList = Lists.newArrayList();
+        for (BlogBo blogBo : blogBoList) {
+            blogVoList.add(chageBoToVo(blogBo,null,true));
+        }
+        return blogVoList;
+    }
+
+
 
     @Override
     public BlogVo descVo(Integer blogId) {

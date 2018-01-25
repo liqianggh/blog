@@ -28,7 +28,12 @@
     <include refid="Base_Column_List"/>
     from category
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectAllWithBlogCount" resultType="cn.blog.vo.CategoryVo">
+          select b.categoryId, count(1) blogCount ,c.categoryName from blog b,category c where b.categoryId=c.categoryId group by b.categoryId;
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from category
     where categoryId = #{categoryId,jdbcType=INTEGER}
   </delete>

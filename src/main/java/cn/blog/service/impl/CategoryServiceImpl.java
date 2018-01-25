@@ -142,4 +142,10 @@ public class CategoryServiceImpl implements ICategoryService{
 
         return ServerResponse.createBySuccess(categoryVo);
     }
+
+    @Override
+    public List<CategoryVo> findAllWithCount() {
+
+        return categoryMapper.selectAllWithBlogCount();
+    }
 }

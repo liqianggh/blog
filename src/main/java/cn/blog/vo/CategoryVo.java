@@ -26,4 +26,8 @@ public class CategoryVo {
     private String createTimeStr;
 
     private String updateTimeStr;
+
+    private Integer blogCount;
+
+
 }

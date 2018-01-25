@@ -6,9 +6,11 @@ import java.util.Set;
 
 public interface Const {
     public interface BlogCodeType{
-          int PUBLIC_BLOG = 1;
-          int PRIVATE_BLOG = 0;
-          int RECOMMENDED_BLOG = 2;
+        int PRIVATE_BLOG = 0;
+        int PUBLIC_BLOG = 1;
+        int RECOMMENDED_BLOG = 2;
+        int ALL_BLOG = 3;
+
 
     }
     public interface IndexConst{
