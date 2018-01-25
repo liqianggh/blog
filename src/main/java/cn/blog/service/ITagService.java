@@ -24,4 +24,5 @@ public interface ITagService {
     List<TagVo> listAllSimpleWithCount();
 
 
+    Tag findTagById(Integer tagId);
 }

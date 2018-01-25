@@ -3,6 +3,8 @@ package cn.blog.controller.potral;
 import cn.blog.common.Const;
 import cn.blog.common.ResponseCode;
 import cn.blog.common.ServerResponse;
+import cn.blog.pojo.Category;
+import cn.blog.pojo.Tag;
 import cn.blog.service.IBlogService;
 import cn.blog.service.ICategoryService;
 import cn.blog.service.ITagService;
@@ -62,9 +64,9 @@ public class UserBlogController {
      @ResponseBody
      public ServerResponse<IndexVo> loadIndex(@RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,@RequestParam(value="pageSize",defaultValue = "10")Integer pageSize) {
          IndexVo indexVo = new IndexVo();
-         List<BlogVo> hotBlog = iBlogService.findBlogVoList(1,null,null,"viewCount desc",null,1,Const.IndexConst.HOT_NUM);
-         PageInfo pageInfo = iBlogService.findBlogVoPageInfo(1,null,null,"createTime desc",null,1,Const.IndexConst.BLOG_NUM);
-         List<BlogVo> recommendedBlog = iBlogService.findBlogVoList(2,null,null,"createTime desc",null,1,Const.IndexConst.RECOMMENDED);
+         List<BlogVo> hotBlog = iBlogService.findBlogVoList(1,null,null,"viewCount_desc",null,1,Const.IndexConst.HOT_NUM);
+         PageInfo pageInfo = iBlogService.findBlogVoPageInfo(1,null,null,"createTime_desc",null,1,Const.IndexConst.BLOG_NUM);
+         List<BlogVo> recommendedBlog = iBlogService.findBlogVoList(2,null,null,"createTime_desc",null,1,Const.IndexConst.RECOMMENDED);
          List<TagVo> tagVoList = iTagService.listAllSimpleWithCount();
          List<CategoryVo> categoryVoList = iCategoryService.findAllWithCount();
          indexVo.setTagVoList(tagVoList);
@@ -127,11 +129,52 @@ public class UserBlogController {
         ArticleVo articleVo = new ArticleVo();
         ServerResponse<PageInfo> blogVoList = iBlogService.listByCodeTitleTagCategory(
                 Const.BlogCodeType.PUBLIC_BLOG,null,
-                "createTime desc",tagId,null,pageNum,pageSize);
+                "createTime_desc",tagId,null,pageNum,pageSize);
         return blogVoList;
 
     }
+    @RequestMapping("category_tag_init.do")
+    @ResponseBody
+    public ServerResponse<IndexVo> categoryOrTagInit(Integer tagId,Integer categoryId, @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,@RequestParam(value="pageSize",defaultValue = "10")Integer pageSize){
+        //todo 校验参数合法性 优化
+        if(tagId==null&&categoryId==null){
+            return ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(),ResponseCode.NULL_ARGUMENT.getDesc());
+        }
+        IndexVo indexVo = new IndexVo();
+        PageInfo pageInfo ;
+        if(tagId!=null){
+            indexVo.setId(tagId);
+            Tag tag  = iTagService.findTagById(tagId);
+            if(tag==null){
+                return ServerResponse.createByErrorCodeAndMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+            }
+            indexVo.setName(tag.getTagName());
+            indexVo.setIsCategory(0);
+            pageInfo=iBlogService.findBlogVoPageInfo(1,null,tagId,"createTime_desc",null,pageNum,pageSize);
+        }else{
+            indexVo.setId(categoryId);
+            Category category = iCategoryService.findSimpleCById(categoryId);
+            if(category==null){
+                return ServerResponse.createByErrorCodeAndMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+            }
+            indexVo.setName(category.getCategoryName());
+            indexVo.setIsCategory(1);
+            pageInfo=iBlogService.findBlogVoPageInfo(1,categoryId,null,"createTime_desc",null,pageNum,pageSize);
+        }
 
+        //最新发布
+        List<BlogVo> newPublishdBlog = iBlogService.findBlogVoList(1,null,null,"createTime_desc",null,1,Const.IndexConst.NEW_PUBLISH);
+
+        List<TagVo> tagVoList = iTagService.listAllSimpleWithCount();
+        List<CategoryVo> categoryVoList = iCategoryService.findAllWithCount();
+        indexVo.setTagVoList(tagVoList);
+        indexVo.setRecommendBlog(newPublishdBlog);
+        indexVo.setCategoryVoList(categoryVoList);
+        indexVo.setBlogPageInfo(pageInfo);
+
+        return ServerResponse.createBySuccess(indexVo);
+
+    }
 
 
 

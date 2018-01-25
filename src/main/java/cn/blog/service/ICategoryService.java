@@ -24,4 +24,5 @@ public interface ICategoryService {
 
     List<CategoryVo> findAllWithCount();
 
+    Category findSimpleCById(Integer categoryId);
 }

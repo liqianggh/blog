@@ -103,6 +103,16 @@ public class TagServiceImpl implements ITagService{
     }
 
     @Override
+    public Tag findTagById(Integer tagId) {
+        if(tagId==null){
+            return null;
+        }
+        //todo 校验合法性
+        Tag tag =tagMapper.selectByPrimaryKey(tagId);
+        return tag;
+    }
+
+    @Override
      public ServerResponse<PageInfo> listAll(Integer pageNum,Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
          List<Tag> tagList = tagMapper.findALl();

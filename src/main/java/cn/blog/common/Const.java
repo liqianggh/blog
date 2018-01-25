@@ -16,7 +16,7 @@ public interface Const {
     public interface IndexConst{
         int BLOG_NUM = 10;
         int HOT_NUM = 5;
-
+        int NEW_PUBLISH=5;
         int RECOMMENDED = 5;
 
     }

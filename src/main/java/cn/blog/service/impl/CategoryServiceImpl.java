@@ -148,4 +148,12 @@ public class CategoryServiceImpl implements ICategoryService{
 
         return categoryMapper.selectAllWithBlogCount();
     }
+
+    @Override
+    public Category findSimpleCById(Integer categoryId) {
+        if(categoryId==null){
+            return null;
+        }
+        return categoryMapper.selectByPrimaryKey(categoryId);
+    }
 }

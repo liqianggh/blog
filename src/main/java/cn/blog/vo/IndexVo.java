@@ -17,6 +17,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IndexVo {
+    private String name;
+    private Integer id;
+    private Integer isCategory;
 
     private PageInfo blogPageInfo;
 
