@@ -1,0 +1,5 @@
+ #项目语言识别配置
+ *.css linguist-language=Java
+ *.less linguist-language=Java
+ *.js linguist-language=Java
+ *.html linguist-language=Java
