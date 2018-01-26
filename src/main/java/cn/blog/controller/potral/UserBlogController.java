@@ -65,7 +65,7 @@ public class UserBlogController {
      public ServerResponse<IndexVo> loadIndex(@RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,@RequestParam(value="pageSize",defaultValue = "10")Integer pageSize) {
          IndexVo indexVo = new IndexVo();
          List<BlogVo> hotBlog = iBlogService.findBlogVoList(1,null,null,"viewCount_desc",null,1,Const.IndexConst.HOT_NUM);
-         PageInfo pageInfo = iBlogService.findBlogVoPageInfo(1,null,null,"createTime_desc",null,1,Const.IndexConst.BLOG_NUM);
+         PageInfo pageInfo = iBlogService.findBlogVoPageInfo(1,null,null,"createTime_desc",null,pageNum,Const.IndexConst.BLOG_NUM);
          List<BlogVo> recommendedBlog = iBlogService.findBlogVoList(2,null,null,"createTime_desc",null,1,Const.IndexConst.RECOMMENDED);
          List<TagVo> tagVoList = iTagService.listAllSimpleWithCount();
          List<CategoryVo> categoryVoList = iCategoryService.findAllWithCount();
@@ -76,6 +76,20 @@ public class UserBlogController {
          indexVo.setBlogPageInfo(pageInfo);
          return ServerResponse.createBySuccess(indexVo);
      }
+
+     /**
+      * @Description: 高可用的下一页
+      * Created by Jann Lee on 2018/1/26  23:43.
+      */
+    @RequestMapping("next_page.do")
+    @ResponseBody
+    public ServerResponse<PageInfo> nextPage(Integer categoryId,Integer tagId,String title,@RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,@RequestParam(value="pageSize",defaultValue = "10")Integer pageSize) {
+
+        PageInfo pageInfo = iBlogService.findBlogVoPageInfo(1,categoryId,tagId,"createTime_desc",title,pageNum,Const.IndexConst.BLOG_NUM);
+
+        return ServerResponse.createBySuccess(pageInfo);
+    }
+
      /**
       * @Param :blogId 文章id
       * @Description:  根据id查询文章信息，并且根据标签或者分类进行推荐
@@ -106,7 +120,10 @@ public class UserBlogController {
 
     @RequestMapping("list_by_category.do")
     @ResponseBody
-    public ServerResponse<PageInfo> listByCategory(Integer categoryId, @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,@RequestParam(value="pageSize",defaultValue = "10")Integer pageSize){
+    public ServerResponse<PageInfo> listByCategory(Integer categoryId,
+                                                   @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,
+                                                   @RequestParam(value="pageSize",defaultValue = "10")Integer pageSize){
+
         //todo 校验参数合法性
         if(categoryId==null){
             return ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(),ResponseCode.NULL_ARGUMENT.getDesc());
@@ -122,6 +139,8 @@ public class UserBlogController {
     @RequestMapping("list_by_tag.do")
     @ResponseBody
     public ServerResponse<PageInfo> listByTag(Integer tagId, @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,@RequestParam(value="pageSize",defaultValue = "10")Integer pageSize){
+log.info("接收到的参数："+tagId);
+
         //todo 校验参数合法性
         if(tagId==null){
             return ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(),ResponseCode.NULL_ARGUMENT.getDesc());
