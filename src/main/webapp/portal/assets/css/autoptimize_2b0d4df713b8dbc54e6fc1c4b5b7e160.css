@@ -2826,7 +2826,8 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     clear:both
 }
 #header {
-    background:#1abc9c;
+    /*background:#1abc9c;*/
+    background: url("../../images/background/romantic.jpg");
     position:relative
 }
 .container-inner {
@@ -2903,6 +2904,7 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     padding:5px 20px 5px;
     color:#fff
 }
+
 .navbar .nav>li>ul>li>a:hover, .navbar .nav li li.current-menu-item a {
     color:#fff
 }
@@ -2910,7 +2912,7 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     background-color:#576663
 }
 .navbar .nav li:hover a, .navbar .nav li.current-menu-item a, .navbar .nav li.current-menu-parent a, .navbar .nav li.current_page_item a, .navbar .nav li.current-post-ancestor a {
-    background-color:#16a085
+    background-color:#27937b
 }
 .sub-menu {
     min-width:130px;
@@ -3085,9 +3087,12 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     font-weight:normal;
     font-style:normal
 }*/
+
 .yusi-logo {
     display:block;
-    text-align:center
+    text-align:left;
+    height:155px;
+    line-height: 177px;
 }
 .yusi-logo h1 {
     font-weight:100;
@@ -3125,30 +3130,33 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     transition:all .5s ease-out
 }
 .yusi-logo h1:hover .yusi-mono {
-    letter-spacing:5px
+    /*letter-spacing:5px*/
 }
 .yusi-logo h1:hover .yusi-bloger {
     left:26px;
     opacity:.2
 }
 .toggle-search {
-    position:absolute;
-    margin-top:0;
-    right:0;
-    padding:16px 19px 16px 19px;
+    position:relative;
+    margin-top:13px;
+    right:7px
+    padding:9px 19px 16px 19px;
     height:20px;
-    background:#16a085;
+    width:20px;
+    float: right;
+    background:#4a4a4a;
     color:#fff;
     cursor:pointer;
-    -webkit-transition:all .25s ease-out;
+    margin-top: 
+/*    -webkit-transition:all .25s ease-out;
     -moz-transition:all .25s ease-out;
     -o-transition:all .25s ease-out;
-    transition:all .25s ease-out
+    transition:all .25s ease-out*/
 }
 .toggle-search:hover, .toggle-search.active {
     opacity:.75
 }
-.search-expand {
+/*.search-expand {
     display:none;
     background:#16a085;
     position:absolute;
@@ -3157,13 +3165,29 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     width:336px;
     -webkit-box-shadow:0 1px 0 rgba(255, 255, 255, 0.1);
     box-shadow:0 1px 0 rgba(255, 255, 255, 0.1)
+}*/
+
+.search-expand {
+    display:none;
+    background:#16a085;
+    position:relative;
+   margin: auto;
+    right:0;
+    width:296px;
+    height: 54px
+    -webkit-box-shadow:0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow:0 1px 0 rgba(255, 255, 255, 0.1)
 }
+
 .search-expand-inner {
-    border-bottom:1px solid #d2d6d5;
-    border-left:1px solid #d2d6d5
+    /*border-bottom:2px solid #d2d6d5;*/
+    /*border-left:1px solid #d2d6d5;*/
+    float:left;
+    margin-top: 5.5px;
+;
 }
 .search-expand .themeform input {
-    width:90%;
+    width:98%;
     border:0;
     outline:0
 }
@@ -3176,18 +3200,18 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     line-height:20px
 }
 .searchform div:after {
-    color:#ccc;
-    line-height:24px;
-    font-size:14px;
-    content:"\f002";
-    position:absolute;
-    left:10px;
-    top:8px;
-    font-family:FontAwesome
+        color: #ccc;
+    line-height: 24px;
+    font-size: 14px;
+    content: "\f002";
+    position: absolute;
+    left: 9px;
+    top: 10px;
+    font-family: FontAwesome;
 }
 .searchform div input.search {
     padding-left:30px;
-    height:31px;
+    height:32px;
     font-family:"Microsoft Yahei", "Helvetica Neue", Helvetica, Arial, sans-serif
 }
 .breadcrumb {
@@ -4027,7 +4051,7 @@ a.label-inverse:hover .label-arrow, a.badge-inverse:hover .label-arrow {
     overflow:hidden;
     clear:both;
     background-color:#fff;
-    text-align:center
+    text-align:left
 }
 .banner-post {
     line-height:1px;
@@ -4093,21 +4117,45 @@ a.label-inverse:hover .label-arrow, a.badge-inverse:hover .label-arrow {
     background-color:#fff
 }
 .article-content h2 {
-    font-size:18px;
-    font-weight:blod;
-    margin:20px -20px 20px -24px;
-    padding:10px 20px 9px 10px;
-    line-height:18px;
-    border-left:4px solid #00a67c;
-    background-color:#fbfbfb
+   
+       font-size: 30px;
+    margin: 20px -20px 20px -19px;
+    padding: 10px 20px 9px 10px;
+    line-height: 28px;
+    border-left: outset #3c3f41 4px;
+    background-color: #eee;
 }
 .article-content h3 {
-    font-size:16px;
-    font-weight:blod
+    font-size: 24px;
+    margin: 20px -20px 20px -19px;
+    padding: 10px 20px 9px 10px;
+    line-height: 24px;
+    border-left: outset #27937b 4px;
+    background-color: #f7f7f7;
 }
 .article-content h4 {
-    font-size:15px;
-    font-weight:blod
+    font-size: 18px;
+    margin: 20px -20px 20px -19px;
+    padding: 10px 20px 9px 10px;
+    line-height: 18px;
+    border-left: outset #777 4px;
+    background-color: #f7f7f7;:blod
+}
+.article-content h5 {
+       font-size: 16px;
+    margin: 20px -20px 20px -19px;
+    padding: 10px 20px 9px 10px;
+    line-height: 13px;
+    border-left: outset #c80a25 4px;
+    background-color: #f7f7f7;
+}
+.article-content h6 {
+       font-size: 16px;
+    margin: 20px -20px 20px -19px;
+    padding: 10px 20px 9px 10px;
+    line-height: 13px;
+    border-left: outset #c80a25a1 4px;
+    background-color: #f7f7f7;
 }
 .article-content p {
     margin:0 0 15px 0
@@ -6082,3 +6130,9 @@ a.label-inverse:hover .label-arrow, a.badge-inverse:hover .label-arrow {
     width:220px;
     height: 135.3px;
 }
+
+#header{
+    height: 207px;
+}
+
+ 

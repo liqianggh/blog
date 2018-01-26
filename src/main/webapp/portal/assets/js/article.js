@@ -29,7 +29,7 @@ window.onload=function(){
                     	wordCountTarget: '.word-count',
                     	readingTimeTarget: '.reading-time',
 						wordCountTarget: '.word-count',
-						wordsPerMinute: 400,
+						wordsPerMinute: 238,
 						round: true,
 						lang: 'ch',
                 		});
@@ -94,7 +94,7 @@ function initArticle(blogVo){
 	var headerArticleInfo = $("#herder_article_info");
 	var articleContentContainer = $("#div_article_container");
 	// var heraderChild="<h1 class=article-title><a href=3798.html>"+title+"</a></h1><div id='article-header' class=meta><span id=mute-category class=muted><i class='fa fa-list-alt'></i><a href='"+categoryId+"'>&nbsp;"+categoryName+"</a></span><span class=muted><i class='fa fa-user'></i>&nbsp;"+author+"</span><time class=muted><i class='fa fa-clock-o'></i>&nbsp;"+createTimeStr+"</time><span class=muted style='display:none;'><i class='fa fa-eye'></i>&nbsp;"+viewCount+"</span><span class=muted><i class='fa fa-comments-o'></i><a href='3798.html#comments'>&nbsp;"+commentCount+"&nbsp;评论</a></span></div>";
-	var heraderChild="<h1 class=article-title><a href=3798.html>"+title+"</a></h1><div id='article-header' class=meta><span id=mute-category class=muted><i class='fa fa-list-alt'></i><a href='"+categoryId+"'>&nbsp;"+categoryName+"</a></span><span class=muted><i class='fa fa-user'></i>&nbsp;"+author+"</span><time class=muted><i class='fa fa-clock-o'></i>&nbsp;"+createTimeStr+"</time><span class=muted style='display:none;'><i class='fa fa-eye'></i>&nbsp;"+viewCount+"</span><span class=muted><i class='fa fa-comments-o'></i><a href='3798.html#comments'>&nbsp;"+commentCount+"&nbsp;评论</a></span></div>";
+	var heraderChild="<h1 class=article-title>"+title+"</h1><div id='article-header' class=meta><span id=mute-category class=muted><i class='fa fa-list-alt'></i><a href='category.html?categoryId="+categoryId+"'>&nbsp;"+categoryName+"</a></span><span class=muted><i class='fa fa-user'></i>&nbsp;"+author+"</span><time class=muted><i class='fa fa-clock-o'></i>&nbsp;"+createTimeStr+"</time><span class=muted style='display:none;'><i class='fa fa-eye'></i>&nbsp;"+viewCount+"</span><span class=muted><i class='fa fa-comments-o'></i><a href='3798.html#comments'>&nbsp;"+commentCount+"&nbsp;评论</a></span></div>";
 
 	headerArticleInfo.append(heraderChild);
 

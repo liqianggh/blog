@@ -301,15 +301,15 @@
   <profiles>
     <profile>
       <id>dev</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <properties>
         <deploy.type>dev</deploy.type>
       </properties>
     </profile>
     <profile>
       <id>prod</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <properties>
         <deploy.type>prod</deploy.type>
       </properties>
