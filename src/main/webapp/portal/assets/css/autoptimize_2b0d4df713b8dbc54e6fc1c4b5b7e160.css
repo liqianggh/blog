@@ -1,8 +1,9 @@
 /*@font-face {
     font-family:'FontAwesome';
-    src:url(//yusi123.com/wp-content/themes/yusi/fonts/fontawesome-webfont.eot?v=4.1.0);
-    src:url(//yusi123.com/wp-content/themes/yusi/fonts/fontawesome-webfont.eot?#iefix&v=4.1.0) format('embedded-opentype'), url(//yusi123.com/wp-content/themes/yusi/fonts/fontawesome-webfont.woff?v=4.1.0) format('woff'), url(//yusi123.com/wp-content/themes/yusi/fonts/fontawesome-webfont.ttf?v=4.1.0) format('truetype'), url(//yusi123.com/wp-content/themes/yusi/fonts/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular)format('svg');
+    src:url(//blog123.com/wp-content/themes/blog/fonts/fontawesome-webfont.eot?v=4.1.0);
+    src:url(//blog123.com/wp-content/themes/blog/fonts/fontawesome-webfont.eot?#iefix&v=4.1.0) format('embedded-opentype'), url(//blog123.com/wp-content/themes/blog/fonts/fontawesome-webfont.woff?v=4.1.0) format('woff'), url(//blog123.com/wp-content/themes/blog/fonts/fontawesome-webfont.ttf?v=4.1.0) format('truetype'), url(//blog123.com/wp-content/themes/blog/fonts/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular)format('svg');
     font-weight:normal;
+
     font-style:normal
 }*/
 .fa {
@@ -3075,26 +3076,26 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
 }
 /*@font-face {
     font-family:'jin_mei_mxplzx55112';
-    src:url(//yusi123.com/wp-content/themes/yusi/fonts/jin_mei_mxplzx.eot);
-    src:url(//yusi123.com/wp-content/themes/yusi/fonts/jin_mei_mxplzx.eot?#iefix) format('embedded-opentype'), url(//yusi123.com/wp-content/themes/yusi/fonts/jin_mei_mxplzx.woff) format('woff'), url(//yusi123.com/wp-content/themes/yusi/fonts/jin_mei_mxplzx.ttf) format('truetype'), url(//yusi123.com/wp-content/themes/yusi/fonts/jin_mei_mxplzx.svg#jin_mei_mxplzx55112)format('svg');
+    src:url(//blog123.com/wp-content/themes/blog/fonts/jin_mei_mxplzx.eot);
+    src:url(//blog123.com/wp-content/themes/blog/fonts/jin_mei_mxplzx.eot?#iefix) format('embedded-opentype'), url(//blog123.com/wp-content/themes/blog/fonts/jin_mei_mxplzx.woff) format('woff'), url(//blog123.com/wp-content/themes/blog/fonts/jin_mei_mxplzx.ttf) format('truetype'), url(//blog123.com/wp-content/themes/blog/fonts/jin_mei_mxplzx.svg#jin_mei_mxplzx55112)format('svg');
     font-weight:normal;
     font-style:normal
 }*/
 /*@font-face {
     font-family:'minijianxixingkai55387';
-    src:url(//yusi123.com/wp-content/themes/yusi/fonts/minijianxixingkai.eot);
-    src:url(//yusi123.com/wp-content/themes/yusi/fonts/minijianxixingkai.eot?#iefix) format('embedded-opentype'), url(//yusi123.com/wp-content/themes/yusi/fonts/minijianxixingkai.woff) format('woff'), url(//yusi123.com/wp-content/themes/yusi/fonts/minijianxixingkai.ttf) format('truetype'), url(//yusi123.com/wp-content/themes/yusi/fonts/minijianxixingkai.svg#minijianxixingkai55387)format('svg');
+    src:url(//blog123.com/wp-content/themes/blog/fonts/minijianxixingkai.eot);
+    src:url(//blog123.com/wp-content/themes/blog/fonts/minijianxixingkai.eot?#iefix) format('embedded-opentype'), url(//blog123.com/wp-content/themes/blog/fonts/minijianxixingkai.woff) format('woff'), url(//blog123.com/wp-content/themes/blog/fonts/minijianxixingkai.ttf) format('truetype'), url(//blog123.com/wp-content/themes/blog/fonts/minijianxixingkai.svg#minijianxixingkai55387)format('svg');
     font-weight:normal;
     font-style:normal
 }*/
 
-.yusi-logo {
+.blog-logo {
     display:block;
     text-align:left;
     height:155px;
     line-height: 177px;
 }
-.yusi-logo h1 {
+.blog-logo h1 {
     font-weight:100;
     text-shadow:0 0 1px rgba(94, 255, 216, .8);
     display:inline-block;
@@ -3103,7 +3104,7 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     position:relative;
     color:#fff
 }
-.yusi-mono {
+.blog-mono {
     font-family:jin_mei_mxplzx55112;
     letter-spacing:-2px;
     font-size:54px;
@@ -3116,7 +3117,7 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     -ms-transition:all .1s ease-out;
     transition:all .1s ease-out
 }
-.yusi-bloger {
+.blog-bloger {
     font-family:minijianxixingkai55387;
     font-size:24px;
     margin-left:-6px;
@@ -3129,10 +3130,10 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     -ms-transition:all .5s ease-out;
     transition:all .5s ease-out
 }
-.yusi-logo h1:hover .yusi-mono {
+.blog-logo h1:hover .blog-mono {
     /*letter-spacing:5px*/
 }
-.yusi-logo h1:hover .yusi-bloger {
+.blog-logo h1:hover .blog-bloger {
     left:26px;
     opacity:.2
 }
@@ -3200,13 +3201,13 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     line-height:20px
 }
 .searchform div:after {
-        color: #ccc;
+          color: #ccc;
     line-height: 24px;
-    font-size: 14px;
+    font-size: 19px;
     content: "\f002";
     position: absolute;
     left: 9px;
-    top: 10px;
+    top: 9px;
     font-family: FontAwesome;
 }
 .searchform div input.search {
@@ -3234,6 +3235,9 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
 .breadcrumb>.active {
     color:#999
 }
+
+
+
 .pagination {
     padding:20px 0 15px 0;
     background-color:#fff;
@@ -3269,11 +3273,15 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
 .pagination ul>.active>a, .pagination ul>.active>span {
     cursor:default
 }
-.pagination ul>li>span, .pagination ul>.disabled>span, .pagination ul>.disabled>a, .pagination ul>.disabled>a:hover, .pagination ul>.disabled>a:focus {
+/*.pagination ul>li>span, .pagination ul>.disabled>span, .pagination ul>.disabled>a, .pagination ul>.disabled>a:hover, .pagination ul>.disabled>a:focus {
     color:#999;
     background-color:transparent;
     cursor:default
 }
+*/
+
+
+
 .ias_trigger {
     padding-top:4px
 }
@@ -5387,7 +5395,7 @@ a.label-inverse:hover .label-arrow, a.badge-inverse:hover .label-arrow {
     .toggle-search {
         padding:11px 25px 10px 20px
     }
-    .yusi-mono {
+    .blog-mono {
         font-size:42px !important
     }
     .navbar {
@@ -5474,7 +5482,7 @@ a.label-inverse:hover .label-arrow, a.badge-inverse:hover .label-arrow {
         color:#444;
         display:block
     }
-    .yusi-bloger, .speedbar, .screen-search {
+    .blog-bloger, .speedbar, .screen-search {
         display:none
     }
     .sidebar {
@@ -5790,7 +5798,7 @@ a.label-inverse:hover .label-arrow, a.badge-inverse:hover .label-arrow {
     }
 }
 @media(max-width:334px) {
-    .yusi-mono {
+    .blog-mono {
         font-size:32px !important
     }
     .article-title a {

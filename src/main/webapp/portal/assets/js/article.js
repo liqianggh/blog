@@ -87,6 +87,7 @@ function initArticle(blogVo){
 	var commentCount = blogVo.commentCount;
 	var shareCount = blogVo.shareCount;
 	var viewCount = blogVo.viewCount;
+	var likeCount = blogVo.likeCount;
 	var title = blogVo.title;
 	//标签处理
 	var tags = blogVo.tags;
@@ -100,6 +101,19 @@ function initArticle(blogVo){
 
 	articleContentContainer.append("<div class='article-content'>"+content+"</div>");
 		// articleContentContainer.append("<article><div class='eta'></div><div class='article-content'>"+content+"</div></article>");
+
+	//喜欢次数
+	var likeCountContainer = $("#span_like_count");
+	likeCountContainer.empty();
+	likeCountContainer.append(likeCount);
+
+	//分享次数
+	var shareCountContainer = $("#span_share_count");
+	shareCountContainer.empty();
+	shareCountContainer.attr("title","累计分享"+shareCount+"次");
+	
+	shareCountContainer.append(shareCount);
+
 
 
 }
@@ -115,7 +129,8 @@ function initGuessYouLike(blogVoList){
 		imgUrl = value.imgHost+value.imgUri;
 		commentCount = value.commentCount;
 		createTimeStr=value.createTimeStr;
-		var liChild = "<li><a href='"+blogId+"' title='"+title+"'><span class=thumbnail><img src='"+imgUrl+"' alt='"+title+"'></span><span class=text>"+title+"</span><span class=muted>"+createTimeStr+"</span><span class=muted style='float: right;'>"+commentCount+"评论</span></a>"
+		blogId=value.blogId;
+		var liChild = "<li><a href='article.html?blogId="+blogId+"' title='"+title+"'><span class=thumbnail><img src='"+imgUrl+"' alt='"+title+"'></span><span class=text>"+title+"</span><span class=muted>"+createTimeStr+"</span><span class=muted style='float: right;'>"+commentCount+"评论</span></a>"
 
 		ulGuessLike.append(liChild);
 	})

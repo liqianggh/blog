@@ -18,57 +18,36 @@
  <body class="home blog">
   <header id="header" class="header">
 
-     <div class="container-inner">
-    <div class="yusi-logo"> 
+   <div class="container-inner">
+    <div class="blog-logo"> 
       <img src="images/logo2.png"  >
-  <!--    <a href="index.html"><h1> <span style="font-family:'Times New Roman,Georgia','Serif';" class="yusi-mono">李强的个人博客</span> <span style="font-family: '幼圆';" class="yusi-bloger">– Nothing is impossible!</span></h1> </a>
-    </div> -->
    </div> 
 
    <div id="nav-header" class="navbar">
     <ul class="nav">
-     <li  class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item"><a href="mycookies_default.html">首页</a></li>
-     <li  class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3305"><a href="money.htm">技术分享</a></li>
-
-     <li    class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3300"><a href="share.htm">心情随记</a></li>
-
-
-     <li   class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3294"><a href="web.htm">心得笔记</a></li>
-
-
-
-     <li   class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3291"><a href="design.htm">读过的书</a></li>
-
-
-     <li  class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3288"><a href="wordpress.htm">走过的路</a></li>
-
-
-     <li   class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3306"><a href="diary.htm">留言版</a>
-<!--       <ul class="sub-menu">
-       <li id="menu-item-3304" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3304"><a href="website.htm">站长吐槽</a></li>
-       <li id="menu-item-3299" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3299"><a href="search.htm">搜索引擎</a></li>
-      </ul> --></li>
-
-
-     <li id="menu-item-3308" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3308"><a href="guestbook.htm">关于我</a></li>
+     <li  class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item"><a href="index.html">首页</a></li>
+     <li id="menu-item-1"  class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3305"><a href="category.html?categoryId=1">技术分享</a></li>
+     <li id="menu-item-2" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3300"><a href="category.html?categoryId=2">生活笔记</a></li>
+     <li  id="menu-item-3" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3294"><a href="category.html?categoryId=3">胡说八道</a></li>
+     <li  id="menu-item-4"  class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3291"><a href="category.html?categoryId=4">读过的书</a></li>
+     <li id="menu-item-5"  class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3288"><a href="javascript:alert('该模块开发中，敬请期待！');">资源分享</a></li>
+     <li id="menu-item-c" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3306"><a href="javascript:alert('该模块开发中，敬请期待！');">留言版</a>
+    </li>
+     <li id="menu-item-x" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="javascript:alert('该模块开发中，敬请期待！');">关于我</a></li>
 
      <li class="menu-item" style="float:right;">
       <div style="width:376px; max-height: 54px;">
-
-
-
         <div class="search-expand" style="display: block;">
          <div class="search-expand-inner">
           <form method="get" class="searchform themeform" onsubmit="location.href='https://mycookies.com/search/' + encodeURIComponent(this.s.value).replace(/%20/g, '+'); return false;" action="mycookies_default.html">
            <div> 
-            <input type="ext" class="search" name="s" onblur="if(this.value=='')this.value='search...';" onfocus="if(this.value=='search...')this.value='';" value="search..." />
+            <input type=text" class="search" name="s" onblur="if(this.value=='')this.value='search...';" onfocus="if(this.value=='search...')this.value='';" value="search..." />
            </div>
           </form>
           </div>
 
-
          <div class="toggle-search">
-               <i class="fa fa-search"></i>
+               <i class="fa fa-search" style="font-size: 24px;"></i>
          </div>
 
       </div>
@@ -150,17 +129,23 @@
 
 
      <div class="pagination">
-      <ul>
-       <li class="prev-page"></li>
+      <ul id="ul_pagination">
+
+       <!--  <li class="first-page"><a>首页</a></li>
+       <li class="prev-page"><a>上一页</a></li>
        <li class="active"><span>1</span></li>
        <li><a href="page/2.htm">2</a></li>
        <li><a href="page/3.htm">3</a></li>
        <li><a href="page/4.htm">4</a></li>
        <li><a href="page/5.htm">5</a></li>
-       <li><span> ... </span></li>
+        <li><a href="page/5.htm">6</a></li>
+         <li><a href="page/5.htm">7</a></li>
        <li class="next-page"><a href="page/2.htm">下一页</a></li>
+       <li class="last-page"><a href="page/2.htm">尾页</a></li> -->
+
       </ul>
      </div>
+
 
     </div>
    </div>
@@ -195,7 +180,7 @@
       <div class="title">
        <h2>听听音乐</h2>
     <!--   </div>
-      <h3>本站主题：Yusi1.0(扁平化+响应式)</h3><p>支持 WordPress 3.8 及以上最新版，兼容 IE9+、Chrome、Firefox 等主流浏览器！</p> --><!-- </a> -->
+      <h3>本站主题：blog1.0(扁平化+响应式)</h3><p>支持 WordPress 3.8 及以上最新版，兼容 IE9+、Chrome、Firefox 等主流浏览器！</p> --><!-- </a> -->
    <!--  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=295 height=210 src="//music.163.com/outchain/player?type=0&id=933392845&auto=1&height=430"></iframe>   -->
     </div>
   </div>
@@ -263,14 +248,8 @@
       <h2>友情链接</h2>
      </div>
      <ul class="xoxo blogroll">
-      <li><a href="http://nanlong123.com/" target="_blank">南龙博客</a></li>
-      <li><a href="http://www.comca.cn/" target="_blank">全网目录</a></li>
-      <li><a href="http://www.zhaonew.com/" target="_blank">找牛网</a></li>
-      <li><a href="http://www.liaosam.com/" target="_blank">料神SAM料网</a></li>
-      <li><a href="http://www.wangzhijun.com.cn" target="_blank">王志军博客</a></li>
-      <li><a href="http://www.xiariboke.com" target="_blank">夏日博客</a></li>
-      <li><a href="http://java-er.com/" target="_blank">月小升博客</a></li>
-      <li><a href="http://www.uctheme.com/" target="_blank">导购主题</a></li>
+      <li><a href="http://www.mycookies.cn" target="_blank">哈哈哈哈</a></li>
+      <li><a href="http://www.mycookies.cn" target="_blank"> 大家好我是渣渣辉 </a></li>
      </ul>
     </div>
 
@@ -282,7 +261,7 @@
    <div class="footer-inner">
     <div class="copyright pull-left"> 
      <a href="https://mycookies.com/mycookies_default.html" title="李强的个人博客">李强的个人博客</a> 版权所有，保留一切权利 ! Theme 
-     <a href="3233.html">Yusi</a> &middot; 
+     <a href="3233.html">blog</a> &middot; 
      <a href="sitemap.xml" title="站点地图">站点地图</a> &copy; 2011-2014 &middot; 
      <a href="http://www.miitbeian.gov.cn/" rel="nofollow" target="_blank">赣ICP备13005641号</a> &middot; 托管于 
      <a rel="nofollow" target="_blank" href="https://mycookies.com/go/aliyun">阿里云</a> &amp; 

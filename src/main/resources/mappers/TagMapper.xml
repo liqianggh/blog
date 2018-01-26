@@ -42,8 +42,8 @@
     select count(1) from tag where tagId=#{tagId}
   </select>
   <select id="findALlWithCount" resultType="cn.blog.vo.TagVo">
-   select count(1) as tagCount,tagName,tagId from tag group by tagName;
-  </select>
+select ba.tagId, t.tagName ,count(ba.blogId) as tagCount from tag t, blogandtags ba where t.tagId=ba.tagId group by ba.tagId
+   </select>
   <select id="selectCountOfTagsAndBlog" parameterType="map" resultType="int">
     select count(1) from blogAndTags
     <where>
