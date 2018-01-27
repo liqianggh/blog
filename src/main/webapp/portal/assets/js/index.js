@@ -1,13 +1,13 @@
 // var url = "http://localhost:8080"
+var url = "http://www.mycookies.cn"
 
-var host = "http://www.mycookies.cn/"
  window.onload=function(){
 	//首页数据初始化
 	//数据冗余 todo
 	$.ajax({
 		type:"post",
 		dataType:"json",
-		url:host+"user/blog/load_index.do",
+		url:url+"/user/blog/load_index.do",
 		success:function(result){
 		    // 推荐博客
 			var recBlogs = result.data.recommendBlog;
@@ -87,7 +87,7 @@ var host = "http://www.mycookies.cn/"
 		 		var createTimeStr = value.createTimeStr;
 		 		var categoryName = value.categoryName;
 		 		var imgUrl=value.imgHost+value.imgUri;
-		 		var blogChild = "<article class='excerpt'><header><a target='_blank' class='label label-important' href='category.html?categoryId="+categoryId+"'>"+categoryName+"<i class='label-arrow'></i></a> <h2><a target='_blank'  href='article.html?blogId="+blogId+"' title='"+title+"'>"+title+" </a></h2></header><div class='focus'> <a target='_blank' target='blank' href='#'><img class='thumb' src='"+imgUrl+"' alt='"+title+"' /></a>	</div> 	<span class='note'>"+summary+"</span>	<p class='auth-span'> <span class='muted'><i class='fa fa-clock-o'></i> "+createTimeStr+"</span> <span class='muted'><i class='fa fa-eye'></i> "+viewCount+"℃</span> <span class='muted'><i class='fa fa-comments-o'></i> <a target='_blank' target='_blank' href='3849.html#comments'>"+commentCount+"评论</a></span><span class='muted'> <a target='_blank' href='javascript:;' data-action='ding' data-id='3849' id='Addlike' class='action'><i class='fa fa-heart-o'></i><span class='count'>"+likeCount+"</span>喜欢</a></span></p> </article>";
+		 		var blogChild = "<article class='excerpt'><header><a target='_blank' class='label label-important' href='category.html?categoryId="+categoryId+"'>"+categoryName+"<i class='label-arrow'></i></a> <h2><a target='_blank'  href='article.html?blogId="+blogId+"' title='"+title+"'>"+title+" </a></h2></header><div class='focus'> <a target='_blank' target='blank' href='#'><img class='thumb' src='"+imgUrl+"' alt='"+title+"' /></a>	</div> 	<span class='note'>"+summary+"</span>	<p class='auth-span'> <span class='muted'><i class='fa fa-clock-o'></i> "+createTimeStr+"</span> <span class='muted'><i class='fa fa-eye'></i> "+viewCount+"℃</span> <span class='muted'><i class='fa fa-comments-o'></i><span id = 'url::http://www.mycookies.cn/portal/article.do?blogId="+blogId+"' class = 'cy_cmt_count' ></span>评论</span><span class='muted'> <a target='_blank' href='javascript:;' data-action='ding' data-id='3849' id='Addlike' class='action'><i class='fa fa-heart-o'></i><span class='count'>"+likeCount+"</span>喜欢</a></span></p> </article>";
 		 		blogContainer.append(blogChild);
 		 	})
 
