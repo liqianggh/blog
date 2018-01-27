@@ -6143,4 +6143,29 @@ a.label-inverse:hover .label-arrow, a.badge-inverse:hover .label-arrow {
     height: 207px;
 }
 
- 
+/*article*/
+  .fixed {
+
+      position: fixed;
+      margin-left: 0px;
+      width:336px;
+      top: 0;
+    }
+    #herder_article_info{
+        text-align: center;
+    }
+
+  .emph_left_boder {
+    background-color: #4e4d4d;
+    color: white;
+    font-weight: normal;
+    width: 100%;
+    margin: 0;
+    height: 59px;
+    text-align: left;
+    line-height: 59px;
+        padding-left: 10px;
+}
+    .emph_left_boder .reading-time{
+          color:green;
+    }

@@ -1,7 +1,7 @@
-var url = "http://localhost:8080"
+// var url = "http://localhost:8080"
+var host = "http://www.mycookies.cn"
 
  window.onload=function(){
-
 	//首页数据初始化
 	//数据冗余 todo
 	$.ajax({
@@ -31,13 +31,8 @@ var url = "http://localhost:8080"
 			var hasNextPage=pageInfo.hasNextPage;
 			var prePage = pageInfo.prePage;
 			var hasPreviousPage = pageInfo.hasPreviousPage;
-
-
 		pagination(pageNum,pages,firstPage,isFirstPage,lastPage
 		,isLastPage,nextPage,hasNextPage,prePage,hasPreviousPage);
-
-
-
 
 
 		 	//图片窗口部分
@@ -51,12 +46,14 @@ var url = "http://localhost:8080"
 			    //拼接元素
 			    /*<li><img src="image/images/eee.jpg" alt="麻将少年" title="麻将少年" id="wows1_0"/></li>*/
 			    ul_ws_images.append("<li><a target='_blank'  href='article.html?blogId="+blogId+"'><img src='"+imgUrl+"'  alt='"+title+"' title='"+title+"'  id='wows1_"+index+"' /></a></li>");
+
 // $("#wows1_"+index).attr("src",imgUrl);
 // $("#wows1_"+index).attr("title",title);
 // $("#div_wow_js").append(" <script type='text/javascript' src='assets/engine/wowslider.js'></script><script type='text/javascript' src='assets/engine/script.js'></script>");
 
 				/*<a target='_blank' href="#" title="麻将少年"><span><img src="image/tooltips/eee.jpg" alt="麻将少年"/>1</span></a>*/
 				div_ws_bullets.append("<a target='_blank' href='article.html?blogId="+blogId+"' title='"+title+"'><span></span></a>")
+
 		 	})
 
 		 	jQuery("#wowslider-container1").wowSlider({effect:"bubbles,parallax,seven,blur,domino,blast,blinds,basic,flip,page,stack,stack_vertical",prev:"",next:"",duration:20*100,delay:20*100,width:640,height:360,autoPlay:true,autoPlayVideo:false,playPause:true,stopOnHover:false,loop:false,bullets:1,caption:true,captionEffect:"parallax",controls:true,controlsThumb:false,responsive:1,fullScreen:false,gestures:2,onBeforeStep:0,images:0});
@@ -141,6 +138,7 @@ var url = "http://localhost:8080"
 	function pagination(pageNum,pages,firstPage,isFirstPage,lastPage
 		,isLastPage,nextPage,hasNextPage,prePage,hasPreviousPage){
 		var ul_pagination = $("#ul_pagination");
+		// alert(ul_pagination.text());
 		ul_pagination.empty();
 		if(pages>0){
 			//首页

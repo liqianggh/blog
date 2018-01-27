@@ -1,5 +1,6 @@
-var host = "http://localhost:8080/"
- 
+// var host = "http://localhost:8080/"
+var host = "http://www.mycookies.cn"
+
 
 window.onload=function(){
 	var thisUrl = window.location.href;

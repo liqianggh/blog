@@ -1,5 +1,7 @@
-var host = "http://localhost:8080/"
+// var host = "http://localhost:8080/"
+var host = "http://www.mycookies.cn"
 window.onload=function(){
+
 	var thisUrl = window.location.href;
 	var start = thisUrl.lastIndexOf("=");
 	if(start>0){
@@ -79,6 +81,12 @@ window.onload=function(){
 
 
 function initArticle(blogVo){
+
+
+	var headerArticleInfo = $("#herder_article_info");
+	headerArticleInfo.empty();
+	var articleContentContainer = $("#div_article_container");
+	articleContentContainer.empty();
 	var content = blogVo.content;
 	var author = blogVo.author;
 	var categoryId = blogVo.categoryId;
@@ -92,8 +100,7 @@ function initArticle(blogVo){
 	//标签处理
 	var tags = blogVo.tags;
 
-	var headerArticleInfo = $("#herder_article_info");
-	var articleContentContainer = $("#div_article_container");
+
 	// var heraderChild="<h1 class=article-title><a href=3798.html>"+title+"</a></h1><div id='article-header' class=meta><span id=mute-category class=muted><i class='fa fa-list-alt'></i><a href='"+categoryId+"'>&nbsp;"+categoryName+"</a></span><span class=muted><i class='fa fa-user'></i>&nbsp;"+author+"</span><time class=muted><i class='fa fa-clock-o'></i>&nbsp;"+createTimeStr+"</time><span class=muted style='display:none;'><i class='fa fa-eye'></i>&nbsp;"+viewCount+"</span><span class=muted><i class='fa fa-comments-o'></i><a href='3798.html#comments'>&nbsp;"+commentCount+"&nbsp;评论</a></span></div>";
 	var heraderChild="<h1 class=article-title>"+title+"</h1><div id='article-header' class=meta><span id=mute-category class=muted><i class='fa fa-list-alt'></i><a href='category.html?categoryId="+categoryId+"'>&nbsp;"+categoryName+"</a></span><span class=muted><i class='fa fa-user'></i>&nbsp;"+author+"</span><time class=muted><i class='fa fa-clock-o'></i>&nbsp;"+createTimeStr+"</time><span class=muted style='display:none;'><i class='fa fa-eye'></i>&nbsp;"+viewCount+"</span><span class=muted><i class='fa fa-comments-o'></i><a href='3798.html#comments'>&nbsp;"+commentCount+"&nbsp;评论</a></span></div>";
 
