@@ -1,6 +1,5 @@
 // var host = "http://localhost:8080/"
-var host = "http://www.mycookies.cn"
-
+var host = "http://www.mycookies.cn/"
 
 window.onload=function(){
 	var thisUrl = window.location.href;
@@ -32,7 +31,7 @@ window.onload=function(){
 							initialBlogList(blogList);
 							initialNewBlogs(newBlogs);
 							initialTagClouds(tagList);
-
+							initialCategory(categoryVoList);
 					    }
 					})
 
@@ -52,6 +51,8 @@ window.onload=function(){
 							var newBlogs = data.data.recommendBlog;
 							var tagList = data.data.tagVoList;
 							var categoryVoList = data.data.categoryVoList;
+							initialCategory(categoryVoList);
+
 							initialHeader(isCategory,name,id);
 							initialBlogList(blogList);
 							initialNewBlogs(newBlogs);
@@ -331,3 +332,12 @@ function findByCategory(categoryId,categoryName){
 			$("#menu-item-1").addClass("current-menu-item current_page_item");
  		}
 	}
+	//分类初始化
+ 	function initialCategory(categoryList){
+ 		var d_category = $("#div_category");
+ 		d_category.empty();
+
+ 		$.each(categoryList,function(index,value){
+ 			d_category.append("<a class=cate"+getRandom(1,6)+" title='"+value.categoryName+"'   href=javascript:findByCategory("+value.categoryId+",'"+value.categoryName+"')  >"+value.categoryName+"("+value.blogCount+")</a>");
+ 		})
+ 	}

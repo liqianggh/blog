@@ -180,9 +180,9 @@ log.info("接收到的参数："+tagId);
             indexVo.setIsCategory(1);
             pageInfo=iBlogService.findBlogVoPageInfo(1,categoryId,null,"createTime_desc",null,pageNum,pageSize);
         }
-
         //最新发布
         List<BlogVo> newPublishdBlog = iBlogService.findBlogVoList(1,null,null,"createTime_desc",null,1,Const.IndexConst.NEW_PUBLISH);
+
 
         List<TagVo> tagVoList = iTagService.listAllSimpleWithCount();
         List<CategoryVo> categoryVoList = iCategoryService.findAllWithCount();

@@ -101,7 +101,8 @@
              <div id="div_article_container">
          
              </div>
-         
+              <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytqlFQwr">
+              </script>
              <!--分页-->
              <div class="pagination">
               <ul id="ul_pagination">
@@ -112,30 +113,27 @@
            </div>
          
            <aside class="sidebar">
-           
-            <div class="widget widget_text">
-             <div class="textwidget">
-              <div class="social"> 
-               <a href="https://.com/go/weibo" rel="external nofollow" title="新浪微博" target="_blank"><i class="sinaweibo fa fa-weibo"></i></a>
-               <a class="weixin"><i class="weixins fa fa-weixin"></i>
-                <div class="weixin-popover">
-                 <div class="popover bottom in">
-                  <div class="arrow"></div>
-                  <div class="popover-title">
-                   订阅号“欲思”
-                  </div>
-                  <div class="popover-content">
-        <!--            <img src="image/img/weixin.gif" />
-         -->          </div>
-                 </div>
-                </div></a>
-               <a href="https://mycookies.com/go/email" rel="external nofollow" title="Email" target="_blank"><i class="email fa fa-envelope-o"></i></a>
-               <a href="https://mycookies.com/go/add_qq" rel="external nofollow" title="联系QQ" target="_blank"><i class="qq fa fa-qq"></i></a>
-               <a href="feed" rel="external nofollow" target="_blank" title="订阅本站"><i class="rss fa fa-rss"></i></a>
+            <div class="widget d_tag">
+              <div class="title">
+                  <h2>分类</h2>
               </div>
-             </div>
+              <div id="div_category" class="d_category">
+                
+              </div>
+          </div>
+
+
+
+           <div class="widget">
+             <div class="title">
+              <h2>标签云</h2> 
             </div>
-         
+              <div class="tagcloud" id="tagscloud">
+       
+              </div>
+          </div>
+              
+
             <div style="height: 268px;" class="widget">
            <!--   <a class="style01" href="3233.html"> -->
               <div class="title">
@@ -146,24 +144,16 @@
             </div>
           </div>
          
-            <div style="height: 152px;" class="widget d_subscribe">
+     <!--        <div style="height: 152px;" class="widget d_subscribe">
              <div class="title">
               <h2>今日天气</h2>
              </div>
               <div style="border:solid red 1px;margin-right: 20px;margin-left: 20px;height:96px">
-        <!--      <iframe allowtransparency="true" frameborder="0" width="290" height="96" scrolling="no" src="//tianqi.2345.com/plugin/widget/index.htm?s=2&z=3&t=0&v=0&d=2&bd=0&k=&f=400040<f=009944&htf=cc0000&q=1&e=1&a=1&c=60767&w=290&h=96&align=center"></iframe>  -->
+             <iframe allowtransparency="true" frameborder="0" width="290" height="96" scrolling="no" src="//tianqi.2345.com/plugin/widget/index.htm?s=2&z=3&t=0&v=0&d=2&bd=0&k=&f=400040<f=009944&htf=cc0000&q=1&e=1&a=1&c=60767&w=290&h=96&align=center"></iframe> 
              </div>
-            </div>
+            </div> -->
          
-            <div class="widget">
-                 <div class="title">
-                  <!-- <h2>标签云</h2> -->
-                </div>
-                <div class="tagcloud" id="tagscloud">
-         
-                </div>
-            </div>
-              
+ 
         <!-- <script type="text/javascript" src="assets/js/tagscloud.js"></script> -->
          
         <!--     <div style="height: 200px;" class="widget d_banner">
@@ -185,20 +175,32 @@
              <div class="title">
               <h2>最新吐槽</h2>
              </div>
-             <ul>
-           
-              <li><a href="659.html#comment-20559" title="如何实现wordpress评论回复邮件通知功能上的评论"><img alt="" src=""  class="avatar avatar-48 photo" height="48" width="48" />
+              <!--  <ul>
+            <li><a href="659.html#comment-20559" title="如何实现wordpress评论回复邮件通知功能上的评论"><img alt="" src=""  class="avatar avatar-48 photo" height="48" width="48" />
                 <div class="muted">
                  <i>kkoopp</i>4周前 (12-24)说：设置了不行啊！
                 </div></a></li>
               <li><a href="2408.html#comment-20558" title="小伙伴们都会惊呆的10个超炫的HTML5+CSS3效果作品上的评论"><img alt=""  class="avatar avatar-48 photo" height="48" width="48" />
                 <div class="muted">
                  <i>长寿之都扬州小严</i>4周前 (12-23)说：谢谢谢谢~提供了一个好的网站作为参考，很感谢！
-                </div></a></li>
-             </ul>
+                </div></a></li> 
+               </ul>  -->
+
+
+                  <!-- 代码1：放在页面需要展示的位置  -->
+                  <!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+                  <div id="cyReping" role="cylabs" data-use="reping"></div>
+                  <!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+                  <!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+                  <!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+                  <script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+                  <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cytqlFQwr"></script>
+
             </div>
          
-            <div class="widget widget_links">
+
+
+  <!--           <div class="widget widget_links">
              <div class="title">
               <h2>友情链接</h2>
              </div>
@@ -206,7 +208,7 @@
               <li><a href="http://www.mycookies.cn" target="_blank">哈哈哈哈</a></li>
               <li><a href="http://www.mycookies.cn" target="_blank"> 大家好我是渣渣辉 </a></li>
              </ul>
-            </div>
+            </div> -->
          
            </aside>
           </section>
