@@ -85,7 +85,7 @@ public class BlogServiceImpl implements IBlogService {
         if (rowCount > 0) {
             BlogBo blogBo = blogMapper.selectBoById(blog.getBlogId());
             if (blogBo != null) {
-                return ServerResponse.createBySuccess(chageBoToVo(blogBo,null,true));
+                return ServerResponse.createBySuccess(changeBoToVo(blogBo,null,true));
             }
         }
         return ServerResponse.createByErrorMessage("修改/新增失败！");
@@ -124,7 +124,7 @@ public class BlogServiceImpl implements IBlogService {
         PageInfo pageInfo = new PageInfo(blogBoList);
         List<BlogVo> blogVoList = Lists.newArrayList();
         for (BlogBo blogBo : blogBoList) {
-            blogVoList.add(chageBoToVo(blogBo,null,true));
+            blogVoList.add(changeBoToVo(blogBo,null,true));
         }
         pageInfo.setList(blogVoList);
 
@@ -196,7 +196,7 @@ public class BlogServiceImpl implements IBlogService {
         PageInfo pageInfo = new PageInfo(blogBoList);
         List<BlogVo> blogVoList = Lists.newArrayList();
         for (BlogBo blogBo : blogBoList) {
-            blogVoList.add(chageBoToVo(blogBo,null,true));
+            blogVoList.add(changeBoToVo(blogBo,null,true));
         }
         pageInfo.setList(blogVoList);
         return pageInfo;
@@ -231,7 +231,7 @@ public class BlogServiceImpl implements IBlogService {
         List<BlogBo> blogBoList = blogMapper.selectByCodeTitleTagCategory(code, title, tagId, categoryId);
         List<BlogVo> blogVoList = Lists.newArrayList();
         for (BlogBo blogBo : blogBoList) {
-            blogVoList.add(chageBoToVo(blogBo,null,true));
+            blogVoList.add(changeBoToVo(blogBo,null,true));
         }
         return blogVoList;
     }
@@ -244,13 +244,7 @@ public class BlogServiceImpl implements IBlogService {
             return null;
         }
         BlogBo blogBo =  blogMapper.selectBoByIdWithBlobsNoSummary(blogId);
-        BlogVo blogVo = chageBoToVo(blogBo,DateTimeUtil.STANDARD_FORMAT,false);
-        List<Tag> tagList = null;
-        int rowCount = tagMapper.selectCountOfTagsAndBlog(null,blogId);
-        if(rowCount>0){
-            tagList = tagMapper.selectTagsOfBlog(blogId);
-        }
-        blogVo.setTagsList(tagList);
+        BlogVo blogVo = changeBoToVoWithTags(blogBo,DateTimeUtil.STANDARD_FORMAT,false);
         return blogVo;
     }
 
@@ -288,12 +282,23 @@ public class BlogServiceImpl implements IBlogService {
             blogBoList = blogMapper.selectByCodeTitleTagCategory(1,null,null,null);
         }
         for(BlogBo blogBo:blogBoList){
-            bLogVoList.add(chageBoToVo(blogBo,null,false));
+            bLogVoList.add(changeBoToVo(blogBo,null,false));
         }
         return bLogVoList;
     }
 
-    private BlogVo chageBoToVo(BlogBo blogBo,String regex,boolean isCalc) {
+    @Override
+    public List<BlogVo> findLastAndNext(Integer blogId) {
+        List<BlogVo> blogVoList = Lists.newArrayList();
+        BlogBo last = blogMapper.selectLastById(blogId);
+        BlogBo next = blogMapper.selectNextById(blogId);
+        blogVoList.add(changeBoToVo(last,null,false));
+        blogVoList.add(changeBoToVo(next,null,false));
+        
+        return blogVoList;
+    }
+
+    private BlogVo changeBoToVo(BlogBo blogBo,String regex,boolean isCalc) {
         if (blogBo == null) {
             return null;
         }
@@ -302,27 +307,45 @@ public class BlogServiceImpl implements IBlogService {
         }
         BlogVo blogVo = new BlogVo();
         BeanUtils.copyProperties(blogBo, blogVo);
-        blogVo.setUpdateTimeStr(DateTimeUtil.dateToStr(blogBo.getUpdateTime()));
-        if(isCalc){
-            blogVo.setCreateTimeStr(DateCalUtils.format(blogBo.getCreateTime())+" ("+DateTimeUtil.dateToStr(blogBo.getCreateTime(),regex)+")");
-        }else{
-            blogVo.setCreateTimeStr(DateTimeUtil.dateToStr(blogBo.getCreateTime(),regex));
+        if(blogBo.getCreateTime()!=null&&blogBo.getUpdateTime()!=null){
+            blogVo.setUpdateTimeStr(DateTimeUtil.dateToStr(blogBo.getUpdateTime()));
+            if(isCalc){
+                blogVo.setCreateTimeStr(DateCalUtils.format(blogBo.getCreateTime())+" ("+DateTimeUtil.dateToStr(blogBo.getCreateTime(),regex)+")");
+            }else{
+                blogVo.setCreateTimeStr(DateTimeUtil.dateToStr(blogBo.getCreateTime(),regex));
 
+            }
         }
         blogVo.setImgHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
         blogVo.setCategoryName(blogBo.getCategoryName());
-        blogVo.setTags(null);
-        String str = blogBo.getTags();
-
-        //todo  标签处理
-////        if(str!=null&&str.length()>0){
-//            String []tags = str.split("_");
-//            List<String> tagList=Arrays.asList(tags);
-//            blogVo.setTagsList(tagList);
-//        }
 
         return blogVo;
     }
 
+
+    private BlogVo changeBoToVoWithTags(BlogBo blogBo,String regex,boolean isCalc) {
+        if (blogBo == null) {
+            return null;
+        }
+        if(regex==null||regex.trim().length()==0||regex.length()==0){
+            regex=DateTimeUtil.DATE_FORMAT;
+        }
+        BlogVo blogVo = new BlogVo();
+        BeanUtils.copyProperties(blogBo, blogVo);
+        if(blogBo.getCreateTime()!=null&&blogBo.getUpdateTime()!=null){
+            blogVo.setUpdateTimeStr(DateTimeUtil.dateToStr(blogBo.getUpdateTime()));
+            if(isCalc){
+                blogVo.setCreateTimeStr(DateCalUtils.format(blogBo.getCreateTime())+" ("+DateTimeUtil.dateToStr(blogBo.getCreateTime(),regex)+")");
+            }else{
+                blogVo.setCreateTimeStr(DateTimeUtil.dateToStr(blogBo.getCreateTime(),regex));
+
+            }
+        }
+        List<Tag> tagList = tagMapper.selectTagsOfBlog(blogBo.getBlogId());
+        blogVo.setImgHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
+        blogVo.setCategoryName(blogBo.getCategoryName());
+        blogVo.setTagsList(tagList);
+        return blogVo;
+    }
 
 }

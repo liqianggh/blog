@@ -7,7 +7,7 @@
         <link type="text/css" media="all" href="assets/css/autoptimize_2b0d4df713b8dbc54e6fc1c4b5b7e160.css" rel="stylesheet" />
         <!--new 引入fontawesome-->
         <link type="text/css" media="all" href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-        <title>Jann Lee丨李强的个人博客- ！</title>
+        <title id="title_page_name">Jann Lee丨李强的个人博客- ！</title>
         <link rel="stylesheet" type="text/css" href="assets/engine/wowsliderstyle.css">
         <meta name="keywords" content="李强的个人博客,Jann Lee,资源共享,技术分享" />
         <meta name="description" content="李强的个人博客是一个关注Java后台开发、网站建设、胡说八道的个人博客！" />
@@ -36,27 +36,18 @@
      <li id="menu-item-x" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="javascript:alert('该模块开发中，敬请期待！');">关于我</a></li>
 
      <li class="menu-item" style="float:right;">
-      <div style="width:376px; max-height: 54px;">
-        <div class="search-expand" style="display: block;">
-         <div class="search-expand-inner">
-          <form method="get" class="searchform themeform" onsubmit="location.href='https://mycookies.com/search/' + encodeURIComponent(this.s.value).replace(/%20/g, '+'); return false;" action="mycookies_default.html">
-           <div> 
-            <input type=text" class="search" name="s" onblur="if(this.value=='')this.value='search...';" onfocus="if(this.value=='search...')this.value='';" value="search..." />
-           </div>
-          </form>
-          </div>
-
-         <div class="toggle-search">
-               <i class="fa fa-search" style="font-size: 24px;"></i>
+       <div style="width:376px; max-height: 54px;">
+          <div class="search-expand" style="display: block;">
+              <div class="search-expand-inner">
+                      <div>
+                          <input id="input_search" type=text" class="search" name="s" onblur="if(this.value=='' )this.value='search...' ;" onfocus="if(this.value=='search...' )this.value='' ;" value="search..." />
+                      </div>
+              </div>
+             <div class="toggle-search">
+                    <i onclick="javascript:search()" class="fa fa-search" style="font-size: 24px;"></i>
+             </div>
          </div>
-
-      </div>
-   
-      
-
-      </div>
-
-
+       </div>
    </li>
 
     </ul>
@@ -72,8 +63,17 @@
                     <header id="header_category_tag" class="archive-header">
                 
                     </header>
-                    <div id="div_article_container" class="banner banner-sticky"></div>
- 
+                    <div id="div_article_container" class="banner banner-sticky">
+                      
+
+                    </div>
+
+             
+
+            <!--      <span id = 'url::http://www.mycookies.cn/portal/article.do?blogId=9' class = 'cy_cmt_count' ></span>
+                 <span id = 'url::http://www.mycookies.cn/portal/article.do?blogId=2' class = 'cy_cmt_count' ></span>
+                 <span id = 'url::http://www.mycookies.cn/portal/article.do?blogId="+blogId+"' class = 'cy_cmt_count' ></span> -->
+             
                   
                     <div class="pagination">
                         <ul id="ul_pagination">
@@ -89,6 +89,7 @@
                       </div>
                       <div id="div_category" class="d_category">
                   </div>
+                </div>
 
                 
                 <div class="widget">
@@ -114,15 +115,7 @@
                     <div class="title">
                         <h2>最新吐槽</h2>
                     </div>
-<!--                     <ul>
-                        <li>
-                            <a href="3233.html#comment-20556" title="WordPress主题发布：blog1.0(扁平化+响应式)免费下载上的评论">
-                                <img alt='' src='https://blog123.com/avatar/48-f6f180451b1a1a8d1bc3d03a75ac011d.jpg' srcset='https://blog123.com/avatar/96*f6f180451b1a1a8d1bc3d03a75ac011d.jpg' class='avatar avatar-48 photo' height='48' width='48' />
-                                <div class="muted"><i>林中漫步</i>4周前 (12-22)说：分享按钮里面的分享到微信朋友圈二维码扫不上了，贵站的也是一样，请问如何解决？谢谢</div>
-                            </a>
-                        </li>
-                    </ul> -->
-
+<!--                   
 
                   <!-- 代码1：放在页面需要展示的位置  -->
                   <!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
@@ -146,32 +139,27 @@
             </aside>
         </section>
         <footer class="footer">
+      <footer class="footer">
             <div class="footer-inner">
-                <div class="copyright pull-left"> <a href="https://blog123.com/blog123_default.html" title="李强的个人博客">李强的个人博客</a> 版权所有，保留一切权利 ! Theme <a href="3233.html">blog</a> · <a href="sitemap.xml" title="站点地图">站点地图</a> © 2011-2014 · <a href="http://www.miitbeian.gov.cn/" rel="nofollow" target="_blank">赣ICP备13005641号</a> ·
-                    托管于 <a rel="nofollow" target="_blank" href="https://blog123.com/go/aliyun">阿里云</a> & <a rel="nofollow" target="_blank" href="https://blog123.com/go/qiniu">七牛</a>
+                <div class="copyright"> <a href="www.mycookies.cn" title="李强的个人博客">李强的个人博客</a> 版权所有，保留一切权利 ! </a>·© 2018 · <a href="http://www.miitbeian.gov.cn/" rel="nofollow" target="_blank">皖ICP备17014740号</a> ·
+                    托管于 <a rel="nofollow" target="_blank" href="javascript:void(0)">腾讯云</a> 
                 </div>
-                <div class="trackcode pull-right">
-                <!--     <script src="https://s23.cnzz.com/z_stat.php?id=4687699&web_id=4687699" language="JavaScript"></script>
-                    <script>
-                        var _hmt = _hmt || [];
-                        (function() {
-                            var hm = document.createElement("script");
-                            hm.src = "//hm.baidu.com/hm.js?b52ad73b0742bc99858449915680c213";
-                            var s = document.getElementsByTagName("script")[0];
-                            s.parentNode.insertBefore(hm, s);
-                        })();
-                    </script>
-                </div> -->
             </div>
         </footer>
 <!--         <script type='text/javascript' src='https://blog123.com/wp-includes/js/wp-embed.min.js'></script>
  -->    </body>
+ <div id="div_for_cy">
+    
+
+
+ </div>
+     <!--  <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytqlFQwr"></script> -->
 
  <script type="text/javascript" src="assets/js/jquery.js"></script> 
 
 
 <script type="text/javascript" src="assets/tagcloud/tagcloud.min.js"></script>
-
+<script type="text/javascript" src="assets/js/host.js"></script>
  <script type="text/javascript" src="assets/js/category.js"></script>
 
  

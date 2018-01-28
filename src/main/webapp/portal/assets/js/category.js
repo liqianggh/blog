@@ -1,6 +1,5 @@
-// var host = "http://localhost:8080/"
-
-var host = "http://www.mycookies.cn/"
+var host = "http://localhost:8080/"
+ 
 
 window.onload=function(){
 	var thisUrl = window.location.href;
@@ -17,7 +16,7 @@ window.onload=function(){
 			 		$.ajax({
 						type:"post",
 						dataType:"json",
-						url:host+"user/blog/category_tag_init.do",
+						url:host+"/user/blog/category_tag_init.do",
 						data:{"tagId":value},
 						success:function(data){
 							var isCategory = data.data.isCategory;
@@ -33,7 +32,9 @@ window.onload=function(){
 							initialNewBlogs(newBlogs);
 							initialTagClouds(tagList);
 							initialCategory(categoryVoList);
-					    }
+
+							add_script_cy();
+ 					    }
 					})
 
 			 }else if(key=="categoryId"){
@@ -41,7 +42,7 @@ window.onload=function(){
 			 		$.ajax({
 						type:"post",
 						dataType:"json",
-						url:host+"user/blog/category_tag_init.do",
+						url:host+"/user/blog/category_tag_init.do",
 						data:{"categoryId":value},
 						success:function(data){
 							var isCategory = data.data.isCategory;
@@ -58,6 +59,10 @@ window.onload=function(){
 							initialBlogList(blogList);
 							initialNewBlogs(newBlogs);
 							initialTagClouds(tagList);
+
+							add_script_cy();
+
+
 						}
 					})
 		    }
@@ -68,6 +73,20 @@ window.onload=function(){
 		return;
 	}
 }
+
+
+
+	$(window).scroll(function () {
+		if($(window).scrollTop()>=$(".sidebar").height()){
+			//固定猜你喜欢
+			 $(".d_postlist").addClass("fixed");
+			 $(".sidebar").css("marginTop",-$(".d_postlist").height());
+		}else{
+			$(".d_postlist").removeClass('fixed');
+			$(".sidebar").css("marginTop",0);
+		}
+
+	})
 //初始化标签、分类名（导航）
 function initialHeader(isCategory,name,id){
 	var header_category_tag = $("#header_category_tag");
@@ -100,7 +119,8 @@ function initialBlogList(blogList){
  		var createTimeStr = value.createTimeStr;
  		var categoryName = value.categoryName;
  		var imgUrl=value.imgHost+value.imgUri;
- 		var blogChild = "<article class='excerpt'><header><a class='label label-important' href=javascript:findByCategory("+categoryId+",'"+categoryName+"')  >"+categoryName+"<i class='label-arrow'></i></a> <h2><a  href='article.html?blogId="+blogId+"' title='"+title+"'>"+title+" </a></h2></header><div class='focus'> <a target='blank' href='#'><img class='thumb' src='"+imgUrl+"' alt='"+title+"' /></a>	</div> 	<span class='note'>"+summary+"</span>	<p class='auth-span'> <span class='muted'><i class='fa fa-clock-o'></i> "+createTimeStr+"</span> <span class='muted'><i class='fa fa-eye'></i> "+viewCount+"℃</span> <span class='muted'><i class='fa fa-comments-o'></i>   <span id = 'http://www.mycookies.cn/portal/article.do?blogId="+blogId+"' class = 'cy_cmt_count' ></span>评论</span><span class='muted'> <a href='javascript:;' data-action='ding' data-id='3849' id='Addlike' class='action'><i class='fa fa-heart-o'></i><span class='count'>"+likeCount+"</span>喜欢</a></span></p> </article>";
+                
+ 		var blogChild = "<article class='excerpt'><header><a class='label label-important' href=javascript:findByCategory("+categoryId+",'"+categoryName+"')  >"+categoryName+"<i class='label-arrow'></i></a> <h2><a  href='article.html?blogId="+blogId+"' title='"+title+"'>"+title+" </a></h2></header><div class='focus'> <a target='blank' href='http://www.mycookies.cn/portal/article.do?blogId="+blogId+"'><img class='thumb' src='"+imgUrl+"' alt='"+title+"' /></a>	</div> 	<span class='note'>"+summary+"</span>	<p class='auth-span'> <span class='muted'><i class='fa fa-clock-o'></i> "+createTimeStr+"</span> <span class='muted'><i class='fa fa-eye'></i> "+viewCount+"℃</span> <span class='muted'><i class='fa fa-comments-o'></i><span id ='http://www.mycookies.cn/portal/article.do?blogId="+blogId+"' class = 'cy_cmt_count' ></span>评论</span><span class='muted'> <a href='javascript:;' data-action='ding' data-id='3849' id='Addlike' class='action'><i class='fa fa-heart-o'></i><span class='count'>"+likeCount+"</span>喜欢</a></span></p> </article>";
  		blogContainer.append(blogChild);
  	})
 
@@ -117,7 +137,7 @@ function initialNewBlogs(newBlogs){
  		var blogId = value.blogId;
  		var createTimeStr = value.createTimeStr;
  		var imgUrl=value.imgHost+value.imgUri;
- 		var childEle =  "<li><a href='article.html?blogId="+blogId+"' title='"+title+"'><span class='thumbnail'><img src='"+imgUrl+"' alt='"+title+"' /></span><span class='text'>"+title+"</span><span class='muted'>"+createTimeStr+"</span><span class='muted' style='float: right;'>"+commentCount+"评论</span></a></li>";
+ 		var childEle =  "<li><a href='article.html?blogId="+blogId+"' title='"+title+"'><span class='thumbnail'><img src='"+imgUrl+"' alt='"+title+"' /></span><span class='text'>"+title+"</span><span class='muted'>"+createTimeStr+"</span><span class='muted' style='float: right;'><span id ='http://www.mycookies.cn/portal/article.do?blogId="+blogId+"' class = 'cy_cmt_count' ></span>评论</span></a></li>";
  		newBlogsContainer.append(childEle);
  	})
 }
@@ -144,11 +164,12 @@ function getRandom(min,max){
 }
 
 function findByTag(tagId,tagName){
+	changeThePageTitle(tagName);
 	initialHeader(0,tagName,tagId);
 	$.ajax({
 		type:"post",
 		dataType:"json",
-		url:host+"user/blog/list_by_tag.do",
+		url:host+"/user/blog/list_by_tag.do",
 		data:{"tagId":tagId},
 		success:function(data){
 			var blogList = data.data.list;
@@ -175,12 +196,13 @@ function findByTag(tagId,tagName){
 }
 
 function findByCategory(categoryId,categoryName){
+	changeThePageTitle(categoryName);
 	changeMenuItem(categoryId);
 	initialHeader(1,categoryName,categoryId);
 	$.ajax({
 		type:"post",
 		dataType:"json",
-		url:host+"user/blog/list_by_category.do",
+		url:host+"/user/blog/list_by_category.do",
 		data:{"categoryId":categoryId},
 		success:function(data){
 			var blogList = data.data.list;
@@ -316,7 +338,7 @@ function findByCategory(categoryId,categoryName){
 				 		var createTimeStr = value.createTimeStr;
 				 		var categoryName = value.categoryName;
 				 		var imgUrl=value.imgHost+value.imgUri;
-				 		var blogChild = "<article class='excerpt'><header><a target='_blank' class='label label-important' href='category.html?categoryId="+categoryId+"'>"+categoryName+"<i class='label-arrow'></i></a> <h2><a target='_blank'  href='article.html?blogId="+blogId+"' title='"+title+"'>"+title+" </a></h2></header><div class='focus'> <a target='_blank' target='blank' href='#'><img class='thumb' src='"+imgUrl+"' alt='"+title+"' /></a>	</div> 	<span class='note'>"+summary+"</span>	<p class='auth-span'> <span class='muted'><i class='fa fa-clock-o'></i> "+createTimeStr+"</span> <span class='muted'><i class='fa fa-eye'></i> "+viewCount+"℃</span> <span class='muted'><i class='fa fa-comments-o'></i> <a target='_blank' target='_blank' href='3849.html#comments'>"+commentCount+"评论</a></span><span class='muted'> <a target='_blank' href='javascript:;' data-action='ding' data-id='3849' id='Addlike' class='action'><i class='fa fa-heart-o'></i><span class='count'>"+likeCount+"</span>喜欢</a></span></p> </article>";
+				 		var blogChild = "<article class='excerpt'><header><a target='_blank' class='label label-important' href='category.html?categoryId="+categoryId+"'>"+categoryName+"<i class='label-arrow'></i></a> <h2><a target='_blank'  href='article.html?blogId="+blogId+"' title='"+title+"'>"+title+" </a></h2></header><div class='focus'> <a target='_blank' target='blank' href='#'><img class='thumb' src='"+imgUrl+"' alt='"+title+"' /></a>	</div> 	<span class='note'>"+summary+"</span>	<p class='auth-span'> <span class='muted'><i class='fa fa-clock-o'></i> "+createTimeStr+"</span> <span class='muted'><i class='fa fa-eye'></i> "+viewCount+"℃</span> <span class='muted'><i class='fa fa-comments-o'></i><span id = 'url::http://www.mycookies.cn/portal/article.do?blogId="+blogId+"' class = 'cy_cmt_count' ></span>评论</span><span class='muted'> <a target='_blank' href='javascript:;' data-action='ding' data-id='3849' id='Addlike' class='action'><i class='fa fa-heart-o'></i><span class='count'>"+likeCount+"</span>喜欢</a></span></p> </article>";
 				 		blogContainer.append(blogChild);
 				 	})
 			 	}
@@ -341,4 +363,13 @@ function findByCategory(categoryId,categoryName){
  		$.each(categoryList,function(index,value){
  			d_category.append("<a class=cate"+getRandom(1,6)+" title='"+value.categoryName+"'   href=javascript:findByCategory("+value.categoryId+",'"+value.categoryName+"')  >"+value.categoryName+"("+value.blogCount+")</a>");
  		})
+ 	}
+ 	function changeThePageTitle(name){
+ 		var title = $("#title_page_name");
+ 		title.empty();
+ 		title.append(name);
+ 	}
+
+ 	function add_script_cy(){
+ 		$("#div_for_cy").append("<script id='cy_cmt_num' src='https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytqlFQwr'></script>");
  	}

@@ -7,7 +7,7 @@
         <link type="text/css" media="all" href="assets/css/autoptimize_2b0d4df713b8dbc54e6fc1c4b5b7e160.css" rel="stylesheet" />
         <!--new 引入fontawesome-->
         <link type="text/css" media="all" href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-        <title>Jann Lee丨李强的个人博客- ！</title>
+        <title id="title_page_name">Jann Lee丨李强的个人博客- ！</title>
         <link rel="stylesheet" type="text/css" href="assets/engine/wowsliderstyle.css">
         <meta name="keywords" content="李强的个人博客,Jann Lee,资源共享,技术分享" />
         <meta name="description" content="李强的个人博客是一个关注Java后台开发、网站建设、胡说八道的个人博客！" />
@@ -26,7 +26,7 @@
    </div> 
    <div id="nav-header" class="navbar">
     <ul class="nav">
-     <li  class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item"><a href="index.html">首页</a></li>
+     <li  class="menu-item menu-item-type-custom menu-item-object-custom"><a href="index.html">首页</a></li>
      <li id="menu-item-1"  class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3305"><a href="category.html?categoryId=1">技术分享</a></li>
      <li id="menu-item-2" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3300"><a href="category.html?categoryId=2">生活笔记</a></li>
      <li  id="menu-item-3" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3294"><a href="category.html?categoryId=3">胡说八道</a></li>
@@ -37,27 +37,24 @@
      <li id="menu-item-x" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="javascript:alert('该模块开发中，敬请期待！');">关于我</a></li>
 
 	    <li style="float:right;">
-		<div class="toggle-search">
-		    <i class="fa fa-search"></i>
-		    </div>
-		    <div class="search-expand" style="display: block;">
-			    <div class="search-expand-inner">
-				    <form method="get" class="searchform themeform" onsubmit="location.href='https://mycookies.com/search/' + encodeURIComponent(this.s.value).replace(/%20/g, '+'); return false;" action="mycookies_default.html">
-				    <div> 
-				    <input type="ext" class="search" name="s" onblur="if(this.value=='')this.value='search...';" onfocus="if(this.value=='search...')this.value='';" value="search..." />
-				     </div>
-				    </form>
-			   </div>
-     	 	</div>
+  		 <div style="width:376px; max-height: 54px;">
+            <div class="search-expand" style="display: block;">
+                <div class="search-expand-inner">
+                        <div>
+                            <input id="input_search" type=text" class="search" name="s" onblur="if(this.value=='' )this.value='search...' ;" onfocus="if(this.value=='search...' )this.value='' ;" value="search..." />
+                        </div>
+                </div>
+               <div class="toggle-search">
+                      <i onclick="javascript:search()" class="fa fa-search" style="font-size: 24px;"></i>
+               </div>
+           </div>
+       </div>
 	 	</li>
     </ul>
    </div>
   </header>
         <section class="container">
-            <div class="speedbar">
-                <div class="toptip"><strong class="text-success"><i class="fa fa-volume-up"></i> </strong>
-                </div>
-            </div>
+ 
             <div class="content-wrap">
               
                 <div class="content">
@@ -65,43 +62,35 @@
                     <header id="herder_article_info" class="article-header">
                         <!-- <div class="eta"></div> -->
                     </header>
-                    <!--广告区域-->
-                    <!--<div class="banner banner-post">
-                            var mediav_ad_width = '728';
-                            var mediav_ad_height = '90';
-                        </script>
-                      <script type="text/javascript" language="javascript" charset="utf-8" src="https://static.mediav.com/js/mvf_g2.js"></script> 
-                    </div>-->
                     <article class="banner banner-post"><h1 class="emph_left_boder">阅读本文大约需要&nbsp;<span class="reading-time"></span>分钟</h1><div id="div_article_container"></div>
                     </article>
                 <!--the tags of article-->
                 <footer class="article-footer">
-                    <div class="article-tags"><i class="fa fa-tags"></i><a href="" rel="tag">这是标签</a><a href=" " rel="tag">这是标签</a>
+                    <div id="div_tag_bog" class="article-tags">
                     </div>
-                    <div class="article-share" style="border: solid red 1px"></div>
+                    <div class="article-share" >
+                      <span id="span_like">
+                        <a target="_blank" href="javascript:void(0)" onclick="addLike()" >
+                        <i id="span_like_icon" class="fa fa-heart-o"></i>&nbsp;&nbsp;<span id="span_like_count" data-status="0" data-id="33" class="count">1</span>&nbsp;人喜欢&nbsp;&nbsp;
+                      </a>
+                      </span>
+                      
+              <!--         <span>
+                        <a href="3798.html#" class="sinaweibo fa fa-weibo" data-cmd="tsina" title="分享到新浪微博"></a>&nbsp;
+                        <a href="3798.html#" class="bds_qzone fa fa-star" data-cmd="qzone" title="分享到QQ空间"></a>&nbsp;
+                        <a href="3798.html#" class="qq fa fa-qq" data-cmd="sqq" title="分享到QQ好友"></a>&nbsp;
+                        <a href="3798.html#" class="bds_weixin fa fa-weixin" data-cmd="weixin" title="分享到微信"></a>&nbsp;
+                      </span> -->
+
+
+                    </div>
                 </footer>
 
             
                     <!--start of the declaration of rights-->
                     <div class="article-content">
                         <div class="article-social">
-                        <!--  <a href="javascript:;" data-action="ding" data-id="3798" id="Addlike" class="action"><i class="fa fa-heart-o"></i>喜欢 (<span id="span_like_count" class="count">99</span>)</a><span class="or">or</span><span class="action action-share bdsharebuttonbox"><i class="fa fa-share-alt"></i>分享 (<span id="span_share_count" class="bds_count" data-cmd="count" title="累计分享99次">99</span>)
-	                            <div
-	                            class="action-popover">
-	                                <div class="popover top in">
-	                                    <div class="arrow"></div>
-	                                    <div class="popover-content">
-	                                        <a href="3798.html#" class="sinaweibo fa fa-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
-	                                        <a href="3798.html#" class="bds_qzone fa fa-star" data-cmd="qzone" title="分享到QQ空间"></a>
-	                                        <a href="" class="tencentweibo fa fa-tencent-weibo" data-cmd="tqq" title="分享到腾讯微博"></a>
-	                                        <a href="3798.html#" class="qq fa fa-qq" data-cmd="sqq" title="分享到QQ好友"></a>
-	                                        <a href="3798.html#" class="bds_renren fa fa-renren" data-cmd="renren" title="分享到人人网"></a>
-	                                        <a href="3798.html#" class="bds_weixin fa fa-weixin" data-cmd="weixin" title="分享到微信"></a>
-	                                        <a href="3798.html#" class="bds_more fa fa-ellipsis-h" data-cmd="more"></a>
-	                                    </div>
-	                                </div>
-	                       		 </div>
-                       		 </span> -->
+
                           <div id="cyReward" role="cylabs" data-use="reward"></div>
                     	</div>
                     <div class="open-message article-content"><i class="fa fa-bullhorn"></i> 本站内容可任意转载，务必注明出处！</div>
@@ -132,49 +121,13 @@
 
             <!--the begin of aside -->
             <aside class="sidebar">
-                <div class="widget widget_text">
-                    <div class="textwidget">
-                        <div class="social"> <a href="https://blog123.com/go/weibo" rel="external nofollow" title="新浪微博" target="_blank"><i class="sinaweibo fa fa-weibo"></i></a> 
-                            <a
-                            class="weixin"><i class="weixins fa fa-weixin"></i>
-                                <div class="weixin-popover">
-                                    <div class="popover bottom in">
-                                        <div class="arrow"></div>
-                                        <div class="popover-title">订阅号“欲思”</div>
-                                        <div class="popover-content">
-<!--                                             <img src="assets/img/weixin.gif">
- -->                                        </div>
-                                    </div>
-                                </div>
-
-                                </a><a href="https://blog123.com/go/email" rel="external nofollow" title="Email" target="_blank"><i class="email fa fa-envelope-o"></i></a><a href="https://blog123.com/go/add_qq" rel="external nofollow" title="联系QQ" target="_blank"><i class="qq fa fa-qq"></i></a>
-                                <a
-                                href="feed" rel="external nofollow" target="_blank" title="订阅本站"><i class="rss fa fa-rss"></i>
-                                    </a>
-                        </div>
-                    </div>
-                </div>
-                                
-                  <div class="widget d_tag">
-                    <div class="title">
-                        <h2>标签云</h2>
-                    </div>
-                    <div class="d_category"><a title="33个话题" href="tag/wordpress.htm">WordPress (33)</a><a title="29个话题" href="tag/css3.htm">CSS3 (29)</a><a title="21个话题" href="tag/wordpressތԌ.htm">WordPress教程 (21)</a><a title="16个话题" href="tag/ԌѲԱ.htm">程序员 (16)</a><a title="14个话题" href="tag/wordpressԅۯ.htm">WordPress优化 (14)</a>
-                        <a
-                        title="11个话题" href="tag/jquery.htm">jQuery (11)</a><a title="10个话题" href="tag/θҳʨ݆.htm">网页设计 (10)</a><a title="10个话题" href="tag/html5.htm">HTML5 (10)</a><a title="10个话题" href="tag/linux.htm">Linux (10)</a><a title="9个话题" href="tag/أ{.htm">福利 (9)</a><a title="9个话题" href="tag/ʨ݆̘ӄ.htm">设计素材 (9)</a>
-                            <a
-                            title="8个话题" href="tag/wordpressݓ̙.htm">WordPress加速 (8)</a><a title="8个话题" href="tag/վӤƽ̨.htm">站长平台 (8)</a><a title="7个话题" href="tag/ҠԌ.htm">编程 (7)</a><a title="7个话题" href="tag/wordpressӥݾ.htm">WordPress插件 (7)</a><a title="7个话题" href="tag/wordpress۳̨.htm">WordPress后台 (7)</a><a title="6个话题"
-                                href="tag/seo-2.htm">SEO (6)</a><a title="6个话题" href="tag/wordpressگ˽.htm">WordPress函数 (6)</a><a title="6个话题" href="tag/wordpressպë.htm">WordPress代码 (6)</a><a title="6个话题" href="tag/css3ތԌ.htm">CSS3教程 (6)</a>
-                    </div>
-                </div>
-
-
             <div class="widget d_tag">
                       <div class="title">
                           <h2>分类</h2>
                       </div>
                       <div id="div_category" class="d_category">
                   </div>
+            </div>
 
                 
                 <div class="widget">
@@ -196,17 +149,6 @@
                     </ul>
                 </div>
 <!--多媒体区域-->
-         <!--        <div class="widget d_banner">
-                    <div class="d_banner_inner">
-                        <script>
-                            var mediav_ad_pub = '0emRm8_1587441';
-                            var mediav_ad_width = '360';
-                            var mediav_ad_height = '360'
-                        </script>
-                        <script type="text/javascript" language="javascript" charset="utf-8" src="https://static.mediav.com/js/mvf_g2.js"></script>
-                    </div>
-                </div> -->
-
 <!--最新吐槽-->
                 <div class="widget d_comment">
                     <div class="title">
@@ -224,15 +166,15 @@
         </section>
         <footer class="footer">
             <div class="footer-inner">
-                <div class="copyright pull-left"> <a href="https://blog123.com/blog123_default.html" title="李强的个人博客">李强的个人博客</a> 版权所有，保留一切权利 ! Theme <a href="3233.html">blog</a> · <a href="sitemap.xml" title="站点地图">站点地图</a> © 2011-2014 · <a href="http://www.miitbeian.gov.cn/" rel="nofollow" target="_blank">赣ICP备13005641号</a> ·
-                    托管于 <a rel="nofollow" target="_blank" href="https://blog123.com/go/aliyun">阿里云</a> & <a rel="nofollow" target="_blank" href="https://blog123.com/go/qiniu">七牛</a>
+                <div class="copyright"> <a href="www.mycookies.cn" title="李强的个人博客">李强的个人博客</a> 版权所有，保留一切权利 ! </a>·© 2018 · <a href="http://www.miitbeian.gov.cn/" rel="nofollow" target="_blank">皖ICP备17014740号</a> ·
+                    托管于 <a rel="nofollow" target="_blank" href="javascript:void(0)">腾讯云</a> 
                 </div>
             </div>
         </footer>
+        <script type="text/javascript" src="assets/js/jquery.js"></script> 
+        <script type="text/javascript" src="assets/tagcloud/tagcloud.min.js"></script>
+        <script type="text/javascript" src="assets/js/host.js"></script>
         <script type="text/javascript" src="assets/js/article.js"></script>
-     
-        <script src="assets/js/jquery-1.10.2.min.js"></script>
-    
         <script src="assets/js/readingTime.js"></script>
     </body>
  

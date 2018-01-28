@@ -50,4 +50,8 @@ public interface BlogMapper {
     List<BlogBo> selectTheSameTagByBlogId(Integer blogId);
 
     List<BlogBo> selectSameCategoryByBlogId(Integer blogId);
+
+    BlogBo selectLastById(Integer blogId);
+
+    BlogBo selectNextById(Integer blogId);
 }

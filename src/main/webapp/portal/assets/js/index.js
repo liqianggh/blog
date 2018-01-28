@@ -1,5 +1,4 @@
-// var url = "http://localhost:8080"
-var url = "http://www.mycookies.cn/"
+var host = "http://localhost:8080"
 
  window.onload=function(){
 	//首页数据初始化
@@ -7,7 +6,7 @@ var url = "http://www.mycookies.cn/"
 	$.ajax({
 		type:"post",
 		dataType:"json",
-		url:url+"/user/blog/load_index.do",
+		url:host+"/user/blog/load_index.do",
 		success:function(result){
 		    // 推荐博客
 			var recBlogs = result.data.recommendBlog;
@@ -49,9 +48,6 @@ var url = "http://www.mycookies.cn/"
 			    /*<li><img src="image/images/eee.jpg" alt="麻将少年" title="麻将少年" id="wows1_0"/></li>*/
 			    ul_ws_images.append("<li><a target='_blank'  href='article.html?blogId="+blogId+"'><img src='"+imgUrl+"'  alt='"+title+"' title='"+title+"'  id='wows1_"+index+"' /></a></li>");
 
-// $("#wows1_"+index).attr("src",imgUrl);
-// $("#wows1_"+index).attr("title",title);
-
 				/*<a target='_blank' href="#" title="麻将少年"><span><img src="image/tooltips/eee.jpg" alt="麻将少年"/>1</span></a>*/
 				div_ws_bullets.append("<a target='_blank' href='article.html?blogId="+blogId+"' title='"+title+"'><span></span></a>")
 
@@ -59,7 +55,18 @@ var url = "http://www.mycookies.cn/"
 
 		 	jQuery("#wowslider-container1").wowSlider({effect:"bubbles,parallax,seven,blur,domino,blast,blinds,basic,flip,page,stack,stack_vertical",prev:"",next:"",duration:20*100,delay:20*100,width:640,height:360,autoPlay:true,autoPlayVideo:false,playPause:true,stopOnHover:false,loop:false,bullets:1,caption:true,captionEffect:"parallax",controls:true,controlsThumb:false,responsive:1,fullScreen:false,gestures:2,onBeforeStep:0,images:0});
 
+		 	//下拉时固定指定窗口
+			$(window).scroll(function () {
+				if($(window).scrollTop()>=$(".sidebar").height()){
+					//固定猜你喜欢
+					 $(".d_postlist").addClass("fixed");
+					 $(".sidebar").css("marginTop",-$(".d_postlist").height());
+				}else{
+					$(".d_postlist").removeClass('fixed');
+					$(".sidebar").css("marginTop",0);
+				}
 
+			})
 
 		 	//推荐博客模块
 		 	var  ul_blog_recommend=$("#ul_blog_recommend");
@@ -87,7 +94,7 @@ var url = "http://www.mycookies.cn/"
 		 		var createTimeStr = value.createTimeStr;
 		 		var categoryName = value.categoryName;
 		 		var imgUrl=value.imgHost+value.imgUri;
-		 		var blogChild = "<article class='excerpt'><header><a target='_blank' class='label label-important' href='category.html?categoryId="+categoryId+"'>"+categoryName+"<i class='label-arrow'></i></a> <h2><a target='_blank'  href='article.html?blogId="+blogId+"' title='"+title+"'>"+title+" </a></h2></header><div class='focus'> <a target='_blank' target='blank' href='#'><img class='thumb' src='"+imgUrl+"' alt='"+title+"' /></a>	</div> 	<span class='note'>"+summary+"</span>	<p class='auth-span'> <span class='muted'><i class='fa fa-clock-o'></i> "+createTimeStr+"</span> <span class='muted'><i class='fa fa-eye'></i> "+viewCount+"℃</span> <span class='muted'><i class='fa fa-comments-o'></i><span id = 'http://www.mycookies.cn/portal/article.do?blogId="+blogId+"' class = 'cy_cmt_count' ></span>评论</span><span class='muted'> <a target='_blank' href='javascript:;' data-action='ding' data-id='3849' id='Addlike' class='action'><i class='fa fa-heart-o'></i><span class='count'>"+likeCount+"</span>喜欢</a></span></p> </article>";
+		 		var blogChild = "<article class='excerpt'><header><a target='_blank' class='label label-important' href='category.html?categoryId="+categoryId+"'>"+categoryName+"<i class='label-arrow'></i></a> <h2><a target='_blank'  href='article.html?blogId="+blogId+"' title='"+title+"'>"+title+" </a></h2></header><div class='focus'> <a target='_blank' target='blank' href='article.html?blogId="+blogId+"'><img class='thumb' src='"+imgUrl+"' alt='"+title+"' /></a>	</div> 	<span class='note'>"+summary+"</span>	<p class='auth-span'> <span class='muted'><i class='fa fa-clock-o'></i> "+createTimeStr+"</span> <span class='muted'><i class='fa fa-eye'></i> "+viewCount+"℃</span> <span class='muted'><i class='fa fa-comments-o'></i><span id = 'url::http://www.mycookies.cn/portal/article.do?blogId="+blogId+"' class = 'cy_cmt_count' ></span>评论</span><span class='muted'> <a target='_blank' href='javascript:;' data-action='ding' data-id='3849' id='Addlike' class='action'><i class='fa fa-heart-o'></i><span class='count'>"+likeCount+"</span>喜欢</a></span></p> </article>";
 		 		blogContainer.append(blogChild);
 		 	})
 
@@ -217,7 +224,7 @@ var url = "http://www.mycookies.cn/"
 			 $.ajax({
 			 	type:"post",
 			 	dataType:"json",
-			 	url:url+"/user/blog/next_page.do",
+			 	url:host+"/user/blog/next_page.do",
 			 	data:{"pageNum":pageNum},
 			 	success:function(data){
 		 			var blogList = data.data.list;
@@ -269,4 +276,9 @@ var url = "http://www.mycookies.cn/"
  		$.each(categoryList,function(index,value){
  			d_category.append("<a class=cate"+getRandom(1,6)+" title='"+value.categoryName+"' href='category.html?categoryId="+value.categoryId+"'>"+value.categoryName+"("+value.blogCount+")</a>");
  		})
+ 	}
+ 	
+ 	function search(){
+ 		var value = $("#input_search").val();
+ 		alert(value);
  	}

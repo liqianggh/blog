@@ -146,6 +146,18 @@
         select title,commentCount,createTime,imgUri
         from blog where blogId=#{blogId}
     </select>
+
+    <select id="selectLastById" parameterType="int" resultType="cn.blog.bo.BlogBo">
+        select blogId,title from blog
+        where createTime &gt;(select createTime from blog where blogId = #{blogId})limit 0,1
+    </select>
+
+    <select id="selectNextById" parameterType="int" resultType="cn.blog.bo.BlogBo">
+            select blogId,title from blog
+        where createTime &lt;(select createTime from blog where blogId = #{blogId})limit 0,1
+    </select>
+
+
     <insert id="addTagToBlog" parameterType="map">
     insert into blogAndTags(blogId,tagId) values (#{blogId},#{tagId})
   </insert>

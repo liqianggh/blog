@@ -27,4 +27,5 @@ public interface IBlogService {
     boolean isExists(Integer blogId);
     List<BlogVo> guessYouLike(Integer blogId);
 
+    List<BlogVo> findLastAndNext(Integer blogId);
 }

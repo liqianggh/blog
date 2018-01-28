@@ -46,16 +46,15 @@
                             <div style="width:376px; max-height: 54px;">
                                 <div class="search-expand" style="display: block;">
                                     <div class="search-expand-inner">
-                                        <form method="get" class="searchform themeform" onsubmit="location.href='https://mycookies.com/search/' + encodeURIComponent(this.s.value).replace(/%20/g, '+'); return false;" action="mycookies_default.html">
                                             <div>
-                                                <input type=text" class="search" name="s" onblur="if(this.value=='' )this.value='search...' ;" onfocus="if(this.value=='search...' )this.value='' ;" value="search..." />
+                                                <input id="input_search" type=text" class="search" name="s" onblur="if(this.value=='' )this.value='search...' ;" onfocus="if(this.value=='search...' )this.value='' ;" value="search..." />
                                             </div>
-                                        </form>
                                     </div>
                                    <div class="toggle-search">
-                                         <i class="fa fa-search" style="font-size: 24px;"></i>
+                                          <i onclick="javascript:search()" class="fa fa-search" style="font-size: 24px;"></i>
                                    </div>
-                            </div>
+                               </div>
+                             </div>
                         </li>
                     </ul>
                 </div>
@@ -64,10 +63,10 @@
          
            
           <section class="container">
-          <!--  <div class="speedbar">
+           <div class="speedbar">
             <div class="toptip">
-             <strong class="text-success"><i class="fa fa-volume-up"></i> </strong>
-            </div> -->
+             <strong class="text-success"><i class="fa fa-volume-up"></i>目前是v1.0t版本 评论,点赞,浏览,浏览版等功能逐步实现中。。。。 </strong>
+            </div>
            </div>
            <div class="content-wrap">
             <div class="content">
@@ -101,9 +100,13 @@
              <div id="div_article_container">
          
              </div>
+
+       <!--          <span id="url::http://www.mycookies.cn/portal/article.do?blogId=73" class="cy_cmt_count"></span>
+              <span id = "url::http://www.mycookies.cn/portal/article.do?blogId=7" class = "cy_cmt_count" ></span>
               <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytqlFQwr">
-              </script>
-             <!--分页-->
+              </script> -->
+
+
              <div class="pagination">
               <ul id="ul_pagination">
               </ul>
@@ -138,9 +141,7 @@
            <!--   <a class="style01" href="3233.html"> -->
               <div class="title">
                <h2>听听音乐</h2>
-            <!--   </div>
-              <h3>本站主题：blog1.0(扁平化+响应式)</h3><p>支持 WordPress 3.8 及以上最新版，兼容 IE9+、Chrome、Firefox 等主流浏览器！</p> --><!-- </a> -->
-           <!--  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=295 height=210 src="//music.163.com/outchain/player?type=0&id=933392845&auto=1&height=430"></iframe>   -->
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=295 height=210 src="//music.163.com/outchain/player?type=0&id=933392845&auto=0&height=430"></iframe>  
             </div>
           </div>
          
@@ -175,18 +176,6 @@
              <div class="title">
               <h2>最新吐槽</h2>
              </div>
-              <!--  <ul>
-            <li><a href="659.html#comment-20559" title="如何实现wordpress评论回复邮件通知功能上的评论"><img alt="" src=""  class="avatar avatar-48 photo" height="48" width="48" />
-                <div class="muted">
-                 <i>kkoopp</i>4周前 (12-24)说：设置了不行啊！
-                </div></a></li>
-              <li><a href="2408.html#comment-20558" title="小伙伴们都会惊呆的10个超炫的HTML5+CSS3效果作品上的评论"><img alt=""  class="avatar avatar-48 photo" height="48" width="48" />
-                <div class="muted">
-                 <i>长寿之都扬州小严</i>4周前 (12-23)说：谢谢谢谢~提供了一个好的网站作为参考，很感谢！
-                </div></a></li> 
-               </ul>  -->
-
-
                   <!-- 代码1：放在页面需要展示的位置  -->
                   <!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
                   <div id="cyReping" role="cylabs" data-use="reping"></div>
@@ -214,20 +203,13 @@
           </section>
          
          
-          <footer class="footer">
-           <div class="footer-inner">
-            <div class="copyright pull-left"> 
-             <a href="http://www.mycookies.cn" title="李强的个人博客">李强的个人博客</a> 版权所有，保留一切权利 ! Theme 
-             <a href="3233.html">blog</a> · 
-             <a href="sitemap.xml" title="站点地图">站点地图</a> © 2011-2014 · 
-             <a href="http://www.miitbeian.gov.cn/" rel="nofollow" target="_blank">赣ICP备13005641号</a> · 托管于 
-             <a rel="nofollow" target="_blank" href="https://mycookies.com/go/aliyun">阿里云</a> & 
-             <a rel="nofollow" target="_blank" href="https://mycookies.com/go/qiniu">七牛</a>
+      <footer class="footer">
+            <div class="footer-inner">
+                <div class="copyright"> <a href="www.mycookies.cn" title="李强的个人博客">李强的个人博客</a> 版权所有，保留一切权利 ! </a>·© 2018 · <a href="http://www.miitbeian.gov.cn/" rel="nofollow" target="_blank">皖ICP备17014740号</a> ·
+                    托管于 <a rel="nofollow" target="_blank" href="javascript:void(0)">腾讯云</a> 
+                </div>
             </div>
-            <div class="trackcode pull-right"> 
-            </div>
-           </div>
-          </footer> 
+        </footer>
 
 
 
@@ -242,9 +224,8 @@
          
         <script type="text/javascript" src="assets/tagcloud/tagcloud.min.js"></script>
           
-          
+           <script type="text/javascript" src="assets/js/host.js"></script>
          <script type="text/javascript" src="assets/js/index.js"></script>
-         
           <script type="text/javascript" src="assets/engine/wowslider.js"></script>
         <script type="text/javascript" src="assets/engine/script.js"></script>
          

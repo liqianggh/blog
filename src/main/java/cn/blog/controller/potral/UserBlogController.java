@@ -112,9 +112,16 @@ public class UserBlogController {
         BlogVo  blogVo = iBlogService.descVo(blogId);
         List<BlogVo>  blogVoList = iBlogService.guessYouLike(blogId);
 
-        articleVo.setBlogVo(blogVo);
+        List<TagVo> tagVoList = iTagService.listAllSimpleWithCount();
+        List<CategoryVo>  categoryVoList = iCategoryService.findAllWithCount();
+        //上一篇，下一篇
+        List<BlogVo> lastAndNext = iBlogService.findLastAndNext(blogId);
 
+        articleVo.setBlogVo(blogVo);
         articleVo.setBlogVoList(blogVoList);
+        articleVo.setTagVoList(tagVoList);
+        articleVo.setCategoryList(categoryVoList);
+        articleVo.setLastAndNext(lastAndNext);
         return ServerResponse.createBySuccess(articleVo);
     }
 
@@ -192,7 +199,6 @@ log.info("接收到的参数："+tagId);
         indexVo.setBlogPageInfo(pageInfo);
 
         return ServerResponse.createBySuccess(indexVo);
-
     }
 
 

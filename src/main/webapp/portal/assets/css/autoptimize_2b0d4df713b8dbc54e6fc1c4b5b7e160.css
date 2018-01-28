@@ -1611,7 +1611,8 @@ a.text-info:hover, a.text-info:focus {
     color:#2d6987
 }
 .text-success {
-    color:#56af45
+    /*color:#56af45*/
+    color:#d9534f；
 }
 a.text-success:hover, a.text-success:focus {
     color:#448a37
@@ -2219,7 +2220,8 @@ select, textarea, input {
     vertical-align:middle
 }
 input, textarea, .uneditable-input {
-    width:206px
+    width: 261px;
+    height: 30px;
 }
 textarea {
     height:auto
@@ -2544,9 +2546,11 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     list-style:none
 }
 .nav i {
-    display:inline-block;
-    vertical-align:text-bottom
+    display: inline-block;
+    vertical-align: text-bottom;
+    width: 48px;
 }
+
 .nav>li>a {
     display:block
 }
@@ -5259,12 +5263,17 @@ a.label-inverse:hover .label-arrow, a.badge-inverse:hover .label-arrow {
 }
 
 .article-share{
-    border: solid red 1px;
     width: auto;
     float: right;
     height: 25px;
+    line-height: 19px;
+
 }
 
+.article-share .fa{
+    font-size: 19px;
+}
+    
 .article-social {
    /* margin-bottom:30px;
     padding-top:40px;
@@ -6014,25 +6023,23 @@ a.label-inverse:hover .label-arrow, a.badge-inverse:hover .label-arrow {
     -webkit-box-shadow:inset 0 -1px 0 #3333sf
 }
 .sinaweibo {
-    background:#f78585
+    background:#fbfbfb
 }
 .tencentweibo {
-    background:#27ccc0
+    background:#fbfbfb
 }
 .qq {
-    background:#e74c3c
+    background:#fbfbfb
 }
 .facebook {
-    background:#5b7aa7
+    background:#fbfbfb
 }
 .email {
-    background:#eca3ac
+    background:#fbfbfb
 }
-.twitter {
-    background:#81c1f2
-}
+ 
 .weixins {
-    background:#6fc299
+    background:#fbfbfb
 }
 .weixin-popover {
     position:absolute;
@@ -6208,4 +6215,14 @@ a.label-inverse:hover .label-arrow, a.badge-inverse:hover .label-arrow {
 #div_category a.cate7{background-color:#609fbd;}
 #div_category a:hover{
     background:#7b8f8a;
+}
+
+#span_like a{
+    color: #d9534f;
+    font-size: 19px;
+}
+
+.toggle-search a:hover{
+    background-color: red;
+
 }
