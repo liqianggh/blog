@@ -1,5 +1,3 @@
-var host = "http://localhost:8080/"
- 
 
 window.onload=function(){
 	var thisUrl = window.location.href;

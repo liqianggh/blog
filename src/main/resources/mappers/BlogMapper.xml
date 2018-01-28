@@ -143,7 +143,7 @@
              in (select tagId from blogAndTags bat where bat.blogId = #{blogId} )
     </select>
     <select id="selectSameCategoryByBlogId" parameterType="int" resultType="cn.blog.bo.BlogBo">
-        select title,commentCount,createTime,imgUri
+        select blogId,title,commentCount,createTime,imgUri
         from blog where blogId=#{blogId}
     </select>
 

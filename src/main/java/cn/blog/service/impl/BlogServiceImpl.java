@@ -288,14 +288,18 @@ public class BlogServiceImpl implements IBlogService {
     }
 
     @Override
-    public List<BlogVo> findLastAndNext(Integer blogId) {
-        List<BlogVo> blogVoList = Lists.newArrayList();
+    public  BlogVo  findLast(Integer blogId) {
+
         BlogBo last = blogMapper.selectLastById(blogId);
+        return  changeBoToVo(last,null,false);
+
+    }
+    @Override
+    public  BlogVo  findNext(Integer blogId) {
+
         BlogBo next = blogMapper.selectNextById(blogId);
-        blogVoList.add(changeBoToVo(last,null,false));
-        blogVoList.add(changeBoToVo(next,null,false));
-        
-        return blogVoList;
+        return  changeBoToVo(next,null,false);
+
     }
 
     private BlogVo changeBoToVo(BlogBo blogBo,String regex,boolean isCalc) {
@@ -307,7 +311,7 @@ public class BlogServiceImpl implements IBlogService {
         }
         BlogVo blogVo = new BlogVo();
         BeanUtils.copyProperties(blogBo, blogVo);
-        if(blogBo.getCreateTime()!=null&&blogBo.getUpdateTime()!=null){
+        if(blogBo.getCreateTime()!=null||blogBo.getUpdateTime()!=null){
             blogVo.setUpdateTimeStr(DateTimeUtil.dateToStr(blogBo.getUpdateTime()));
             if(isCalc){
                 blogVo.setCreateTimeStr(DateCalUtils.format(blogBo.getCreateTime())+" ("+DateTimeUtil.dateToStr(blogBo.getCreateTime(),regex)+")");
@@ -332,7 +336,7 @@ public class BlogServiceImpl implements IBlogService {
         }
         BlogVo blogVo = new BlogVo();
         BeanUtils.copyProperties(blogBo, blogVo);
-        if(blogBo.getCreateTime()!=null&&blogBo.getUpdateTime()!=null){
+        if(blogBo.getCreateTime()!=null||blogBo.getUpdateTime()!=null){
             blogVo.setUpdateTimeStr(DateTimeUtil.dateToStr(blogBo.getUpdateTime()));
             if(isCalc){
                 blogVo.setCreateTimeStr(DateCalUtils.format(blogBo.getCreateTime())+" ("+DateTimeUtil.dateToStr(blogBo.getCreateTime(),regex)+")");

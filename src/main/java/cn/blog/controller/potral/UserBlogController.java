@@ -11,6 +11,7 @@ import cn.blog.service.ITagService;
 import cn.blog.vo.*;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.net.nntp.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -90,6 +91,33 @@ public class UserBlogController {
         return ServerResponse.createBySuccess(pageInfo);
     }
 
+
+    @RequestMapping("loadAt_by_id.do")
+    @ResponseBody
+    public ServerResponse<ArticleVo> loadAtById(Integer blogId){
+        ArticleVo articleVo = new ArticleVo();
+        if(blogId==null){
+            return ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode()
+                    ,ResponseCode.NULL_ARGUMENT.getDesc());
+        }
+        boolean result = iBlogService.isExists(blogId);
+        if(!result){
+            return ServerResponse.createByErrorCodeAndMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),
+                    ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        BlogVo blogVo = iBlogService.descVo(blogId);
+        BlogVo nextBlog = iBlogService.findNext(blogId);
+        BlogVo lastBlog = iBlogService.findLast(blogId);
+
+        articleVo.setBlogVo(blogVo);
+
+        articleVo.setNextBlog(nextBlog);
+        articleVo.setLastBlog(lastBlog);
+
+        return ServerResponse.createBySuccess(articleVo);
+    }
+
      /**
       * @Param :blogId 文章id
       * @Description:  根据id查询文章信息，并且根据标签或者分类进行推荐
@@ -115,13 +143,16 @@ public class UserBlogController {
         List<TagVo> tagVoList = iTagService.listAllSimpleWithCount();
         List<CategoryVo>  categoryVoList = iCategoryService.findAllWithCount();
         //上一篇，下一篇
-        List<BlogVo> lastAndNext = iBlogService.findLastAndNext(blogId);
+        BlogVo lastBlog = iBlogService.findLast(blogId);
+        BlogVo nextBlog = iBlogService.findNext(blogId);
 
         articleVo.setBlogVo(blogVo);
         articleVo.setBlogVoList(blogVoList);
         articleVo.setTagVoList(tagVoList);
         articleVo.setCategoryList(categoryVoList);
-        articleVo.setLastAndNext(lastAndNext);
+        articleVo.setLastBlog(lastBlog);
+        articleVo.setNextBlog(nextBlog);
+
         return ServerResponse.createBySuccess(articleVo);
     }
 

@@ -18,6 +18,6 @@ public class ArticleVo{
     private List<TagVo> tagVoList;
     private List<CategoryVo> categoryList;
 
-    private List<BlogVo> lastAndNext;
-
+    private BlogVo lastBlog;
+    private BlogVo nextBlog;
 }

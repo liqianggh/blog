@@ -1,4 +1,3 @@
-var host = "http://localhost:8080"
 
  window.onload=function(){
 	//首页数据初始化

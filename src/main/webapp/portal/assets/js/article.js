@@ -11,15 +11,21 @@ window.onload=function(){
 				url:host+"/user/blog/article.do",
 				data:{"blogId":blogId},
 				success:function(result){
+
 					  if(result.status !=0){
 					 	alert("参数不合法");
 					 	return ;
 					 }
+
 					 //解析参数
 					 var blogVo = result.data.blogVo;
+					 //猜你喜欢
 					 var blogVoList = result.data.blogVoList;
 					 var tagVoList = result.data.tagVoList;
 					 var categoryVoList = result.data.categoryList;
+					 //上下篇
+					 var lastBlog = result.data.lastBlog;
+					 var nextBlog = result.data.nextBlog; 
 					 //正文部分初始化
 					 initArticle(blogVo);
 					 //todo 点赞功能缓存优化 点赞id填充
@@ -28,6 +34,9 @@ window.onload=function(){
 
 					 initialCategory(categoryVoList);
 					 initialTagList(tagVoList);
+ 					 initGuessYouLike(blogVoList);
+ 					 initialLastAndNext(lastBlog,nextBlog);
+
 			 	  	 //启动标签特效
 	 	  	 		var tc = tagcloud(); 
 					 	 //计算阅读时间
@@ -40,22 +49,6 @@ window.onload=function(){
 						round: true,
 						lang: 'ch',
                 		});
-					// var defaults = {
-					//       readingTimeTarget: '.eta',
-					//       wordCountTarget: null,
-					//       wordsPerMinute: 270,
-					//       round: false,
-					//       lang: 'en',
-					//	     lessThanAMinuteString: '',
-					//	     prependTimeString: '',
-					//	     prependWordString: '',
-					//       remotePath: null,
-					//       remoteTarget: null
-					//      }
-
-					 initGuessYouLike(blogVoList);
-
-
 				}
 			})
 			
@@ -88,7 +81,6 @@ window.onload=function(){
 
 
 
-
 function initArticle(blogVo){
 
 	var headerArticleInfo = $("#herder_article_info");
@@ -96,7 +88,7 @@ function initArticle(blogVo){
 	var articleContentContainer = $("#div_article_container");
 	articleContentContainer.empty();
 	var div_tag_bog = $("#div_tag_bog");
-
+	div_tag_bog.empty();
 
 	var content = blogVo.content;
 	var author = blogVo.author;
@@ -158,8 +150,7 @@ function initGuessYouLike(blogVoList){
 		commentCount = value.commentCount;
 		createTimeStr=value.createTimeStr;
 		blogId=value.blogId;
-		var liChild = "<li><a href='article.html?blogId="+blogId+"' title='"+title+"'><span class=thumbnail><img src='"+imgUrl+"' alt='"+title+"'></span><span class=text>"+title+"</span><span class=muted>"+createTimeStr+"</span><span class=muted style='float: right;'>"+commentCount+"评论</span></a>"
-
+		var liChild = "<li><a href='javascript:initNewArticle("+blogId+")' title='"+title+"'><span class=thumbnail><img src='"+imgUrl+"' alt='"+title+"'></span><span class=text>"+title+"</span><span class=muted>"+createTimeStr+"</span><span class=muted style='float: right;'>"+commentCount+"评论</span></a>"
 		ulGuessLike.append(liChild);
 	})
 
@@ -201,8 +192,15 @@ function initGuessYouLike(blogVoList){
  		})
  	}
 
- 	function lastAndNext(BlogVoList){
-
+ 	function initialLastAndNext(lastBlog,nextBlog){
+ 		var last_and_next=$("#last_and_next");
+ 		last_and_next.empty();
+ 		if(lastBlog!=null){
+ 			last_and_next.append("<div><strong>上一篇</strong>：<a href='javascript:initNewArticle("+lastBlog.blogId+")'>"+lastBlog.title+"</a></div>");
+ 		}
+ 		if(nextBlog!=null){
+ 			last_and_next.append("<div><strong>下一篇</strong>：<a href='javascript:initNewArticle("+nextBlog.blogId+")'>"+nextBlog.title+"</a></div>");
+ 		}
  	}
 
  	function addLike(){
@@ -223,10 +221,41 @@ function initGuessYouLike(blogVoList){
  		}
  	}
 
- 		function changeMenuItem(key){
+	function changeMenuItem(key){
 		if(key<=5){
-			$("#menu-item-"+key).addClass("current-menu-item current_page_item");
+			$("#menu-item-"+key).addClass("current-menu-item current_page_item").siblings().removeClass("current-menu-item current_page_item");;
+
 		}else{
-			$("#menu-item-1").addClass("current-menu-item current_page_item");
+			$("#menu-item-1").siblings().removeClass("current-menu-item current_page_item").addClass("current-menu-item current_page_item");
  		}
+	}
+	function initNewArticle(blogId){
+		$.ajax({
+			type:"post",
+			dataType:"json",
+			url:host+"/user/blog/loadAt_by_id.do",
+			data:{"blogId":blogId},
+			success:function(result){
+				if(result.status==0){
+					var lastBlog = result.data.lastBlog;
+					var nextBlog = result.data.nextBlog;
+					var blogVo = result.data.blogVo;
+
+					if(blogVo!=null){
+						initArticle(blogVo);
+					}
+					initialLastAndNext(lastBlog,nextBlog);
+					goTop();
+
+				}else{
+					alert("未知错误!");
+				}
+				
+			}
+
+		})
+	}
+
+	function goTop(){
+		$('html').animate( { scrollTop: '0px' }, 600 ); 
 	}
