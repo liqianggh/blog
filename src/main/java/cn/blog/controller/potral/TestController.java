@@ -1,12 +1,11 @@
 package cn.blog.controller.potral;
 
-import cn.blog.common.Const;
 import cn.blog.common.ServerResponse;
+import cn.blog.service.CacheService.CacheService;
 import cn.blog.service.IFileService;
 import cn.blog.util.PropertiesUtil;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.net.ntp.TimeStamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +29,18 @@ public class TestController {
 
     @Autowired
     private IFileService iFileService;
+    @Autowired
+    private CacheService tagCacheService;
+
+    @RequestMapping("init.do")
+    @ResponseBody
+    public ServerResponse init(HttpSession session) {
+            tagCacheService.initCache();
+
+        return ServerResponse.createBySuccess();
+
+    }
+
 
     @RequestMapping("upload.do")
     @ResponseBody

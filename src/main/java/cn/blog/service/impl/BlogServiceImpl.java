@@ -68,18 +68,18 @@ public class BlogServiceImpl implements IBlogService {
             rowCount = blogMapper.insertSelective(blog);
         }
 
-//        //todo  处理标签
-//        String[] ids = null;
-//        //插入这些标签
-//        if(rowCount>0&&tagIds!=null&&tagIds.trim().length()>0){
-//            rowCount=0;
-//            ids = tagIds.split(" ");
-//            List<Integer> idList = Lists.newArrayList();
-//            for(String str:ids){
-//                idList.add(Integer.parseInt(str));
-//            }
-//            rowCount = blogMapper.addTagsToBlog(blog.getBlogId(),idList);
-//        }
+        //todo  处理标签
+        String[] ids = null;
+        //插入这些标签
+        if(rowCount>0&&tagIds!=null&&tagIds.trim().length()>0){
+            rowCount=0;
+            ids = tagIds.split(" ");
+            List<Integer> idList = Lists.newArrayList();
+            for(String str:ids){
+                idList.add(Integer.parseInt(str));
+            }
+            rowCount = blogMapper.addTagsToBlog(blog.getBlogId(),idList);
+        }
 
         //插入成功返回Vo
         if (rowCount > 0) {

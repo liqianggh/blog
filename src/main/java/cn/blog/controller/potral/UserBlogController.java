@@ -5,13 +5,13 @@ import cn.blog.common.ResponseCode;
 import cn.blog.common.ServerResponse;
 import cn.blog.pojo.Category;
 import cn.blog.pojo.Tag;
+import cn.blog.service.CacheService.CacheService;
 import cn.blog.service.IBlogService;
 import cn.blog.service.ICategoryService;
 import cn.blog.service.ITagService;
 import cn.blog.vo.*;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.net.nntp.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +35,9 @@ public class UserBlogController {
     private ITagService iTagService;
     @Autowired
     private ICategoryService iCategoryService;
+
+    @Autowired
+    private CacheService cacheService;
 
     /**
      * 高复用查询博客列表,
@@ -68,8 +71,16 @@ public class UserBlogController {
          List<BlogVo> hotBlog = iBlogService.findBlogVoList(1,null,null,"viewCount_desc",null,1,Const.IndexConst.HOT_NUM);
          PageInfo pageInfo = iBlogService.findBlogVoPageInfo(1,null,null,"createTime_desc",null,pageNum,Const.IndexConst.BLOG_NUM);
          List<BlogVo> recommendedBlog = iBlogService.findBlogVoList(2,null,null,"createTime_desc",null,1,Const.IndexConst.RECOMMENDED);
+//         List<TagVo> tagVoList = iTagService.listAllSimpleWithCount();
+//         List<TagVo> tagVoList = cacheService.findTagsWithCount();
+//
+//         List<CategoryVo> categoryVoList = iCategoryService.findAllWithCount();
+         //使用缓存
          List<TagVo> tagVoList = iTagService.listAllSimpleWithCount();
-         List<CategoryVo> categoryVoList = iCategoryService.findAllWithCount();
+         List<CategoryVo> categoryVoList = cacheService.findAllCategoryWithBlogCount();
+
+
+
          indexVo.setTagVoList(tagVoList);
          indexVo.setRecommendBlog(recommendedBlog);
          indexVo.setHotBlogs(hotBlog);
@@ -139,9 +150,14 @@ public class UserBlogController {
         ArticleVo articleVo = new ArticleVo();
         BlogVo  blogVo = iBlogService.descVo(blogId);
         List<BlogVo>  blogVoList = iBlogService.guessYouLike(blogId);
-
+        //未使用缓存
+//        List<TagVo> tagVoList = cacheService.findTagsWithCount();
+//        List<CategoryVo>  categoryVoList = iCategoryService.findAllWithCount();
+        //使用缓存
         List<TagVo> tagVoList = iTagService.listAllSimpleWithCount();
-        List<CategoryVo>  categoryVoList = iCategoryService.findAllWithCount();
+        List<CategoryVo> categoryVoList = cacheService.findAllCategoryWithBlogCount();
+
+
         //上一篇，下一篇
         BlogVo lastBlog = iBlogService.findLast(blogId);
         BlogVo nextBlog = iBlogService.findNext(blogId);
@@ -222,8 +238,14 @@ log.info("接收到的参数："+tagId);
         List<BlogVo> newPublishdBlog = iBlogService.findBlogVoList(1,null,null,"createTime_desc",null,1,Const.IndexConst.NEW_PUBLISH);
 
 
+//        List<TagVo> tagVoList = iTagService.listAllSimpleWithCount();
+//        List<CategoryVo> categoryVoList = iCategoryService.findAllWithCount();
+
+        //使用缓存
         List<TagVo> tagVoList = iTagService.listAllSimpleWithCount();
-        List<CategoryVo> categoryVoList = iCategoryService.findAllWithCount();
+        List<CategoryVo> categoryVoList = cacheService.findAllCategoryWithBlogCount();
+
+
         indexVo.setTagVoList(tagVoList);
         indexVo.setRecommendBlog(newPublishdBlog);
         indexVo.setCategoryVoList(categoryVoList);

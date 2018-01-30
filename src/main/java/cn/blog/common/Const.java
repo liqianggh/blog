@@ -5,13 +5,18 @@ import com.google.common.collect.Sets;
 import java.util.Set;
 
 public interface Const {
+
+    public interface CacheTypeName{
+        String TAGS_WITHCOUNT = "tags_with_count";
+        String CATEGORY_WITHCOUNT="category_with_count";
+    }
+
+
     public interface BlogCodeType{
         int PRIVATE_BLOG = 0;
         int PUBLIC_BLOG = 1;
         int RECOMMENDED_BLOG = 2;
         int ALL_BLOG = 3;
-
-
     }
     public interface IndexConst{
         int BLOG_NUM = 12;

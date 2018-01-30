@@ -149,12 +149,12 @@
 
     <select id="selectLastById" parameterType="int" resultType="cn.blog.bo.BlogBo">
         select blogId,title from blog
-        where createTime &gt;(select createTime from blog where blogId = #{blogId})limit 0,1
+        where createTime &lt;(select createTime from blog where blogId = #{blogId})limit 0,1
     </select>
 
     <select id="selectNextById" parameterType="int" resultType="cn.blog.bo.BlogBo">
             select blogId,title from blog
-        where createTime &lt;(select createTime from blog where blogId = #{blogId})limit 0,1
+        where createTime &gt;(select createTime from blog where blogId = #{blogId})limit 0,1
     </select>
 
 
