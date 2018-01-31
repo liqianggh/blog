@@ -30,4 +30,9 @@ public interface IBlogService {
      BlogVo  findLast(Integer blogId);
      BlogVo  findNext(Integer blogId);
 
+    boolean addLike(Integer blogId);
+
+    boolean cancelLike(Integer blogId);
+
+    boolean addViewCount(Integer blogId);
 }

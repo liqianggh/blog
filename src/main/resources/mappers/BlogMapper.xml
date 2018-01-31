@@ -415,4 +415,15 @@
       summary = #{summary,jdbcType=VARCHAR}
     where blogId = #{blogId,jdbcType=INTEGER}
   </update>
+
+    <update id="addViewCount" parameterType="int" >
+        update blog set viewCount=viewCount+1 where blogId=#{blogId}
+    </update>
+    <update id="addLike" parameterType="int" >
+        update blog set likeCount=likeCount+1 where blogId=#{blogId}
+    </update>
+    <update id="cancelLike" parameterType="int" >
+        update blog set likeCount=likeCount-1 where blogId=#{blogId}
+    </update>
+
 </mapper>

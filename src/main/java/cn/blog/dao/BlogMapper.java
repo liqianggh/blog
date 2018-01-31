@@ -54,4 +54,9 @@ public interface BlogMapper {
     BlogBo selectLastById(Integer blogId);
 
     BlogBo selectNextById(Integer blogId);
+
+    int cancelLike(Integer blogId);
+    int addLike(Integer blogId);
+
+    int addViewCount(Integer blogId);
 }

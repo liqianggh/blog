@@ -302,6 +302,33 @@ public class BlogServiceImpl implements IBlogService {
 
     }
 
+    @Override
+    public boolean addLike(Integer blogId) {
+        int rowCount = blogMapper.addLike(blogId);
+        if(rowCount>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean cancelLike(Integer blogId) {
+        int rowCount = blogMapper.cancelLike(blogId);
+        if(rowCount>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addViewCount(Integer blogId) {
+        int rowCount = blogMapper.addViewCount(blogId);
+        if(rowCount>0){
+            return true;
+        }
+        return false;
+    }
+
     private BlogVo changeBoToVo(BlogBo blogBo,String regex,boolean isCalc) {
         if (blogBo == null) {
             return null;

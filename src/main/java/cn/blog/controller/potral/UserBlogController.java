@@ -1,6 +1,8 @@
 package cn.blog.controller.potral;
 
+import cn.blog.bo.RemoteUser;
 import cn.blog.common.Const;
+import cn.blog.common.RedisPool;
 import cn.blog.common.ResponseCode;
 import cn.blog.common.ServerResponse;
 import cn.blog.pojo.Category;
@@ -9,9 +11,11 @@ import cn.blog.service.CacheService.CacheService;
 import cn.blog.service.IBlogService;
 import cn.blog.service.ICategoryService;
 import cn.blog.service.ITagService;
+import cn.blog.util.JsonUtil;
 import cn.blog.util.RedisPoolUtil;
 import cn.blog.vo.*;
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -257,16 +262,69 @@ log.info("接收到的参数："+tagId);
 
     @RequestMapping("add_like.do")
     @ResponseBody
-    public ServerResponse addLike(){
+    public ServerResponse addLike(Integer blogId, HttpServletRequest request){
 
-        return null;
+        if(blogId==null){
+            return ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(),ResponseCode.NULL_ARGUMENT.getDesc());
+        }
+        boolean flag  = iBlogService.isExists(blogId);
+        if(!flag){
+            return ServerResponse.createByErrorCodeAndMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        //获取请求的ip
+        String remoteAddr = request.getRemoteAddr();
+        //查询redis中是否有该ip
+        Boolean isExistsLiker = cacheService.isLikeUserExists(remoteAddr);
+        log.info(isExistsLiker+"this is result结果");
+        String message = "";
+        Boolean result;
+        //如果没有点过赞 否则取消赞 然后记录到缓存中
+        if(!isExistsLiker){
+            //todo 判断是否添加到缓存
+            //存入Redis
+            RedisPoolUtil.hset(Const.CacheTypeName.REMOTE_USER_LIKE_STATUS,remoteAddr,blogId.toString(),Const.CacheTime.ADD_LIKE_TIME);
+            //修改数据库中的数据
+            result =iBlogService.addLike(blogId);
+            message="点赞";
+        }else{
+            RedisPoolUtil.hdel(Const.CacheTypeName.REMOTE_USER_LIKE_STATUS,remoteAddr);
+            result = iBlogService.cancelLike(blogId);
+            message="取消点赞";
+        }
+        if(result){
+            return ServerResponse.createBySuccessMessage(message+"成功！");
+        }else{
+            return ServerResponse.createByErrorMessage(message+"失败！");
+        }
     }
 
     @RequestMapping("add_view.do")
     @ResponseBody
-    public ServerResponse addLike(){
-
-        return null;
+    public ServerResponse addLike(HttpServletRequest request,Integer blogId){
+        if(blogId==null){
+            return ServerResponse.createByErrorCodeAndMessage(ResponseCode.NULL_ARGUMENT.getCode(),ResponseCode.NULL_ARGUMENT.getDesc());
+        }
+        boolean flag  = iBlogService.isExists(blogId);
+        if(!flag){
+            return ServerResponse.createByErrorCodeAndMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+        //获取请求的ip
+        String remoteAddr = request.getRemoteAddr();
+        //查询redis中是否有该ip
+        Boolean  remoteUser = cacheService.isBlogViewerExists(remoteAddr,blogId);
+        boolean result = false;
+        //如果没有点过赞 否则取消赞 然后记录到缓存中
+        if(!remoteUser){
+            //存入Redis
+            RedisPoolUtil.sadd(Const.CacheTypeName.REMOTE_VIEW_USER+"_"+remoteAddr,blogId.toString(),Const.CacheTime.VIEW_COUNT_TIME);
+            //修改数据库中的数据
+            result =iBlogService.addViewCount(blogId);
+        }
+        if(result){
+            return ServerResponse.createBySuccessMessage("您已成功贡献了一个浏览量！");
+        }
+        return ServerResponse.createByErrorMessage("贡献浏览量失败！");
     }
 
 }

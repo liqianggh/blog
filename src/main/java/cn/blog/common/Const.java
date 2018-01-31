@@ -9,6 +9,13 @@ public interface Const {
     public interface CacheTypeName{
         String TAGS_WITHCOUNT = "tags_with_count";
         String CATEGORY_WITHCOUNT="category_with_count";
+        String REMOTE_USER_LIKE_STATUS="remote_user_isLike";
+        String REMOTE_VIEW_USER="remote_view_user";
+    }
+
+    public interface  CacheTime{
+        int ADD_LIKE_TIME= 60*60*12;
+        int VIEW_COUNT_TIME=60*30;
     }
 
 
