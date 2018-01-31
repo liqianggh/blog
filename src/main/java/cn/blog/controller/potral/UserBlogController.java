@@ -9,6 +9,7 @@ import cn.blog.service.CacheService.CacheService;
 import cn.blog.service.IBlogService;
 import cn.blog.service.ICategoryService;
 import cn.blog.service.ITagService;
+import cn.blog.util.RedisPoolUtil;
 import cn.blog.vo.*;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -254,6 +255,18 @@ log.info("接收到的参数："+tagId);
         return ServerResponse.createBySuccess(indexVo);
     }
 
+    @RequestMapping("add_like.do")
+    @ResponseBody
+    public ServerResponse addLike(){
 
+        return null;
+    }
+
+    @RequestMapping("add_view.do")
+    @ResponseBody
+    public ServerResponse addLike(){
+
+        return null;
+    }
 
 }

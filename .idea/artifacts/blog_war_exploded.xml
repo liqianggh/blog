@@ -7,6 +7,7 @@
           <element id="module-output" name="blog" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-servlet-api:8.5.4" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.0.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.0.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:4.0.3.RELEASE" />
