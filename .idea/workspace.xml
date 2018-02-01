@@ -7,85 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cc4e72ed-8189-496c-b3fe-8d6d7e51b063" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/article.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/css/autoptimize_2b0d4df713b8dbc54e6fc1c4b5b7e160.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/arrows.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/bullet.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/jquery.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/next_photo.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/pause.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/play.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/prev_photo.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/script.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/script1.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/style.mod.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/triangle.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/wowslider.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/wowslider.mod.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/engine/wowsliderstyle.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/HELP-US-OUT.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/css/font-awesome.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/css/font-awesome.min.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/fonts/FontAwesome.otf" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/fonts/fontawesome-webfont.eot" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/fonts/fontawesome-webfont.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/fonts/fontawesome-webfont.ttf" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/fonts/fontawesome-webfont.woff" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/fonts/fontawesome-webfont.woff2" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/animated.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/bordered-pulled.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/core.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/fixed-width.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/font-awesome.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/icons.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/larger.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/list.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/mixins.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/path.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/rotated-flipped.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/screen-reader.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/stacked.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/less/variables.less" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/_animated.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/_bordered-pulled.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/_core.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/_fixed-width.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/_icons.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/_larger.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/_list.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/_mixins.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/_path.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/_rotated-flipped.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/_screen-reader.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/_stacked.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/_variables.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/font-awesome/scss/font-awesome.scss" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/js/article.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/js/category.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/js/host.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/js/index.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/js/jquery-1.10.2.min.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/js/jquery.1.9.1.min.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/js/jquery.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/js/readingTime.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/js/selectivizr-min.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/js/tagscloud.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/src/css/style.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/src/jquery-1.10.2.min.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/src/lib/jquery.1.9.1.min.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/src/readingTime.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/tagcloud/tagcloud.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/tagcloud/tagcloud.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/tagcloud/tagcloud.min.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/assets/tagcloud/tagcloud.min.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/category.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/favicon1.ico" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/images/background/romantic.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/images/background/run.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/images/logo.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/images/logo2.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/portal/index.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/项目介绍/引入插件.md" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/项目介绍/技术选型与系统架构.md" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -135,12 +60,51 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="host.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="host.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/portal/assets/js/host.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="23">
               <caret line="1" column="36" lean-forward="false" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="23">
+                <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="技术选型与系统架构.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/项目介绍/技术选型与系统架构.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="0">
+                <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="引入插件.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/项目介绍/引入插件.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="253">
+                <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+                <folding />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -160,16 +124,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="391">
               <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ResponseCode.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/common/ResponseCode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="6" column="12" lean-forward="false" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -268,7 +222,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/backend/styles/editBlog.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/backend/Pages.html" />
         <option value="$PROJECT_DIR$/src/main/java/cn/blog/vo/TagVo.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/blog/common/ServerResponse.java" />
@@ -319,6 +272,7 @@
         <option value="$PROJECT_DIR$/src/main/webapp/portal/article.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/portal/category.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/portal/assets/js/host.js" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -395,20 +349,7 @@
             <path>
               <item name="blog" type="b2602c69:ProjectViewProjectNode" />
               <item name="blog" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="blog" type="b2602c69:ProjectViewProjectNode" />
-              <item name="blog" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="blog" type="b2602c69:ProjectViewProjectNode" />
-              <item name="blog" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="项目介绍" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -430,17 +371,18 @@
       <recent name="cn.blog.controller.backend" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Git\blog\项目介绍" />
       <recent name="E:\Git\blog\src\main\webapp" />
       <recent name="E:\Git\blog\src\main\webapp\portal" />
       <recent name="E:\Git\blog\src\main\java\cn\blog\util" />
       <recent name="E:\Git\blog\src\main\webapp\portal\assets\js" />
-      <recent name="E:\Git\blog" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="cn.blog.util" />
       <recent name="cn.blog.controller.potral" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Git\blog\项目介绍" />
       <recent name="E:\Git\blog\src\main\webapp" />
       <recent name="E:\Git\blog" />
       <recent name="E:\Git\blog\src" />
@@ -707,12 +649,12 @@
       <workItem from="1517338742012" duration="3628000" />
       <workItem from="1517409378830" duration="6436000" />
       <workItem from="1517423383368" duration="8767000" />
-      <workItem from="1517487538562" duration="6138000" />
+      <workItem from="1517487538562" duration="6905000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="224448000" />
+    <option name="totallyTimeSpent" value="225215000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -819,27 +761,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/bo/BlogBo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/bo/TagsAndBlog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/github/pagehelper/pagehelper/4.1.0/pagehelper-4.1.0.jar!/com/github/pagehelper/PageInfo.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3634">
-          <caret line="189" column="13" lean-forward="false" selection-start-line="189" selection-start-column="13" selection-end-line="189" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/mappers/TagMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="897">
@@ -1481,6 +1402,39 @@
         <state relative-caret-position="23">
           <caret line="1" column="36" lean-forward="false" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="23">
+            <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/项目介绍/技术选型与系统架构.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/项目介绍/引入插件.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="253">
+            <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
