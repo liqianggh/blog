@@ -275,27 +275,31 @@ log.info("接收到的参数："+tagId);
         //获取请求的ip
         String remoteAddr = request.getRemoteAddr();
         //查询redis中是否有该ip
-        Boolean isExistsLiker = cacheService.isLikeUserExists(remoteAddr);
+        Boolean isExistsLiker = cacheService.isLikeUserExists(remoteAddr,blogId);
         log.info(isExistsLiker+"this is result结果");
         String message = "";
         Boolean result;
+        int code = 0;
         //如果没有点过赞 否则取消赞 然后记录到缓存中
         if(!isExistsLiker){
             //todo 判断是否添加到缓存
             //存入Redis
-            RedisPoolUtil.hset(Const.CacheTypeName.REMOTE_USER_LIKE_STATUS,remoteAddr,blogId.toString(),Const.CacheTime.ADD_LIKE_TIME);
+            RedisPoolUtil.hset(Const.CacheTypeName.REMOTE_USER_LIKE_STATUS,remoteAddr+"_"+ blogId.toString(),Boolean.toString(true),Const.CacheTime.ADD_LIKE_TIME);
             //修改数据库中的数据
             result =iBlogService.addLike(blogId);
             message="点赞";
+            code = ResponseCode.LIKE_IT_SUCCESS.getCode();
+
         }else{
-            RedisPoolUtil.hdel(Const.CacheTypeName.REMOTE_USER_LIKE_STATUS,remoteAddr);
+            RedisPoolUtil.hdel(Const.CacheTypeName.REMOTE_USER_LIKE_STATUS,remoteAddr+"_"+blogId.toString());
             result = iBlogService.cancelLike(blogId);
             message="取消点赞";
+            code =ResponseCode.NOT_LIKE_SUCCESS.getCode();
         }
         if(result){
-            return ServerResponse.createBySuccessMessage(message+"成功！");
+            return ServerResponse.createByErrorCodeAndMessage(code,message+"成功！");
         }else{
-            return ServerResponse.createByErrorMessage(message+"失败！");
+            return ServerResponse.createByErrorCodeAndMessage(code,message+"失败！");
         }
     }
 

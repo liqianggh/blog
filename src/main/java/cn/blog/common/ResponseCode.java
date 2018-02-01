@@ -8,7 +8,10 @@ public enum ResponseCode {
     SUCCESS(0,"SUCCESS"),
     ERROR(1,"ERROR"),
     ILLEGAL_ARGUMENT(2,"ILLEGAL_ARGUMENT"),
-     NULL_ARGUMENT(3,"NULL_ARGUMENT");
+     NULL_ARGUMENT(3,"NULL_ARGUMENT"),
+
+     LIKE_IT_SUCCESS(4,"LIKE IT SUCCESS!"),
+     NOT_LIKE_SUCCESS(5,"CANCEL IT SUCCESS!");
 
 
      private final int code;

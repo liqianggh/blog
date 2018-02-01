@@ -55,8 +55,9 @@ public class CacheService {
     }
 
 
-    public Boolean  isLikeUserExists(String remoteUserAddr) {
-        Boolean result = RedisPoolUtil.hexists(Const.CacheTypeName.REMOTE_USER_LIKE_STATUS,remoteUserAddr);
+    //REMOTE_USER_LIKE_STATUS ,remoteUserAddr_blogId , true/false
+    public Boolean  isLikeUserExists(String remoteUserAddr,Integer blogId) {
+        Boolean result = RedisPoolUtil.hexists(Const.CacheTypeName.REMOTE_USER_LIKE_STATUS,remoteUserAddr+"_"+blogId.toString());
         return result;
     }
 

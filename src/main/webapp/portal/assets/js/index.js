@@ -93,7 +93,7 @@
 		 		var createTimeStr = value.createTimeStr;
 		 		var categoryName = value.categoryName;
 		 		var imgUrl=value.imgHost+value.imgUri;
-		 		var blogChild = "<article class='excerpt'><header><a target='_blank' class='label label-important' href='category.html?categoryId="+categoryId+"'>"+categoryName+"<i class='label-arrow'></i></a> <h2><a target='_blank'  href='article.html?blogId="+blogId+"' title='"+title+"'>"+title+" </a></h2></header><div class='focus'> <a target='_blank' target='blank' href='article.html?blogId="+blogId+"'><img class='thumb' src='"+imgUrl+"' alt='"+title+"' /></a>	</div> 	<span class='note'>"+summary+"</span>	<p class='auth-span'> <span class='muted'><i class='fa fa-clock-o'></i> "+createTimeStr+"</span> <span class='muted'><i class='fa fa-eye'></i> "+viewCount+"℃</span> <span class='muted'><i class='fa fa-comments-o'></i><span id = 'url::http://www.mycookies.cn/portal/article.do?blogId="+blogId+"' class = 'cy_cmt_count' ></span>评论</span><span class='muted'> <a target='_blank' href='javascript:;' data-action='ding' data-id='3849' id='Addlike' class='action'><i class='fa fa-heart-o'></i><span class='count'>"+likeCount+"</span>喜欢</a></span></p> </article>";
+		 		var blogChild = "<article class='excerpt'><header><a target='_blank' class='label label-important' href='category.html?categoryId="+categoryId+"'>"+categoryName+"<i class='label-arrow'></i></a> <h2><a target='_blank'  href='article.html?blogId="+blogId+"' title='"+title+"'>"+title+" </a></h2></header><div class='focus'> <a target='_blank' target='blank' href='article.html?blogId="+blogId+"'><img class='thumb' src='"+imgUrl+"' alt='"+title+"' /></a>	</div> 	<span class='note'>"+summary+"</span>	<p class='auth-span'> <span class='muted'><i class='fa fa-clock-o'></i> "+createTimeStr+"</span> <span class='muted'><i class='fa fa-eye'></i> "+viewCount+"℃</span> <span class='muted'><a href ='http://www.mycookies.cn/portal/article.html?blogId="+blogId+"'><i class='fa fa-comments-o'></i><span id = 'url::http://www.mycookies.cn/portal/article.html?blogId="+blogId+"' class = 'cy_cmt_count' ></span><script id='cy_cmt_num' src='https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytqlFQwr'></script></a> 评论</span><span class='muted'> <a target='_blank' href='javascript:addLike("+blogId+")'   class='action'><i id='fa_"+blogId+"' status='0' class='fa fa-heart-o'></i><span id='like_count_"+blogId+"' class='count'>"+likeCount+"</span>喜欢</a></span></p> </article>";
 		 		blogContainer.append(blogChild);
 		 	})
 
@@ -120,7 +120,9 @@
 		 		var blogId = value.blogId;
 		 		var createTimeStr = value.createTimeStr;
 		 		var imgUrl=value.imgHost+value.imgUri;
-		 		var childEle =  "<li><a target='_blank' href='article.html?blogId="+blogId+"' title='"+title+"'><span class='thumbnail'><img src='"+imgUrl+"' alt='"+title+"' /></span><span class='text'>"+title+"</span><span class='muted'>"+createTimeStr+"</span><span class='muted' style='float: right;'><span id = 'http://www.mycookies.cn/portal/article.html?blogId="+blogId+" class = 'cy_cmt_count'></span>评论</span></a></li>";
+		 		// var childEle =  "<li><a target='_blank' href='article.html?blogId="+blogId+"' title='"+title+"'><span class='thumbnail'><img src='"+imgUrl+"' alt='"+title+"' /></span><span class='text'>"+title+"</span><span class='muted'>"+createTimeStr+"</span><span class='muted' style='float: right;'><a href='http://www.mycookies.cn/portal/article.html?blogId="+blogId+"'><span id = 'url::http://www.mycookies.cn/portal/article.html?blogId="+blogId+"' class = 'cy_cmt_count' ></span><script id='cy_cmt_num' src='https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytqlFQwr'></script> 评论</a></span></li>";
+				   var childEle =  "<li><a target='_blank' href='article.html?blogId="+blogId+"' title='"+title+"'><span class='thumbnail'><img src='"+imgUrl+"' alt='"+title+"' /></span><span class='text'>"+title+"</span><span class=muted>"+createTimeStr+"</span><span class=muted style='float: right;'><span id = 'url::http://www.mycookies.cn/portal/article.html?blogId="+blogId+"' class = 'cy_cmt_count' ></span><script id='cy_cmt_num' src='https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytqlFQwr'></script>评论</span></a>"
+
 		 		guessYouLike.append(childEle);
 		 	})
 			//启动标签特效
@@ -258,7 +260,7 @@
 				 		var createTimeStr = value.createTimeStr;
 				 		var categoryName = value.categoryName;
 				 		var imgUrl=value.imgHost+value.imgUri;
-				 		var blogChild = "<article class='excerpt'><header><a target='_blank' class='label label-important' href='category.html?categoryId="+categoryId+"'>"+categoryName+"<i class='label-arrow'></i></a> <h2><a target='_blank'  href='article.html?blogId="+blogId+"' title='"+title+"'>"+title+" </a></h2></header><div class='focus'> <a target='_blank' target='blank' href='#'><img class='thumb' src='"+imgUrl+"' alt='"+title+"' /></a>	</div> 	<span class='note'>"+summary+"</span>	<p class='auth-span'> <span class='muted'><i class='fa fa-clock-o'></i> "+createTimeStr+"</span> <span class='muted'><i class='fa fa-eye'></i> "+viewCount+"℃</span> <span class='muted'><i class='fa fa-comments-o'></i> <a target='_blank' target='_blank' href='3849.html#comments'><span id = 'http://www.mycookies.cn/portal/article.html?blogId="+blogId+" class = 'cy_cmt_count'></span>评论</a></span><span class='muted'> <a target='_blank' href='javascript:;' data-action='ding' data-id='3849' id='Addlike' class='action'><i class='fa fa-heart-o'></i><span class='count'>"+likeCount+"</span>喜欢</a></span></p> </article>";
+				 		var blogChild = "<article class='excerpt'><header><a target='_blank' class='label label-important' href='category.html?categoryId="+categoryId+"'>"+categoryName+"<i class='label-arrow'></i></a> <h2><a target='_blank'  href='article.html?blogId="+blogId+"' title='"+title+"'>"+title+" </a></h2></header><div class='focus'> <a target='_blank' target='blank' href='#'><img class='thumb' src='"+imgUrl+"' alt='"+title+"' /></a>	</div> 	<span class='note'>"+summary+"</span>	<p class='auth-span'> <span class='muted'><i class='fa fa-clock-o'></i> "+createTimeStr+"</span> <span class='muted'><i class='fa fa-eye'></i> "+viewCount+"℃</span> <span class='muted'><i class='fa fa-comments-o'></i> <a target='_blank' target='_blank' href='http://www.mycookies.cn/portal/article.html?blogId="+blogId+"'><span id = 'http://www.mycookies.cn/portal/article.html?blogId="+blogId+"' class = 'cy_cmt_count'></span><script id='cy_cmt_num' src='https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytqlFQwr'></script> 评论</a></span><span class='muted'> <a target='_blank' href='javascript:;' data-action='ding' data-id='3849' id='Addlike' class='action'><a href='javascript:addLike("+blogId+")'><i class='fa fa-heart-o'></i></a><span class='count'>"+likeCount+"</span>喜欢</a></span></p> </article>";
 				 		blogContainer.append(blogChild);
 				 	})
 			 	}
@@ -280,4 +282,42 @@
  	function search(){
  		var value = $("#input_search").val();
  		alert(value);
+ 	}
+ 	function addLike(blogId){
+ 		var icon = $("#fa_"+blogId);
+ 		var status = icon.attr("status");
+ 		var likeCount = $("#like_count_"+blogId);
+ 		$.ajax({
+ 			dataType:"json",
+ 			url:host+"/user/blog/add_like.do",
+ 			data:{blogId,blogId},
+ 			success:function(result){
+ 				 if(result.status==4){
+				 	  if(status==0){
+ 				 		icon.attr("status",1);
+	 		 			icon.removeClass("fa-heart-o").addClass("fa-heart");
+	 		 			var likeCountNumber = parseInt(likeCount.text())+1;
+	 		 			alert(likeCountNumber);
+	 		 			likeCount.empty().text(likeCountNumber);
+	 				 	}else{
+ 				 		icon.attr("status",0);
+	 		 			icon.removeClass("fa-heart").addClass("fa-heart-o");
+	 		 			var likeCountNumber = parseInt(likeCount.text())-1;
+	 		 			alert(likeCountNumber);
+	 		 			likeCount.empty().text(likeCountNumber);
+				 		}
+ 				 }else if(result.status==5){
+ 				 	 	icon.attr("status",0);
+	 		 			icon.removeClass("fa-heart").addClass("fa-heart-o");
+	 		 			var likeCountNumber = parseInt(likeCount.text())-1;
+	 		 			likeCount.empty().text(likeCountNumber);
+	 		 			alert("您已取消点赞！");
+ 				 }
+
+ 			}
+
+ 		})
+
+
+
  	}

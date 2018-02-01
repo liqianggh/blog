@@ -5307,13 +5307,15 @@ a.label-inverse:hover .label-arrow, a.badge-inverse:hover .label-arrow {
     display:inline-block;
     border:1px solid #d6d6d6;
     border-radius:2px;
-    background-color:#5fcec0;
+    /*background-color:#5fcec0;*/
+    background-color: #f7f7f7;
     font-size:15px;
     margin:0 3px;
     color:#fff
 }
 .action:hover {
-    background-color:#3bbfaf;
+    /*background-color:#3bbfaf;*/
+    background-color: #d9534f8f;
     border-bottom:1px solid #d6d6d6
 }
 .action i, bdsharebuttonbox i {

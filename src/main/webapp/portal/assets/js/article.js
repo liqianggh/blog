@@ -29,8 +29,8 @@ window.onload=function(){
 					 //正文部分初始化
 					 initArticle(blogVo);
 					 //todo 点赞功能缓存优化 点赞id填充
-					 var span_like_count = $("#span_like_count");
-					 span_like_count.attr("data-id");
+					 // var span_like_count = $("#span_like_count");
+					 // span_like_count.attr("data-id");
 
 					 initialCategory(categoryVoList);
 					 initialTagList(tagVoList);
@@ -100,6 +100,7 @@ function initArticle(blogVo){
 	var viewCount = blogVo.viewCount;
 	var likeCount = blogVo.likeCount;
 	var title = blogVo.title;
+	var blogId = blogVo.blogId;
 	//标签处理
 	var tagList=blogVo.tagsList;
 	$.each(tagList,function(index,value){
@@ -124,9 +125,8 @@ function initArticle(blogVo){
 		// articleContentContainer.append("<article><div class='eta'></div><div class='article-content'>"+content+"</div></article>");
 
 	//喜欢次数
-	var likeCountContainer = $("#span_like_count");
-	likeCountContainer.empty();
-	likeCountContainer.append(likeCount);
+	var span_like = $("#span_like");
+	span_like.empty().append("<a target='_blank' href='javascript:addLike("+blogId+")'   class='action'><i id='fa_"+blogId+"' status='0' class='fa fa-heart-o'></i><span id='like_count_"+blogId+"' class='count'>"+likeCount+"人喜欢</span>");
 
 	//分享次数
 	var shareCountContainer = $("#span_share_count");
@@ -135,7 +135,13 @@ function initArticle(blogVo){
 	
 	shareCountContainer.append(shareCount);
 
-
+	//浏览次数
+	$.ajax({
+			type:"post",
+			dataType:"json",
+			url:host+"/user/blog/add_view.do",
+			data:{"blogId":blogId}
+		   })
 }
 function initGuessYouLike(blogVoList){
 	var title ;
@@ -203,23 +209,23 @@ function initGuessYouLike(blogVoList){
  		}
  	}
 
- 	function addLike(){
- 		var span_like_count = $("#span_like_count");
- 		var count = span_like_count.text();
- 		var blogId = span_like_count.attr("data-id");
- 		var status = span_like_count.attr("data-status");
- 		//todo 如果是没点赞就加1 
- 		if(status==0){
- 			$("#span_like_icon").removeClass("fa-heart-o").addClass("fa-heart");
- 			span_like_count.attr("data-status",1);
- 			span_like_count.text(++count);
- 			//todo  数据库
- 		}else{
-			$("#span_like_icon").removeClass("fa-heart").addClass("fa-heart-o");
- 			span_like_count.attr("data-status",0);
- 			span_like_count.text(--count);
- 		}
- 	}
+ 	// function addLike(){
+ 	// 	var span_like_count = $("#span_like_count");
+ 	// 	var count = span_like_count.text();
+ 	// 	var blogId = span_like_count.attr("data-id");
+ 	// 	var status = span_like_count.attr("data-status");
+ 	// 	//todo 如果是没点赞就加1 
+ 	// 	if(status==0){
+ 	// 		$("#span_like_icon").removeClass("fa-heart-o").addClass("fa-heart");
+ 	// 		span_like_count.attr("data-status",1);
+ 	// 		span_like_count.text(++count);
+ 	// 		//todo  数据库
+ 	// 	}else{
+		// 	$("#span_like_icon").removeClass("fa-heart").addClass("fa-heart-o");
+ 	// 		span_like_count.attr("data-status",0);
+ 	// 		span_like_count.text(--count);
+ 	// 	}
+ 	// }
 
 	function changeMenuItem(key){
 		if(key<=5){
@@ -259,3 +265,38 @@ function initGuessYouLike(blogVoList){
 	function goTop(){
 		$('html').animate( { scrollTop: '0px' }, 600 ); 
 	}
+
+
+	function addLike(blogId){
+	var icon = $("#fa_"+blogId);
+	var status = icon.attr("status");
+	var likeCount = $("#like_count_"+blogId);
+	$.ajax({
+		dataType:"json",
+		url:host+"/user/blog/add_like.do",
+		data:{blogId,blogId},
+		success:function(result){
+			 if(result.status==4){
+		 	  if(status==0){
+			 		icon.attr("status",1);
+		 			icon.removeClass("fa-heart-o").addClass("fa-heart");
+		 			var likeCountNumber = parseInt(likeCount.text())+1;
+		 			likeCount.empty().text(likeCountNumber+"人喜欢");
+				 	}else{
+			 		icon.attr("status",0);
+		 			icon.removeClass("fa-heart").addClass("fa-heart-o");
+		 			var likeCountNumber = parseInt(likeCount.text())-1;
+		 			likeCount.empty().text(likeCountNumber+"人喜欢");
+		 		}
+			 }else if(result.status==5){
+			 	 	icon.attr("status",0);
+		 			icon.removeClass("fa-heart").addClass("fa-heart-o");
+		 			var likeCountNumber = parseInt(likeCount.text())-1;
+		 			likeCount.empty().text(likeCountNumber+"人喜欢");
+		 			alert("您已取消点赞！");
+			 }
+
+		}
+
+	})
+ 	}
