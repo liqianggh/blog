@@ -12,7 +12,7 @@ import cn.blog.service.IBlogService;
 import cn.blog.service.ICategoryService;
 import cn.blog.service.ITagService;
 import cn.blog.util.JsonUtil;
-import cn.blog.util.RedisPoolUtil;
+import cn.blog.util.RedisShardedPoolUtil;
 import cn.blog.vo.*;
 import com.github.pagehelper.PageInfo;
 import com.sun.org.apache.xpath.internal.operations.Bool;
@@ -284,14 +284,14 @@ log.info("接收到的参数："+tagId);
         if(!isExistsLiker){
             //todo 判断是否添加到缓存
             //存入Redis
-            RedisPoolUtil.hset(Const.CacheTypeName.REMOTE_USER_LIKE_STATUS,remoteAddr+"_"+ blogId.toString(),Boolean.toString(true),Const.CacheTime.ADD_LIKE_TIME);
+            RedisShardedPoolUtil.hset(Const.CacheTypeName.REMOTE_USER_LIKE_STATUS,remoteAddr+"_"+ blogId.toString(),Boolean.toString(true),Const.CacheTime.ADD_LIKE_TIME);
             //修改数据库中的数据
             result =iBlogService.addLike(blogId);
             message="点赞";
             code = ResponseCode.LIKE_IT_SUCCESS.getCode();
 
         }else{
-            RedisPoolUtil.hdel(Const.CacheTypeName.REMOTE_USER_LIKE_STATUS,remoteAddr+"_"+blogId.toString());
+            RedisShardedPoolUtil.hdel(Const.CacheTypeName.REMOTE_USER_LIKE_STATUS,remoteAddr+"_"+blogId.toString());
             result = iBlogService.cancelLike(blogId);
             message="取消点赞";
             code =ResponseCode.NOT_LIKE_SUCCESS.getCode();
@@ -321,7 +321,7 @@ log.info("接收到的参数："+tagId);
         //如果没有点过赞 否则取消赞 然后记录到缓存中
         if(!remoteUser){
             //存入Redis
-            RedisPoolUtil.sadd(Const.CacheTypeName.REMOTE_VIEW_USER+"_"+remoteAddr,blogId.toString(),Const.CacheTime.VIEW_COUNT_TIME);
+            RedisShardedPoolUtil.sadd(Const.CacheTypeName.REMOTE_VIEW_USER+"_"+remoteAddr,blogId.toString(),Const.CacheTime.VIEW_COUNT_TIME);
             //修改数据库中的数据
             result =iBlogService.addViewCount(blogId);
         }
