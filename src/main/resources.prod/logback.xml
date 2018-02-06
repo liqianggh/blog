@@ -9,7 +9,6 @@
             <level>DEBUG</level>
         </filter>
     </appender>
-
     <!--日志地址-->
     <appender name="blog" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>/develop/logs/blog.log</File>
