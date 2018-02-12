@@ -7,7 +7,6 @@ Author URL: http://michaelynch.com
 Date Created: August 14, 2013
 Date Updated: January 24, 2014
 Licensed under the MIT license
-
 */
 
 ;(function($) {
