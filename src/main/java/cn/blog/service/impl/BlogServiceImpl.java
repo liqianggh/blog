@@ -73,7 +73,7 @@ public class BlogServiceImpl implements IBlogService {
         //插入这些标签
         if(rowCount>0&&tagIds!=null&&tagIds.trim().length()>0){
             rowCount=0;
-            ids = tagIds.split(" ");
+            ids = tagIds.trim().split(" ");
             List<Integer> idList = Lists.newArrayList();
             for(String str:ids){
                 idList.add(Integer.parseInt(str));
