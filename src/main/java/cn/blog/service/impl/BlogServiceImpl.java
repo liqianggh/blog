@@ -204,9 +204,6 @@ public class BlogServiceImpl implements IBlogService {
     @Override
     public  List<BlogVo> findBlogVoList(Integer code,Integer categoryId,Integer tagId,
                                      String orderBy,String title,Integer pageNum,Integer pageSize){
-
-        log.info("这是排序方式："+orderBy);
-
         if(pageNum==null||pageSize==null){
             PageHelper.startPage(1,Const.IndexConst.BLOG_NUM);
         }
@@ -231,7 +228,7 @@ public class BlogServiceImpl implements IBlogService {
         List<BlogBo> blogBoList = blogMapper.selectByCodeTitleTagCategory(code, title, tagId, categoryId);
         List<BlogVo> blogVoList = Lists.newArrayList();
         for (BlogBo blogBo : blogBoList) {
-            blogVoList.add(changeBoToVo(blogBo,null,true));
+            blogVoList.add(changeBoToVo(blogBo,null,false));
         }
         return blogVoList;
     }
