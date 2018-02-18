@@ -219,7 +219,6 @@ public class BlogServiceImpl implements IBlogService {
                     ){
                 String [] orderByArray = orderBy.split("_");
                 PageHelper.orderBy(orderByArray[0]+" "+orderByArray[1]);
-
             }
         }else{
             PageHelper.orderBy("createTime"+" "+"desc");
