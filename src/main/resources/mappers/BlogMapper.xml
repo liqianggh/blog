@@ -79,8 +79,14 @@
                 and b.categoryId = c.categoryId
             </if>
             <if test="code !=null">
-                and b.code = #{code}
+                <if test="code ==0">
+                  and b.code = #{code}
+                </if>
+                <if test="code!=0">
+                  and b.code >= #{code}
+                </if>
             </if>
+
             <if test="title !=null">
                 and b.title like CONCAT('%',#{title},'%' )
             </if>
