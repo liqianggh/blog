@@ -39,7 +39,7 @@ public class BlogController {
     @RequestMapping(value = "saveOrUpdate.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse add( Blog  blog,@RequestParam("tagIds")String tagIds) {
-        log.info("接受到的参数："+blog);
+        log.info("接受到的参数："+blog+" "+tagIds);
         return iBlogService.saveOrUpdate(blog,tagIds);
     }
 
