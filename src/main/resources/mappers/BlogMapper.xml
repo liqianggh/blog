@@ -287,7 +287,7 @@
         insert into blogandtags(tagId,blogId)
         VALUES
         <foreach collection="idList" open="(" close=")" separator="),(" index="index" item="tagId">
-            #{tagId,blogId},
+            #{tagId},#{blogId}
         </foreach>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="cn.blog.pojo.Blog">

@@ -25,6 +25,7 @@ import net.sf.jsqlparser.schema.Server;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -33,6 +34,7 @@ import java.util.*;
  * Created by Jann Lee on 2018/1/20  0:51.
  */
 @Slf4j
+@Transactional
 @Service("iBlogService")
 public class BlogServiceImpl implements IBlogService {
 
@@ -62,6 +64,9 @@ public class BlogServiceImpl implements IBlogService {
             }
             if (blog.getCategoryId() == null) {
                 blog.setCategoryId(1);
+            }
+            if(blog.getAuthor()==null){
+                blog.setAuthor("Jann Lee");
             }
             log.info(blog.toString());
 
