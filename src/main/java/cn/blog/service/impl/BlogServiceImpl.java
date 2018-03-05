@@ -348,7 +348,7 @@ public class BlogServiceImpl implements IBlogService {
 
             }
         }
-        blogVo.setImgHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
+        blogVo.setImgHost(PropertiesUtil.getProperty("cdn.image.prefix"));
         blogVo.setCategoryName(blogBo.getCategoryName());
 
         return blogVo;
@@ -374,7 +374,7 @@ public class BlogServiceImpl implements IBlogService {
             }
         }
         List<Tag> tagList = tagMapper.selectTagsOfBlog(blogBo.getBlogId());
-        blogVo.setImgHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
+        blogVo.setImgHost(PropertiesUtil.getProperty("cdn.image.prefix"));
         blogVo.setCategoryName(blogBo.getCategoryName());
         blogVo.setTagsList(tagList);
         return blogVo;
