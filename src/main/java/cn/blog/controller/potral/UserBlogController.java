@@ -191,7 +191,7 @@ public class UserBlogController {
         ArticleVo articleVo = new ArticleVo();
        ServerResponse<PageInfo> blogVoList = iBlogService.listByCodeTitleTagCategory(
                 Const.BlogCodeType.PUBLIC_BLOG,null,
-                "createTime desc",null,categoryId,pageNum,pageSize);
+                "createTime_desc",null,categoryId,pageNum,pageSize);
         return blogVoList;
 
     }
