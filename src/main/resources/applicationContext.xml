@@ -8,8 +8,10 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
-        <!--扫描cn.包下的注解-->
-        <context:component-scan base-package="cn.blog" annotation-config="true"/>
+        <!--扫描cn.包下的注解 不扫描controller-->
+        <context:component-scan base-package="cn.blog" annotation-config="true">
+                <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        </context:component-scan>
 
         <!--<context:annotation-config/>-->
         <aop:aspectj-autoproxy/>

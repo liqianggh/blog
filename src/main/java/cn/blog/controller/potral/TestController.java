@@ -33,14 +33,20 @@ public class TestController {
     private CacheService tagCacheService;
 
     @RequestMapping("init.do")
-    @ResponseBody
-    public ServerResponse init(HttpSession session) {
+          @ResponseBody
+        public ServerResponse init(HttpSession session) {
             tagCacheService.initCache();
 
+            return ServerResponse.createBySuccess();
+
+    }
+    @RequestMapping("test.do")
+    @ResponseBody
+    public ServerResponse test(HttpSession session) {
+            int y = 10/0;
         return ServerResponse.createBySuccess();
 
     }
-
 
 
 
