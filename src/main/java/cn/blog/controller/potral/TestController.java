@@ -31,6 +31,7 @@ public class TestController {
     private IFileService iFileService;
     @Autowired
     private CacheService tagCacheService;
+//todo 要做定时任务
 
     @RequestMapping("init.do")
           @ResponseBody
