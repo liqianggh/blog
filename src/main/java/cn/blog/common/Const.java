@@ -41,4 +41,8 @@ public interface Const {
         Set<String> COMMENTCOUNT_ASC_DESC = Sets.newHashSet("commentCount_desc","commentCount_asc");
 
     }
+
+    public interface REDIS_LOCK{
+        String REDIS_LOCK_NAME="REDIS_LOCK_NAME";
+    }
 }
