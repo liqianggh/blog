@@ -31,10 +31,36 @@ public class TagsAndCategoryTask {
         long timeOut = Long.parseLong(PropertiesUtil.getProperty("lock.timeout"));
         Long setNxResult = RedisShardedPoolUtil.setNx(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()+timeOut));
 
-        if(setNxResult!=null)
+        //获取锁成功
+        if(setNxResult!=null&&setNxResult==1){
+            initialCache(Const.REDIS_LOCK.REDIS_LOCK_NAME);
+        }else{
+            //获取锁失败
+            /*
+            * 校验锁是否过期
+            * */
+            Long timeOutResult = Long.parseLong(RedisShardedPoolUtil.get(Const.REDIS_LOCK.REDIS_LOCK_NAME));
+            //如果过期时间不为空 并且已经过期
+            if(timeOutResult!=null&&System.currentTimeMillis()>timeOutResult+timeOut){
+                String getSetResult = RedisShardedPoolUtil.getset(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()+timeOut));
+                if(getSetResult==null||Long.valueOf(getSetResult)==timeOutResult){
+                    initialCache(Const.REDIS_LOCK.REDIS_LOCK_NAME);
+                }else{
+                    log.info("获取分布式锁失败！");
+
+                }
+            }else{
+                log.info("获取分布式锁失败！");
+            }
+       }
 
         tagCacheService.initCache();
         log.info("缓存更新执行完毕！");
+    }
+
+    public  void initialCache(String locakName){
+        tagCacheService.initCache();
+        RedisShardedPoolUtil.del(locakName);
     }
 
 }
