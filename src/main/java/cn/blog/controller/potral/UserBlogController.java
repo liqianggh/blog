@@ -273,7 +273,9 @@ log.info("接收到的参数："+tagId);
         }
 
         //获取请求的ip
-        String remoteAddr = request.getRemoteAddr();
+//        String remoteAddr = request.getRemoteAddr();
+        String remoteAddr =request.getHeader("X-Real-Ip");
+
         //查询redis中是否有该ip
         Boolean isExistsLiker = cacheService.isLikeUserExists(remoteAddr,blogId);
         log.info(isExistsLiker+"this is result结果");
@@ -314,7 +316,9 @@ log.info("接收到的参数："+tagId);
             return ServerResponse.createByErrorCodeAndMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
         //获取请求的ip
-        String remoteAddr = request.getRemoteAddr();
+//        String remoteAddr = request.getRemoteAddr();
+        String remoteAddr = request.getHeader("X-Real-Ip");
+
         //查询redis中是否有该ip
         Boolean  remoteUser = cacheService.isBlogViewerExists(remoteAddr,blogId);
         boolean result = false;
