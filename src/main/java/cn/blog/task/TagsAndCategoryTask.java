@@ -43,7 +43,7 @@ public class TagsAndCategoryTask {
             //如果过期时间不为空 并且已经过期
             if(timeOutResult!=null&&System.currentTimeMillis()>timeOutResult+timeOut){
                 String getSetResult = RedisShardedPoolUtil.getset(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()+timeOut));
-                if(getSetResult==null||Long.valueOf(getSetResult)==timeOutResult){
+                if(getSetResult==null||(getSetResult!=null&&Long.valueOf(getSetResult)==timeOutResult)){
                     initialCache(Const.REDIS_LOCK.REDIS_LOCK_NAME);
                 }else{
                     log.info("获取分布式锁失败！");
