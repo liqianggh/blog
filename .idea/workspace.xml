@@ -51,14 +51,9 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="114" column="20" lean-forward="false" selection-start-line="114" selection-start-column="20" selection-end-line="114" selection-end-column="20" />
-              <folding>
-                <element signature="n#style#0;n#li#8;n#ul#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#li#8;n#ul#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#li#8;n#ul#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#div#1;n#div#0;n#div#0;n#li#8;n#ul#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="346">
+              <caret line="67" column="152" lean-forward="false" selection-start-line="67" selection-start-column="152" selection-end-line="67" selection-end-column="152" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -407,23 +402,6 @@
             <path>
               <item name="blog" type="b2602c69:ProjectViewProjectNode" />
               <item name="blog" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="blog" type="b2602c69:ProjectViewProjectNode" />
-              <item name="blog" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-              <item name="background" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="blog" type="b2602c69:ProjectViewProjectNode" />
-              <item name="blog" type="462c0819:PsiDirectoryNode" />
               <item name="target" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -443,15 +421,13 @@
     <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\Git\blog\项目介绍" />
-      <recent name="E:\Git\blog\src\main\webapp" />
-      <recent name="E:\Git\blog" />
-      <recent name="E:\Git\blog\src" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="cn.blog.service" />
+      <recent name="cn.blog.controller.backend" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\Git\blog\src\main\webapp\images\background" />
       <recent name="E:\Git\blog\src\main\webapp" />
+      <recent name="E:\Git\blog\src\main\webapp\images\background" />
       <recent name="E:\Git\blog\项目介绍" />
       <recent name="E:\Git\blog\src\main\webapp\portal" />
       <recent name="E:\Git\blog\src\main\java\cn\blog\util" />
@@ -461,9 +437,11 @@
       <recent name="cn.blog.common" />
       <recent name="cn.blog.controller.potral" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="cn.blog.service" />
-      <recent name="cn.blog.controller.backend" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Git\blog\项目介绍" />
+      <recent name="E:\Git\blog\src\main\webapp" />
+      <recent name="E:\Git\blog" />
+      <recent name="E:\Git\blog\src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -796,12 +774,12 @@
       <workItem from="1521162634721" duration="2004000" />
       <workItem from="1521201542682" duration="3093000" />
       <workItem from="1521242703733" duration="2032000" />
-      <workItem from="1521271593277" duration="3785000" />
+      <workItem from="1521271593277" duration="4669000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="291309000" />
+    <option name="totallyTimeSpent" value="292193000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1259,14 +1237,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="114" column="20" lean-forward="false" selection-start-line="114" selection-start-column="20" selection-end-line="114" selection-end-column="20" />
-          <folding>
-            <element signature="n#style#0;n#li#8;n#ul#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#li#8;n#ul#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#li#8;n#ul#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#div#1;n#div#0;n#div#0;n#li#8;n#ul#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="346">
+          <caret line="67" column="152" lean-forward="false" selection-start-line="67" selection-start-column="152" selection-end-line="67" selection-end-column="152" />
+          <folding />
         </state>
       </provider>
     </entry>
