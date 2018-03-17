@@ -275,6 +275,8 @@ log.info("接收到的参数："+tagId);
         //获取请求的ip
 //        String remoteAddr = request.getRemoteAddr();
         String remoteAddr =request.getHeader("X-Real-Ip");
+        log.info("这是获取的ip："+remoteAddr);
+
 
         //查询redis中是否有该ip
         Boolean isExistsLiker = cacheService.isLikeUserExists(remoteAddr,blogId);
@@ -318,6 +320,7 @@ log.info("接收到的参数："+tagId);
         //获取请求的ip
 //        String remoteAddr = request.getRemoteAddr();
         String remoteAddr = request.getHeader("X-Real-Ip");
+        log.info("这是获取的ip："+remoteAddr);
 
         //查询redis中是否有该ip
         Boolean  remoteUser = cacheService.isBlogViewerExists(remoteAddr,blogId);
