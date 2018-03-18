@@ -83,6 +83,9 @@ CentOS6.8 + JDK1.7+MySQL5.1+Maven3.0.5+Nginx1.10.2+Git2.8+Tomcat7+Redis2.8+Vsftp
 14.点赞，浏览量功能优化 。2018/2/1
 
 15.升级为分布式Redis。2018/2/2
+
 16.全局异常处理。2018/3/11
+
+17.nginx+tomcat集群。2018/3/18
 
 持续更新中。。。
