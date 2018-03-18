@@ -8,9 +8,775 @@
   <component name="ChangeListManager">
     <list default="true" id="cc4e72ed-8189-496c-b3fe-8d6d7e51b063" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/blog/task/TagsAndCategoryTask.java" afterPath="$PROJECT_DIR$/src/main/java/cn/blog/task/TagsAndCategoryTask.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources.prod/blog.properties" afterPath="$PROJECT_DIR$/src/main/resources.prod/blog.properties" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources.prod/datasource.properties" afterPath="$PROJECT_DIR$/src/main/resources.prod/datasource.properties" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/Pages.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/fonts/FontAwesome.otf" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/fonts/fontawesome-webfont.eot" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/fonts/fontawesome-webfont.svg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/fonts/fontawesome-webfont.ttf" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/fonts/fontawesome-webfont.woff" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/avatar/128.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/avatar/48.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/avatar/profile-pic.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/bg/1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/bg/2.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/bg/3.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/bg/bg.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/bg/login-background.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/blogs/1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/blogs/10.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/blogs/11.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/blogs/12.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/blogs/2.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/blogs/3.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/blogs/4.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/blogs/5.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/blogs/6.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/blogs/7.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/blogs/8.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/blogs/9.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/blogs/blog_item1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/gallery/1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/gallery/10.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/gallery/11.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/gallery/12.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/gallery/2.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/gallery/3.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/gallery/4.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/gallery/5.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/gallery/6.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/gallery/7.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/gallery/8.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/gallery/9.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/gallery/blog_item1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/icons/loading.gif" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/arch-1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/arch-2.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/autumn-1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/boats-1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/book-1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/business-1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/calendar-1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/car-1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/christmas-1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/christmas-2.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/christmas-3.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/city-1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/city-2.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/coffee-grass.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/coins.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/crayons.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/cupcakes.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/eggs-nest.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/flower-1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/flower-2.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/flower-3.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/fountain.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/leaves.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/lichterman.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/pinecone.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/river-1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/river-2.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/sunset-1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/tree.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/winter-1.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/winter-2.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/winter-sun.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/images/thumbs/woodstump.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/.gitignore" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/.jshintrc" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/BUGS.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/CHANGE.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/Gulpfile.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/LICENSE" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/README.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/bower.json" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/css/editormd.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/css/editormd.logo.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/css/editormd.logo.min.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/css/editormd.min.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/css/editormd.preview.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/css/editormd.preview.min.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/editormd.js.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-Bold-webfont.eot" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-Bold-webfont.svg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-Bold-webfont.woff" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-BoldItalic-webfont.eot" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-BoldItalic-webfont.svg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-BoldItalic-webfont.woff" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-Italic-webfont.eot" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-Italic-webfont.svg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-Italic-webfont.woff" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-Light-webfont.eot" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-Light-webfont.svg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-Light-webfont.woff" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-LightItalic-webfont.eot" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-LightItalic-webfont.svg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-LightItalic-webfont.woff" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-Regular-webfont.eot" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-Regular-webfont.svg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/fonts/OpenSans-Regular-webfont.woff" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/scripts/linenumber.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/scripts/prettify/Apache-License-2.0.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/scripts/prettify/lang-css.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/scripts/prettify/prettify.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/styles/jsdoc-default.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/styles/prettify-jsdoc.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/docs/styles/prettify-tomorrow.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/editormd.amd.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/editormd.amd.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/editormd.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/editormd.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/@links.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/auto-height.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/change-mode.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/code-fold.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/css/style.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/custom-keyboard-shortcuts.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/custom-toolbar.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/define-plugin.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/delay-renderer-preview.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/dynamic-create-editormd.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/emoji.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/extends.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/external-use.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/flowchart.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/form-get-value.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/full.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/goto-line.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/html-preview-markdown-to-html-custom-toc-container.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/html-preview-markdown-to-html.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/html-tags-decode.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/image-cross-domain-upload.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/image-upload.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/images/4.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/images/7.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/images/8.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/images/editormd-screenshot.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/js/jquery.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/js/require.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/js/sea.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/js/seajs-main.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/js/zepto.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/katex.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/manually-load-modules.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/multi-editormd.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/multi-languages.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/on-off.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/onchange.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/onfullscreen.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/onload.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/onpreviewing-onpreviewed.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/onresize.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/onscroll-onpreviewscroll.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/onwatch-onunwatch.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/page-break.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/php/cross-domain-upload.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/php/editormd.uploader.class.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/php/post.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/php/upload.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/php/upload_callback.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/readonly.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/resettings.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/search-replace.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/sequence-diagram.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/set-get-replace-selection.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/simple.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/sync-scrolling.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/task-lists.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/test.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/themes.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/toc.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/toolbar-auto-fixed.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/use-requirejs.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/use-seajs.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/examples/use-zepto.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/fonts/FontAwesome.otf" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/fonts/editormd-logo.eot" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/fonts/editormd-logo.svg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/fonts/editormd-logo.ttf" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/fonts/editormd-logo.woff" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/fonts/fontawesome-webfont.eot" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/fonts/fontawesome-webfont.svg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/fonts/fontawesome-webfont.ttf" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/fonts/fontawesome-webfont.woff" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/fonts/fontawesome-webfont.woff2" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/loading.gif" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/loading@2x.gif" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/loading@3x.gif" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-favicon-16x16.ico" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-favicon-24x24.ico" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-favicon-32x32.ico" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-favicon-48x48.ico" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-favicon-64x64.ico" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-114x114.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-120x120.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-144x144.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-16x16.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-180x180.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-240x240.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-24x24.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-320x320.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-32x32.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-48x48.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-57x57.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-64x64.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-72x72.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/editormd-logo-96x96.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/images/logos/vi.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/languages/en.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/languages/zh-tw.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/AUTHORS" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/LICENSE" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/README.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/comment/comment.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/comment/continuecomment.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/dialog/dialog.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/dialog/dialog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/display/fullscreen.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/display/fullscreen.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/display/panel.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/display/placeholder.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/display/rulers.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/edit/closebrackets.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/edit/closetag.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/edit/continuelist.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/edit/matchbrackets.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/edit/matchtags.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/edit/trailingspace.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/fold/brace-fold.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/fold/comment-fold.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/fold/foldcode.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/fold/foldgutter.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/fold/foldgutter.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/fold/indent-fold.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/fold/markdown-fold.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/fold/xml-fold.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/hint/anyword-hint.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/hint/css-hint.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/hint/html-hint.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/hint/javascript-hint.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/hint/show-hint.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/hint/show-hint.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/hint/sql-hint.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/hint/xml-hint.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/lint/coffeescript-lint.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/lint/css-lint.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/lint/javascript-lint.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/lint/json-lint.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/lint/lint.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/lint/lint.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/lint/yaml-lint.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/merge/merge.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/merge/merge.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/mode/loadmode.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/mode/multiplex.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/mode/multiplex_test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/mode/overlay.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/mode/simple.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/runmode/colorize.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/runmode/runmode-standalone.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/runmode/runmode.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/runmode/runmode.node.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/scroll/annotatescrollbar.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/scroll/scrollpastend.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/scroll/simplescrollbars.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/scroll/simplescrollbars.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/search/match-highlighter.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/search/matchesonscrollbar.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/search/matchesonscrollbar.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/search/search.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/search/searchcursor.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/selection/active-line.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/selection/mark-selection.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/selection/selection-pointer.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/tern/tern.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/tern/tern.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/tern/worker.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addon/wrap/hardwrap.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/addons.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/bower.json" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/codemirror.min.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/codemirror.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/lib/codemirror.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/lib/codemirror.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/apl/apl.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/apl/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/asterisk/asterisk.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/asterisk/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/clike/clike.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/clike/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/clike/scala.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/clojure/clojure.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/clojure/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/cobol/cobol.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/cobol/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/coffeescript/coffeescript.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/coffeescript/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/commonlisp/commonlisp.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/commonlisp/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/css/css.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/css/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/css/less.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/css/less_test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/css/scss.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/css/scss_test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/css/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/cypher/cypher.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/cypher/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/d/d.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/d/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/dart/dart.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/dart/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/diff/diff.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/diff/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/django/django.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/django/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/dockerfile/dockerfile.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/dockerfile/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/dtd/dtd.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/dtd/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/dylan/dylan.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/dylan/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/ebnf/ebnf.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/ebnf/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/ecl/ecl.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/ecl/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/eiffel/eiffel.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/eiffel/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/erlang/erlang.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/erlang/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/forth/forth.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/forth/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/fortran/fortran.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/fortran/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/gas/gas.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/gas/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/gfm/gfm.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/gfm/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/gfm/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/gherkin/gherkin.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/gherkin/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/go/go.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/go/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/groovy/groovy.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/groovy/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/haml/haml.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/haml/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/haml/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/haskell/haskell.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/haskell/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/haxe/haxe.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/haxe/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/htmlembedded/htmlembedded.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/htmlembedded/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/htmlmixed/htmlmixed.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/htmlmixed/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/http/http.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/http/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/idl/idl.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/idl/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/jade/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/jade/jade.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/javascript/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/javascript/javascript.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/javascript/json-ld.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/javascript/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/javascript/typescript.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/jinja2/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/jinja2/jinja2.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/julia/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/julia/julia.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/kotlin/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/kotlin/kotlin.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/livescript/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/livescript/livescript.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/lua/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/lua/lua.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/markdown/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/markdown/markdown.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/markdown/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/meta.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/mirc/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/mirc/mirc.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/mllike/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/mllike/mllike.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/modelica/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/modelica/modelica.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/nginx/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/nginx/nginx.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/ntriples/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/ntriples/ntriples.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/octave/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/octave/octave.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/pascal/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/pascal/pascal.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/pegjs/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/pegjs/pegjs.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/perl/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/perl/perl.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/php/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/php/php.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/php/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/pig/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/pig/pig.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/properties/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/properties/properties.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/puppet/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/puppet/puppet.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/python/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/python/python.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/q/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/q/q.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/r/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/r/r.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/rpm/changes/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/rpm/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/rpm/rpm.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/rst/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/rst/rst.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/ruby/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/ruby/ruby.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/ruby/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/rust/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/rust/rust.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/sass/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/sass/sass.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/scheme/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/scheme/scheme.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/shell/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/shell/shell.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/shell/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/sieve/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/sieve/sieve.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/slim/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/slim/slim.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/slim/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/smalltalk/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/smalltalk/smalltalk.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/smarty/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/smarty/smarty.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/smartymixed/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/smartymixed/smartymixed.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/solr/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/solr/solr.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/soy/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/soy/soy.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/sparql/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/sparql/sparql.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/spreadsheet/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/spreadsheet/spreadsheet.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/sql/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/sql/sql.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/stex/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/stex/stex.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/stex/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/stylus/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/stylus/stylus.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/tcl/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/tcl/tcl.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/textile/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/textile/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/textile/textile.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/tiddlywiki/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/tiddlywiki/tiddlywiki.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/tiddlywiki/tiddlywiki.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/tiki/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/tiki/tiki.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/tiki/tiki.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/toml/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/toml/toml.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/tornado/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/tornado/tornado.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/turtle/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/turtle/turtle.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/vb/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/vb/vb.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/vbscript/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/vbscript/vbscript.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/velocity/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/velocity/velocity.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/verilog/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/verilog/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/verilog/verilog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/xml/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/xml/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/xml/xml.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/xquery/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/xquery/test.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/xquery/xquery.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/yaml/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/yaml/yaml.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/z80/index.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/mode/z80/z80.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/modes.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/package.json" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/3024-day.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/3024-night.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/ambiance-mobile.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/ambiance.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/base16-dark.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/base16-light.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/blackboard.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/cobalt.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/colorforth.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/eclipse.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/elegant.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/erlang-dark.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/lesser-dark.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/mbo.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/mdn-like.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/midnight.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/monokai.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/neat.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/neo.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/night.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/paraiso-dark.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/paraiso-light.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/pastel-on-dark.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/rubyblue.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/solarized.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/the-matrix.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/tomorrow-night-bright.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/tomorrow-night-eighties.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/twilight.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/vibrant-ink.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/xq-dark.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/xq-light.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/codemirror/theme/zenburn.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/flowchart.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/jquery.flowchart.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/marked.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/prettify.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/raphael.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/sequence-diagram.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/lib/underscore.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/package.json" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/code-block-dialog/code-block-dialog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/emoji-dialog/emoji-dialog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/emoji-dialog/emoji.json" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/goto-line-dialog/goto-line-dialog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/help-dialog/help-dialog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/help-dialog/help.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/html-entities-dialog/html-entities-dialog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/html-entities-dialog/html-entities.json" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/image-dialog/image-dialog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/link-dialog/link-dialog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/plugin-template.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/preformatted-text-dialog/preformatted-text-dialog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/reference-link-dialog/reference-link-dialog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/table-dialog/table-dialog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/plugins/test-plugin/test-plugin.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/editormd.codemirror.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/editormd.dialog.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/editormd.form.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/editormd.grid.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/editormd.logo.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/editormd.menu.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/editormd.preview.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/editormd.preview.themes.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/editormd.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/editormd.tab.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/editormd.themes.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/font-awesome.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/github-markdown.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/lib/prefixes.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/lib/variables.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/scss/prettify.scss" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/src/editormd.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/bootstrap-test.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/codemirror-searchbox-test.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/codemirror-test.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/css/bootstrap-theme.min.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/css/bootstrap.min.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/js/bootstrap.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/js/searchbox.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/katex-tests.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/marked-@at-test.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/marked-emoji-test.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/marked-heading-link-test.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/marked-todo-list-test.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/qunit/qunit-1.16.0.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/mdeditor/tests/qunit/qunit-1.16.0.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/animation.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/bootstrap-hover-dropdown.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/bootstrap.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/charts-chartjs.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/charts-flotchart.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/charts-highchart-area.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/charts-highchart-column-bar.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/charts-highchart-combinations.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/charts-highchart-dynamic.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/charts-highchart-line.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/charts-highchart-more.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/charts-highchart-pie.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/charts-highchart-scatter-bubble.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/custom.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/data.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/drilldown.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/exporting.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/funnel.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/highchart.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/highcharts-more.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/highcharts.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/holder.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/html5shiv.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/icheck.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/index.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jplist.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jplist.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery-1.10.2.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery-migrate-1.2.1.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery-ui.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.cookie.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.flot.categories.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.flot.fillbetween.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.flot.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.flot.pie.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.flot.resize.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.flot.spline.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.flot.stack.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.flot.tooltip.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.menu.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.metisMenu.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.nestable.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.news-ticker.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/jquery.slimscroll.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/main.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/modernizr.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/pace.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/respond.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/responsive-tabs.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/ui-nestable-list.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/script/zabuto_calendar.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/all.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/animate.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/bootstrap.min.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/editBlog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/aero.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/aero.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/aero@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/all.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/blue.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/blue.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/blue@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/flat.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/flat.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/flat@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/green.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/green.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/green@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/grey.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/grey.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/grey@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/orange.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/orange.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/orange@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/pink.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/pink.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/pink@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/purple.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/purple.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/purple@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/red.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/red.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/red@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/yellow.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/yellow.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/flat/yellow@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/font-awesome.min.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/futurico/futurico.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/futurico/futurico.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/futurico/futurico@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/introjs.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/jplist-custom.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/jquery-ui-1.10.4.custom.min.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/jquery.news-ticker.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/line/aero.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/line/all.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/line/blue.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/line/green.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/line/grey.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/line/line.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/line/line.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/line/line@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/line/orange.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/line/pink.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/line/purple.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/line/red.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/line/yellow.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/main.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/aero.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/aero.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/aero@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/all.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/blue.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/blue.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/blue@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/green.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/green.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/green@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/grey.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/grey.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/grey@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/minimal.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/minimal.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/minimal@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/orange.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/orange.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/orange@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/pink.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/pink.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/pink@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/purple.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/purple.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/purple@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/red.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/red.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/red@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/yellow.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/yellow.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/minimal/yellow@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/nestable.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/pace.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/polaris/polaris.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/polaris/polaris.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/polaris/polaris@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/aero.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/aero.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/aero@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/all.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/blue.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/blue.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/blue@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/green.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/green.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/green@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/grey.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/grey.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/grey@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/orange.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/orange.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/orange@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/pink.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/pink.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/pink@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/purple.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/purple.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/purple@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/red.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/red.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/red@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/square.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/square.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/square@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/yellow.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/yellow.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/square/yellow@2x.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/style-responsive.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/backend/styles/zabuto_calendar.min.css" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -42,7 +808,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/task/TagsAndCategoryTask.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-483">
-              <caret line="27" column="37" lean-forward="true" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+              <caret line="27" column="37" lean-forward="false" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -54,7 +820,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1318">
-              <caret line="196" column="19" lean-forward="true" selection-start-line="196" selection-start-column="19" selection-end-line="196" selection-end-column="19" />
+              <caret line="196" column="19" lean-forward="false" selection-start-line="196" selection-start-column="19" selection-end-line="196" selection-end-column="19" />
               <folding>
                 <element signature="n#style#0;n#li#8;n#ul#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#li#8;n#ul#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -101,7 +867,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/resources.prod/datasource.properties">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="138">
-              <caret line="6" column="21" lean-forward="true" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
+              <caret line="6" column="21" lean-forward="false" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -111,7 +877,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/resources.prod/blog.properties">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="207">
-              <caret line="18" column="16" lean-forward="true" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+              <caret line="18" column="16" lean-forward="false" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -121,7 +887,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/resources.prod/logback.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="276">
-              <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+              <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -131,7 +897,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="370">
-              <caret line="54" column="0" lean-forward="true" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+              <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -309,7 +1075,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-88" />
     <option name="y" value="17" />
     <option name="width" value="1938" />
@@ -815,12 +1581,12 @@
       <workItem from="1521277648374" duration="2170000" />
       <workItem from="1521281064383" duration="849000" />
       <workItem from="1521285770334" duration="3580000" />
-      <workItem from="1521331834750" duration="2436000" />
+      <workItem from="1521331834750" duration="3092000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="301338000" />
+    <option name="totallyTimeSpent" value="301994000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -832,8 +1598,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1064" extended-state="6" />
-    <editor active="true" />
+    <frame x="-9" y="-9" width="1938" height="1064" extended-state="7" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960895" sideWeight="0.49785408" order="6" side_tool="false" content_ui="tabs" />
@@ -850,7 +1615,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3698324" sideWeight="0.4527897" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15075107" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15075107" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1240,7 +2005,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/task/TagsAndCategoryTask.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-483">
-          <caret line="27" column="37" lean-forward="true" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+          <caret line="27" column="37" lean-forward="false" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1250,7 +2015,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1318">
-          <caret line="196" column="19" lean-forward="true" selection-start-line="196" selection-start-column="19" selection-end-line="196" selection-end-column="19" />
+          <caret line="196" column="19" lean-forward="false" selection-start-line="196" selection-start-column="19" selection-end-line="196" selection-end-column="19" />
           <folding>
             <element signature="n#style#0;n#li#8;n#ul#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#li#8;n#ul#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -1265,7 +2030,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="370">
-          <caret line="54" column="0" lean-forward="true" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+          <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1273,7 +2038,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/resources.prod/logback.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
-          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1281,7 +2046,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/resources.prod/blog.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
-          <caret line="18" column="16" lean-forward="true" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+          <caret line="18" column="16" lean-forward="false" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
           <folding />
         </state>
       </provider>
@@ -1289,7 +2054,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/resources.prod/datasource.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
-          <caret line="6" column="21" lean-forward="true" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
+          <caret line="6" column="21" lean-forward="false" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
           <folding />
         </state>
       </provider>
