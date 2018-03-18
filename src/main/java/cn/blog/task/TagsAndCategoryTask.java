@@ -25,7 +25,7 @@ public class TagsAndCategoryTask {
     }
 
 
-    @Scheduled(cron="0 */1 * * * ?")
+    @Scheduled(cron="0 */15 * * * ?")
     public void initCacheV2(){
         log.info("执行缓存更新！");
         long timeOut = Long.parseLong(PropertiesUtil.getProperty("lock.timeout"));
