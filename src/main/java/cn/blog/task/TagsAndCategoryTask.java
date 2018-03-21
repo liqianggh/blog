@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 @Component
 @Slf4j
 public class TagsAndCategoryTask {
@@ -25,6 +27,7 @@ public class TagsAndCategoryTask {
     }
 
 
+    @PostConstruct//初始化容器后执行
     @Scheduled(cron="0 */10 * * * ?")
     public void initCacheV2(){
         log.info("执行缓存更新！");
@@ -61,5 +64,7 @@ public class TagsAndCategoryTask {
         tagCacheService.initCache();
         RedisShardedPoolUtil.del(locakName);
     }
+
+
 
 }
