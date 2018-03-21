@@ -27,7 +27,6 @@ public class TagsAndCategoryTask {
     }
 
 
-    @PostConstruct//初始化容器后执行
     @Scheduled(cron="0 */10 * * * ?")
     public void initCacheV2(){
         log.info("执行缓存更新！");
@@ -48,6 +47,7 @@ public class TagsAndCategoryTask {
                 String getSetResult = RedisShardedPoolUtil.getset(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()+timeOut));
                 if(getSetResult==null||(getSetResult!=null&&Long.valueOf(getSetResult)==timeOutResult)){
                     initialCache(Const.REDIS_LOCK.REDIS_LOCK_NAME);
+                    log.info("缓存更新执行完毕！");
                 }else{
                     log.info("获取分布式锁失败！");
 
@@ -56,14 +56,14 @@ public class TagsAndCategoryTask {
                 log.info("获取分布式锁失败！");
             }
        }
-        tagCacheService.initCache();
-        log.info("缓存更新执行完毕！");
+//        tagCacheService.initCache();
     }
 
     public  void initialCache(String locakName){
         tagCacheService.initCache();
         RedisShardedPoolUtil.del(locakName);
     }
+
 
 
 
