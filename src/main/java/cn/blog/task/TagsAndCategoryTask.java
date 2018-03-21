@@ -25,7 +25,7 @@ public class TagsAndCategoryTask {
     }
 
 
-    @Scheduled(cron="0 */15 * * * ?")
+    @Scheduled(cron="0 */10 * * * ?")
     public void initCacheV2(){
         log.info("执行缓存更新！");
         long timeOut = Long.parseLong(PropertiesUtil.getProperty("lock.timeout"));
@@ -53,7 +53,6 @@ public class TagsAndCategoryTask {
                 log.info("获取分布式锁失败！");
             }
        }
-
         tagCacheService.initCache();
         log.info("缓存更新执行完毕！");
     }

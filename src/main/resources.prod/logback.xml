@@ -40,7 +40,7 @@
         </filter>
     </appender>
 
-    <logger name="com.blog" additivity="false" level="INFO" >
+    <logger name="cn.blog" additivity="false" level="INFO" >
         <appender-ref ref="blog" />
         <appender-ref ref="console"/>
     </logger>
@@ -49,7 +49,7 @@
 
     <!--  mybatis log 日志  可以通过日志查看sql语句 -->
 
-    <logger name="com.blog.dao" level="DEBUG"/>
+    <logger name="cn.blog.dao" level="DEBUG"/>
 
     <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" >
         <appender-ref ref="console"/>
