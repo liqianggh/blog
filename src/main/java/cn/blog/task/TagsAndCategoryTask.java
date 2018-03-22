@@ -26,13 +26,13 @@ public class TagsAndCategoryTask {
         log.info("缓存更新执行完毕！");
     }
 
-
-    @Scheduled(cron="0 */10 * * * ?")
+    @PostConstruct
+    @Scheduled(cron="0 */30 * * * ?")
     public void initCacheV2(){
         log.info("执行缓存更新！");
         long timeOut = Long.parseLong(PropertiesUtil.getProperty("lock.timeout"));
         Long setNxResult = RedisShardedPoolUtil.setNx(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()+timeOut));
-
+        log.info(timeOut+" "+setNxResult);
         //获取锁成功
         if(setNxResult!=null&&setNxResult==1){
             initialCache(Const.REDIS_LOCK.REDIS_LOCK_NAME);
@@ -43,13 +43,13 @@ public class TagsAndCategoryTask {
             * */
             Long timeOutResult = Long.parseLong(RedisShardedPoolUtil.get(Const.REDIS_LOCK.REDIS_LOCK_NAME));
             //如果过期时间不为空 并且已经过期
-            if(timeOutResult!=null&&System.currentTimeMillis()>timeOutResult+timeOut){
-                String getSetResult = RedisShardedPoolUtil.getset(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()+timeOut));
-                if(getSetResult==null||(getSetResult!=null&&Long.valueOf(getSetResult)==timeOutResult)){
-                    initialCache(Const.REDIS_LOCK.REDIS_LOCK_NAME);
-                    log.info("缓存更新执行完毕！");
-                }else{
-                    log.info("获取分布式锁失败！");
+                              if(timeOutResult!=null&&System.currentTimeMillis()>timeOutResult+timeOut){
+                        String getSetResult = RedisShardedPoolUtil.getset(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()+timeOut));
+                        if(getSetResult==null||(getSetResult!=null&&(Long.valueOf(getSetResult)==timeOutResult))){
+                            initialCache(Const.REDIS_LOCK.REDIS_LOCK_NAME);
+                            log.info("缓存更新执行完毕！");
+                        }else{
+                            log.info("获取分布式锁失败！");
 
                 }
             }else{
@@ -63,8 +63,6 @@ public class TagsAndCategoryTask {
         tagCacheService.initCache();
         RedisShardedPoolUtil.del(locakName);
     }
-
-
 
 
 }
