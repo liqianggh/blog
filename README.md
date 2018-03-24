@@ -88,4 +88,6 @@ CentOS6.8 + JDK1.7+MySQL5.1+Maven3.0.5+Nginx1.10.2+Git2.8+Tomcat7+Redis2.8+Vsftp
 
 17.nginx+tomcat集群。2018/3/18
 
+18.后台管理部分实现。2018/3/24
+
 持续更新中。。。
