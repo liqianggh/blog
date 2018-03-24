@@ -56,6 +56,9 @@ public class BlogServiceImpl implements IBlogService {
             //如果有id就更新
             //todo 校验管理员是否登录
             rowCount = blogMapper.updateByPrimaryKeySelective(blog);
+            //删除所有标签
+            tagMapper.deleteBlogTags(blog.getBlogId());
+
         } else {
             //没有id就添加
             //校验参数
@@ -110,8 +113,12 @@ public class BlogServiceImpl implements IBlogService {
      */
     @Override
     public ServerResponse<PageInfo> listByCodeTitleTagCategory(Integer code, String title,String orderBy,
-                                                               Integer tagId, Integer categoryId, int pageNum, int pageSize) {
+
+                                                               Integer tagId, Integer categoryId,Boolean isCalc, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
+        if(isCalc==null){
+            isCalc=true;
+        }
         //排序处理
         if(org.apache.commons.lang3.StringUtils.isNotBlank(orderBy)){
             //如果包含处理结果 就进行处理
@@ -129,7 +136,7 @@ public class BlogServiceImpl implements IBlogService {
         PageInfo pageInfo = new PageInfo(blogBoList);
         List<BlogVo> blogVoList = Lists.newArrayList();
         for (BlogBo blogBo : blogBoList) {
-            blogVoList.add(changeBoToVo(blogBo,null,true));
+            blogVoList.add(changeBoToVo(blogBo,null,isCalc));
         }
         pageInfo.setList(blogVoList);
 
@@ -328,6 +335,19 @@ public class BlogServiceImpl implements IBlogService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public ServerResponse deleteBlog(Integer blogId) {
+        int result = 0;
+        //todo 进行校验处理
+         result = tagMapper.deleteBlogTags(blogId);
+         result =  blogMapper.deleteByPrimaryKey(blogId);
+         if(result==0){
+             return ServerResponse.createByErrorMessage("删除失败！");
+         }
+
+        return ServerResponse.createBySuccess();
     }
 
     private BlogVo changeBoToVo(BlogBo blogBo,String regex,boolean isCalc) {

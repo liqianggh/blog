@@ -14,7 +14,7 @@ import java.util.List;
 public interface IBlogService {
     ServerResponse saveOrUpdate(Blog blog,String tagIds);
 
-    ServerResponse<PageInfo> listByCodeTitleTagCategory(Integer code, String title,String orderBy, Integer tagId, Integer categoryId, int pageNum, int pageSize);
+    ServerResponse<PageInfo> listByCodeTitleTagCategory(Integer code, String title,String orderBy, Integer tagId, Integer categoryId,Boolean isCalc, int pageNum, int pageSize);
 
     ServerResponse addTagToBlog(Integer blogId,Integer  tagId);
 
@@ -35,4 +35,6 @@ public interface IBlogService {
     boolean cancelLike(Integer blogId);
 
     boolean addViewCount(Integer blogId);
+
+    ServerResponse deleteBlog(Integer blogId);
 }

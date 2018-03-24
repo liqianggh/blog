@@ -13,8 +13,8 @@ public class CrossInterceptor extends HandlerInterceptorAdapter {
         response.addHeader("Access-Control-Allow-Methods","*");
         response.addHeader("Access-Control-Max-Age","100");
         response.addHeader("Access-Control-Allow-Headers", "Content-Type");
-        String ip = request.getLocalAddr();
-        response.addHeader("Server",ip);
+//        String ip = request.getLocalAddr();
+//        response.addHeader("Server",ip);
         //允许客户端发送cookies
 //        response.addHeader("Access-Control-Allow-Credentials","true");
         return super.preHandle(request, response, handler);

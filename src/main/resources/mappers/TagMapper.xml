@@ -137,4 +137,8 @@ select ba.tagId, t.tagName ,count(ba.blogId) as tagCount from tag t, blogandtags
       updateTime = now()
     where tagId = #{tagId,jdbcType=INTEGER}
   </update>
+
+  <delete id="deleteBlogTags" parameterType="int">
+    delete from blogAndTags where blogId=#{blogId}
+  </delete>
 </mapper>

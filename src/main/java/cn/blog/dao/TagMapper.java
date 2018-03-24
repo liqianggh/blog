@@ -36,4 +36,6 @@ public interface TagMapper {
     int selectCountOfTagsAndBlog(@Param("tagId") Integer tagId, @Param("blogId") Integer blogId);
 
     List<Tag> selectTagsOfBlog(Integer blogId);
+
+    int deleteBlogTags(Integer blogId);
 }

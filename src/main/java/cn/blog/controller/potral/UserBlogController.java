@@ -59,11 +59,14 @@ public class UserBlogController {
                                          String title,
                                          Integer tagId,
                                          Integer categoryId,
+                                         Boolean isCalc,
                                          @RequestParam(value="orderBy" ,required = false)String orderBy,
                                          @RequestParam(value="pageNum",defaultValue = "1")int pageNum,
                                          @RequestParam(value = "pageSize",defaultValue = "10")int pageSize) {
-        return  iBlogService.listByCodeTitleTagCategory(code,title,orderBy,tagId,categoryId,pageNum,pageSize);
+        return  iBlogService.listByCodeTitleTagCategory(code,title,orderBy,tagId,categoryId,isCalc,pageNum,pageSize);
     }
+
+
 
 
      /**
@@ -180,7 +183,7 @@ public class UserBlogController {
 
     @RequestMapping("list_by_category.do")
     @ResponseBody
-    public ServerResponse<PageInfo> listByCategory(Integer categoryId,
+    public ServerResponse<PageInfo> listByCategory(Integer categoryId,Boolean isCalc,
                                                    @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,
                                                    @RequestParam(value="pageSize",defaultValue = "10")Integer pageSize){
 
@@ -191,14 +194,14 @@ public class UserBlogController {
         ArticleVo articleVo = new ArticleVo();
        ServerResponse<PageInfo> blogVoList = iBlogService.listByCodeTitleTagCategory(
                 Const.BlogCodeType.PUBLIC_BLOG,null,
-                "createTime_desc",null,categoryId,pageNum,pageSize);
+                "createTime_desc",null,categoryId,isCalc,pageNum,pageSize);
         return blogVoList;
 
     }
 
     @RequestMapping("list_by_tag.do")
     @ResponseBody
-    public ServerResponse<PageInfo> listByTag(Integer tagId, @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,@RequestParam(value="pageSize",defaultValue = "10")Integer pageSize){
+    public ServerResponse<PageInfo> listByTag(Integer tagId,Boolean isCalc, @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,@RequestParam(value="pageSize",defaultValue = "10")Integer pageSize){
 log.info("接收到的参数："+tagId);
 
         //todo 校验参数合法性
@@ -208,7 +211,7 @@ log.info("接收到的参数："+tagId);
         ArticleVo articleVo = new ArticleVo();
         ServerResponse<PageInfo> blogVoList = iBlogService.listByCodeTitleTagCategory(
                 Const.BlogCodeType.PUBLIC_BLOG,null,
-                "createTime_desc",tagId,null,pageNum,pageSize);
+                "createTime_desc",tagId,null,isCalc,pageNum,pageSize);
         return blogVoList;
 
     }
