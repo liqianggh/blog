@@ -16,8 +16,8 @@ public class RedisShardedPool {
     private static Boolean testOnBorrow=Boolean.parseBoolean(PropertiesUtil.getProperty("redis.test.borrow","true"));//获取jedis实例前是否要进行验证
     private static Boolean testOnReturn=Boolean.parseBoolean(PropertiesUtil.getProperty("redis.test.return","false"));//归还时是否进行验证
 
-    private static String redis1Ip = PropertiesUtil.getProperty("redis1.ip");
-    private static int redis1Port = Integer.parseInt(PropertiesUtil.getProperty("redis1.port"));
+//    private static String redis1Ip = PropertiesUtil.getProperty("redis1.ip");
+//    private static int redis1Port = Integer.parseInt(PropertiesUtil.getProperty("redis1.port"));
 
 
     private static String redis2Ip = PropertiesUtil.getProperty("redis2.ip");
@@ -33,12 +33,12 @@ public class RedisShardedPool {
 
         config.setBlockWhenExhausted(true);//连接耗尽时是否阻塞，默认为true
 
-        JedisShardInfo info1 = new JedisShardInfo(redis1Ip,redis1Port,1000*2);
+//        JedisShardInfo info1 = new JedisShardInfo(redis1Ip,redis1Port,1000*2);
         JedisShardInfo info2 = new JedisShardInfo(redis2Ip,redis2Port,1000*2);
 //        info1.setPassword("密码");
 
         List<JedisShardInfo> jedisShardInfoList = new ArrayList<JedisShardInfo>(2);
-        jedisShardInfoList.add(info1);
+//        jedisShardInfoList.add(info1);
         jedisShardInfoList.add(info2);
         //创建连接池，指定分配算法
         pool = new ShardedJedisPool(config,jedisShardInfoList, Hashing.MURMUR_HASH, Sharded.DEFAULT_KEY_TAG_PATTERN);
