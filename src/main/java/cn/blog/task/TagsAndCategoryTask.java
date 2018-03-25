@@ -25,8 +25,8 @@ public class TagsAndCategoryTask {
         tagCacheService.initCache();
         log.info("缓存更新执行完毕！");
     }
-    @PostConstruct
-    @Scheduled(cron="0 0 0/1 * * ?")
+//    @PostConstruct
+//    @Scheduled(cron="0 0 0/1 * * ?")
     public void initCacheV2(){
         log.info("执行缓存更新！");
         long timeOut = Long.parseLong(PropertiesUtil.getProperty("lock.timeout"));
@@ -58,10 +58,15 @@ public class TagsAndCategoryTask {
 //        tagCacheService.initCache();
     }
 
+
+    @PostConstruct
+    @Scheduled(cron="0 0 0/3 * * ?")
+    public  void initialCache(){
+        tagCacheService.initCache();
+    }
     public  void initialCache(String locakName){
         tagCacheService.initCache();
         RedisShardedPoolUtil.del(locakName);
     }
-
 
 }
