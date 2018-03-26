@@ -44,13 +44,13 @@ public class TagsAndCategoryTask {
 
             String timeOutResult =RedisShardedPoolUtil.get(Const.REDIS_LOCK.REDIS_LOCK_NAME);
             //如果过期时间不为空 并且已经过期
-                              if(timeOutResult!=null&&System.currentTimeMillis()>Long.parseLong(timeOutResult)+timeOut){
-                        String getSetResult = RedisShardedPoolUtil.getset(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()/1000+timeOut));
-                        if(getSetResult==null||(getSetResult!=null&&(Long.valueOf(getSetResult)==timeOutResult))){
-                            initialCache(Const.REDIS_LOCK.REDIS_LOCK_NAME);
-                            log.info("缓存更新执行完毕！");
-                        }else{
-                            log.info("获取分布式锁失败！");
+              if(timeOutResult!=null&&System.currentTimeMillis()>Long.parseLong(timeOutResult)+timeOut){
+                String getSetResult = RedisShardedPoolUtil.getset(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()/1000+timeOut));
+                if(getSetResult!=null&&(Long.valueOf(getSetResult)==Long.parseLong(timeOutResult))){
+                    initialCache(Const.REDIS_LOCK.REDIS_LOCK_NAME);
+                    log.info("缓存更新执行完毕！");
+                }else{
+                    log.info("获取分布式锁失败！");
 
                 }
             }else{
