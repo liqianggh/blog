@@ -41,9 +41,10 @@ public class TagsAndCategoryTask {
             /*
             * 校验锁是否过期
             * */
-            Long timeOutResult = Long.parseLong(RedisShardedPoolUtil.get(Const.REDIS_LOCK.REDIS_LOCK_NAME));
+
+            String timeOutResult =RedisShardedPoolUtil.get(Const.REDIS_LOCK.REDIS_LOCK_NAME);
             //如果过期时间不为空 并且已经过期
-                              if(timeOutResult!=null&&System.currentTimeMillis()>timeOutResult+timeOut){
+                              if(timeOutResult!=null&&System.currentTimeMillis()>Long.parseLong(timeOutResult)+timeOut){
                         String getSetResult = RedisShardedPoolUtil.getset(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()/1000+timeOut));
                         if(getSetResult==null||(getSetResult!=null&&(Long.valueOf(getSetResult)==timeOutResult))){
                             initialCache(Const.REDIS_LOCK.REDIS_LOCK_NAME);
