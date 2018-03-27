@@ -30,7 +30,7 @@ public class TagsAndCategoryTask {
     @Scheduled(cron="0 0 0/1 * * ?")
     public void initCacheV2(){
         log.info("执行缓存更新！");
-        long timeOut = Long.parseLong(PropertiesUtil.getProperty("lock.timeout"));
+        Long timeOut = Long.parseLong(PropertiesUtil.getProperty("lock.timeout","2000"));
         Long setNxResult = RedisShardedPoolUtil.setNx(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()/1000+timeOut));
         log.info(timeOut+" "+setNxResult);
         //获取锁成功
@@ -41,14 +41,13 @@ public class TagsAndCategoryTask {
             /*
             * 校验锁是否过期
             * */
-
             String timeOutResult =RedisShardedPoolUtil.get(Const.REDIS_LOCK.REDIS_LOCK_NAME);
             //如果过期时间不为空 并且已经过期
               if(timeOutResult!=null&&System.currentTimeMillis()>Long.parseLong(timeOutResult)+timeOut){
-                String getSetResult = RedisShardedPoolUtil.getset(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()/1000+timeOut));
-                if(getSetResult!=null&&(Long.valueOf(getSetResult)==Long.parseLong(timeOutResult))){
+                String getSetResult = RedisShardedPoolUtil.getset(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()/1000));
+                if(getSetResult!=null||(getSetResult!=null&&getSetResult.equals(timeOutResult))){
                     initialCache(Const.REDIS_LOCK.REDIS_LOCK_NAME);
-                    log.info("缓存更新执行完毕！");
+                    log.info("缓存更新执行成功！");
                 }else{
                     log.info("获取分布式锁失败！");
 
