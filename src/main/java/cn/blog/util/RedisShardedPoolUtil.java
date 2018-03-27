@@ -237,6 +237,7 @@ public class RedisShardedPoolUtil {
          System.out.println("end");
 
 
+
 //        boolean result = RedisShardedPoolUtil.sismember("setTest", "valuseTest");
 //        log.info(result + " ");
     }

@@ -24,6 +24,7 @@ public class RedisShardedPool {
     private static int redis2Port = Integer.parseInt(PropertiesUtil.getProperty("redis2.port"));
 
     private  static void initPool(){
+        System.out.println(redis2Ip+":"+redis2Port);
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxIdle(maxIdel);
         config.setMinIdle(minIdel);
@@ -63,7 +64,7 @@ public class RedisShardedPool {
     public static void main(String[] args) {
         ShardedJedis jedis = pool.getResource();
 
-        for(int i = 0; i < 10; i ++){
+        for(int i = 0; i < 3; i ++){
             jedis.set("key"+i,"value"+i);
         }
 
