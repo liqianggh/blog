@@ -50,5 +50,10 @@ public class TagController {
         return iTagService.delete(tagId);
     }
 
+    @RequestMapping("listById.do")
+    @ResponseBody
+    public ServerResponse<Tag> listById(@RequestParam(value="tagId") Integer tagId){
+        return ServerResponse.createBySuccess(iTagService.findTagById(tagId));
+    }
 
 }
