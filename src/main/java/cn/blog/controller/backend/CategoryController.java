@@ -50,4 +50,9 @@ public class CategoryController {
         return iCategoryService.delete(categoryId);
     }
 
+    @RequestMapping("listById.do")
+    @ResponseBody
+    public ServerResponse<CategoryVo> listById(Integer categoryId){
+        return iCategoryService.findById(categoryId);
+    }
 }

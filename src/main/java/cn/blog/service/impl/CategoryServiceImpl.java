@@ -73,6 +73,7 @@ public class CategoryServiceImpl implements ICategoryService{
          int rowCount = categoryMapper.deleteByPrimaryKey(categoryId);
 
          if(rowCount>0){
+             //todo 删除与之关联的博客
              return createBySuccess();
          }
          return ServerResponse.createByErrorMessage("删除失败！");
@@ -113,7 +114,7 @@ public class CategoryServiceImpl implements ICategoryService{
             CategoryVo categoryVo = new CategoryVo();
             BeanUtils.copyProperties(category,categoryVo);
             categoryVo.setUpdateTimeStr(DateTimeUtil.dateToStr(category.getUpdateTime()));
-            categoryVo.setUpdateTimeStr(DateTimeUtil.dateToStr(category.getCreateTime()));
+            categoryVo.setCreateTimeStr(DateTimeUtil.dateToStr(category.getCreateTime()));
             categoryVoList.add(categoryVo);
         }
         pageInfo.setList(categoryVoList);
