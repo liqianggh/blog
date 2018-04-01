@@ -341,4 +341,12 @@ log.info("接收到的参数："+tagId);
         return ServerResponse.createByErrorMessage("贡献浏览量失败！");
     }
 
+
+    @RequestMapping("listByTitle.do")
+    @ResponseBody
+    public  ServerResponse<PageInfo> listByTitle(@RequestParam("title") String title,@RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,@RequestParam(value="pageSize",defaultValue = "10")Integer pageSize){
+        PageInfo pageInfo = iBlogService.findBlogVoPageInfo(Const.BlogCodeType.PUBLIC_BLOG,null,null,"createTime_desc",title,pageNum,pageSize);
+        return ServerResponse.createBySuccess(pageInfo);
+    }
+
 }
