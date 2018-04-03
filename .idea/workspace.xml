@@ -8,7 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cc4e72ed-8189-496c-b3fe-8d6d7e51b063" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/book.html" afterPath="$PROJECT_DIR$/src/main/webapp/book.html" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/resume.html" afterPath="$PROJECT_DIR$/src/main/webapp/resume.html" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -60,8 +59,8 @@
       <file leaf-file-name="book.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/book.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1">
-              <caret line="87" column="49" lean-forward="true" selection-start-line="87" selection-start-column="49" selection-end-line="87" selection-end-column="49" />
+            <state relative-caret-position="160">
+              <caret line="41" column="125" lean-forward="false" selection-start-line="41" selection-start-column="119" selection-end-line="41" selection-end-column="125" />
               <folding />
             </state>
           </provider>
@@ -71,7 +70,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/webapp/resume.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="160">
-              <caret line="107" column="97" lean-forward="true" selection-start-line="107" selection-start-column="97" selection-end-line="107" selection-end-column="97" />
+              <caret line="75" column="109" lean-forward="false" selection-start-line="75" selection-start-column="109" selection-end-line="75" selection-end-column="109" />
               <folding />
             </state>
           </provider>
@@ -281,7 +280,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>trim</find>
       <find>code !=null</find>
       <find>guessYouLike</find>
       <find>index</find>
@@ -311,6 +309,7 @@
       <find>request.get</find>
       <find>images</find>
       <find>header</find>
+      <find>resume</find>
     </findStrings>
     <replaceStrings>
       <replace>blog</replace>
@@ -974,12 +973,12 @@
       <workItem from="1522582136707" duration="3300000" />
       <workItem from="1522591812163" duration="490000" />
       <workItem from="1522676668114" duration="1298000" />
-      <workItem from="1522721074112" duration="788000" />
+      <workItem from="1522721074112" duration="1017000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="367861000" />
+    <option name="totallyTimeSpent" value="368090000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1552,8 +1551,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/book.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1">
-          <caret line="87" column="49" lean-forward="true" selection-start-line="87" selection-start-column="49" selection-end-line="87" selection-end-column="49" />
+        <state relative-caret-position="160">
+          <caret line="41" column="125" lean-forward="false" selection-start-line="41" selection-start-column="119" selection-end-line="41" selection-end-column="125" />
           <folding />
         </state>
       </provider>
@@ -1561,7 +1560,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/resume.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
-          <caret line="107" column="97" lean-forward="true" selection-start-line="107" selection-start-column="97" selection-end-line="107" selection-end-column="97" />
+          <caret line="75" column="109" lean-forward="false" selection-start-line="75" selection-start-column="109" selection-end-line="75" selection-end-column="109" />
           <folding />
         </state>
       </provider>
