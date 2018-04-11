@@ -1,24 +1,24 @@
 package cn.blog.common;
 
-import lombok.extern.slf4j.slf4j;
-import org.springframework.stereotype.component;
-import org.springframework.web.servlet.handlerexceptionresolver;
-import org.springframework.web.servlet.modelandview;
-import org.springframework.web.servlet.view.json.mappingjacksonjsonview;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
-import javax.servlet.http.httpservletrequest;
-import javax.servlet.http.httpservletresponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@slf4j
-@component
-public class exceptionresolver implements handlerexceptionresolver {
+@Slf4j
+@Component
+public class ExceptionResolver implements HandlerExceptionResolver {
 
-    @override
-    public modelandview resolveexception(httpservletrequest httpservletrequest, httpservletresponse httpservletresponse, object o, exception e) {
-        modelandview modelandview  = new modelandview(new mappingjacksonjsonview());
-        modelandview.addobject("status",responsecode.error.getcode());
-        modelandview.addobject("msg","接口异常信息");
-        modelandview.addobject("data",e.tostring());
-        return modelandview;
+    @Override
+    public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
+        ModelAndView modelAndView  = new ModelAndView(new MappingJacksonJsonView());
+        modelAndView.addObject("status",ResponseCode.ERROR.getCode());
+        modelAndView.addObject("msg","接口异常信息");
+        modelAndView.addObject("data",e.toString());
+        return modelAndView;
     }
 }
