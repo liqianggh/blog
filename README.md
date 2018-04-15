@@ -122,3 +122,4 @@ CentOS6.8 + JDK1.7+MySQL5.1+Maven3.0.5+Nginx1.10.2+Git2.8+Tomcat7+Redis2.8+Vsftp
 
 
 持续更新中。。。
+需要数据库表的请邮件联系我哦
