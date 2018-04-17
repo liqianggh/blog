@@ -1,0 +1,250 @@
+@media only screen and (max-width: 980px) {
+    .dl-share {
+        display: none;
+    }
+    
+    .year {
+        text-align: left;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    body {
+        padding-bottom: 10px;
+    }
+    .container-resume {
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .container-resume {
+        padding: 20px;
+    }
+    h1 {
+        margin-top: 20px;
+    }
+    .propic {
+        border-radius: 0;
+    }
+    .list-unstyled li {
+        border-bottom: 1px solid #fcfcfc;
+        padding: 15px 0;
+    }
+    .firsthr {
+        visibility: hidden;
+    }
+    .secicon.fa {
+        margin: 10px 0;
+    }
+    .year,
+    .mobmid {
+        text-align: center;
+    }
+}
+
+@media only screen and (width: 480px) {
+    footer{
+        padding: 0 100px;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    footer{
+        padding: 0 15px;
+    }
+}
+
+/*body {
+    background: #f4f4f4;
+    color: #757575;
+    font-family: 'Alegreya Sans', sans-serif;
+    letter-spacing: 2px;
+    padding-bottom: 60px;
+}
+
+*/
+.container-resume {
+       color: #757575;
+    font-family: 'Alegreya Sans', sans-serif;
+    letter-spacing: 2px;
+    background: #fff;
+    padding: 70px 75px;
+    margin: 1px auto;
+    border: 1px solid #a5d4fc;
+    min-height: 500px;
+    overflow: hidden;
+    max-width: 1176px;
+}
+
+img {
+    max-width: 100%
+}
+
+.propic {
+    border-radius: 10px;
+}
+
+hr {
+    margin: 40px 0;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: bolder;
+    text-transform: uppercase;
+    color: #000;
+    margin: 0;
+}
+
+h2 {
+    font-size: 1.3em;
+    background: #fcfcfc;
+    padding: 10px;
+}
+
+h3 {
+    font-size: 1.4em;
+    text-transform: uppercase;
+    color: #000;
+    margin-top: 0;
+}
+
+h4 {
+    margin: 15px 0 0;
+}
+
+.container-resume a ,p{
+    line-height: 1.7em;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    font-size: 16px;
+}
+
+/*li {
+    padding: 7px 0;
+}*/
+
+.dl-share .btn {
+    min-width: 120px;
+}
+
+.signature {
+    font-family: 'Kristi', cursive;
+    color: #3e3f40;
+    font-size: 2.2em;
+    margin-top: 20px;
+}
+
+.social {
+    margin-right: 7px;
+}
+
+.btn .fa {
+    margin-right: 10px;
+}
+
+.secicon.fa {
+    font-size: 28px;
+    color: #000;
+    margin-right: 10px;
+}
+
+.sub {
+    margin-bottom: 15px;
+}
+
+.award {
+    padding-top: 20px;
+}
+
+blockquote {
+    font-size: 1em;
+    padding: 0 15px;
+    margin: 30px 0;
+}
+.copyrights{
+	text-indent:-9999px;
+	height:0;
+	line-height:0;
+	font-size:0;
+	overflow:hidden;
+}
+.mainleft {
+    padding-right: 30px;
+}
+
+.testimonials img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    float: left;
+    margin-right: 15px;
+    margin-top: -10px;
+    border: 1px solid #ededed;
+}
+
+.year,
+.share {
+    text-align: right;
+}
+.book_table{
+    margin: 30px 0;
+/*    border:solid red 1px;
+*/    text-align: center;
+}
+
+ .item_book{
+    margin:10px auto;
+    min-height:175px;
+   width: 1000px;
+}
+
+.item_book li{
+     position:relative;
+    float: left;
+    margin: 10px auto;
+    height:175px;
+/*    border:solid red 1px;*/
+}
+
+.book_image{
+     width: 141px;
+}
+.book_image img{
+    width:1130px;
+    height: 172px;
+}
+.book_title{
+    width:600px;
+    overflow: hidden;
+}
+.book_title div{
+    text-align: left;
+    letter-spacing: 1px;
+    margin: 7px 10px 0 15px;
+}
+.book_comment{
+  width: 252px;
+  text-align: left;
+}
+.comment_div{
+    text-indent: 2px;
+    margin:15px 10px 0 10px;
+    letter-spacing: 1px;
+
+}
+.pingfen{
+    color:red;
+}
+
+.book_table .item_book{
+
+ border-bottom: dashed gray 1px;
+ padding-bottom: 15px;
+
+}
+.book_table .item_book:last-child{
+      border: none;
+}

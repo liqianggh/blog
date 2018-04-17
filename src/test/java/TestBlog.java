@@ -1,4 +1,4 @@
-import org.junit.Test;
+//import org.junit.Test;
 
 /**
  * 无处不再的跳转
@@ -73,7 +73,7 @@ import org.junit.Test;
  */
 public class TestBlog {
 
-    @Test
+//    @Test
     public void test() {
 
         for(int i = 0;i<=100;i++){
