@@ -1,6 +1,8 @@
 package cn.blog.controller.potral;
 
 import cn.blog.common.ServerResponse;
+import cn.blog.dao.VisitorMapper;
+import cn.blog.pojo.Visitor;
 import cn.blog.service.CacheService.CacheService;
 import cn.blog.service.IFileService;
 import cn.blog.util.PropertiesUtil;
@@ -17,6 +19,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.InputStream;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -33,6 +37,8 @@ public class TestController {
     private CacheService tagCacheService;
 //todo 要做定时任务
 
+    @Autowired
+    private VisitorMapper visitorMapper;
     @RequestMapping("init.do")
           @ResponseBody
         public ServerResponse init(HttpSession session) {
@@ -44,9 +50,8 @@ public class TestController {
     @RequestMapping("test.do")
     @ResponseBody
     public ServerResponse test(HttpSession session) {
-            int y = 10/0;
-        return ServerResponse.createBySuccess();
 
+        return null;
     }
 
 

@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.codehaus.jackson.map.annotate.JacksonInject;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
-import java.io.Serializable;
 import java.util.Date;
  /**
   * @Description: 博客分类，使用lombok简化代码

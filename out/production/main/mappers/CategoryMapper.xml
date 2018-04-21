@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.blog.dao.CategoryMapper" >
+  <resultMap id="BaseResultMap" type="cn.blog.pojo.Category" >
+    <constructor >
+      <idArg column="categoryId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="categoryName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="categoryDesc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="createTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="updateTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    categoryId, categoryName, categoryDesc, createTime, updateTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from category
+    where categoryId = #{categoryId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllSimple" resultType="cn.blog.vo.CategoryVo">
+    select categoryId,categoryName
+    from category
+  </select>
+  <select id="selectAll" resultType="cn.blog.pojo.Category">
+    select
+    <include refid="Base_Column_List"/>
+    from category
+  </select>
+    <select id="selectAllWithBlogCount" resultType="cn.blog.vo.CategoryVo">
+          select b.categoryId, count(1) blogCount ,c.categoryName from blog b,category c where b.categoryId=c.categoryId group by b.categoryId;
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from category
+    where categoryId = #{categoryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.blog.pojo.Category" >
+    insert into category (categoryId, categoryName, categoryDesc, 
+      createTime, updateTime)
+    values (#{categoryId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{categoryDesc,jdbcType=VARCHAR}, 
+      now(),now())
+  </insert>
+  <insert id="insertSelective" parameterType="cn.blog.pojo.Category" >
+    insert into category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        categoryId,
+      </if>
+      <if test="categoryName != null" >
+        categoryName,
+      </if>
+      <if test="categoryDesc != null" >
+        categoryDesc,
+      </if>
+      <!--<if test="createTime != null" >-->
+        createTime,
+      <!--</if>-->
+      <!--<if test="updateTime != null" >-->
+        updateTime,
+      <!--</if>-->
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryDesc != null" >
+        #{categoryDesc,jdbcType=VARCHAR},
+      </if>
+      <!--<if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+        </if>
+      -->
+        now(),
+      <!--<if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+         </if>
+      -->
+      now(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.blog.pojo.Category" >
+    update category
+    <set >
+      <if test="categoryName != null" >
+        categoryName = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryDesc != null" >
+        categoryDesc = #{categoryDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <!--<if test="updateTime != null" >-->
+        <!--updateTime = #{updateTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+        updateTime=now(),
+    </set>
+    where categoryId = #{categoryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.blog.pojo.Category" >
+    update category
+    set categoryName = #{categoryName,jdbcType=VARCHAR},
+      categoryDesc = #{categoryDesc,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      updateTime = now()
+    where categoryId = #{categoryId,jdbcType=INTEGER}
+  </update>
+</mapper>

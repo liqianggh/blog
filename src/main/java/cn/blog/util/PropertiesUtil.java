@@ -1,9 +1,9 @@
 package cn.blog.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -14,9 +14,9 @@ import java.util.Properties;
 public class PropertiesUtil {
 
     private static Properties props;
+     private static String fileName = "blog.properties";
 
     static{
-        String fileName = "blog.properties";
         props = new Properties();
         try {
             props.load(new InputStreamReader(PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName),"UTF-8"));
@@ -41,5 +41,13 @@ public class PropertiesUtil {
             value = defaultValue;
         }
         return value.trim();
+    }
+
+
+    public static void setProperty(String key,String value) throws IOException {
+        if(org.apache.commons.lang.StringUtils.isNotEmpty(key) && StringUtils.isNotEmpty(value)){
+             props.setProperty(key,value);
+             props.store(new FileOutputStream(fileName),null);
+        }
     }
 }

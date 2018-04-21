@@ -1,11 +1,9 @@
 package cn.blog.dao;
 
-import cn.blog.bo.TagsAndBlog;
 import cn.blog.pojo.Tag;
 import cn.blog.vo.TagVo;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.HashSet;
 import java.util.List;
 
 public interface TagMapper {

@@ -1,6 +1,11 @@
 package cn.blog.pojo;
 
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.Getter;
 
 import java.util.Date;
 @Setter

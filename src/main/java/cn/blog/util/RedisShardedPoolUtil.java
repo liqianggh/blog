@@ -4,8 +4,9 @@ import cn.blog.common.Const;
 import cn.blog.common.RedisShardedPool;
 import cn.blog.common.RedisShardedPool;
 import lombok.extern.slf4j.Slf4j;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ShardedJedis;
+
+import java.util.Map;
 
 /**
   * @Description: 封装Redis工具类
@@ -21,7 +22,7 @@ public class RedisShardedPoolUtil {
             jedis = RedisShardedPool.getJedis();
             result = jedis.set(key, value);
         } catch (Exception e) {
-            log.error("set key:{} value:{} error", key, value, e);
+            log.error("set key:{} value:{} error{ }", key, value, e);
             RedisShardedPool.returnBrokenResource(jedis);
             return result;
         }
@@ -29,6 +30,24 @@ public class RedisShardedPoolUtil {
         return result;
     }
 
+    public static String setEx(String key, String value,Integer expireTime) {
+        ShardedJedis jedis = null;
+        String result = null;
+        if (expireTime == null) {
+            expireTime = 60 * 30;
+        }
+        try {
+            jedis = RedisShardedPool.getJedis();
+            result = jedis.set(key, value);
+            jedis.expire(key,expireTime);
+        } catch (Exception e) {
+            log.error("set key:{} value:{} error{} expireTime{}", key, value, e,expireTime);
+            RedisShardedPool.returnBrokenResource(jedis);
+            return result;
+        }
+        RedisShardedPool.returnResource(jedis);
+        return result;
+    }
     //sadd方法
     public static Long sadd(String key, String value, Integer expireTime) {
         ShardedJedis jedis = null;
@@ -142,7 +161,7 @@ public class RedisShardedPoolUtil {
             result = jedis.hset(key, filed, value);
             jedis.expire(key, expireTime);
         } catch (Exception e) {
-            log.error("hset key:{} filed:{} value:{} error", key, filed, value, e);
+            log.error("hset key:{} filed:{} expireTime{} value:{} error", key, filed, value,expireTime, e);
             RedisShardedPool.returnBrokenResource(jedis);
         }
         RedisShardedPool.returnResource(jedis);
@@ -178,7 +197,6 @@ public class RedisShardedPoolUtil {
         RedisShardedPool.returnResource(jedis);
         return result;
     }
-
     //hdel
     public static Long hdel(String key, String filed) {
         ShardedJedis jedis = null;
@@ -194,6 +212,21 @@ public class RedisShardedPoolUtil {
         return result;
     }
 
+    //hdel
+    public static Map<String,String> hgetAll (String key) {
+        ShardedJedis jedis = null;
+        Map<String,String> result = null;
+        try {
+            jedis = RedisShardedPool.getJedis();
+            result =  jedis.hgetAll(key);
+        } catch (Exception e) {
+            log.error("hgetAll key:{}  error{}", key, e);
+            RedisShardedPool.returnBrokenResource(jedis);
+        }
+        RedisShardedPool.returnResource(jedis);
+        return result;
+    }
+
     //setNx方法
     public static Long setNx(String key, String value) {
         ShardedJedis jedis = null;
@@ -201,6 +234,35 @@ public class RedisShardedPoolUtil {
         try {
             jedis = RedisShardedPool.getJedis();
             result = jedis.setnx(key, value);
+        } catch (Exception e) {
+            log.error("set key:{} value:{} error{}", key, value, e);
+            RedisShardedPool.returnBrokenResource(jedis);
+            return result;
+        }
+        RedisShardedPool.returnResource(jedis);
+        return result;
+    }
+    public static Long setNx(String key, String value, int expire) {
+        ShardedJedis jedis = null;
+        Long result = null;
+        try {
+            jedis = RedisShardedPool.getJedis();
+            result = jedis.setnx(key, value);
+            jedis.expire(key,expire);
+        } catch (Exception e) {
+            log.error("set key:{} value:{} error:{}", key, value, e);
+            RedisShardedPool.returnBrokenResource(jedis);
+            return result;
+        }
+        RedisShardedPool.returnResource(jedis);
+        return result;
+    }
+    public static String getset(String key, String value) {
+        ShardedJedis jedis = null;
+        String result = null;
+        try {
+            jedis = RedisShardedPool.getJedis();
+            result = jedis.getSet(key, value);
         } catch (Exception e) {
             log.error("set key:{} value:{} error", key, value, e);
             RedisShardedPool.returnBrokenResource(jedis);
@@ -210,14 +272,29 @@ public class RedisShardedPoolUtil {
         return result;
     }
 
-    public static String getset(String key, String value) {
+    public static long incr(String key) {
         ShardedJedis jedis = null;
-        String result = null;
+        Long result = null;
         try {
             jedis = RedisShardedPool.getJedis();
-            result = jedis.getSet(key, value);
+            result = jedis.incr(key);
         } catch (Exception e) {
-            log.error("set key:{} value:{} error", key, value, e);
+            log.error("incr key:{}", key);
+            RedisShardedPool.returnBrokenResource(jedis);
+            return result;
+        }
+        RedisShardedPool.returnResource(jedis);
+        return result;
+    }
+
+    public static Boolean exists(String key) {
+        ShardedJedis jedis = null;
+        Boolean result = null;
+        try {
+            jedis = RedisShardedPool.getJedis();
+            result = jedis.exists(key);
+        } catch (Exception e) {
+            log.error("incr exists:{}", key);
             RedisShardedPool.returnBrokenResource(jedis);
             return result;
         }
@@ -235,8 +312,6 @@ public class RedisShardedPoolUtil {
 
             RedisShardedPool.returnResource(jedis);
          System.out.println("end");
-
-
 
 //        boolean result = RedisShardedPoolUtil.sismember("setTest", "valuseTest");
 //        log.info(result + " ");
