@@ -86,8 +86,9 @@
   <insert id="batchInsert" parameterType="list" >
       insert into visitor(ipAddr, createTime, updateTime)
       values
-    <foreach collection="visitors" open="(" close=")" separator="," item="item" index="index">
-      INET_ATON(#{item.ipaddr}),#{item.createtime},#{item.updatetime}
+    <!-- open="(" close=")"-->
+    <foreach collection="visitors" separator="," item="item" index="index">
+      (INET_ATON(#{item.ipaddr}) ,#{item.createtime},#{item.updatetime})
     </foreach>
 
   </insert>
