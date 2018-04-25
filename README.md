@@ -9,7 +9,9 @@
 
 ​      UI是基于欲思主题改造的。在页面上花费了很多时间，为了增强用户体验，引用了很多花里胡哨的插件，同时有专门的文件服务器用来存储图片和js/css文件，大大提高了网站的响应速度度。同时后台也采用了Tomcat集群与Redis分布式来提高网站的性能。当然好的项目都不是一蹴而就的，本项目仍然有很多问题，我会继续努力完善。
 
-![](http://p34qzbztu.bkt.clouddn.com/201802030200_161.jpg?imageView1/JannLee/md/01)
+ ![](http://p34qzbztu.bkt.clouddn.com/201804232236_895.jpg?imageView1/JannLee/md/01)
+
+ 
 
 ### 引用的插件：
 
@@ -22,6 +24,8 @@
 ②3D效果标签云
 
 忘记在哪里找的了，不过github上和百度搜索中都能找到。
+
+ 
 
 ![](http://p34qzbztu.bkt.clouddn.com/201804082217_593.png?imageView1/JannLee/md/01)
 
