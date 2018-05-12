@@ -66,16 +66,16 @@
 
 */
 .container-resume {
-       color: #757575;
+    color: #757575;
     font-family: 'Alegreya Sans', sans-serif;
     letter-spacing: 2px;
     background: #fff;
     padding: 70px 75px;
-    margin: 1px auto;
+    margin: 4px auto;
     border: 1px solid #a5d4fc;
     min-height: 500px;
     overflow: hidden;
-    max-width: 1176px;
+    max-width: 1141px;
 }
 
 img {

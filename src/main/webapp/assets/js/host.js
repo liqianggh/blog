@@ -1,7 +1,19 @@
 // var host = "http://localhost:8080"
 var host = "http://www.mycookies.cn"
 var searchTitle = null;
-
+var cateId = null;
+var tId = null;
+initMobileMenue();
+function initMobileMenue(){
+    var oH2 = document.getElementById("navh2");
+    var oUl = document.getElementById("navul");
+    oH2.onclick = function ()
+    {
+        var style = oUl.style;
+        style.display = style.display == "block" ? "none" : "block";
+        oH2.className = style.display == "block" ? "open" : ""
+    }
+}
 //获取随机数
 function getRandom(min,max){
 	//Math.random()*(上限-下限+1)+下限  
@@ -94,7 +106,7 @@ function goToPage(pageNum){
 			 	type:"post",
 			 	dataType:"json",
 			 	url:host+"/user/blog/next_page.do",
-			 	data:{"pageNum":pageNum,"title":searchTitle},
+			 	data:{"pageNum":pageNum,"title":searchTitle,"categoryId":cateId,"tagId":tId},
 			 	success:function(data){
 		 			var blogList = data.data.list;
 		 			var pageInfo = data.data;
@@ -143,11 +155,12 @@ function initialCategory(categoryList,status){
 	d_category.empty();
 	if(status==0){
 		$.each(categoryList,function(index,value){
-			d_category.append("<a class=cate"+getRandom(1,6)+" title='"+value.categoryName+"' href='category.html?categoryId="+value.categoryId+"'>"+value.categoryName+"("+value.blogCount+")</a>");
+			//d_category.append("<a class=cate"+getRandom(1,10)+" title='"+value.categoryName+"' href='category.html?categoryId="+value.categoryId+"'>"+value.categoryName+"("+value.blogCount+")</a>");
+            d_category.append("<a class=cate"+(index+1)+" title='"+value.categoryName+"' href='category.html?categoryId="+value.categoryId+"'>"+value.categoryName+"("+value.blogCount+")</a>");
 		})
 	}else if(status ==1){
 		$.each(categoryList,function(index,value){
-			d_category.append("<a class=cate"+getRandom(1,6)+" title='"+value.categoryName+"' href=javascript:findByCategory("+value.categoryId+",'"+value.categoryName+"')>"+value.categoryName+"("+value.blogCount+")</a>");
+			d_category.append("<a class=cate"+(index+1)+" title='"+value.categoryName+"' href=javascript:findByCategory("+value.categoryId+",'"+value.categoryName+"')>"+value.categoryName+"("+value.blogCount+")</a>");
 		})	
 	}
 	
@@ -162,7 +175,7 @@ function initialTagClouds(tagList,status){
 	 		var tagId = value.tagId;
 	 		var tagName = value.tagName;
 	 		var tagCount = value.tagCount;
-	 		tagscloud.append("<a href='category.html?tagId="+tagId+"' class='tagc"+getRandom(1,5)+"'>"+tagName+'('+tagCount+')'+"</a>");
+	 		tagscloud.append("<a href='category.html?tagId="+tagId+"' class='tagc"+getRandom(1,10)+"'>"+tagName+'('+tagCount+')'+"</a>");
 	 	})
 
 	}else if(status==1){
@@ -170,7 +183,7 @@ function initialTagClouds(tagList,status){
 	 		var tagId = value.tagId;
 	 		var tagName = value.tagName;
 	 		var tagCount = value.tagCount;
-	 		tagscloud.append("<a href=javascript:findByTag("+tagId+",'"+tagName+"') class='tagc"+getRandom(1,5)+"'>"+tagName+'('+tagCount+')'+"</a>");
+	 		tagscloud.append("<a href=javascript:findByTag("+tagId+",'"+tagName+"') class='tagc"+getRandom(1,10)+"'>"+tagName+'('+tagCount+')'+"</a>");
 	 	})
 	}
  	//启动标签特效
@@ -281,7 +294,7 @@ function findByTag(tagId,tagName){
 		,isLastPage,nextPage,hasNextPage,prePage,hasPreviousPage);
 
 			initBlogList(blogList);
-
+			tId = tagId;
 		}
 	})
 
@@ -325,6 +338,38 @@ function search(){
 			}
 		})
 	 searchTitle=value;
-}
+	}
 
+
+
+function findByCategory(categoryId,categoryName){
+    changeThePageTitle(categoryName);
+    changeMenuItem(categoryId);
+    initialHeader(1,categoryName,categoryId);
+    $.ajax({
+        type:"post",
+        dataType:"json",
+        url:host+"/user/blog/list_by_category.do",
+        data:{"categoryId":categoryId},
+        success:function(data){
+            var blogList = data.data.list;
+            var pageInfo = data.data;
+            //分页部分
+            var pageNum =pageInfo.pageNum;
+            var pages=pageInfo.pages;
+            var firstPage=pageInfo.firstPage;
+            var isFirstPage=pageInfo.isFirstPage;
+            var lastPage = pageInfo.lastPage;
+            var isLastPage=pageInfo.isLastPage;
+            var nextPage=pageInfo.nextPage;
+            var hasNextPage=pageInfo.hasNextPage;
+            var prePage = pageInfo.prePage;
+            var hasPreviousPage = pageInfo.hasPreviousPage;
+            pagination(pageNum,pages,firstPage,isFirstPage,lastPage
+                ,isLastPage,nextPage,hasNextPage,prePage,hasPreviousPage);
+            initBlogList(blogList);
+			cateId = categoryId;
+        }
+    })
+}
 

@@ -46,7 +46,6 @@ window.onload=function(){
 							var hasPreviousPage = pageInfo.hasPreviousPage;
 						pagination(pageNum,pages,firstPage,isFirstPage,lastPage
 						,isLastPage,nextPage,hasNextPage,prePage,hasPreviousPage);
-
  					    }
 					})
 
@@ -87,7 +86,6 @@ window.onload=function(){
 							var hasPreviousPage = pageInfo.hasPreviousPage;
 						pagination(pageNum,pages,firstPage,isFirstPage,lastPage
 						,isLastPage,nextPage,hasNextPage,prePage,hasPreviousPage);
-
 						}
 					})
 		    }
@@ -135,36 +133,6 @@ function initialNewBlogs(newBlogs){
 
 
 
-function findByCategory(categoryId,categoryName){
-	changeThePageTitle(categoryName);
-	changeMenuItem(categoryId);
-	initialHeader(1,categoryName,categoryId);
-	$.ajax({
-		type:"post",
-		dataType:"json",
-		url:host+"/user/blog/list_by_category.do",
-		data:{"categoryId":categoryId},
-		success:function(data){
-			var blogList = data.data.list;
- 			var pageInfo = data.data;
-			 	//分页部分
-			var pageNum =pageInfo.pageNum;
-			var pages=pageInfo.pages;
-			var firstPage=pageInfo.firstPage;
-			var isFirstPage=pageInfo.isFirstPage;
-			var lastPage = pageInfo.lastPage;
-			var isLastPage=pageInfo.isLastPage;
-			var nextPage=pageInfo.nextPage;
-			var hasNextPage=pageInfo.hasNextPage;
-			var prePage = pageInfo.prePage;
-			var hasPreviousPage = pageInfo.hasPreviousPage;
-			pagination(pageNum,pages,firstPage,isFirstPage,lastPage
-		,isLastPage,nextPage,hasNextPage,prePage,hasPreviousPage);
-			initBlogList(blogList);
-			 
-		}
-	})
-}
  
  	function changeThePageTitle(name){
  		var title = $("#title_page_name");

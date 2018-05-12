@@ -3,6 +3,7 @@
 
  window.onload=function(){
 	//首页数据初始化
+
 	//数据冗余 todo
 	$.ajax({
 		type:"post",
