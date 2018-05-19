@@ -17,7 +17,7 @@ public interface Const {
         int ADD_LIKE_TIME= 60*60*12;
         int VIEW_COUNT_TIME=60*30;
         // 用户停留时间
-        int VISITOR_COUNT = 60*31;
+        int VISITOR_COUNT = 61*30;
     }
 
 

@@ -80,6 +80,8 @@ public class TagsAndCategoryTask {
                 log.info("Redisson获取分布式锁:{},ThreadName{}",Const.REDIS_LOCK.REDIS_LOCK_NAME,Thread.currentThread().getName());
                 Long timeOut = Long.parseLong(PropertiesUtil.getProperty("lock.timeout","2000"));
                 tagCacheService.initCache();
+                // 将redis中的访客信息存入mysql
+                tagCacheService.saveVisitorToDB();
             }else {
                 log.info("没有获取到分布式锁");
             }
