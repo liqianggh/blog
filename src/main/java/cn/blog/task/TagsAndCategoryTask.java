@@ -1,16 +1,19 @@
 package cn.blog.task;
 
 import cn.blog.common.Const;
+import cn.blog.common.myInteceptor.RedissonManager;
 import cn.blog.service.CacheService.CacheService;
 import cn.blog.util.PropertiesUtil;
 import cn.blog.util.RedisShardedPoolUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @Slf4j
@@ -18,6 +21,8 @@ public class TagsAndCategoryTask {
     @Autowired
     private CacheService tagCacheService;
 
+    @Autowired
+    private RedissonManager redissonManager;
     //@Scheduled(cron="0 0 */2 * * ?")//两个小时的倍数执行
 
 //    @Scheduled(cron="0 */1 * * * ?")
@@ -34,7 +39,7 @@ public class TagsAndCategoryTask {
      }
 
 
-    @Scheduled(cron="0 0/30 * * * ?")
+    // @Scheduled(cron="0 0/30 * * * ?")
     public void initCacheV2(){
         Long timeOut = Long.parseLong(PropertiesUtil.getProperty("lock.timeout","2000"));
         Long setNxResult = RedisShardedPoolUtil.setNx(Const.REDIS_LOCK.REDIS_LOCK_NAME,String.valueOf(System.currentTimeMillis()/1000+timeOut));
@@ -66,10 +71,32 @@ public class TagsAndCategoryTask {
        }
     }
 
+    @Scheduled(cron="0 0/30 * * * ?")
+    public void initCacheV3(){
+        RLock lock = redissonManager.getRedisson().getLock(Const.REDIS_LOCK.REDIS_LOCK_NAME);
+        boolean flag = false;
+        try {
+            if (flag=lock.tryLock(0,50,TimeUnit.SECONDS)){
+                log.info("Redisson获取分布式锁:{},ThreadName{}",Const.REDIS_LOCK.REDIS_LOCK_NAME,Thread.currentThread().getName());
+                Long timeOut = Long.parseLong(PropertiesUtil.getProperty("lock.timeout","2000"));
+                tagCacheService.initCache();
+            }else {
+                log.info("没有获取到分布式锁");
+            }
+        } catch (InterruptedException e) {
+            log.info("获取锁失败",e);
+        } finally {
+            if(!flag){
+                return;
+            }
+            lock.unlock();
+            log.info("Redisson锁释放成功");
+        }
+
+    }
 
     public  void initialCache(String locakName){
         tagCacheService.initCache();
         RedisShardedPoolUtil.del(locakName);
     }
-
 }
