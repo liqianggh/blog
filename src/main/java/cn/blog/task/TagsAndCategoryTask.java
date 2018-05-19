@@ -35,7 +35,7 @@ public class TagsAndCategoryTask {
         // 获取本地数据 并存入redis
         String count =  PropertiesUtil.getProperty("visitor.count");
         RedisShardedPoolUtil.set(Const.VISITOR.VISITOR_BASIC,count);
-        initCacheV2();
+        initCacheV3();
      }
 
 
