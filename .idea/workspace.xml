@@ -8,7 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="80c1ccba-4a87-4f35-ae26-d85c8d665a91" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -56,8 +55,17 @@
       <file leaf-file-name="resume.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/resume.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="546">
-              <caret line="26" selection-start-line="26" selection-end-line="26" />
+            <state relative-caret-position="6279">
+              <caret line="299" column="10" selection-start-line="299" selection-start-column="10" selection-end-line="299" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="share.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/share.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="157">
+              <caret line="99" column="22" selection-start-line="99" selection-start-column="22" selection-end-line="99" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -107,11 +115,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="92" column="111" lean-forward="true" selection-start-line="92" selection-start-column="111" selection-end-line="92" selection-end-column="111" />
+            <state relative-caret-position="4158">
+              <caret line="198" column="87" selection-start-line="198" selection-start-column="87" selection-end-line="198" selection-end-column="87" />
             </state>
           </provider>
         </entry>
@@ -128,7 +136,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>update</find>
       <find>lombok</find>
       <find>guawa</find>
       <find>apache</find>
@@ -158,6 +165,7 @@
       <find>CookiesUtil</find>
       <find>redisson</find>
       <find>initFileAndRedis</find>
+      <find>changyan</find>
     </findStrings>
     <replaceStrings>
       <replace>ipaddr,jdbcType=String</replace>
@@ -266,6 +274,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -334,15 +344,13 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../gril" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -655,19 +663,19 @@
       <workItem from="1526653972930" duration="837000" />
       <workItem from="1526731207204" duration="6035000" />
       <workItem from="1526827197403" duration="97000" />
-      <workItem from="1526891121826" duration="48000" />
+      <workItem from="1526891121826" duration="2598000" />
+      <workItem from="1526906251878" duration="170000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50401000" />
+    <option name="totallyTimeSpent" value="53121000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5154584" side_tool="true" visible="true" weight="0.302072" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.51599145" side_tool="true" visible="true" weight="0.302072" />
       <window_info anchor="bottom" id="Application Servers" order="7" sideWeight="0.49946696" weight="0.3293348" />
       <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.036247335" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
@@ -686,11 +694,11 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3293348" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.71055436" weight="0.35441658" />
       <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49946696" weight="0.3293348" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.48454157" visible="true" weight="0.302072" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8078125" visible="true" weight="0.3011727" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.48400852" visible="true" weight="0.302072" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.80625" visible="true" weight="0.304371" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info id="Favorites" order="2" sideWeight="0.1921875" side_tool="true" visible="true" weight="0.3011727" />
+      <window_info id="Favorites" order="2" sideWeight="0.19375" side_tool="true" visible="true" weight="0.304371" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -880,13 +888,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/share.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2163">
-          <caret line="103" column="23" selection-start-line="103" selection-start-column="23" selection-end-line="103" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/common/myInteceptor/AuthorityInterceptor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
@@ -1021,13 +1022,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resume.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/common/Const.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
@@ -1065,8 +1059,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="92" column="111" lean-forward="true" selection-start-line="92" selection-start-column="111" selection-end-line="92" selection-end-column="111" />
+        <state relative-caret-position="4158">
+          <caret line="198" column="87" selection-start-line="198" selection-start-column="87" selection-end-line="198" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resume.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6279">
+          <caret line="299" column="10" selection-start-line="299" selection-start-column="10" selection-end-line="299" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/share.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="99" column="22" selection-start-line="99" selection-start-column="22" selection-end-line="99" selection-end-column="22" />
         </state>
       </provider>
     </entry>
