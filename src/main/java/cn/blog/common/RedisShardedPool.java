@@ -1,7 +1,7 @@
 package cn.blog.common;
 
 import cn.blog.util.PropertiesUtil;
-import com.sun.java.swing.plaf.windows.TMSchema;
+
 import redis.clients.jedis.*;
 import redis.clients.util.Hashing;
 import redis.clients.util.Sharded;
