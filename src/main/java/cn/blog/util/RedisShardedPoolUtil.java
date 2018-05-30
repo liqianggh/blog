@@ -133,7 +133,7 @@ public class RedisShardedPoolUtil {
         return result;
     }
 
-    //设置有效期  单位是秒
+
     public static Long del(String key) {
         ShardedJedis jedis = null;
         Long result = null;

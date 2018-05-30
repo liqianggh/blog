@@ -34,8 +34,7 @@ public class TagsAndCategoryTask {
     public void initFileAndRedis() {
         // 获取本地访客数据 并存入redis
 //        String count =  PropertiesUtil.getProperty("visitor.count");
-//        RedisShardedPoolUtil.set(Const.VISITOR.VISITOR_BASIC,count);
-        initCacheV3();
+         initCacheV3();
     }
 
 
@@ -99,6 +98,6 @@ public class TagsAndCategoryTask {
 
     public void initialCache(String locakName) {
         tagCacheService.initCache();
-        RedisShardedPoolUtil.del(locakName);
+//        RedisShardedPoolUtil.del(locakName);
     }
 }
