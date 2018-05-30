@@ -1,6 +1,7 @@
 package cn.blog.common;
 
 import cn.blog.util.PropertiesUtil;
+import com.sun.java.swing.plaf.windows.TMSchema;
 import redis.clients.jedis.*;
 import redis.clients.util.Hashing;
 import redis.clients.util.Sharded;
@@ -22,6 +23,7 @@ public class RedisShardedPool {
 
     private static String redis2Ip = PropertiesUtil.getProperty("redis2.ip");
     private static int redis2Port = Integer.parseInt(PropertiesUtil.getProperty("redis2.port"));
+    private static String password = PropertiesUtil.getProperty("redis2.password");
 
     private  static void initPool(){
         System.out.println(redis2Ip+":"+redis2Port);
@@ -36,7 +38,7 @@ public class RedisShardedPool {
 
 //        JedisShardInfo info1 = new JedisShardInfo(redis1Ip,redis1Port,1000*2);
         JedisShardInfo info2 = new JedisShardInfo(redis2Ip,redis2Port,1000*2);
-//        info1.setPassword("密码");
+        info2.setPassword(password);
 
         List<JedisShardInfo> jedisShardInfoList = new ArrayList<JedisShardInfo>(2);
 //        jedisShardInfoList.add(info1);

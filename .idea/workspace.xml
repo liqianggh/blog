@@ -7,11 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80c1ccba-4a87-4f35-ae26-d85c8d665a91" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/blog/task/TagsAndCategoryTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/blog/task/TagsAndCategoryTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/blog/util/RedisShardedPoolUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/blog/util/RedisShardedPoolUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources.prod/blog.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources.prod/blog.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/blog/common/RedisShardedPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/blog/common/RedisShardedPool.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -65,7 +61,7 @@
       <file leaf-file-name="RedisShardedPoolUtil.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/util/RedisShardedPoolUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4725">
+            <state relative-caret-position="4620">
               <caret line="231" column="12" selection-start-line="231" selection-start-column="12" selection-end-line="231" selection-end-column="12" />
             </state>
           </provider>
@@ -80,11 +76,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RedisShardedPool.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RedisShardedPool.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/common/RedisShardedPool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+            <state relative-caret-position="399">
+              <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
               <folding>
                 <element signature="e#1955#1971#0" expanded="true" />
               </folding>
@@ -92,11 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="blog.properties" pinned="false" current-in-tab="true">
+      <file leaf-file-name="blog.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources.prod/blog.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="25" column="21" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="31" />
+            <state relative-caret-position="257">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
             </state>
           </provider>
         </entry>
@@ -105,7 +101,7 @@
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="488">
-              <caret line="36" selection-start-line="36" selection-end-line="36" />
+              <caret line="36" column="1" selection-start-line="36" selection-start-column="1" selection-end-line="36" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -205,7 +201,6 @@
         <option value="$PROJECT_DIR$/src/main/resources/mappers/VisitorMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/cn/blog/common/myInteceptor/CrossInterceptor.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/blog/common/ServerResponse.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/blog/common/RedisShardedPool.java" />
         <option value="$PROJECT_DIR$/src/test/java/TestBlog.java" />
         <option value="$PROJECT_DIR$/src/main/resources.dev/blog.properties" />
         <option value="$PROJECT_DIR$/src/main/resources.prod/datasource.properties" />
@@ -222,8 +217,9 @@
         <option value="$PROJECT_DIR$/src/main/webapp/share.html" />
         <option value="$PROJECT_DIR$/src/main/java/cn/blog/task/TagsAndCategoryTask.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/blog/util/RedisShardedPoolUtil.java" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/main/resources.prod/blog.properties" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/blog/common/RedisShardedPool.java" />
       </list>
     </option>
   </component>
@@ -268,7 +264,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
@@ -681,15 +677,15 @@
       <workItem from="1526906251878" duration="170000" />
       <workItem from="1527173878640" duration="85000" />
       <workItem from="1527551912238" duration="690000" />
-      <workItem from="1527688915716" duration="1788000" />
+      <workItem from="1527688915716" duration="2284000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55684000" />
+    <option name="totallyTimeSpent" value="56180000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -1054,13 +1050,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/util/RedisShardedPoolUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4725">
-          <caret line="231" column="12" selection-start-line="231" selection-start-column="12" selection-end-line="231" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/redis/clients/jedis/2.6.0/jedis-2.6.0-sources.jar!/redis/clients/jedis/ShardedJedis.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -1075,27 +1064,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/common/RedisShardedPool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
-          <folding>
-            <element signature="e#1955#1971#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="488">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
+          <caret line="36" column="1" selection-start-line="36" selection-start-column="1" selection-end-line="36" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/util/RedisShardedPoolUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4620">
+          <caret line="231" column="12" selection-start-line="231" selection-start-column="12" selection-end-line="231" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources.prod/blog.properties">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/common/RedisShardedPool.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
-          <caret line="25" column="21" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="31" />
+          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+          <folding>
+            <element signature="e#1955#1971#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
