@@ -6,9 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80c1ccba-4a87-4f35-ae26-d85c8d665a91" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/blog/common/RedisShardedPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/blog/common/RedisShardedPool.java" afterDir="false" />
-    </list>
+    <list default="true" id="80c1ccba-4a87-4f35-ae26-d85c8d665a91" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -79,8 +77,8 @@
       <file leaf-file-name="RedisShardedPool.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/common/RedisShardedPool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+            <state relative-caret-position="672">
+              <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
               <folding>
                 <element signature="e#1955#1971#0" expanded="true" />
               </folding>
@@ -264,8 +262,8 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="953" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
@@ -677,21 +675,20 @@
       <workItem from="1526906251878" duration="170000" />
       <workItem from="1527173878640" duration="85000" />
       <workItem from="1527551912238" duration="690000" />
-      <workItem from="1527688915716" duration="2284000" />
+      <workItem from="1527688915716" duration="2914000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56180000" />
+    <option name="totallyTimeSpent" value="56810000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="953" y="0" width="974" height="1047" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.51759064" side_tool="true" visible="true" weight="0.302072" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.51859957" side_tool="true" visible="true" weight="0.30506608" />
       <window_info anchor="bottom" id="Application Servers" order="7" sideWeight="0.49946696" weight="0.3293348" />
-      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.15405117" />
+      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.31619257" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
@@ -708,11 +705,11 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3293348" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.71055436" weight="0.35441658" />
       <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49946696" weight="0.3293348" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4824094" visible="true" weight="0.302072" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8015625" visible="true" weight="0.3139659" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.48140043" visible="true" weight="0.30506608" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.80031693" visible="true" weight="0.64442015" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info id="Favorites" order="2" sideWeight="0.1984375" side_tool="true" visible="true" weight="0.3139659" />
+      <window_info id="Favorites" order="2" sideWeight="0.19968304" side_tool="true" visible="true" weight="0.64442015" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -1087,8 +1084,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/blog/common/RedisShardedPool.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+        <state relative-caret-position="672">
+          <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
           <folding>
             <element signature="e#1955#1971#0" expanded="true" />
           </folding>
