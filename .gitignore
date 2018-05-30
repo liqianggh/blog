@@ -34,4 +34,4 @@ target/
 Thumbs.db
 
 #忽略配置文件
-blog.properties
+#blog.properties
