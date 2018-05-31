@@ -78,7 +78,7 @@
 
 > *环境配置
 
-CentOS6.8 + JDK1.7+MySQL5.1+Maven3.0.5+Nginx1.10.2+Git2.8+Tomcat7+Redis2.8+Vsftpd2.2.2
+CentOS6.8 + JDK1.7+MySQL5.1+Maven3.0.5+Nginx1.10.2+Git2.8+Tomcat7+Redis2.8+Vsftpd2.2.2(文件对接服务已经不在使用)
 
 ##  三、系统架构
 
@@ -128,5 +128,6 @@ CentOS6.8 + JDK1.7+MySQL5.1+Maven3.0.5+Nginx1.10.2+Git2.8+Tomcat7+Redis2.8+Vsftp
 
 21.使用Redisson分布式锁，替代自定义的锁。2018/5/19
 
+22.Redis加上密码，redis总是被flushdb。2018/05/30
 持续更新中。。。
 需要数据库表的请邮件联系我哦
