@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 /**
-  * @Description:  Redisson初始化类，注意，redisson不支持redis集群
-  * Created by Jann on 2018/5/19  20:26.
-  */
- @Component
- @Slf4j
+ * @Description: Redisson初始化类，注意，redisson不支持redis集群
+ * Created by Jann on 2018/5/19  20:26.
+ */
+@Component
+@Slf4j
 public class RedissonManager {
     private Config config = new Config();
     private Redisson redisson = null;
@@ -30,16 +30,17 @@ public class RedissonManager {
     }
 
     @PostConstruct
-    private void init(){
+    private void init() {
         try {
-            config.useSingleServer().setAddress(new StringBuilder(redis2Ip).append(":").append(redis2Port).toString()).setPassword(redis2Pass);
+//            config.useSingleServer().setAddress(new StringBuilder(redis2Ip).append(":").append(redis2Port).toString()).setPassword(redis2Pass);
+            config.useSingleServer().setAddress(new StringBuilder(redis2Ip).append(":").append(redis2Port).toString());
+
             redisson = (Redisson) Redisson.create(config);
             log.info("初始化redisson完成");
         } catch (Exception e) {
-            log.info("redisson 初始化失败",e);
+            log.info("redisson 初始化失败", e);
         }
     }
 
 
-
- }
+}
