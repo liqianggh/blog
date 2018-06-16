@@ -34,7 +34,7 @@ public class CrossInterceptor extends HandlerInterceptorAdapter {
 //            RedisShardedPoolUtil.setNx("")
 //        }
        // nginx 代理自定义的头部
-        String ip = request.getHeader("X-Real-Ip");;
+        String ip = request.getHeader("X-Real-Ip");
 
         cacheService.addVisitor(ip);
         return super.preHandle(request, response, handler);

@@ -32,8 +32,8 @@ public class RedissonManager {
     @PostConstruct
     private void init() {
         try {
-//            config.useSingleServer().setAddress(new StringBuilder(redis2Ip).append(":").append(redis2Port).toString()).setPassword(redis2Pass);
-            config.useSingleServer().setAddress(new StringBuilder(redis2Ip).append(":").append(redis2Port).toString());
+            config.useSingleServer().setAddress(new StringBuilder(redis2Ip).append(":").append(redis2Port).toString()).setPassword(redis2Pass);
+//            config.useSingleServer().setAddress(new StringBuilder(redis2Ip).append(":").append(redis2Port).toString());
 
             redisson = (Redisson) Redisson.create(config);
             log.info("初始化redisson完成");
