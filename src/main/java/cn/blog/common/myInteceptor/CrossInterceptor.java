@@ -17,7 +17,7 @@ import java.util.Date;
 public class CrossInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private CacheService cacheService;
-
+    // 作用是获取ip，传递给tomcat
    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 //        response.addHeader("Access-Control-Allow-Origin","http://58.87.104.109:8080"); 
 //         response.addHeader("Access-Control-Allow-Origin","*");

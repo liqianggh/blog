@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 /**
-  * @Description:  Redisson初始化类
+  * @Description:  Redisson初始化类，注意，redisson不支持redis集群
   * Created by Jann on 2018/5/19  20:26.
   */
  @Component
