@@ -23,6 +23,7 @@ public class RedissonManager {
 
     private static String redis2Ip = PropertiesUtil.getProperty("redis2.ip");
     private static int redis2Port = Integer.parseInt(PropertiesUtil.getProperty("redis2.port"));
+    private static String redis2Pass = PropertiesUtil.getProperty("redis2.password");
 
     public Redisson getRedisson() {
         return redisson;
@@ -31,7 +32,7 @@ public class RedissonManager {
     @PostConstruct
     private void init(){
         try {
-            config.useSingleServer().setAddress(new StringBuilder(redis2Ip).append(":").append(redis2Port).toString());
+            config.useSingleServer().setAddress(new StringBuilder(redis2Ip).append(":").append(redis2Port).toString()).setPassword(redis2Pass);
             redisson = (Redisson) Redisson.create(config);
             log.info("初始化redisson完成");
         } catch (Exception e) {
