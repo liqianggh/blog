@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mycookies.dao.TagMapper">
+  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.po.Tag">
+    <constructor>
+      <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="tag_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="tag_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="cn.mycookies.pojo.po.Tag">
+    insert into tag (id, tag_name, tag_desc, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}, #{tagDesc,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.mycookies.pojo.po.Tag">
+    insert into tag
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tagName != null">
+        tag_name,
+      </if>
+      <if test="tagDesc != null">
+        tag_desc,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tagName != null">
+        #{tagName,jdbcType=VARCHAR},
+      </if>
+      <if test="tagDesc != null">
+        #{tagDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -46,7 +46,7 @@
             <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
             <property name="trimStrings" value="true"/>
             <!-- 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
-            <!--<property name="immutable" value="true"/>-->
+            <property name="immutable" value="true"/>
         </javaModelGenerator>
 
         <!--mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
@@ -67,8 +67,11 @@
         </javaClientGenerator>
 
         <!--配置表-->
-        <table tableName="tag" domainObjectName="Shipping" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-        <table tableName="blog" domainObjectName="Cart" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="blog" domainObjectName="Blog" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>
+        <table tableName="tag" domainObjectName="Tag" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>
+        <table tableName="comment" domainObjectName="Comment" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>
+        <table tableName="category" domainObjectName="Category" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>
+
         <!-- geelynote mybatis插件的搭建 -->
     </context>
 </generatorConfiguration>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mycookies.dao.CommentMapper">
+  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.po.Comment">
+    <constructor>
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="target_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="parent_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="reply_uid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.mycookies.pojo.po.Comment">
+    <constructor>
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="target_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="parent_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="reply_uid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="id" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Blob_Column_List">
+    id
+  </sql>
+  <insert id="insert" parameterType="cn.mycookies.pojo.po.Comment">
+    insert into comment (user_id, target_id, parent_id, 
+      reply_uid, content, type, 
+      status, create_time, update_time, 
+      id)
+    values (#{userId,jdbcType=INTEGER}, #{targetId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, 
+      #{replyUid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{id,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.mycookies.pojo.po.Comment">
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="targetId != null">
+        target_id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="replyUid != null">
+        reply_uid,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="targetId != null">
+        #{targetId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="replyUid != null">
+        #{replyUid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.po.Comment">
+    <constructor>
+      <arg column="cid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="diseaseId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="uid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="createtime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.mycookies.pojo.po.Comment">
+    <constructor>
+      <arg column="cid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="diseaseId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="uid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="createtime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <insert id="insert" parameterType="cn.mycookies.pojo.po.Comment">
+    insert into comment (cid, diseaseId, uid, 
+      createtime, content)
+    values (#{cid,jdbcType=INTEGER}, #{diseaseid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.mycookies.pojo.po.Comment">
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="diseaseid != null">
+        diseaseId,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="diseaseid != null">
+        #{diseaseid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
