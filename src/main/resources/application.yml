@@ -1,5 +1,6 @@
-
 spring:
   profiles:
   #选择环境
     active: dev
+server:
+  port: 8088
