@@ -4,3 +4,9 @@ spring:
     active: dev
 server:
   port: 8088
+# 分页配置
+pagehelper:git
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-argugments: true
+  params: count=countSql
