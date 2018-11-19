@@ -10,11 +10,9 @@
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
-  <insert id="insert" parameterType="cn.mycookies.pojo.po.Tag">
-    insert into tag (id, tag_name, tag_desc, 
-      create_time, update_time)
-    values (#{id,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}, #{tagDesc,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="cn.mycookies.pojo.bo.TagAdd">
+    insert into tag (tag_name, tag_desc, create_time)
+    values (#{tagName,jdbcType=VARCHAR}, #{tagDesc,jdbcType=VARCHAR}, now())
   </insert>
   <insert id="insertSelective" parameterType="cn.mycookies.pojo.po.Tag">
     insert into tag
@@ -53,4 +51,37 @@
       </if>
     </trim>
   </insert>
+  <select id="queryTagList" resultMap="BaseResultMap">
+    SELECT * from tag 
+  </select>
+
+  <select id="queryByName" parameterType="String" resultType="tag">
+    SELECT id,tag_name as tagName, tag_desc as tagDesc,create_time as createTime,update_time as updateTime
+    FROM tag
+    WHERE tag_name=#{tagName}
+  </select>
+  <select id="queryById" parameterType="Integer" resultType="tag">
+    SELECT id,tag_name as tagName, tag_desc as tagDesc,create_time as createTime,update_time as updateTime
+    FROM tag
+    WHERE id=#{id}
+  </select>
+
+  <update id="updateTag" parameterType="tag">
+      UPDATE tag
+    <set>
+    <if test="tagName != null">
+        tag_name=#{tagName,jdbcType=VARCHAR},
+      </if>
+      <if test="tagDesc != null">
+        tag_desc=#{tagDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time=#{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time=#{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

@@ -67,7 +67,7 @@ public class ServerResponse<T> implements Serializable{
 
     public static <T> ServerResponse<T> createBySuccess(){
 
-      return new ServerResponse<T>(ActionStatus.NORMAL_RETURNED.inValue(),ActionStatus.UNKNOWN.getDescription());
+      return new ServerResponse<T>(ActionStatus.NORMAL_RETURNED.inValue(),ActionStatus.NORMAL_RETURNED.getDescription());
     }
 
     public static <T> ServerResponse<T> createBySuccessMsg(String msg){
