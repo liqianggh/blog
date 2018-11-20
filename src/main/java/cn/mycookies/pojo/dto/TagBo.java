@@ -1,4 +1,4 @@
-package cn.mycookies.pojo.bo;
+package cn.mycookies.pojo.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;

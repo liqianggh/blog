@@ -10,7 +10,7 @@
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
-  <insert id="insert" parameterType="cn.mycookies.pojo.bo.TagAdd">
+  <insert id="insert" parameterType="cn.mycookies.pojo.dto.TagAdd">
     insert into tag (tag_name, tag_desc, create_time)
     values (#{tagName,jdbcType=VARCHAR}, #{tagDesc,jdbcType=VARCHAR}, now())
   </insert>

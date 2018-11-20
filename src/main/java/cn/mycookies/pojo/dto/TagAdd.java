@@ -1,4 +1,4 @@
-package cn.mycookies.pojo.bo;
+package cn.mycookies.pojo.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

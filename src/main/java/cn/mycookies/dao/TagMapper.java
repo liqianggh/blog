@@ -1,6 +1,6 @@
 package cn.mycookies.dao;
 
-import cn.mycookies.pojo.bo.TagAdd;
+import cn.mycookies.pojo.dto.TagAdd;
 import cn.mycookies.pojo.po.Tag;
 import org.springframework.stereotype.Repository;
 

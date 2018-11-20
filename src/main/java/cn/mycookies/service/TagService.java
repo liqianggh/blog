@@ -1,8 +1,8 @@
 package cn.mycookies.service;
 
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.pojo.bo.TagAdd;
-import cn.mycookies.pojo.bo.TagBo;
+import cn.mycookies.pojo.dto.TagAdd;
+import cn.mycookies.pojo.dto.TagBo;
 import cn.mycookies.pojo.po.Tag;
 import com.github.pagehelper.PageInfo;
 
