@@ -3,7 +3,7 @@ server:
 spring:
     datasource:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8
+      url: jdbc:mysql://140.143.26.185:3306/blog?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8
       username: DES@M5blq4GyNdJn5A/fQ+tk+w==
       password: DES@iLW/EHruBCaPpNZGoY/DOQ==
 #可以用data.name表示

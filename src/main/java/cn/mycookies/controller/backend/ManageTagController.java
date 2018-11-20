@@ -1,6 +1,7 @@
 package cn.mycookies.controller.backend;
 
 import cn.mycookies.common.ActionStatus;
+import cn.mycookies.common.ProcessBindingResult;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.bo.TagAdd;
 import cn.mycookies.pojo.bo.TagBo;
@@ -19,6 +20,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,10 +31,10 @@ import java.util.Objects;
  * @Date 2018-11-18 16:36
  **/
 @Controller
-@Api(value = "manage", description = "标签管理")
+@Api(description = "标签管理")
 @RequestMapping("manage/tags")
 @ResponseBody
-public class TagController {
+public class ManageTagController {
 
     @Autowired
     private TagService tagService;
@@ -49,8 +51,7 @@ public class TagController {
     public ServerResponse<Boolean> addTag(@RequestBody @Valid TagAdd tagAdd, BindingResult bindingResult) {
 
         if (bindingResult != null && bindingResult.hasErrors()) {
-
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), processBindingResult(bindingResult));
+            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
         }
         return tagService.addTag(tagAdd);
     }
@@ -60,7 +61,7 @@ public class TagController {
     public ServerResponse updateTag(@RequestBody @Valid Tag tag, BindingResult bindingResult, @PathVariable(name = "id", required = true) Integer id) {
 
         if (bindingResult != null && bindingResult.hasErrors()) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), processBindingResult(bindingResult));
+            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
         }
         tag.setId(id);
         return tagService.updateTag(tag);
@@ -73,24 +74,11 @@ public class TagController {
         return tagService.selectTagById(id);
     }
 
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "查找标签", response = Boolean.class)
+    public ServerResponse<TagBo> deleteTag(@PathVariable(name = "id", required = true) Integer id) {
 
-    /**
-     * 处理数据校验异常结果，返回字符串
-     *
-     * @param bindingResult
-     * @return
-     */
-    public String processBindingResult(BindingResult bindingResult) {
-
-        List<String> resultList = Lists.newArrayList();
-        if (bindingResult.getAllErrors().size() == 1) {
-            return bindingResult.getAllErrors().get(0).getDefaultMessage();
-        }
-        if (Objects.nonNull(bindingResult) && bindingResult.hasErrors()) {
-            for (ObjectError error : bindingResult.getAllErrors()) {
-                resultList.add(error.getDefaultMessage());
-            }
-        }
-        return JsonUtil.objToString(resultList);
+        return tagService.deleteById(id);
     }
+
 }

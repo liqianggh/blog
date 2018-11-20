@@ -121,4 +121,18 @@ public class TagServiceImpl implements TagService {
         }
         return ServerResponse.createBySuccess(convertTagToBo(tagResult));
     }
+
+    @Override
+    public ServerResponse<TagBo> deleteById(Integer id) {
+        Tag tagResult = tagMapper.queryById(id);
+        if (tagResult == null || StringUtils.isEmpty(tagResult.getTagName())) {
+            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
+        }
+        int result = tagMapper.deleteById(id);
+        if (result > 0) {
+            return ServerResponse.createBySuccess();
+        } else {
+            return ServerResponse.createByErrorCodeMessage(ActionStatus.DATABASE_ERROR.inValue(),ActionStatus.DATABASE_ERROR.getDescription());
+        }
+     }
 }

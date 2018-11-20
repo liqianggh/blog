@@ -84,4 +84,9 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <delete id="deleteById" parameterType="int">
+    DELETE 
+    FROM tag
+    WHERE id=#{id,jdbcType=INTEGER} 
+  </delete>
 </mapper>

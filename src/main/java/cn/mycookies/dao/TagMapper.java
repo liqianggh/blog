@@ -24,4 +24,6 @@ public interface TagMapper {
     Integer updateTag(Tag tag);
 
     Tag queryById(Integer id);
+
+    int deleteById(Integer id);
 }

@@ -42,4 +42,6 @@ public interface TagService {
     ServerResponse updateTag(Tag tag);
 
     ServerResponse<TagBo> selectTagById(Integer id);
+
+    ServerResponse<TagBo> deleteById(Integer id);
 }
