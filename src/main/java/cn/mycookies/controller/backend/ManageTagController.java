@@ -3,26 +3,20 @@ package cn.mycookies.controller.backend;
 import cn.mycookies.common.ActionStatus;
 import cn.mycookies.common.ProcessBindingResult;
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.pojo.bo.TagAdd;
-import cn.mycookies.pojo.bo.TagBo;
+import cn.mycookies.pojo.dto.TagAdd;
+import cn.mycookies.pojo.dto.TagBo;
 import cn.mycookies.pojo.po.Tag;
 import cn.mycookies.service.TagService;
-import cn.mycookies.utils.JsonUtil;
 import com.github.pagehelper.PageInfo;
-import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * @ClassName TagController

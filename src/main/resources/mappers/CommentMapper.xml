@@ -5,10 +5,9 @@
     <constructor>
       <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="target_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="parent_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="like_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="reply_uid" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="type" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
@@ -16,32 +15,36 @@
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="cn.mycookies.pojo.po.Comment">
     <constructor>
+      <arg column="id" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
       <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="target_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="parent_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="reply_uid" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="type" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="id" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+      <arg column="like_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Blob_Column_List">
-    id
+    id,
+    user_id as userId,
+    reply_uid as replyUid,
+    content,
+    like_count as likeCount,
+    create_time as createTime
   </sql>
   <insert id="insert" parameterType="cn.mycookies.pojo.po.Comment">
-    insert into comment (user_id, target_id, parent_id, 
-      reply_uid, content, type, 
+    insert into comment (user_id, target_id,
+      reply_uid, content,
       status, create_time, update_time, 
       id)
-    values (#{userId,jdbcType=INTEGER}, #{targetId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, 
-      #{replyUid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
+    values (#{userId,jdbcType=INTEGER}, #{targetId,jdbcType=INTEGER},
+      #{replyUid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},
       #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{id,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.mycookies.pojo.po.Comment">
+  <insert id="insertSelective" useGeneratedKeys="true" parameterType="cn.mycookies.pojo.po.Comment">
     insert into comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -50,17 +53,11 @@
       <if test="targetId != null">
         target_id,
       </if>
-      <if test="parentId != null">
-        parent_id,
-      </if>
       <if test="replyUid != null">
         reply_uid,
       </if>
       <if test="content != null">
         content,
-      </if>
-      <if test="type != null">
-        type,
       </if>
       <if test="status != null">
         status,
@@ -82,17 +79,11 @@
       <if test="targetId != null">
         #{targetId,jdbcType=INTEGER},
       </if>
-      <if test="parentId != null">
-        #{parentId,jdbcType=INTEGER},
-      </if>
       <if test="replyUid != null">
         #{replyUid,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=TINYINT},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -108,4 +99,62 @@
       </if>
     </trim>
   </insert>
+  <update id="updateComment" parameterType="cn.mycookies.pojo.po.Comment">
+    UPDATE comment
+    SET
+    <trim suffixOverrides=",">
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = status + #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+    where id=#{targetId,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteComment" parameterType="int">
+      DELETE
+      FROM comment
+      where id=#{id,jdbcType=INTEGER}
+  </delete>
+  <select id="selectCommentById" resultType="cn.mycookies.pojo.po.Comment">
+    SELECT
+    <include refid="Blob_Column_List"></include>
+    FROM comment
+    WHERE status =0 AND id=#{id,jdbcType=INTEGER}
+  </select>
+  <!--查询评论 并关联用户信息-->
+  <select id="selectComments" resultType="cn.mycookies.pojo.vo.CommentVO">
+    SELECT
+    t.id,
+    t.user_id as userId,
+    u1.user_name as userName,
+    u2.user_name as replyUserName,
+    t.reply_uid as replyUid,
+    t.content,
+    t.like_count as likeCount,
+    t.create_time as createTime
+
+　　　<where>
+　　　　　　<if test="targetId != null ">
+            id=#{targetId}
+          </if>
+          <!--如果replyId-->
+　　　　　　<if test="sessionId!= null">
+　　　　　　  and session_id = #{sessionId}
+　　　     </if>
+    　     <if test="user_id!= null">
+　　　　　　  and user_id = #{userId}
+　　　     </if>
+           <if test="user_id!= null">
+　　　　　　  and reply_uid = #{replyUid}
+　　　     </if>
+    　     <if test="status!= null">
+　　　　　　  and status = #{status}
+　　　      </if>
+　　　</where>
+    LEFT JOIN `user` u1 ON t.user_id = u1.id,
+    LEFT JOIN `user` u2 ON t.reply_uid = u2.id
+  </select>
 </mapper>
