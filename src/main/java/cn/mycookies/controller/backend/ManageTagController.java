@@ -1,8 +1,6 @@
 package cn.mycookies.controller.backend;
 
-import cn.mycookies.common.ActionStatus;
-import cn.mycookies.common.ProcessBindingResult;
-import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.*;
 import cn.mycookies.pojo.dto.TagAdd;
 import cn.mycookies.pojo.dto.TagBo;
 import cn.mycookies.pojo.po.Tag;
@@ -33,11 +31,14 @@ public class ManageTagController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping("")
+    @GetMapping("/")
     @ApiOperation(value = "获取标签列表", response = TagBo.class, responseContainer = "List")
-    public PageInfo<TagBo> tagList(@ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize, @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum) {
+    public PageInfo<TagBo> tagList(
+            @ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize,
+            @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum,
+             @ApiParam(value = "标签类型，是分类还是标签") @RequestParam(defaultValue = TagTypes.TAG_LABEL+"") Byte type) {
 
-        return tagService.findTagList(pageNum, pageSize);
+        return tagService.findTagList(pageNum, pageSize,type);
     }
 
     @PostMapping("")
@@ -52,27 +53,34 @@ public class ManageTagController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "修改标签", response = Boolean.class)
-    public ServerResponse updateTag(@RequestBody @Valid Tag tag, BindingResult bindingResult, @PathVariable(name = "id", required = true) Integer id) {
+    public ServerResponse updateTag(@RequestBody @Valid Tag tag,
+                                    BindingResult bindingResult,
+                                    @RequestParam(name = "type",required = true)Byte type,
+                                    @PathVariable(name = "id", required = true) Integer id) {
 
         if (bindingResult != null && bindingResult.hasErrors()) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
         }
         tag.setId(id);
+        tag.setType(type);
         return tagService.updateTag(tag);
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "查找标签", response = Boolean.class)
-    public ServerResponse<TagBo> selectTag(@PathVariable(name = "id", required = true) Integer id) {
+    public ServerResponse<TagBo> selectTag(
+            @PathVariable(name = "id", required = true) Integer id,
+            @RequestParam(name = "type", required =true) Byte type) {
 
-        return tagService.selectTagById(id);
+        return tagService.selectTagById(id,type);
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "查找标签", response = Boolean.class)
-    public ServerResponse<TagBo> deleteTag(@PathVariable(name = "id", required = true) Integer id) {
+    @ApiOperation(value = "删除标签", response = Boolean.class)
+    public ServerResponse<TagBo> deleteTag(@PathVariable(name = "id", required = true) Integer id,
+                                           @RequestParam(name = "type", required = true) Byte type) {
 
-        return tagService.deleteById(id);
+        return tagService.deleteById(id,type,DataStatus.DELETED);
     }
 
 }

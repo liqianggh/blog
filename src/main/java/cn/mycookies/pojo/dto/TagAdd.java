@@ -1,11 +1,17 @@
 package cn.mycookies.pojo.dto;
 
+import cn.mycookies.common.TagTypes;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @ClassName TagAdd
@@ -27,4 +33,6 @@ public class TagAdd {
     @ApiModelProperty(value = "标签描述",required = false)
     private String tagDesc;
 
+    @ApiModelProperty(value = "标签类型",required = false)
+    private Byte type;
 }

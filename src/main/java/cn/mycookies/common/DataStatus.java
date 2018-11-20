@@ -1,7 +1,7 @@
 package cn.mycookies.common;
 
 public interface DataStatus {
-    int NO_DELETED=0;
-    int DELETED = 1;
-    int ALL = 2;
+    byte NO_DELETED=0;
+    byte DELETED = 1;
+    byte ALL = 2;
 }

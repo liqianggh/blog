@@ -4,6 +4,7 @@ import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.dto.TagAdd;
 import cn.mycookies.pojo.dto.TagBo;
 import cn.mycookies.pojo.po.Tag;
+import cn.mycookies.pojo.vo.TagVO;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface TagService {
      * @param pageNum  当前页码数
      * @return
      */
-     PageInfo<TagBo> findTagList(int pageNum, int pageSize);
+     PageInfo<TagBo> findTagList(int pageNum, int pageSize,Byte type);
 
 
      List<TagBo> findAllTagsWithCount();
@@ -41,7 +42,9 @@ public interface TagService {
      */
     ServerResponse updateTag(Tag tag);
 
-    ServerResponse<TagBo> selectTagById(Integer id);
+    ServerResponse<TagBo> selectTagById(Integer id,Byte type);
 
-    ServerResponse<TagBo> deleteById(Integer id);
+    ServerResponse<TagBo> deleteById(Integer id,Byte type,Byte isDelete);
+
+    PageInfo<TagVO> findTagVoList(Integer pageNum, Integer pageSize, Byte type);
 }

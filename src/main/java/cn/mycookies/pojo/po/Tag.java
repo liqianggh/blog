@@ -25,9 +25,13 @@ public class Tag {
     @Length(max = 50,message = "tagDesc长度需50之间")
     private String tagDesc;
 
+    @ApiModelProperty(value = "标签类型",required = false,hidden = true)
+    private Byte type;
+
     @ApiModelProperty(hidden = true)
     private Date createTime;
 
     @ApiModelProperty(hidden = true)
     private Date updateTime;
+
 }

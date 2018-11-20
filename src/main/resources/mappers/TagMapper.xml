@@ -51,27 +51,65 @@
       </if>
     </trim>
   </insert>
-  <select id="queryTagList" resultMap="BaseResultMap">
-    SELECT * from tag 
+  <select id="queryTagList" parameterType="cn.mycookies.pojo.po.Tag"  resultMap="BaseResultMap">
+    SELECT * from tag
+    <where>
+      <if test="type != null">
+        type = #{type}
+      </if>
+    </where>
   </select>
 
-  <select id="queryByName" parameterType="String" resultType="tag">
+  <select id="queryByName" parameterType="cn.mycookies.pojo.dto.TagAdd" resultType="cn.mycookies.pojo.po.Tag">
     SELECT id,tag_name as tagName, tag_desc as tagDesc,create_time as createTime,update_time as updateTime
     FROM tag
-    WHERE tag_name=#{tagName}
+    <where>
+    <if test="type != null">
+      type = #{type}
+    </if>
+    <if test="tagName != null">
+      tag_name= #{tagName}
+    </if>
+    </where>
   </select>
-  <select id="queryById" parameterType="Integer" resultType="tag">
+  <select id="queryById" parameterType="cn.mycookies.pojo.po.Tag" resultType="cn.mycookies.pojo.po.Tag">
     SELECT id,tag_name as tagName, tag_desc as tagDesc,create_time as createTime,update_time as updateTime
     FROM tag
-    WHERE id=#{id}
+    <where>
+      <if test="type != null">
+        type = #{type}
+      </if>
+      <if test="id != null">
+        id= #{id}
+      </if>
+    </where>
+  </select>
+  <select id="queryTagBoList" resultType="cn.mycookies.pojo.vo.TagVO">
+      SELECT
+        COUNT(t.blog_id) count, t.tag_id, t2.tag_name
+    FROM
+        blog_tags t
+            LEFT JOIN
+        tag t2 ON t.tag_id = t2.id AND t2.type = 1
+    GROUP BY t.tag_id;
+  </select>
+  <select id="queryTagVOList" resultType="cn.mycookies.pojo.vo.TagVO">
+   SELECT
+        COUNT(t.category_id) count, t.category_id, t2.tag_name
+    FROM
+        blog t
+
+            LEFT JOIN
+        tag t2 ON t.category_id = t2.id AND t2.type = 1
+    GROUP BY t.category_id;
   </select>
 
-  <update id="updateTag" parameterType="tag">
+  <update id="updateTag" parameterType="cn.mycookies.pojo.po.Tag">
       UPDATE tag
     <set>
-    <if test="tagName != null">
-        tag_name=#{tagName,jdbcType=VARCHAR},
-      </if>
+       <if test="tagName != null">
+      tag_name=#{tagName,jdbcType=VARCHAR},
+    </if>
       <if test="tagDesc != null">
         tag_desc=#{tagDesc,jdbcType=VARCHAR},
       </if>

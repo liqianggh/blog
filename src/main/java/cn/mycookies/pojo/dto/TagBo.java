@@ -33,7 +33,7 @@ public class TagBo {
     private Integer count;
 
     private String createTime;
-    String updateTime;
+    private String updateTime;
 
 
 }

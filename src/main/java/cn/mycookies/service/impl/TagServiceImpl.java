@@ -1,11 +1,14 @@
 package cn.mycookies.service.impl;
 
 import cn.mycookies.common.ActionStatus;
+import cn.mycookies.common.DataStatus;
 import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.TagTypes;
 import cn.mycookies.dao.TagMapper;
 import cn.mycookies.pojo.dto.TagAdd;
 import cn.mycookies.pojo.dto.TagBo;
 import cn.mycookies.pojo.po.Tag;
+import cn.mycookies.pojo.vo.TagVO;
 import cn.mycookies.service.TagService;
 import cn.mycookies.utils.DateTimeUtil;
 import com.github.pagehelper.Page;
@@ -32,10 +35,12 @@ public class TagServiceImpl implements TagService {
     private TagMapper tagMapper;
 
     @Override
-    public PageInfo<TagBo> findTagList(int pageNum, int pageSize) {
+    public PageInfo<TagBo> findTagList(int pageNum, int pageSize,Byte type) {
         Page page = PageHelper.startPage(pageNum, pageSize);
-        PageHelper.orderBy("id desc");
-        List<Tag> tagList = tagMapper.queryTagList();
+        PageHelper.orderBy("create_time desc");
+        Tag param = new Tag();
+        param.setType(type);
+        List<Tag> tagList = tagMapper.queryTagList(param);
 
         List<TagBo> list = new ArrayList<>();
         tagList.stream().forEach(tag -> {
@@ -48,6 +53,27 @@ public class TagServiceImpl implements TagService {
         return pageInfo;
     }
 
+    /**
+     * 获取tagVo列表
+     * @param pageNum
+     * @param pageSize
+     * @param type
+     * @return
+     */
+    @Override
+    public PageInfo<TagVO> findTagVoList(Integer pageNum, Integer pageSize, Byte type) {
+
+        Page page = PageHelper.startPage(pageNum, pageSize);
+        List<TagVO> tagList = null;
+        if (type == TagTypes.TAG_LABEL) {
+            tagList = tagMapper.queryTagBoList();
+        } else {
+            tagList = tagMapper.queryTagVOList();
+        }
+        PageInfo pageInfo = page.toPageInfo();
+        pageInfo.setList(tagList);
+        return pageInfo;
+    }
     private TagBo convertTagToBo(Tag tag) {
         if (Objects.isNull(tag)) {
             return null;
@@ -71,8 +97,11 @@ public class TagServiceImpl implements TagService {
         if (tagAdd == null || tagAdd.getTagName() == null) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
         }
+        Tag param = new Tag();
+        tagAdd.setTagName(tagAdd.getTagName());
+        tagAdd.setType(tagAdd.getType());
         // 是否存在校验
-        Tag tag = tagMapper.queryByName(tagAdd.getTagName());
+        Tag tag = tagMapper.queryByName(param);
         if (tag != null) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.DATA_REPEAT.inValue(), ActionStatus.DATA_REPEAT.getDescription());
         }
@@ -90,13 +119,13 @@ public class TagServiceImpl implements TagService {
         if (tag == null || tag.getTagName() == null) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
         }
-
         // 是否存在校验
-        Tag tagResult = tagMapper.queryByName(tag.getTagName());
+        Tag tagResult = tagMapper.queryByName(tag);
         if (tagResult != null) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.DATA_REPEAT.inValue(), ActionStatus.DATA_REPEAT.getDescription());
         }
-        tagResult = tagMapper.queryById(tag.getId());
+
+        tagResult = tagMapper.queryById(tag);
         if (tagResult == null) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
         }
@@ -110,12 +139,15 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public ServerResponse<TagBo> selectTagById(Integer id) {
+    public ServerResponse<TagBo> selectTagById(Integer id,Byte type) {
 
         if(id == 0 ){
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(),ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
         }
-        Tag tagResult = tagMapper.queryById(id);
+        Tag param = new Tag();
+        param.setId(id);
+        param.setType(type);
+        Tag tagResult = tagMapper.queryById(param);
         if (tagResult == null || StringUtils.isEmpty(tagResult.getTagName())) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
         }
@@ -123,16 +155,24 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public ServerResponse<TagBo> deleteById(Integer id) {
-        Tag tagResult = tagMapper.queryById(id);
+    public ServerResponse<TagBo> deleteById(Integer id,Byte type,Byte status) {
+        Tag param = new Tag();
+        param.setId(id);
+        param.setType(type);
+        if (status == DataStatus.NO_DELETED) {
+
+        }
+        Tag tagResult = tagMapper.queryById(param);
         if (tagResult == null || StringUtils.isEmpty(tagResult.getTagName())) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
         }
-        int result = tagMapper.deleteById(id);
+        int result = tagMapper.deleteById(param);
         if (result > 0) {
             return ServerResponse.createBySuccess();
         } else {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.DATABASE_ERROR.inValue(),ActionStatus.DATABASE_ERROR.getDescription());
         }
-     }
+    }
+
+
 }
