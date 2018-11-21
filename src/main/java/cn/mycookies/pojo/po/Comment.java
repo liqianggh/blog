@@ -10,6 +10,7 @@ import org.apache.logging.log4j.core.config.plugins.validation.constraints.Requi
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Min;
+ import javax.validation.constraints.NotNull;
  import java.util.Date;
 @Setter
 @Getter
@@ -38,9 +39,9 @@ public class Comment {
     private Integer likeCount;
 
     @ApiModelProperty(hidden = true)
-    private Integer status;
+    private Byte isDeleted;
 
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value = "对话id")
     private Integer sessionId;
 
     @ApiModelProperty(hidden = true)

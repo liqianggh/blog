@@ -19,4 +19,6 @@ public interface CommentMapper {
     Comment selectCommentById(Integer commentId);
 
     List<CommentVO> selectComments(Comment comment);
+
+    int likeComment(Integer id);
 }

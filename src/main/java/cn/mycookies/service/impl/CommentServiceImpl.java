@@ -11,7 +11,7 @@ import cn.mycookies.utils.DateTimeUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.mysql.jdbc.StringUtils;
+import com.mysql.cj.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,9 +48,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public ServerResponse<PageInfo<CommentVO>> getComments(Integer pageNum, Integer pageSize, Integer userId, Integer replyUid, Integer targetId,Integer sessionId, Integer isDeleted) {
+    public ServerResponse<PageInfo<CommentVO>> getComments(Integer pageNum, Integer pageSize, Integer userId, Integer replyUid, Integer targetId,Integer sessionId, Byte isDeleted) {
         Page page = PageHelper.startPage(pageNum, pageSize);
-        PageHelper.orderBy("like_count desc, create_time desc");
+        PageHelper.orderBy("t.like_count desc, t.create_time desc");
         if (isDeleted == DataStatus.ALL) {
             isDeleted = null;
         }
@@ -59,14 +59,14 @@ public class CommentServiceImpl implements CommentService {
         }
         Comment comment = new Comment();
         comment.setUserId(userId);
-        comment.setStatus(isDeleted);
+        comment.setIsDeleted(isDeleted);
         comment.setReplyUid(replyUid);
         comment.setTargetId(targetId);
         comment.setSessionId(sessionId);
         List<CommentVO> commentList = commentMapper.selectComments(comment);
 
         if (commentList == null || commentList.size() == 0) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.DATABASE_ERROR.inValue(), ActionStatus.DATABASE_ERROR.getDescription());
+            return ServerResponse.createByErrorCodeMessage(ActionStatus.NO_RESULT.inValue(), ActionStatus.NO_RESULT.getDescription());
         }
         // 日期转换
          commentList.stream().forEach(commentTemp -> {
@@ -79,7 +79,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public ServerResponse deleteComment(Integer commentId, Integer isRealDelete) {
+    public ServerResponse deleteComment(Integer commentId, Byte isRealDelete) {
         int result = 0;
         // 判断是否存在
         Comment commentResult = commentMapper.selectCommentById(commentId);
@@ -92,7 +92,7 @@ public class CommentServiceImpl implements CommentService {
         } else {
             Comment comment = new Comment();
             comment.setId(commentId);
-            comment.setStatus(isRealDelete);
+            comment.setIsDeleted(isRealDelete);
             result = commentMapper.updateComment(comment);
         }
         if (result > 0) {
@@ -101,5 +101,21 @@ public class CommentServiceImpl implements CommentService {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.DATABASE_ERROR.inValue(), ActionStatus.DATABASE_ERROR.getDescription());
         }
     }
+
+    @Override
+    public ServerResponse<String> likeComment(Integer id) {
+
+        // 判断是否存在
+        Comment comment = commentMapper.selectCommentById(id);
+        if (comment == null){
+            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(),ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
+        }
+        int result = commentMapper.likeComment(id);
+        if (result > 0) {
+            return ServerResponse.createBySuccess();
+        } else {
+            return ServerResponse.createByErrorMessage("点赞失败");
+        }
+     }
 
 }

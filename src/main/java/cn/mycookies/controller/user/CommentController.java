@@ -50,10 +50,18 @@ public class CommentController {
             @ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize,
             @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum,
             @ApiParam(value = "评论主体的id") @PathVariable Integer targetId,
-            @ApiParam(value = "对话的id") @PathVariable Integer sessionId) {
+            @ApiParam(value = "对话的id") @RequestParam(required = false) Integer sessionId) {
 
         return commentService.getComments(pageNum, pageSize, null, null, targetId, sessionId, DataStatus.NO_DELETED);
     }
+    @PutMapping("/like/{id}")
+    @ApiOperation(value = "获取评论列表", responseContainer = "PageInfo", response = CommentVO.class)
+    public ServerResponse<String> like(
+           @ApiParam(value ="评论的id") @PathVariable(value = "id",required = true) Integer id){
+
+        return commentService.likeComment(id);
+    }
+
 
     @DeleteMapping("/{commentId}")
     @ApiOperation(value = "删除评论和它相关的回复")

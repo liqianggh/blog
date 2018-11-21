@@ -33,6 +33,6 @@ public class TagAdd {
     @ApiModelProperty(value = "标签描述",required = false)
     private String tagDesc;
 
-    @ApiModelProperty(value = "标签类型",required = false)
+    @ApiModelProperty(value = "标签类型",required = false,dataType = "Byte")
     private Byte type;
 }

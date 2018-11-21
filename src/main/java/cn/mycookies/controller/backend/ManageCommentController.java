@@ -35,9 +35,10 @@ public class ManageCommentController {
     @ApiOperation(value = "获取评论列表",responseContainer = "PageInfo",response = CommentVO.class)
     public ServerResponse<PageInfo<CommentVO>> comments(@ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize,
                                                         @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum,
-                                                        @ApiParam(value = "评论的状态") @RequestParam(defaultValue = DataStatus.ALL+"")@Min(0)@Max(2) Integer status,
-                                                        @ApiParam(value = "评论主体的id") @PathVariable Integer targetId){
+                                                        @ApiParam(value = "评论的状态") @RequestParam(defaultValue = DataStatus.ALL+"")@Min(0)@Max(2) Byte is_deleted,
+                                                        @ApiParam(value = "评论主体的id") @PathVariable Integer targetId,
+                                                        @ApiParam(value = "对话的id") @RequestParam(required = false) Integer sessionId){
 
-        return commentService.getComments(pageNum,pageSize,null,null,targetId,status);
+        return commentService.getComments(pageNum,pageSize,null,null,targetId,sessionId,is_deleted);
     }
 }

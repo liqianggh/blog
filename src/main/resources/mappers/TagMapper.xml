@@ -11,8 +11,8 @@
     </constructor>
   </resultMap>
   <insert id="insert" parameterType="cn.mycookies.pojo.dto.TagAdd">
-    insert into tag (tag_name, tag_desc, create_time)
-    values (#{tagName,jdbcType=VARCHAR}, #{tagDesc,jdbcType=VARCHAR}, now())
+    insert into tag (tag_name, tag_desc,type, create_time)
+    values (#{tagName,jdbcType=VARCHAR}, #{tagDesc,jdbcType=VARCHAR},#{type},now())
   </insert>
   <insert id="insertSelective" parameterType="cn.mycookies.pojo.po.Tag">
     insert into tag
@@ -51,8 +51,8 @@
       </if>
     </trim>
   </insert>
-  <select id="queryTagList" parameterType="cn.mycookies.pojo.po.Tag"  resultMap="BaseResultMap">
-    SELECT * from tag
+  <select id="queryTagList" parameterType="cn.mycookies.pojo.po.Tag"  resultType="cn.mycookies.pojo.po.Tag">
+    SELECT id,tag_name as tagName, tag_desc as tagDesc,`type`,create_time as createTime,update_time as updateTime from tag
     <where>
       <if test="type != null">
         type = #{type}
@@ -61,14 +61,14 @@
   </select>
 
   <select id="queryByName" parameterType="cn.mycookies.pojo.dto.TagAdd" resultType="cn.mycookies.pojo.po.Tag">
-    SELECT id,tag_name as tagName, tag_desc as tagDesc,create_time as createTime,update_time as updateTime
+    SELECT id,tag_name as tagName, tag_desc as tagDesc,type,create_time as createTime,update_time as updateTime
     FROM tag
     <where>
     <if test="type != null">
       type = #{type}
     </if>
     <if test="tagName != null">
-      tag_name= #{tagName}
+      and tag_name= #{tagName}
     </if>
     </where>
   </select>
@@ -80,13 +80,13 @@
         type = #{type}
       </if>
       <if test="id != null">
-        id= #{id}
+        and id= #{id}
       </if>
     </where>
   </select>
   <select id="queryTagBoList" resultType="cn.mycookies.pojo.vo.TagVO">
       SELECT
-        COUNT(t.blog_id) count, t.tag_id, t2.tag_name
+        COUNT(t.blog_id) count, t.tag_id as id, t2.tag_name as tagName
     FROM
         blog_tags t
             LEFT JOIN

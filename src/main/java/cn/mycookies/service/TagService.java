@@ -46,5 +46,5 @@ public interface TagService {
 
     ServerResponse<TagBo> deleteById(Integer id,Byte type,Byte isDelete);
 
-    PageInfo<TagVO> findTagVoList(Integer pageNum, Integer pageSize, Byte type);
+    ServerResponse<List<TagVO>> findTagVoList(Byte type);
 }

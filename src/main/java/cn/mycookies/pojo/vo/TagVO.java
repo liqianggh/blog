@@ -8,9 +8,9 @@ package cn.mycookies.pojo.vo;
  **/
 public class TagVO {
 
-    private Integer id;
+    public Integer id;
 
-    private String tagName;
+    public String tagName;
 
-    private Integer count;
+    public Integer count;
 }

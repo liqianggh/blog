@@ -23,6 +23,8 @@ public class TagBo {
 
     private String tagName;
 
+    private Byte type;
+
     /**
      * 标签描述
      */

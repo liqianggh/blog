@@ -55,25 +55,25 @@ public class TagServiceImpl implements TagService {
 
     /**
      * 获取tagVo列表
-     * @param pageNum
-     * @param pageSize
      * @param type
      * @return
      */
     @Override
-    public PageInfo<TagVO> findTagVoList(Integer pageNum, Integer pageSize, Byte type) {
+    public ServerResponse<List<TagVO>> findTagVoList(Byte type) {
 
-        Page page = PageHelper.startPage(pageNum, pageSize);
         List<TagVO> tagList = null;
         if (type == TagTypes.TAG_LABEL) {
             tagList = tagMapper.queryTagBoList();
         } else {
             tagList = tagMapper.queryTagVOList();
         }
-        PageInfo pageInfo = page.toPageInfo();
-        pageInfo.setList(tagList);
-        return pageInfo;
-    }
+
+        if (tagList==null || tagList.size() ==0) {
+            return ServerResponse.createByErrorCodeMessage(ActionStatus.NO_RESULT.inValue(),ActionStatus.NO_RESULT.getDescription());
+        } else {
+            return ServerResponse.createBySuccess(tagList);
+        }
+     }
     private TagBo convertTagToBo(Tag tag) {
         if (Objects.isNull(tag)) {
             return null;
@@ -82,6 +82,7 @@ public class TagServiceImpl implements TagService {
         tagBo.setId(tag.getId());
         tagBo.setTagName(tag.getTagName());
         tagBo.setTagDesc(tag.getTagDesc());
+        tagBo.setType(tag.getType());
         tagBo.setCreateTime(DateTimeUtil.dateToStr(tag.getCreateTime()));
         tagBo.setUpdateTime(DateTimeUtil.dateToStr(tag.getUpdateTime()));
         return tagBo;
@@ -98,8 +99,8 @@ public class TagServiceImpl implements TagService {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
         }
         Tag param = new Tag();
-        tagAdd.setTagName(tagAdd.getTagName());
-        tagAdd.setType(tagAdd.getType());
+        param.setTagName(tagAdd.getTagName());
+        param.setType(tagAdd.getType());
         // 是否存在校验
         Tag tag = tagMapper.queryByName(param);
         if (tag != null) {
@@ -149,7 +150,7 @@ public class TagServiceImpl implements TagService {
         param.setType(type);
         Tag tagResult = tagMapper.queryById(param);
         if (tagResult == null || StringUtils.isEmpty(tagResult.getTagName())) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
+            return ServerResponse.createByErrorCodeMessage(ActionStatus.NO_RESULT.inValue(), ActionStatus.NO_RESULT.getDescription());
         }
         return ServerResponse.createBySuccess(convertTagToBo(tagResult));
     }
