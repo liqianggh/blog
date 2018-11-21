@@ -47,4 +47,6 @@ public interface TagService {
     ServerResponse<TagBo> deleteById(Integer id,Byte type,Byte isDelete);
 
     ServerResponse<List<TagVO>> findTagVoList(Byte type);
+
+    List<TagVO> geteTagsOfBlog(Integer blogId);
 }

@@ -103,6 +103,12 @@
         tag t2 ON t.category_id = t2.id AND t2.type = 1
     GROUP BY t.category_id;
   </select>
+  <select id="queryTagsOfBlog" resultType="cn.mycookies.pojo.vo.TagVO">
+    SELECT tag.tag_name as tagName ,tag.id
+    FROM blog_tags
+    LEFT JOIN tag on tag.id = blog_tags.tag_id and tag.type=1
+    where blog_id = #{blogId}
+  </select>
 
   <update id="updateTag" parameterType="cn.mycookies.pojo.po.Tag">
       UPDATE tag

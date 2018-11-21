@@ -57,12 +57,9 @@
       #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.mycookies.pojo.po.Blog">
+  <insert id="insertSelective" parameterType="cn.mycookies.pojo.dto.BlogDTO">
     insert into blog
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="categoryId != null">
         category_id,
       </if>
@@ -75,44 +72,21 @@
       <if test="author != null">
         author,
       </if>
-      <if test="tags != null">
-        tags,
-      </if>
       <if test="code != null">
         code,
       </if>
       <if test="imgUrl != null">
         img_url,
       </if>
-      <if test="viewCount != null">
-        view_count,
-      </if>
-      <if test="likeCount != null">
-        like_count,
-      </if>
-      <if test="shareCount != null">
-        share_count,
-      </if>
-      <if test="commentCount != null">
-        comment_count,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="content != null">
+         create_time,
+       <if test="content != null">
         content,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="categoryId != null">
         #{categoryId,jdbcType=INTEGER},
       </if>
@@ -125,39 +99,121 @@
       <if test="author != null">
         #{author,jdbcType=VARCHAR},
       </if>
-      <if test="tags != null">
-        #{tags,jdbcType=VARCHAR},
-      </if>
       <if test="code != null">
         #{code,jdbcType=INTEGER},
       </if>
       <if test="imgUrl != null">
         #{imgUrl,jdbcType=VARCHAR},
       </if>
-      <if test="viewCount != null">
-        #{viewCount,jdbcType=INTEGER},
-      </if>
-      <if test="likeCount != null">
-        #{likeCount,jdbcType=INTEGER},
-      </if>
-      <if test="shareCount != null">
-        #{shareCount,jdbcType=INTEGER},
-      </if>
-      <if test="commentCount != null">
-        #{commentCount,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=TINYINT},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
+         now(),
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
       </if>
+      <if test="isDeleted != null">
+        #{isDeleted},
+      </if>
     </trim>
   </insert>
+
+  <update id="updateBlog" parameterType="cn.mycookies.pojo.dto.BlogDTO">
+    update blog
+    <set>
+      <if test="categoryId != null">
+        category_id=#{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title=#{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null">
+        summary=#{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        author=#{author,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code=#{code,jdbcType=INTEGER},
+      </if>
+      <if test="imgUrl != null">
+        img_url=#{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content=#{content},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted=#{isDeleted}
+      </if>
+    </set>
+      where id=#{id}
+  </update>
+  <update id="updateBlogCount">
+    update blog
+    <set>
+        <if test="type=='like'">
+          like_count = like_count+1
+        </if>
+        <if test="type=='comment'">
+          comment_count = comment_count+1
+        </if>
+        <if test="type=='view'">
+          view_count = view_count+1
+        </if>
+    </set>
+    where id = #{blogId}
+  </update>
+  <select id="selectBlogs" resultType="cn.mycookies.pojo.po.Blog">
+    SELECT
+    id,title,
+    img_url as imgUrl,
+    summary,content,
+    code,create_time as createTime,update_time updateTime,
+    like_count as likeCount,view_count as viewCount,is_deleted isDeleted
+    from blog
+    <where>
+      <if test="tagId != null">
+        tag_id=#{tagId}
+      </if>
+      <if test="tagId != null">
+        and category_id=#{categoryId}
+      </if>
+      <if test="isDeleted != null">
+        and is_deleted=#{isDeleted}
+      </if>
+    </where>
+  </select>
+  <select id="selectById" resultType="cn.mycookies.pojo.po.Blog">
+    SELECT
+    id,title,
+    img_url as imgUrl,
+    summary,content,
+    code,create_time as createTime,
+    like_count as likeCount,view_count as viewCount,is_deleted isDeleted
+    from blog
+    <where>
+      <if test="id != null">
+        id=#{id}
+      </if>
+      <if test="isDeleted != null">
+        and is_deleted=#{isDeleted}
+      </if>
+    </where>
+  </select>
+  <select id="selectLastOrNext" resultType="cn.mycookies.pojo.po.Blog">
+    SELECT
+    id,title,
+    img_url as imgUrl,
+    summary,content,
+    code,create_time as createTime,
+    like_count as likeCount,view_count as viewCount,is_deleted isDeleted
+    from blog
+    <where>
+       is_deleted=0
+      <if test="id != null and page == 1">
+        and id &gt; #{id} order by id asc
+      </if>
+      <if test="id != null and page == -1" >
+       and id &lt; #{id} order by id desc
+      </if>
+    </where>
+    LIMIT 1
+  </select>
 </mapper>
