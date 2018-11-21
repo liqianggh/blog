@@ -13,34 +13,32 @@ import java.util.Date;
 public class Blog {
     private Integer id;
 
+    private String title;
+
     private Integer categoryId;
 
-    private String title;
+    private String tags;
 
     private String summary;
 
-    private String author;
-
-    private String tags;
+    private String content;
 
     private Integer code;
 
     private String imgUrl;
 
+    private String author;
+
     private Integer viewCount;
 
     private Integer likeCount;
 
-    private Integer shareCount;
-
     private Integer commentCount;
 
-    private Byte status;
+    private Byte isDeleted;
 
     private Date createTime;
 
     private Date updateTime;
-
-    private String content;
 
 }

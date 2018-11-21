@@ -74,6 +74,15 @@ public class TagServiceImpl implements TagService {
             return ServerResponse.createBySuccess(tagList);
         }
      }
+
+    @Override
+    public List<TagVO> geteTagsOfBlog(Integer blogId) {
+
+        List<TagVO> tagVOS = tagMapper.queryTagsOfBlog(blogId);
+
+        return tagVOS;
+    }
+
     private TagBo convertTagToBo(Tag tag) {
         if (Objects.isNull(tag)) {
             return null;

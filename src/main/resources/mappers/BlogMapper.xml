@@ -160,4 +160,41 @@
       </if>
     </trim>
   </insert>
+  <select id="selectBlogs" resultType="cn.mycookies.pojo.po.Blog">
+    SELECT
+    id,title,
+    img_url as imgUrl,
+    summary,content,
+    code,create_time as createTime,
+    like_count as likeCount,view_count as viewCount,is_deleted isDeleted
+    from blog
+    <where>
+      <if test="tagId != null">
+        tag_id=#{tagId}
+      </if>
+      <if test="tagId != null">
+        and category_id=#{categoryId}
+      </if>
+      <if test="isDeleted != null">
+        and is_deleted=#{isDeleted}
+      </if>
+    </where>
+  </select>
+  <select id="selectById" resultType="cn.mycookies.pojo.po.Blog">
+    SELECT
+    id,title,
+    img_url as imgUrl,
+    summary,content,
+    code,create_time as createTime,
+    like_count as likeCount,view_count as viewCount,is_deleted isDeleted
+    from blog
+    <where>
+      <if test="id != null">
+        id=#{id}
+      </if>
+      <if test="isDeleted != null">
+        and is_deleted=#{isDeleted}
+      </if>
+    </where>
+  </select>
 </mapper>
