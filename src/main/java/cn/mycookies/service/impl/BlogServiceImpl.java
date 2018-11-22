@@ -115,10 +115,7 @@ public class BlogServiceImpl implements BlogService {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(),ActionStatus.PARAMAS_ERROR.getDescription());
         }
         int result = blogMapper.updateBlogCount(id,type);
-        if (result == 0) {
-            return ServerResponse.createByError();
-        }
-        return ServerResponse.createBySuccess();
+        return null;
     }
 
     private BlogDTO getlastOrNext(Integer id, Integer page){
