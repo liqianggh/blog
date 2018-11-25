@@ -26,8 +26,6 @@ public interface TagService {
      PageInfo<TagBo> findTagList(int pageNum, int pageSize,Byte type);
 
 
-     List<TagBo> findAllTagsWithCount();
-
     /**
      * 添加标签
      * @param tagAdd

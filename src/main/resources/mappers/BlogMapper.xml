@@ -216,4 +216,22 @@
     </where>
     LIMIT 1
   </select>
+  <select id="selectHotOrRecommendBlogs" resultType="cn.mycookies.pojo.vo.BlogVO">
+    SELECT
+      id,title,
+      img_url as imgUrl,
+      summary,content,
+      code,create_time as createTime,update_time updateTime,
+      like_count as likeCount,view_count as viewCount,is_deleted isDeleted
+    from blog
+    <where>
+      is_deleted=0
+      <if test="code == 2">
+        and code= #{code}
+      </if>
+
+    </where>
+      limit #{limit}
+
+  </select>
 </mapper>

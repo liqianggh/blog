@@ -3,6 +3,7 @@ package cn.mycookies.service;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.dto.BlogDTO;
 import cn.mycookies.pojo.vo.BlogVO;
+import cn.mycookies.pojo.vo.IndexVO;
 import com.github.pagehelper.PageInfo;
 
 public interface BlogService {
@@ -28,4 +29,6 @@ public interface BlogService {
      * @return
      */
     ServerResponse blogCountPlus(Integer id, String type);
+
+    ServerResponse<IndexVO> getIndexVO();
 }

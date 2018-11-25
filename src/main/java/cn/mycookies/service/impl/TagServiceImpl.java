@@ -65,7 +65,7 @@ public class TagServiceImpl implements TagService {
         if (type == TagTypes.TAG_LABEL) {
             tagList = tagMapper.queryTagBoList();
         } else {
-            tagList = tagMapper.queryTagVOList();
+            tagList = tagMapper.queryCategoryVOList();
         }
 
         if (tagList==null || tagList.size() ==0) {
@@ -95,11 +95,6 @@ public class TagServiceImpl implements TagService {
         tagBo.setCreateTime(DateTimeUtil.dateToStr(tag.getCreateTime()));
         tagBo.setUpdateTime(DateTimeUtil.dateToStr(tag.getUpdateTime()));
         return tagBo;
-    }
-
-    @Override
-    public List<TagBo> findAllTagsWithCount() {
-        return null;
     }
 
     @Override

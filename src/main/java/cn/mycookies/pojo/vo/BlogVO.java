@@ -1,6 +1,7 @@
 package cn.mycookies.pojo.vo;
 
 import cn.mycookies.pojo.dto.BlogDTO;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @ApiModel("评论回复实体类")
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class BlogVO {
 
     public Integer id;

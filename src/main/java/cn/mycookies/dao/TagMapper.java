@@ -32,4 +32,6 @@ public interface TagMapper {
     List<TagVO> queryTagVOList();
 
     List<TagVO> queryTagsOfBlog(Integer blogId);
+
+    List<TagVO> queryCategoryVOList();
 }

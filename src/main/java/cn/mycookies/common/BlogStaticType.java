@@ -13,4 +13,8 @@ public interface BlogStaticType {
 
     String  COMMENT="comment";
 
+    int HOT_BLOG = 1;
+
+    int RECOMMEND_BLOG=2;
+
 }

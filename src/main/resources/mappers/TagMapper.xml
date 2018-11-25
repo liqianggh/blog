@@ -93,23 +93,22 @@
         tag t2 ON t.tag_id = t2.id AND t2.type = 1
     GROUP BY t.tag_id;
   </select>
-  <select id="queryTagVOList" resultType="cn.mycookies.pojo.vo.TagVO">
-   SELECT
-        COUNT(t.category_id) count, t.category_id, t2.tag_name
-    FROM
-        blog t
-
-            LEFT JOIN
-        tag t2 ON t.category_id = t2.id AND t2.type = 1
-    GROUP BY t.category_id;
-  </select>
   <select id="queryTagsOfBlog" resultType="cn.mycookies.pojo.vo.TagVO">
     SELECT tag.tag_name as tagName ,tag.id
     FROM blog_tags
     LEFT JOIN tag on tag.id = blog_tags.tag_id and tag.type=1
     where blog_id = #{blogId}
   </select>
+  <select id="queryCategoryVOList" resultType="cn.mycookies.pojo.vo.TagVO">
+    SELECT
+      COUNT(t.category_id) count, t.category_id as id, t2.tag_name as tagName
+    FROM
+      blog t
 
+      LEFT JOIN
+      tag t2 ON t.category_id = t2.id AND t2.type = 2
+    GROUP BY t.category_id;
+  </select>
   <update id="updateTag" parameterType="cn.mycookies.pojo.po.Tag">
       UPDATE tag
     <set>

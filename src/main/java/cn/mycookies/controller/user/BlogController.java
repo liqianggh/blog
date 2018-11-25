@@ -4,6 +4,7 @@ import cn.mycookies.common.BlogStaticType;
 import cn.mycookies.common.DataStatus;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.vo.BlogVO;
+import cn.mycookies.pojo.vo.IndexVO;
 import cn.mycookies.service.BlogService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -41,11 +42,19 @@ public class BlogController {
         return blogService.getBlog(id,DataStatus.ALL,true,true);
     }
 
-    @GetMapping("/count/{id}")
+    @PutMapping("/count/{id}")
     @ApiOperation(value ="修改博客统计，如点赞，浏览量，评论数",response=Boolean.class)
     public ServerResponse getBlog(@ApiParam("博客id") @PathVariable Integer id,
                                   @ApiParam("操作类型，like，view，comment等")@RequestParam(defaultValue = BlogStaticType.LIKE) String type){
-
         return blogService.blogCountPlus(id,type);
     }
+
+    @GetMapping("/index")
+    @ApiOperation(value ="修改博客统计，如点赞，浏览量，评论数",response=Boolean.class)
+    public ServerResponse<IndexVO> index(){
+
+        return blogService.getIndexVO();
+    }
+
+
 }

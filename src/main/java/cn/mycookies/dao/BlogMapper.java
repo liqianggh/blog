@@ -2,6 +2,7 @@ package cn.mycookies.dao;
 
 import cn.mycookies.pojo.dto.BlogDTO;
 import cn.mycookies.pojo.po.Blog;
+import cn.mycookies.pojo.vo.BlogVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +18,10 @@ public interface BlogMapper {
 
     List<Blog> selectBlogs(@Param("categoryId") Integer categoryId, @Param("tagId")Integer tagId, @Param("isDeleted")Byte isDeleted);
 
+    List<BlogVO> selectHotOrRecommendBlogs(@Param("code") int code,@Param("limit") int limit);
+
     int updateBlog(BlogDTO blogDTO);
+
     /**
      * 上一条-1 或者 下一条1
      * @param id

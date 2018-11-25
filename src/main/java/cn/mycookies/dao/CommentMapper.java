@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CommentMapper {
+public interface  CommentMapper {
     int insert(Comment record);
 
     int insertSelective(Comment record);

@@ -1,12 +1,13 @@
 package cn.mycookies.service.impl;
 
-import cn.mycookies.common.ActionStatus;
-import cn.mycookies.common.DataStatus;
-import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.*;
 import cn.mycookies.dao.BlogMapper;
 import cn.mycookies.pojo.dto.BlogDTO;
+import cn.mycookies.pojo.dto.TagBo;
 import cn.mycookies.pojo.po.Blog;
 import cn.mycookies.pojo.vo.BlogVO;
+import cn.mycookies.pojo.vo.IndexVO;
+import cn.mycookies.pojo.vo.TagVO;
 import cn.mycookies.service.BlogService;
 import cn.mycookies.service.CommentService;
 import cn.mycookies.service.TagService;
@@ -16,6 +17,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
+import net.sf.jsqlparser.statement.create.table.Index;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -116,6 +118,23 @@ public class BlogServiceImpl implements BlogService {
         }
         int result = blogMapper.updateBlogCount(id,type);
         return null;
+    }
+
+    @Override
+    public ServerResponse<IndexVO> getIndexVO() {
+
+        PageInfo<BlogVO> blogs = getBlogs(1,10,null,null,DataStatus.NO_DELETED,"create_time desc").getData();
+        List<BlogVO> recommendList = blogMapper.selectHotOrRecommendBlogs(BlogStaticType.RECOMMEND_BLOG,10);
+
+        List<TagVO> tagVOS = tagService.findTagVoList(TagTypes.TAG_LABEL).getData();
+        List<TagVO> categoryVOS = tagService.findTagVoList(TagTypes.TAG_CATEGORY).getData();
+
+        IndexVO indexVO = new IndexVO();
+        indexVO.setBlogList(blogs);
+        indexVO.setCategoryList(categoryVOS);
+        indexVO.setTagList(tagVOS);
+        indexVO.setRecommendList(recommendList);
+        return ServerResponse.createBySuccess(indexVO);
     }
 
     private BlogDTO getlastOrNext(Integer id, Integer page){
