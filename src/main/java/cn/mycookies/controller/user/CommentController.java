@@ -4,13 +4,14 @@ import cn.mycookies.common.ActionStatus;
 import cn.mycookies.common.DataStatus;
 import cn.mycookies.common.ProcessBindingResult;
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.pojo.po.Comment;
+import cn.mycookies.pojo.po.CommentDO;
 import cn.mycookies.pojo.vo.CommentVO;
 import cn.mycookies.service.CommentService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,10 +21,10 @@ import javax.validation.Valid;
 
 
 /**
- * @ClassName TagController
- * @Description 评论管理
- * @Author Jann Lee
- * @Date 2018-11-20 12:20
+ * @className TagController
+ * @description 评论管理
+ * @author Jann Lee
+ * @date 2018-11-20 12:20
  **/
 @Controller
 @Api(description = "用户评论模块")
@@ -36,12 +37,12 @@ public class CommentController {
 
     @PostMapping
     @ApiOperation(value = "添加评论")
-    public ServerResponse addComment(@RequestBody @Valid Comment comment, BindingResult bindingResult) {
+    public ServerResponse addComment(@RequestBody @Valid CommentDO commentDO, BindingResult bindingResult,@RequestParam(name = "username",required = false) String username) {
         if (bindingResult != null && bindingResult.hasErrors()) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
         }
 
-        return commentService.addComment(comment);
+        return commentService.insertComment(commentDO,username);
     }
 
     @GetMapping("/{targetId}")
@@ -52,14 +53,14 @@ public class CommentController {
             @ApiParam(value = "评论主体的id") @PathVariable Integer targetId,
             @ApiParam(value = "对话的id") @RequestParam(required = false) Integer sessionId) {
 
-        return commentService.getComments(pageNum, pageSize, null, null, targetId, sessionId, DataStatus.NO_DELETED);
+        return commentService.listComments(pageNum, pageSize, null, null, targetId, sessionId, DataStatus.NO_DELETED);
     }
     @PutMapping("/like/{id}")
     @ApiOperation(value = "获取评论列表", responseContainer = "PageInfo", response = CommentVO.class)
     public ServerResponse<String> like(
            @ApiParam(value ="评论的id") @PathVariable(value = "id",required = true) Integer id){
 
-        return commentService.likeComment(id);
+        return commentService.updateCommentLikeCount(id);
     }
 
 

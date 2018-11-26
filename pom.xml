@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>myblog</name>
-    <description>The blog of Jann Lee</description>
+    <description>The blogDO of Jann Lee</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -52,12 +52,6 @@
             <artifactId>guava</artifactId>
             <version>20.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.5</version>
-        </dependency>
-
         <!-- 日志记录 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

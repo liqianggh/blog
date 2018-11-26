@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 
 /**
- * @Description 接口返回结果包装类
- * @Author Jann Lee
- * @Date 2018-11-17 19:24
+ * @description 接口返回结果包装类
+ * @author Jann Lee
+ * @date 2018-11-17 19:24
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ServerResponse<T> implements Serializable{

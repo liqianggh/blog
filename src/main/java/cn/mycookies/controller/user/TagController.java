@@ -2,7 +2,7 @@ package cn.mycookies.controller.user;
 
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.common.TagTypes;
-import cn.mycookies.pojo.dto.TagBo;
+import cn.mycookies.pojo.dto.TagDTO;
 import cn.mycookies.pojo.vo.TagVO;
 import cn.mycookies.service.TagService;
 import io.swagger.annotations.Api;
@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- * @ClassName TagController
- * @Description TODO
- * @Author Jann Lee
- * @Date 2018-11-21 0:03
+ * @className TagController
+ * @description TODO
+ * @author Jann Lee
+ * @date 2018-11-21 0:03
  **/
 @Controller
 @Api("标签/分类相关接口")
@@ -32,10 +32,10 @@ public class TagController {
     private TagService tagService;
 
     @GetMapping("/")
-    @ApiOperation(value = "获取标签列表", response = TagBo.class, responseContainer = "List")
+    @ApiOperation(value = "获取标签列表", response = TagDTO.class, responseContainer = "List")
     @ResponseBody
     public ServerResponse<List<TagVO>> tagList(@ApiParam(value = "标签类型，是分类还是标签") @RequestParam(defaultValue = TagTypes.TAG_LABEL+"") Byte type) {
 
-        return tagService.findTagVoList(type);
+        return tagService.listTagVOs(type);
     }
 }

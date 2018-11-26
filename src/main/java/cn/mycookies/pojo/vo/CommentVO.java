@@ -23,10 +23,10 @@ public class CommentVO {
      */
     private Integer targetId;
 
-    private Integer userId;
+    private String email;
     private String userName;
 
-    private Integer replyUid;
+    private String replyEmail;
     private String replyUserName;
     /**
      * 正文

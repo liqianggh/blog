@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mycookies.dao.BlogMapper">
-  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.po.Blog">
+  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.po.BlogDO">
     <constructor>
       <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="category_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -20,7 +20,7 @@
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="cn.mycookies.pojo.po.Blog">
+  <resultMap id="ResultMapWithBLOBs" type="cn.mycookies.pojo.po.BlogDO">
     <constructor>
       <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="category_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -43,8 +43,8 @@
   <sql id="Blob_Column_List">
     content
   </sql>
-  <insert id="insert" parameterType="cn.mycookies.pojo.po.Blog">
-    insert into blog (id, category_id, title, 
+  <insert id="insert" parameterType="cn.mycookies.pojo.po.BlogDO">
+    insert into blog (id, category_id, title,
       summary, author, tags, 
       code, img_url, view_count, 
       like_count, share_count, comment_count, 
@@ -160,7 +160,7 @@
     </set>
     where id = #{blogId}
   </update>
-  <select id="selectBlogs" resultType="cn.mycookies.pojo.po.Blog">
+  <select id="selectBlogs" resultType="cn.mycookies.pojo.po.BlogDO">
     SELECT
     id,title,
     img_url as imgUrl,
@@ -180,7 +180,7 @@
       </if>
     </where>
   </select>
-  <select id="selectById" resultType="cn.mycookies.pojo.po.Blog">
+  <select id="selectById" resultType="cn.mycookies.pojo.po.BlogDO">
     SELECT
     id,title,
     img_url as imgUrl,
@@ -197,7 +197,7 @@
       </if>
     </where>
   </select>
-  <select id="selectLastOrNext" resultType="cn.mycookies.pojo.po.Blog">
+  <select id="selectLastOrNext" resultType="cn.mycookies.pojo.po.BlogDO">
     SELECT
     id,title,
     img_url as imgUrl,

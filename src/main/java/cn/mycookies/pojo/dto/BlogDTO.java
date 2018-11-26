@@ -1,6 +1,8 @@
 package cn.mycookies.pojo.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.JsonValueSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -13,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Getter
 @ToString
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BlogDTO {
     @ApiModelProperty(value = "博客id",required = false,hidden = true)
     private Integer id;

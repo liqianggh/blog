@@ -1,9 +1,9 @@
  package cn.mycookies.common;
 
  /**
-  * @Description 状态码
-  * @Author Jann Lee
-  * @Date 2018-11-17 20:29
+  * @description 状态码
+  * @author Jann Lee
+  * @date 2018-11-17 20:29
   */
  public class ActionStatus {
     public static final ActionStatus NORMAL_RETURNED = new ActionStatus(1000, "OK");

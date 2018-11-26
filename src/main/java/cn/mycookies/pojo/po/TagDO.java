@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 @ApiModel("Tag实体类")
-public class Tag {
+public class TagDO {
 
     @ApiModelProperty(name = "id",value = "标签的主键id",hidden = true)
     private Integer id;

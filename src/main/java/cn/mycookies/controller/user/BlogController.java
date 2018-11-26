@@ -32,7 +32,7 @@ public class BlogController {
                                                      @ApiParam(value = "分类Id") @RequestParam(required = false) Integer tagId,
                                                      @ApiParam(value = "排序类型") @RequestParam(required = false,defaultValue = "create_time desc") String orderBy){
 
-        return blogService.getBlogs(pageNum,pageSize,categoryId,tagId, DataStatus.NO_DELETED,orderBy);
+        return blogService.listBlogs(pageNum,pageSize,categoryId,tagId, DataStatus.NO_DELETED,orderBy);
     }
 
     @GetMapping("/{id}")
@@ -46,15 +46,14 @@ public class BlogController {
     @ApiOperation(value ="修改博客统计，如点赞，浏览量，评论数",response=Boolean.class)
     public ServerResponse getBlog(@ApiParam("博客id") @PathVariable Integer id,
                                   @ApiParam("操作类型，like，view，comment等")@RequestParam(defaultValue = BlogStaticType.LIKE) String type){
-        return blogService.blogCountPlus(id,type);
+        return blogService.updateBlogCount(id,type);
     }
 
     @GetMapping("/index")
-    @ApiOperation(value ="修改博客统计，如点赞，浏览量，评论数",response=Boolean.class)
+    @ApiOperation(value ="首页 内容初始化",response=Boolean.class)
     public ServerResponse<IndexVO> index(){
 
         return blogService.getIndexVO();
     }
-
 
 }

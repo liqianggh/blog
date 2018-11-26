@@ -1,20 +1,15 @@
 package cn.mycookies.pojo.dto;
 
-import cn.mycookies.common.TagTypes;
-import io.swagger.annotations.ApiModel;
+ import com.fasterxml.jackson.annotation.JsonInclude;
+ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Getter;
+ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.validation.constraints.NotNull;
 
 /**
- * @ClassName TagAdd
+ * @ClassName TagAddDTO
  * @Description TODO
  * @Author Jann Lee
  * @Date 2018-11-18 20:17
@@ -23,7 +18,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Getter
 @ToString
-public class TagAdd {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class TagAddDTO {
 
     @Length(min = 1,max = 10,message = "tagName长度需在1-10之间")
     @ApiModelProperty(value="标签名", required = true)
