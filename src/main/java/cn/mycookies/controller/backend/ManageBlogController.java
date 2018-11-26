@@ -5,7 +5,6 @@ import cn.mycookies.common.DataStatus;
 import cn.mycookies.common.ProcessBindingResult;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.dto.BlogDTO;
-import cn.mycookies.pojo.dto.TagAdd;
 import cn.mycookies.pojo.vo.BlogVO;
 import cn.mycookies.service.BlogService;
 import com.github.pagehelper.PageInfo;
@@ -37,7 +36,7 @@ public class ManageBlogController {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
         }
 
-        return blogService.addBlog(blogAdd);
+        return blogService.insertBlog(blogAdd);
     }
 
     @GetMapping
@@ -49,7 +48,7 @@ public class ManageBlogController {
     @ApiParam(value = "是否被删除") @RequestParam(required = false) @Min(0)@Max(2)Byte idDeleted,
     @ApiParam(value = "排序类型") @RequestParam(required = false,defaultValue = "create_time desc") String orderBy){
 
-        return blogService.getBlogs(pageNum,pageSize,categoryId,tagId,idDeleted,orderBy);
+        return blogService.listBlogs(pageNum,pageSize,categoryId,tagId,idDeleted,orderBy);
     }
 
     @PutMapping("/{id}")

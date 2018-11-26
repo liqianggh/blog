@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 @ToString
-public class Blog {
+public class BlogDO {
     private Integer id;
 
     private String title;

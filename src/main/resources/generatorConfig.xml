@@ -22,7 +22,7 @@
         <!--jdbc的数据库连接 -->
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&amp;useSSL=false"
+                connectionURL="jdbc:mysql://localhost:3306/blogDO?serverTimezone=UTC&amp;useSSL=false"
                 userId="root"
                 password="sqlpw">
         </jdbcConnection>
@@ -67,8 +67,8 @@
         </javaClientGenerator>
 
         <!--配置表-->
-        <table tableName="blog" domainObjectName="Blog" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>
-        <table tableName="tag" domainObjectName="Tag" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>
+        <table tableName="blogDO" domainObjectName="Blog" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>
+        <table tableName="tagDO" domainObjectName="Tag" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>
         <table tableName="comment" domainObjectName="Comment" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>
         <table tableName="category" domainObjectName="Category" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>
 

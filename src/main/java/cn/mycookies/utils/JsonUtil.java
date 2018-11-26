@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 /**
- * @Description: 高可用的Json工具类
+ * @description: 高可用的Json工具类
  * Created by Jann Lee on 2018/1/30  1:01.
  */
 @Slf4j

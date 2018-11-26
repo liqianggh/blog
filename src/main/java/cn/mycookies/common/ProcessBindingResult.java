@@ -12,7 +12,6 @@ public class ProcessBindingResult {
 
     /**
      * 处理数据校验异常结果，返回字符串
-     *
      * @param bindingResult
      * @return
      */

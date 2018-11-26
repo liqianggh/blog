@@ -1,9 +1,9 @@
 package cn.mycookies.controller.backend;
 
 import cn.mycookies.common.*;
-import cn.mycookies.pojo.dto.TagAdd;
-import cn.mycookies.pojo.dto.TagBo;
-import cn.mycookies.pojo.po.Tag;
+import cn.mycookies.pojo.dto.TagAddDTO;
+import cn.mycookies.pojo.dto.TagDTO;
+import cn.mycookies.pojo.po.TagDO;
 import cn.mycookies.service.TagService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
- * @ClassName TagController
- * @Description 标签管理
- * @Author Jann Lee
- * @Date 2018-11-18 16:36
+ * @className TagController
+ * @description 标签管理
+ * @author Jann Lee
+ * @date 2018-11-18 16:36
  **/
 @Controller
 @Api(description = "标签管理")
@@ -32,28 +32,28 @@ public class ManageTagController {
     private TagService tagService;
 
     @GetMapping("/")
-    @ApiOperation(value = "获取标签列表", response = TagBo.class, responseContainer = "List")
-    public PageInfo<TagBo> tagList(
+    @ApiOperation(value = "获取标签列表", response = TagDTO.class, responseContainer = "List")
+    public PageInfo<TagDTO> tagList(
             @ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize,
             @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum,
              @ApiParam(value = "标签类型，是分类还是标签") @RequestParam(defaultValue = TagTypes.TAG_LABEL+"") Byte type) {
 
-        return tagService.findTagList(pageNum, pageSize,type);
+        return tagService.listTags(pageNum, pageSize,type);
     }
 
     @PostMapping("")
     @ApiOperation(value = "添加标签", response = Boolean.class)
-    public ServerResponse<Boolean> addTag(@RequestBody @Valid TagAdd tagAdd, BindingResult bindingResult) {
+    public ServerResponse<Boolean> addTag(@RequestBody @Valid TagAddDTO tagAddDTO, BindingResult bindingResult) {
 
         if (bindingResult != null && bindingResult.hasErrors()) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
         }
-        return tagService.addTag(tagAdd);
+        return tagService.insertTag(tagAddDTO);
     }
 
     @PutMapping("/{id}")
     @ApiOperation(value = "修改标签", response = Boolean.class)
-    public ServerResponse updateTag(@RequestBody @Valid Tag tag,
+    public ServerResponse updateTag(@RequestBody @Valid TagDO tagDO,
                                     BindingResult bindingResult,
                                     @RequestParam(name = "type",required = true)Byte type,
                                     @PathVariable(name = "id", required = true) Integer id) {
@@ -61,26 +61,26 @@ public class ManageTagController {
         if (bindingResult != null && bindingResult.hasErrors()) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
         }
-        tag.setId(id);
-        tag.setType(type);
-        return tagService.updateTag(tag);
+        tagDO.setId(id);
+        tagDO.setType(type);
+        return tagService.updateTag(tagDO);
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "查找标签", response = Boolean.class)
-    public ServerResponse<TagBo> selectTag(
+    public ServerResponse<TagDTO> selectTag(
             @PathVariable(name = "id", required = true) Integer id,
             @RequestParam(name = "type", required =true) Byte type) {
 
-        return tagService.selectTagById(id,type);
+        return tagService.getTagById(id,type);
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除标签", response = Boolean.class)
-    public ServerResponse<TagBo> deleteTag(@PathVariable(name = "id", required = true) Integer id,
-                                           @RequestParam(name = "type", required = true) Byte type) {
+    public ServerResponse<TagDTO> deleteTag(@PathVariable(name = "id", required = true) Integer id,
+                                            @RequestParam(name = "type", required = true) Byte type) {
 
-        return tagService.deleteById(id,type,DataStatus.DELETED);
-    }
+        return tagService.deleteById(id,type);
+        }
 
-}
+        }

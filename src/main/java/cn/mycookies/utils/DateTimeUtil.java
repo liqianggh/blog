@@ -8,9 +8,9 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
- * @Description 日期格式工具类
- * @Author Jann Lee
- * @Date 2018-11-18 20:11
+ * @description 日期格式工具类
+ * @author Jann Lee
+ * @date 2018-11-18 20:11
  */
 public class DateTimeUtil {
    public static final String STANDARD_FORMAT="yyyy-MM-dd HH:mm:ss";

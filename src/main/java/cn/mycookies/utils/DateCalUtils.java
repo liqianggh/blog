@@ -3,9 +3,9 @@ package cn.mycookies.utils;
 import java.util.Date;
 
 /**
- * @Description 日期计算工具，计算指定时间到当前时间的距离
- * @Author Jann Lee
- * @Date 2018-11-18 20:10
+ * @description 日期计算工具，计算指定时间到当前时间的距离
+ * @author Jann Lee
+ * @date 2018-11-18 20:10
  */
 public class DateCalUtils {
    private static final long ONE_MINUTE = 60000L;
@@ -24,7 +24,7 @@ public class DateCalUtils {
        if(date==null){
            return "";
        }
-       long delta = new Date().getTime() - date.getTime();
+       long delta = System.currentTimeMillis() - date.getTime();
        if (delta < 1L * ONE_MINUTE) {
            long seconds = toSeconds(delta);
            return (seconds <= 0 ? 1 : seconds) + ONE_SECOND_AGO;

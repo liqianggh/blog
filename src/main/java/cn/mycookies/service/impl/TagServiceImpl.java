@@ -5,9 +5,9 @@ import cn.mycookies.common.DataStatus;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.common.TagTypes;
 import cn.mycookies.dao.TagMapper;
-import cn.mycookies.pojo.dto.TagAdd;
-import cn.mycookies.pojo.dto.TagBo;
-import cn.mycookies.pojo.po.Tag;
+import cn.mycookies.pojo.dto.TagAddDTO;
+import cn.mycookies.pojo.dto.TagDTO;
+import cn.mycookies.pojo.po.TagDO;
 import cn.mycookies.pojo.vo.TagVO;
 import cn.mycookies.service.TagService;
 import cn.mycookies.utils.DateTimeUtil;
@@ -22,12 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @ClassName TagServiceImpl
- * @Description 实现类
- * @Author Jann Lee
- * @Date 2018-11-18 17:02
- **/
 @Service
 public class TagServiceImpl implements TagService {
 
@@ -35,18 +29,18 @@ public class TagServiceImpl implements TagService {
     private TagMapper tagMapper;
 
     @Override
-    public PageInfo<TagBo> findTagList(int pageNum, int pageSize,Byte type) {
+    public PageInfo<TagDTO> listTags(int pageNum, int pageSize, Byte type) {
         Page page = PageHelper.startPage(pageNum, pageSize);
         PageHelper.orderBy("create_time desc");
-        Tag param = new Tag();
+        TagDO param = new TagDO();
         param.setType(type);
-        List<Tag> tagList = tagMapper.queryTagList(param);
+        List<TagDO> tagDOList = tagMapper.queryTagList(param);
 
-        List<TagBo> list = new ArrayList<>();
-        tagList.stream().forEach(tag -> {
+        List<TagDTO> list = new ArrayList<>();
+        tagDOList.stream().forEach(tagDO -> {
 
-            TagBo tagBo = convertTagToBo(tag);
-            list.add(tagBo);
+            TagDTO tagDTO = convertTagToBo(tagDO);
+            list.add(tagDTO);
         });
         PageInfo pageInfo = page.toPageInfo();
         pageInfo.setList(list);
@@ -59,7 +53,7 @@ public class TagServiceImpl implements TagService {
      * @return
      */
     @Override
-    public ServerResponse<List<TagVO>> findTagVoList(Byte type) {
+    public ServerResponse<List<TagVO>> listTagVOs(Byte type) {
 
         List<TagVO> tagList = null;
         if (type == TagTypes.TAG_LABEL) {
@@ -76,41 +70,41 @@ public class TagServiceImpl implements TagService {
      }
 
     @Override
-    public List<TagVO> geteTagsOfBlog(Integer blogId) {
+    public List<TagVO> listTagsOfBlog(Integer blogId) {
 
         List<TagVO> tagVOS = tagMapper.queryTagsOfBlog(blogId);
 
         return tagVOS;
     }
 
-    private TagBo convertTagToBo(Tag tag) {
-        if (Objects.isNull(tag)) {
+    private TagDTO convertTagToBo(TagDO tagDO) {
+        if (Objects.isNull(tagDO)) {
             return null;
         }
-        TagBo tagBo = new TagBo();
-        tagBo.setId(tag.getId());
-        tagBo.setTagName(tag.getTagName());
-        tagBo.setTagDesc(tag.getTagDesc());
-        tagBo.setType(tag.getType());
-        tagBo.setCreateTime(DateTimeUtil.dateToStr(tag.getCreateTime()));
-        tagBo.setUpdateTime(DateTimeUtil.dateToStr(tag.getUpdateTime()));
-        return tagBo;
+        TagDTO tagDTO = new TagDTO();
+        tagDTO.setId(tagDO.getId());
+        tagDTO.setTagName(tagDO.getTagName());
+        tagDTO.setTagDesc(tagDO.getTagDesc());
+        tagDTO.setType(tagDO.getType());
+        tagDTO.setCreateTime(DateTimeUtil.dateToStr(tagDO.getCreateTime()));
+        tagDTO.setUpdateTime(DateTimeUtil.dateToStr(tagDO.getUpdateTime()));
+        return tagDTO;
     }
 
     @Override
-    public ServerResponse<Boolean> addTag(TagAdd tagAdd) {
-        if (tagAdd == null || tagAdd.getTagName() == null) {
+    public ServerResponse<Boolean> insertTag(TagAddDTO tagAddDTO) {
+        if (tagAddDTO == null || tagAddDTO.getTagName() == null) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
         }
-        Tag param = new Tag();
-        param.setTagName(tagAdd.getTagName());
-        param.setType(tagAdd.getType());
+        TagDO param = new TagDO();
+        param.setTagName(tagAddDTO.getTagName());
+        param.setType(tagAddDTO.getType());
         // 是否存在校验
-        Tag tag = tagMapper.queryByName(param);
-        if (tag != null) {
+        TagDO tagDO = tagMapper.queryByName(param);
+        if (tagDO != null) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.DATA_REPEAT.inValue(), ActionStatus.DATA_REPEAT.getDescription());
         }
-        Integer result = tagMapper.insert(tagAdd);
+        Integer result = tagMapper.insert(tagAddDTO);
         if (result == 0) {
             return ServerResponse.createByError();
         } else {
@@ -119,23 +113,23 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public ServerResponse updateTag(Tag tag) {
+    public ServerResponse updateTag(TagDO tagDO) {
 
-        if (tag == null || tag.getTagName() == null) {
+        if (tagDO == null || tagDO.getTagName() == null) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
         }
         // 是否存在校验
-        Tag tagResult = tagMapper.queryByName(tag);
-        if (tagResult != null) {
+        TagDO tagDOResult = tagMapper.queryByName(tagDO);
+        if (tagDOResult != null) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.DATA_REPEAT.inValue(), ActionStatus.DATA_REPEAT.getDescription());
         }
 
-        tagResult = tagMapper.queryById(tag);
-        if (tagResult == null) {
+        tagDOResult = tagMapper.queryById(tagDO);
+        if (tagDOResult == null) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
         }
 
-        Integer result = tagMapper.updateTag(tag);
+        Integer result = tagMapper.updateTag(tagDO);
         if (result > 0) {
             return ServerResponse.createBySuccess(true);
         } else {
@@ -144,31 +138,29 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public ServerResponse<TagBo> selectTagById(Integer id,Byte type) {
+    public ServerResponse<TagDTO> getTagById(Integer id, Byte type) {
 
         if(id == 0 ){
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(),ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
         }
-        Tag param = new Tag();
+        TagDO param = new TagDO();
         param.setId(id);
         param.setType(type);
-        Tag tagResult = tagMapper.queryById(param);
-        if (tagResult == null || StringUtils.isEmpty(tagResult.getTagName())) {
+        TagDO tagDOResult = tagMapper.queryById(param);
+        if (tagDOResult == null || StringUtils.isEmpty(tagDOResult.getTagName())) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.NO_RESULT.inValue(), ActionStatus.NO_RESULT.getDescription());
         }
-        return ServerResponse.createBySuccess(convertTagToBo(tagResult));
+        return ServerResponse.createBySuccess(convertTagToBo(tagDOResult));
     }
 
     @Override
-    public ServerResponse<TagBo> deleteById(Integer id,Byte type,Byte status) {
-        Tag param = new Tag();
+    public ServerResponse<TagDTO> deleteById(Integer id, Byte type) {
+        TagDO param = new TagDO();
         param.setId(id);
         param.setType(type);
-        if (status == DataStatus.NO_DELETED) {
 
-        }
-        Tag tagResult = tagMapper.queryById(param);
-        if (tagResult == null || StringUtils.isEmpty(tagResult.getTagName())) {
+        TagDO tagDOResult = tagMapper.queryById(param);
+        if (tagDOResult == null || StringUtils.isEmpty(tagDOResult.getTagName())) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
         }
         int result = tagMapper.deleteById(param);

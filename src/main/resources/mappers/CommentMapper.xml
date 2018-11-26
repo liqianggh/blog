@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mycookies.dao.CommentMapper">
-    <resultMap id="BaseResultMap" type="cn.mycookies.pojo.po.Comment">
+    <resultMap id="BaseResultMap" type="cn.mycookies.pojo.po.CommentDO">
         <constructor>
             <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="target_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -13,7 +13,7 @@
             <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="cn.mycookies.pojo.po.Comment">
+    <resultMap id="ResultMapWithBLOBs" type="cn.mycookies.pojo.po.CommentDO">
         <constructor>
             <arg column="id" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
             <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -34,7 +34,7 @@
     like_count as likeCount,
     create_time as createTime
   </sql>
-    <insert id="insert" parameterType="cn.mycookies.pojo.po.Comment">
+    <insert id="insert" parameterType="cn.mycookies.pojo.po.CommentDO">
     insert into blog_comment (user_id, target_id,
       reply_uid, content,
       is_deleted, create_time, update_time,
@@ -44,7 +44,7 @@
       #{isDeleted,jdbcType=INTEGER},now(), now(),
       #{id,jdbcType=LONGVARCHAR})
   </insert>
-    <insert id="insertSelective" useGeneratedKeys="true" parameterType="cn.mycookies.pojo.po.Comment">
+    <insert id="insertSelective" useGeneratedKeys="true" parameterType="cn.mycookies.pojo.po.CommentDO">
         insert into blog_comment
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">
@@ -97,7 +97,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateComment" parameterType="cn.mycookies.pojo.po.Comment">
+    <update id="updateComment" parameterType="cn.mycookies.pojo.po.CommentDO">
         UPDATE blog_comment
         SET
         <trim suffixOverrides=",">
@@ -110,7 +110,7 @@
         </trim>
         where id=#{targetId,jdbcType=INTEGER}
     </update>
-    <update id="likeComment" parameterType="cn.mycookies.pojo.po.Comment">
+    <update id="likeComment" parameterType="cn.mycookies.pojo.po.CommentDO">
         UPDATE blog_comment
         SET like_count = like_count+1
         where id=#{targetId,jdbcType=INTEGER}
@@ -120,14 +120,14 @@
       FROM blog_comment
       where id=#{id,jdbcType=INTEGER}
   </delete>
-    <select id="selectCommentById" resultType="cn.mycookies.pojo.po.Comment">
+    <select id="selectCommentById" resultType="cn.mycookies.pojo.po.CommentDO">
         SELECT
         <include refid="Blob_Column_List"></include>
         FROM blog_comment
         WHERE is_deleted =0 AND id=#{id,jdbcType=INTEGER}
     </select>
     <!--查询评论 并关联用户信息-->
-    <select id="selectComments" parameterType="cn.mycookies.pojo.po.Comment" resultType="cn.mycookies.pojo.vo.CommentVO">
+    <select id="selectComments" parameterType="cn.mycookies.pojo.po.CommentDO" resultType="cn.mycookies.pojo.vo.CommentVO">
         SELECT
             t.id,
             t.target_id as targetId,

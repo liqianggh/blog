@@ -1,9 +1,9 @@
 package cn.mycookies.common;
 /**
- * @ClassName TagController
- * @Description 评论管理
- * @Author Jann Lee
- * @Date 2018-11-20 12:20
+ * @className TagController
+ * @description 评论管理
+ * @author Jann Lee
+ * @date 2018-11-20 12:20
  **/
 public interface BlogStaticType {
     // 增加统计类型

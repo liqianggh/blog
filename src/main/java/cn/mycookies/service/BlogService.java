@@ -7,10 +7,30 @@ import cn.mycookies.pojo.vo.IndexVO;
 import com.github.pagehelper.PageInfo;
 
 public interface BlogService {
-    ServerResponse addBlog(BlogDTO blogAdd);
+    /**
+     * 添加博客
+     * @param blogAdd
+     * @return
+     */
+    ServerResponse insertBlog(BlogDTO blogAdd);
 
-    ServerResponse<PageInfo<BlogVO>> getBlogs(Integer pageNum, Integer pageSize, Integer categoryId, Integer tagId, Byte idDeleted,String orderby);
+    /**
+     * 查询博客列表
+     * @param pageNum
+     * @param pageSize
+     * @param categoryId 分类id
+     * @param tagId 标签id
+     * @param idDeleted 是否呗逻辑删除或存入草稿
+     * @param orderby 排序条件 如 createTime desc
+     * @return
+     */
+    ServerResponse<PageInfo<BlogVO>> listBlogs(Integer pageNum, Integer pageSize, Integer categoryId, Integer tagId, Byte idDeleted, String orderby);
 
+    /**
+     * 更新博客
+     * @param blogAdd
+     * @return
+     */
     ServerResponse updateBlog(BlogDTO blogAdd);
 
     /**
@@ -28,7 +48,11 @@ public interface BlogService {
      * @param type
      * @return
      */
-    ServerResponse blogCountPlus(Integer id, String type);
+    ServerResponse updateBlogCount(Integer id, String type);
 
+    /**
+     * 获取首页VO
+     * @return
+     */
     ServerResponse<IndexVO> getIndexVO();
 }

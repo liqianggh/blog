@@ -9,15 +9,13 @@ import lombok.ToString;
 import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Min;
- import javax.validation.constraints.NotNull;
  import java.util.Date;
 @Setter
 @Getter
 @NoArgsConstructor
 @ToString
 @ApiModel("评论实体类")
-public class Comment {
+public class CommentDO {
 
     @ApiModelProperty(value = "用户id",required = true)
     @Required

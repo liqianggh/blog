@@ -1,7 +1,7 @@
 package cn.mycookies.dao;
 
-import cn.mycookies.pojo.dto.TagAdd;
-import cn.mycookies.pojo.po.Tag;
+import cn.mycookies.pojo.dto.TagAddDTO;
+import cn.mycookies.pojo.po.TagDO;
 import cn.mycookies.pojo.vo.TagVO;
 import org.springframework.stereotype.Repository;
 
@@ -9,23 +9,23 @@ import java.util.List;
 
 @Repository
 public interface TagMapper {
-    int insert(TagAdd record);
+    int insert(TagAddDTO record);
 
-    int insertSelective(Tag record);
+    int insertSelective(TagDO record);
 
-    List<Tag> queryTagList(Tag tag);
+    List<TagDO> queryTagList(TagDO tagDO);
 
     /**
      * 根据name查询，判断是否存在
      * @return
      */
-    Tag queryByName(Tag tag);
+    TagDO queryByName(TagDO tagDO);
 
-    Integer updateTag(Tag tag);
+    Integer updateTag(TagDO tagDO);
 
-    Tag queryById(Tag tag);
+    TagDO queryById(TagDO tagDO);
 
-    int deleteById(Tag tag);
+    int deleteById(TagDO tagDO);
 
     List<TagVO> queryTagBoList();
 

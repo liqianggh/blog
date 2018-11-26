@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @ClassName SwaggerConfig
- * @Description swagger相关配置
- * @Author Jann Lee
- * @Date 2018-11-17 22:35
+ * @className SwaggerConfig
+ * @description swagger相关配置
+ * @author Jann Lee
+ * @date 2018-11-17 22:35
  **/
 
 @EnableSwagger2

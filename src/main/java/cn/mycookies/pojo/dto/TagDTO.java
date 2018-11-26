@@ -1,5 +1,6 @@
 package cn.mycookies.pojo.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * @ClassName TagBo
+ * @ClassName TagDTO
  * @Description 标签的bo类
  * @Author Jann Lee
  * @Date 2018-11-18 17:08
@@ -16,8 +17,8 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @ToString
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class TagBo {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class TagDTO {
 
     private Integer id;
 

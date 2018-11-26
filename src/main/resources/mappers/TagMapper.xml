@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mycookies.dao.TagMapper">
-  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.po.Tag">
+  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.po.TagDO">
     <constructor>
       <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="tag_name" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -10,11 +10,11 @@
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
-  <insert id="insert" parameterType="cn.mycookies.pojo.dto.TagAdd">
+  <insert id="insert" parameterType="cn.mycookies.pojo.dto.TagAddDTO">
     insert into tag (tag_name, tag_desc,type, create_time)
     values (#{tagName,jdbcType=VARCHAR}, #{tagDesc,jdbcType=VARCHAR},#{type},now())
   </insert>
-  <insert id="insertSelective" parameterType="cn.mycookies.pojo.po.Tag">
+  <insert id="insertSelective" parameterType="cn.mycookies.pojo.po.TagDO">
     insert into tag
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -51,7 +51,7 @@
       </if>
     </trim>
   </insert>
-  <select id="queryTagList" parameterType="cn.mycookies.pojo.po.Tag"  resultType="cn.mycookies.pojo.po.Tag">
+  <select id="queryTagList" parameterType="cn.mycookies.pojo.po.TagDO" resultType="cn.mycookies.pojo.po.TagDO">
     SELECT id,tag_name as tagName, tag_desc as tagDesc,`type`,create_time as createTime,update_time as updateTime from tag
     <where>
       <if test="type != null">
@@ -60,7 +60,7 @@
     </where>
   </select>
 
-  <select id="queryByName" parameterType="cn.mycookies.pojo.dto.TagAdd" resultType="cn.mycookies.pojo.po.Tag">
+  <select id="queryByName" parameterType="cn.mycookies.pojo.dto.TagAddDTO" resultType="cn.mycookies.pojo.po.TagDO">
     SELECT id,tag_name as tagName, tag_desc as tagDesc,type,create_time as createTime,update_time as updateTime
     FROM tag
     <where>
@@ -72,7 +72,7 @@
     </if>
     </where>
   </select>
-  <select id="queryById" parameterType="cn.mycookies.pojo.po.Tag" resultType="cn.mycookies.pojo.po.Tag">
+  <select id="queryById" parameterType="cn.mycookies.pojo.po.TagDO" resultType="cn.mycookies.pojo.po.TagDO">
     SELECT id,tag_name as tagName, tag_desc as tagDesc,create_time as createTime,update_time as updateTime
     FROM tag
     <where>
@@ -103,13 +103,13 @@
     SELECT
       COUNT(t.category_id) count, t.category_id as id, t2.tag_name as tagName
     FROM
-      blog t
+      blogDO t
 
       LEFT JOIN
       tag t2 ON t.category_id = t2.id AND t2.type = 2
     GROUP BY t.category_id;
   </select>
-  <update id="updateTag" parameterType="cn.mycookies.pojo.po.Tag">
+  <update id="updateTag" parameterType="cn.mycookies.pojo.po.TagDO">
       UPDATE tag
     <set>
        <if test="tagName != null">
