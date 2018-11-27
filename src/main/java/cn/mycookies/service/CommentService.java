@@ -1,16 +1,16 @@
 package cn.mycookies.service;
 
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.pojo.po.CommentDO;
+import cn.mycookies.pojo.dto.CommentDTO;
 import cn.mycookies.pojo.vo.CommentVO;
 import com.github.pagehelper.PageInfo;
 
 
 public interface CommentService {
 
-    ServerResponse insertComment(CommentDO commentDO,String username);
+    ServerResponse insertComment(CommentDTO commentDTO, String username);
 
-    ServerResponse<PageInfo<CommentVO>> listComments(Integer pageNum, Integer pageSize, String email, String replyEmail, Integer targetId, Integer sessionId, Byte isDeleted);
+    ServerResponse<PageInfo<CommentVO>> listComments(Integer pageNum, Integer pageSize, String email, String replyEmail, Integer targetId, String sessionId, Byte isDeleted);
 
     ServerResponse deleteComment(Integer commentId,Byte isRealDelete);
 

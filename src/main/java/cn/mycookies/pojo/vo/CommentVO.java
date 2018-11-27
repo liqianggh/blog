@@ -17,7 +17,7 @@ public class CommentVO {
 
     private Integer id;
 
-    private Integer sessionId;
+    private String sessionId;
     /**
      * 被评论的主体id
      */

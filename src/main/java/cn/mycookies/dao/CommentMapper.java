@@ -1,5 +1,7 @@
 package cn.mycookies.dao;
 
+import cn.mycookies.pojo.dto.CommentDTO;
+import cn.mycookies.pojo.dto.UserDTO;
 import cn.mycookies.pojo.po.CommentDO;
 import cn.mycookies.pojo.vo.CommentVO;
 import org.springframework.stereotype.Repository;
@@ -20,7 +22,7 @@ public interface  CommentMapper {
      * @param record
      * @return
      */
-    int insertSelective(CommentDO record);
+    int insertSelective(CommentDTO record);
 
     /**
      * 删除评论 根据主键
@@ -56,4 +58,8 @@ public interface  CommentMapper {
      * @return
      */
     int likeComment(Integer id);
+
+    UserDTO getUserByEmail(String email);
+
+    int insertUser(UserDTO userDTO);
 }

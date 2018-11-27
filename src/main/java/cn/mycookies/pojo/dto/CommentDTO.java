@@ -1,6 +1,6 @@
-package cn.mycookies.pojo.po;
+package cn.mycookies.pojo.dto;
 
- import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,21 +9,23 @@ import lombok.ToString;
 import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 import org.hibernate.validator.constraints.Length;
 
- import java.util.Date;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @ToString
-@ApiModel("评论实体类")
-public class CommentDO {
+@ApiModel("评论")
+public class CommentDTO {
 
     @ApiModelProperty(value = "用户id",required = true)
-    @Required
+    @NotNull
     private String email;
     /**
      * 如果targetId=-1说明是留言，如果targetId=0说明是回复，其他则是博客评论
      */
-    @ApiModelProperty(value="评论主体id，可以是博客id，留言板标识（-1），回复标识（0）",required = true)
+    @ApiModelProperty(value="评论主体id，可以是博客id，留言板标识（0），回复标识（-1）",required = true)
     private Integer targetId;
 
     @ApiModelProperty(value = "被回复用户")
@@ -33,22 +35,7 @@ public class CommentDO {
     @Length(min = 1,max = 500,message = "评论内容长度应该在1-500之内")
     private String content;
 
-    @ApiModelProperty(value = "评论的点赞数，作为显示的排序",hidden = true)
-    private Integer likeCount;
-
-    @ApiModelProperty(hidden = true)
-    private Byte isDeleted;
-
     @ApiModelProperty(value = "对话id")
     private String sessionId;
-
-    @ApiModelProperty(hidden = true)
-    private Date createTime;
-
-    @ApiModelProperty(hidden = true)
-    private Date updateTime;
-
-    @ApiModelProperty(hidden = true)
-    private Integer id;
 
 }

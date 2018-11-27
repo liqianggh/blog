@@ -9,7 +9,7 @@
 
     <!--指定特定数据库的jdbc驱动jar包的位置-->
    <!-- <classPathEntry location="${db.driverLocation}"/>-->
-    <classPathEntry location="D:\develop\local_repository\mysql\mysql-connector-java\8.0.12\mysql-connector-java-8.0.12.jar"></classPathEntry>
+    <classPathEntry location="D:\develop\local_repository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar"></classPathEntry>
 
     <context id="default" targetRuntime="MyBatis3">
 
@@ -22,7 +22,7 @@
         <!--jdbc的数据库连接 -->
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://localhost:3306/blogDO?serverTimezone=UTC&amp;useSSL=false"
+                connectionURL="jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&amp;useSSL=false"
                 userId="root"
                 password="sqlpw">
         </jdbcConnection>

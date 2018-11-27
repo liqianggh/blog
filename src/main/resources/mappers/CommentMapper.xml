@@ -44,7 +44,7 @@
       #{isDeleted,jdbcType=INTEGER},now(), now(),
       #{id,jdbcType=LONGVARCHAR})
   </insert>
-    <insert id="insertSelective" useGeneratedKeys="true" parameterType="cn.mycookies.pojo.po.CommentDO">
+    <insert id="insertSelective" useGeneratedKeys="true" parameterType="cn.mycookies.pojo.dto.CommentDTO">
         insert into blog_comment
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="email != null">
@@ -59,17 +59,11 @@
             <if test="content != null">
                 content,
             </if>
-            <if test="isDeleted != null">
-                is_deleted,
-            </if>
             <if test="sessionId != null">
                 session_id,
             </if>
                  create_time,
-                 update_time,
-             <if test="id != null">
-                id,
-            </if>
+                 update_time
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="email != null">
@@ -84,18 +78,16 @@
             <if test="content != null">
                 #{content,jdbcType=VARCHAR},
             </if>
-            <if test="isDeleted != null">
-                #{isDeleted,jdbcType=INTEGER},
-            </if>
             <if test="sessionId != null">
                 #{sessionId,jdbcType=INTEGER},
             </if>
                  now(),
-                 now(),
-             <if test="id != null">
-                #{id,jdbcType=LONGVARCHAR},
-            </if>
+                 now()
         </trim>
+    </insert>
+    <insert id="insertUser">
+        insert into user(email,user_name,create_time)
+        values (#{email},#{userName},now())
     </insert>
     <update id="updateComment" parameterType="cn.mycookies.pojo.po.CommentDO">
         UPDATE blog_comment
@@ -161,4 +153,7 @@
             </if>
         </where>
      </select>
+    <select id="getUserByEmail" parameterType="String" resultType="cn.mycookies.pojo.dto.UserDTO">
+        select id ,email,user_name from user where email = #{email}
+    </select>
 </mapper>

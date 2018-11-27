@@ -37,7 +37,7 @@ public class ManageCommentController {
                                                         @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum,
                                                         @ApiParam(value = "评论的状态") @RequestParam(defaultValue = DataStatus.ALL+"")@Min(0)@Max(2) Byte isDeleted,
                                                         @ApiParam(value = "评论主体的id") @PathVariable Integer targetId,
-                                                        @ApiParam(value = "对话的id") @RequestParam(required = false) Integer sessionId){
+                                                        @ApiParam(value = "对话的id") @RequestParam(required = false) String sessionId){
 
         return commentService.listComments(pageNum,pageSize,null,null,targetId,sessionId,isDeleted);
     }

@@ -4,6 +4,7 @@ import cn.mycookies.common.ActionStatus;
 import cn.mycookies.common.DataStatus;
 import cn.mycookies.common.ProcessBindingResult;
 import cn.mycookies.common.ServerResponse;
+import cn.mycookies.pojo.dto.CommentDTO;
 import cn.mycookies.pojo.po.CommentDO;
 import cn.mycookies.pojo.vo.CommentVO;
 import cn.mycookies.service.CommentService;
@@ -37,21 +38,21 @@ public class CommentController {
 
     @PostMapping
     @ApiOperation(value = "添加评论")
-    public ServerResponse addComment(@RequestBody @Valid CommentDO commentDO, BindingResult bindingResult,@RequestParam(name = "username",required = false) String username) {
+    public ServerResponse addComment(@RequestBody @Valid CommentDTO commentDTO, BindingResult bindingResult, @RequestParam(name = "userName",required = false) String username) {
         if (bindingResult != null && bindingResult.hasErrors()) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
         }
 
-        return commentService.insertComment(commentDO,username);
+        return commentService.insertComment(commentDTO,username);
     }
 
-    @GetMapping("/{targetId}")
+    @GetMapping("")
     @ApiOperation(value = "获取评论列表", responseContainer = "PageInfo", response = CommentVO.class)
     public ServerResponse<PageInfo<CommentVO>> comments(
             @ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize,
             @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum,
-            @ApiParam(value = "评论主体的id") @PathVariable Integer targetId,
-            @ApiParam(value = "对话的id") @RequestParam(required = false) Integer sessionId) {
+            @ApiParam(value = "评论主体的id") @RequestParam(required = false) Integer targetId,
+            @ApiParam(value = "对话的id") @RequestParam(required = false) String sessionId) {
 
         return commentService.listComments(pageNum, pageSize, null, null, targetId, sessionId, DataStatus.NO_DELETED);
     }
