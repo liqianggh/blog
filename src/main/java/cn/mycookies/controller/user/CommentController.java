@@ -37,20 +37,12 @@ public class CommentController {
 
     @PostMapping
     @ApiOperation(value = "添加评论")
-<<<<<<< HEAD
     public ServerResponse addComment(@RequestBody @Valid CommentDO commentDO, BindingResult bindingResult,@RequestParam(name = "username",required = false) String username) {
-=======
-    public ServerResponse addComment(@RequestBody @Valid CommentDO commentDO, BindingResult bindingResult) {
->>>>>>> 5b7234e66165bd7a8c06bbf0c43bdc6e3c0624e2
         if (bindingResult != null && bindingResult.hasErrors()) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
         }
 
-<<<<<<< HEAD
         return commentService.insertComment(commentDO,username);
-=======
-        return commentService.insertComment(commentDO);
->>>>>>> 5b7234e66165bd7a8c06bbf0c43bdc6e3c0624e2
     }
 
     @GetMapping("/{targetId}")

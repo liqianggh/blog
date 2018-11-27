@@ -25,7 +25,6 @@ public class CommentServiceImpl implements CommentService {
     private CommentMapper commentMapper;
 
     @Override
-<<<<<<< HEAD
     public ServerResponse insertComment(CommentDO commentDO, String username) {
 
         String email = commentDO.getEmail();
@@ -40,17 +39,6 @@ public class CommentServiceImpl implements CommentService {
             }
             // 如果是回复消息 但是没有sessionId返回错误
             if (StringUtils.isNullOrEmpty(commentDO.getReplyEmail()) && commentDO.getSessionId() == null) {
-=======
-    public ServerResponse insertComment(CommentDO commentDO) {
-        if (commentDO == null) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ActionStatus.PARAMAS_ERROR.getDescription());
-        } else {
-            if (Objects.isNull(commentDO.getTargetId()) || Objects.isNull(commentDO.getUserId()) || StringUtils.isEmptyOrWhitespaceOnly(commentDO.getContent())) {
-                return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ActionStatus.PARAMAS_ERROR.getDescription());
-            }
-            // 如果是回复消息 但是没有sessionId返回错误
-            if (commentDO.getReplyUid() != null && commentDO.getSessionId() == null) {
->>>>>>> 5b7234e66165bd7a8c06bbf0c43bdc6e3c0624e2
                 return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ActionStatus.PARAMAS_ERROR.getDescription());
 
             }
@@ -65,11 +53,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-<<<<<<< HEAD
     public ServerResponse<PageInfo<CommentVO>> listComments(Integer pageNum, Integer pageSize, String email, String repluEmail, Integer targetId, Integer sessionId, Byte isDeleted) {
-=======
-    public ServerResponse<PageInfo<CommentVO>> listComments(Integer pageNum, Integer pageSize, Integer userId, Integer replyUid, Integer targetId, Integer sessionId, Byte isDeleted) {
->>>>>>> 5b7234e66165bd7a8c06bbf0c43bdc6e3c0624e2
         Page page = PageHelper.startPage(pageNum, pageSize);
         PageHelper.orderBy("t.like_count desc, t.create_time desc");
         if (isDeleted == DataStatus.ALL) {
@@ -79,15 +63,9 @@ public class CommentServiceImpl implements CommentService {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ActionStatus.PARAMAS_ERROR.getDescription());
         }
         CommentDO commentDO = new CommentDO();
-<<<<<<< HEAD
         commentDO.setEmail(email);
         commentDO.setIsDeleted(isDeleted);
         commentDO.setReplyEmail(repluEmail);
-=======
-        commentDO.setUserId(userId);
-        commentDO.setIsDeleted(isDeleted);
-        commentDO.setReplyUid(replyUid);
->>>>>>> 5b7234e66165bd7a8c06bbf0c43bdc6e3c0624e2
         commentDO.setTargetId(targetId);
         commentDO.setSessionId(sessionId);
         List<CommentVO> commentList = commentMapper.selectComments(commentDO);

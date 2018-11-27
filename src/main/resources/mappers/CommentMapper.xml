@@ -35,13 +35,8 @@
     create_time as createTime
   </sql>
     <insert id="insert" parameterType="cn.mycookies.pojo.po.CommentDO">
-<<<<<<< HEAD
     insert into blog_comment (email, target_id,
       reply_email, content,
-=======
-    insert into blog_comment (user_id, target_id,
-      reply_uid, content,
->>>>>>> 5b7234e66165bd7a8c06bbf0c43bdc6e3c0624e2
       is_deleted, create_time, update_time,
       id)
     values (#{email,jdbcType=INTEGER}, #{targetId,jdbcType=INTEGER},
