@@ -9,7 +9,7 @@
 
     <!--指定特定数据库的jdbc驱动jar包的位置-->
    <!-- <classPathEntry location="${db.driverLocation}"/>-->
-    <classPathEntry location="D:\develop\local_repository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar"></classPathEntry>
+    <classPathEntry location="D:\download\mysql-connector-java-8.0.13.jar"></classPathEntry>
 
     <context id="default" targetRuntime="MyBatis3">
 
@@ -67,7 +67,8 @@
         </javaClientGenerator>
 
         <!--配置表-->
-        <table tableName="user" domainObjectName="UserDO" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>
+         <table tableName="photo" domainObjectName="PhotoDO" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>
+
         <!--<table tableName="tagDO" domainObjectName="Tag" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>-->
         <!--<table tableName="comment" domainObjectName="Comment" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>-->
         <!--<table tableName="category" domainObjectName="Category" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>-->
