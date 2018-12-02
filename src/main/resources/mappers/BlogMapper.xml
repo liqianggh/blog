@@ -172,7 +172,7 @@
       <if test="tagId != null">
         tag_id=#{tagId}
       </if>
-      <if test="tagId != null">
+      <if test="categoryId != null">
         and category_id=#{categoryId}
       </if>
       <if test="isDeleted != null">

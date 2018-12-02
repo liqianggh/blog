@@ -46,12 +46,12 @@ public class CommentController {
         return commentService.insertComment(commentDTO,username);
     }
 
-    @GetMapping("")
+    @GetMapping("/{targetId}")
     @ApiOperation(value = "获取评论列表", responseContainer = "PageInfo", response = CommentVO.class)
     public ServerResponse<PageInfo<CommentVO>> comments(
             @ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize,
             @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum,
-            @ApiParam(value = "评论主体的id") @RequestParam(required = false) Integer targetId,
+            @ApiParam(value = "评论主体的id") @PathVariable Integer targetId,
             @ApiParam(value = "对话的id") @RequestParam(required = false) String sessionId) {
 
         return commentService.listComments(pageNum, pageSize, null, null, targetId, sessionId, DataStatus.NO_DELETED);

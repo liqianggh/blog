@@ -114,20 +114,26 @@ public class BlogServiceImpl implements BlogService {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(),ActionStatus.PARAMAS_ERROR.getDescription());
         }
         int result = blogMapper.updateBlogCount(id,type);
-        return null;
+        if (result == 0) {
+            return ServerResponse.createByError();
+        } else {
+            return ServerResponse.createBySuccess();
+        }
     }
 
     @Override
-    public ServerResponse<IndexVO> getIndexVO() {
-
-        PageInfo<BlogVO> blogs = listBlogs(1,10,null,null,DataStatus.NO_DELETED,"create_time desc").getData();
+    public ServerResponse<IndexVO> getIndexVO(boolean withBlogs) {
+        PageInfo<BlogVO> blogs = null;
         List<BlogVO> recommendList = blogMapper.selectHotOrRecommendBlogs(BlogStaticType.RECOMMEND_BLOG,10);
 
         List<TagVO> tagVOS = tagService.listTagVOs(TagTypes.TAG_LABEL).getData();
         List<TagVO> categoryVOS = tagService.listTagVOs(TagTypes.TAG_CATEGORY).getData();
 
         IndexVO indexVO = new IndexVO();
-        indexVO.setBlogList(blogs);
+        if (withBlogs) {
+            blogs = listBlogs(1,10,null,null,DataStatus.NO_DELETED,"create_time desc").getData();
+            indexVO.setBlogList(blogs);
+        }
         indexVO.setCategoryList(categoryVOS);
         indexVO.setTagList(tagVOS);
         indexVO.setRecommendList(recommendList);

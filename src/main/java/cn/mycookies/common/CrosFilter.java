@@ -30,7 +30,7 @@ public class CrosFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
-
+        log.info("hello、");
     }
 
     @Override

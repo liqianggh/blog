@@ -43,6 +43,10 @@ public class BlogVO {
 
     public String calcTime;
 
+    public String categoryName;
+
+    public String categoryId;
+
     public List<TagVO> tagList;
 
     public BlogDTO last;

@@ -52,7 +52,8 @@ public interface BlogService {
 
     /**
      * 获取首页VO
+     * @param withBlogs 结果集是否包含博客列表
      * @return
      */
-    ServerResponse<IndexVO> getIndexVO();
+    ServerResponse<IndexVO> getIndexVO(boolean withBlogs);
 }

@@ -10,10 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,11 +28,13 @@ public class TagController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping("/")
+    @GetMapping("/{type}")
     @ApiOperation(value = "获取标签列表", response = TagDTO.class, responseContainer = "List")
     @ResponseBody
-    public ServerResponse<List<TagVO>> tagList(@ApiParam(value = "标签类型，是分类还是标签") @RequestParam(defaultValue = TagTypes.TAG_LABEL+"") Byte type) {
-
+    public ServerResponse<List<TagVO>> tagList(@ApiParam(value = "标签类型，是分类还是标签") @PathVariable(required = true) Byte type) {
+        if (type !=1 && type != 2){
+            type = 2;
+        }
         return tagService.listTagVOs(type);
     }
 }

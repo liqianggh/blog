@@ -103,7 +103,7 @@
     SELECT
       COUNT(t.category_id) count, t.category_id as id, t2.tag_name as tagName
     FROM
-      blogDO t
+      blog t
 
       LEFT JOIN
       tag t2 ON t.category_id = t2.id AND t2.type = 2

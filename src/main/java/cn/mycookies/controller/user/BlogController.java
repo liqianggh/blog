@@ -53,7 +53,14 @@ public class BlogController {
     @ApiOperation(value ="首页 内容初始化",response=Boolean.class)
     public ServerResponse<IndexVO> index(){
 
-        return blogService.getIndexVO();
+        return blogService.getIndexVO(true);
+    }
+
+    @GetMapping("/left")
+    @ApiOperation(value ="首页 内容初始化",response=Boolean.class)
+    public ServerResponse<IndexVO> left(){
+
+        return blogService.getIndexVO(false);
     }
 
 }
