@@ -124,7 +124,9 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public ServerResponse<IndexVO> getIndexVO(boolean withBlogs) {
         PageInfo<BlogVO> blogs = null;
-        List<BlogVO> recommendList = blogMapper.selectHotOrRecommendBlogs(BlogStaticType.RECOMMEND_BLOG,10);
+        List<BlogVO> recommendList = blogMapper.selectHotOrRecommendBlogs(BlogStaticType.RECOMMEND_BLOG,5);
+
+        List<BlogVO> clickRankList = blogMapper.selectHotOrRecommendBlogs(BlogStaticType.HOT_BLOG,5);
 
         List<TagVO> tagVOS = tagService.listTagVOs(TagTypes.TAG_LABEL).getData();
         List<TagVO> categoryVOS = tagService.listTagVOs(TagTypes.TAG_CATEGORY).getData();
