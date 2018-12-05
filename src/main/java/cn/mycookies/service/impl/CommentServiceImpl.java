@@ -32,7 +32,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public ServerResponse insertComment(CommentDTO commentDTO, String username) {
+    public ServerResponse insertComment(CommentDTO commentDTO) {
+        String username = commentDTO.getUsername();
         // 无论是评论 还是回复 ，email和content都不能为空
         if (commentDTO == null || StringUtils.isEmpty(commentDTO.getContent())
                 || StringUtils.isEmpty(commentDTO.getEmail())
@@ -62,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
         // 如果是回复消息 但是没有sessionId返回错误
         int insertResult = 0;
         if (commentDTO.getTargetId() == CommentType.MESSAGE_REPLY || commentDTO.getTargetId() == CommentType.MESSAGE_BOARD) {
-            if (StringUtils.isEmpty(commentDTO.getReplyEmail()) || StringUtils.isEmpty(commentDTO.getSessionId())) {
+            if (StringUtils.isNotEmpty(commentDTO.getReplyEmail()) && StringUtils.isEmpty(commentDTO.getSessionId())) {
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ActionStatus.PARAMAS_ERROR.getDescription());
             } else {

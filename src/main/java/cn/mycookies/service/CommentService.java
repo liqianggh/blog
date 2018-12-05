@@ -8,7 +8,7 @@ import com.github.pagehelper.PageInfo;
 
 public interface CommentService {
 
-    ServerResponse insertComment(CommentDTO commentDTO, String username);
+    ServerResponse insertComment(CommentDTO commentDTO);
 
     ServerResponse<PageInfo<CommentVO>> listComments(Integer pageNum, Integer pageSize, String email, String replyEmail, Integer targetId, String sessionId, Byte isDeleted);
 

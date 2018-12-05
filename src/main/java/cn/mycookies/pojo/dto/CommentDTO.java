@@ -28,6 +28,9 @@ public class CommentDTO {
     @ApiModelProperty(value="评论主体id，可以是博客id，留言板标识（0），回复标识（-1）",required = true)
     private Integer targetId;
 
+    @ApiModelProperty(value = "用户名",required = true)
+    private String username;
+
     @ApiModelProperty(value = "被回复用户")
     private String replyEmail;
 

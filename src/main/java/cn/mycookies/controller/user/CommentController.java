@@ -31,6 +31,7 @@ import javax.validation.Valid;
 @Api(description = "用户评论模块")
 @ResponseBody
 @RequestMapping("comments")
+@CrossOrigin
 public class CommentController {
 
     @Autowired
@@ -38,12 +39,12 @@ public class CommentController {
 
     @PostMapping
     @ApiOperation(value = "添加评论")
-    public ServerResponse addComment(@RequestBody @Valid CommentDTO commentDTO, BindingResult bindingResult, @RequestParam(name = "userName",required = false) String username) {
+    public ServerResponse addComment(@RequestBody @Valid CommentDTO commentDTO, BindingResult bindingResult) {
         if (bindingResult != null && bindingResult.hasErrors()) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
         }
 
-        return commentService.insertComment(commentDTO,username);
+        return commentService.insertComment(commentDTO);
     }
 
     @GetMapping("/{targetId}")
