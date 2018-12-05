@@ -232,6 +232,8 @@
 
     </where>
       limit #{limit}
-
+      <if test="code == 1">
+        order by likeCount desc
+      </if>
   </select>
 </mapper>

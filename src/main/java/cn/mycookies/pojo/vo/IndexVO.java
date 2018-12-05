@@ -25,6 +25,8 @@ public class IndexVO {
 
     public List<BlogVO> recommendList;
 
+    public List<BlogVO> clickRankList;
+
     public List<TagVO> categoryList;
 
     public List<TagVO> tagList;
