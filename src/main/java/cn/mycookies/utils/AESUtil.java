@@ -95,4 +95,8 @@ public class AESUtil {
         return null;
     }
 
+    public static void main(String [] args){
+        System.out.println(encrypt("liqiang1.","*(&s2.1w2%"));
+    }
+
 }

@@ -31,14 +31,14 @@ public class ManageTagController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping("/")
+    @GetMapping
     @ApiOperation(value = "获取标签列表", response = TagDTO.class, responseContainer = "List")
-    public PageInfo<TagDTO> tagList(
+    public ServerResponse<PageInfo<TagDTO>> tagList(
             @ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize,
             @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum,
              @ApiParam(value = "标签类型，是分类还是标签") @RequestParam(defaultValue = TagTypes.TAG_LABEL+"") Byte type) {
 
-        return tagService.listTags(pageNum, pageSize,type);
+        return ServerResponse.createBySuccess(tagService.listTags(pageNum, pageSize,type));
     }
 
     @PostMapping("")

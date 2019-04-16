@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Api("博客相关接口")
 @ResponseBody
 @RequestMapping("blogs")
+@CrossOrigin
 public class BlogController {
 
     @Autowired

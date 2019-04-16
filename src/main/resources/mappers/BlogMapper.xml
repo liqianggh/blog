@@ -161,22 +161,26 @@
     where id = #{blogId}
   </update>
   <select id="selectBlogs" resultType="cn.mycookies.pojo.po.BlogDO">
+
     SELECT
-    id,title,
-    img_url as imgUrl,
-    summary,content,
-    code,create_time as createTime,update_time updateTime,
-    like_count as likeCount,view_count as viewCount,is_deleted isDeleted
-    from blog
+    t.id,t.title,
+    t.img_url as imgUrl,
+    t.summary,content,
+    t.code,t.create_time as createTime,t.update_time updateTime,
+    t.like_count as likeCount,t.view_count as viewCount,t.is_deleted isDeleted
+    from blog t
+    <if test="tagId != null">
+       left join blog_tags b on b.blog_id = t.id
+    </if>
     <where>
       <if test="tagId != null">
-        tag_id=#{tagId}
+        b.tag_id=#{tagId}
       </if>
       <if test="categoryId != null">
-        and category_id=#{categoryId}
+        and t.category_id=#{categoryId}
       </if>
       <if test="isDeleted != null">
-        and is_deleted=#{isDeleted}
+        and t.is_deleted=#{isDeleted}
       </if>
     </where>
   </select>
@@ -231,9 +235,10 @@
       </if>
 
     </where>
-      limit #{limit}
       <if test="code == 1">
-        order by likeCount desc
+        order by view_count desc
       </if>
+    limit #{limit}
+
   </select>
 </mapper>

@@ -139,6 +139,7 @@ public class BlogServiceImpl implements BlogService {
         indexVO.setCategoryList(categoryVOS);
         indexVO.setTagList(tagVOS);
         indexVO.setRecommendList(recommendList);
+        indexVO.setClickRankList(clickRankList);
         return ServerResponse.createBySuccess(indexVO);
     }
 
