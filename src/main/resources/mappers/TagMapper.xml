@@ -26,12 +26,8 @@
       <if test="tagDesc != null">
         tag_desc,
       </if>
-      <if test="createTime != null">
         create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
+        update_time
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -43,12 +39,7 @@
       <if test="tagDesc != null">
         #{tagDesc,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
+      now(),now()
     </trim>
   </insert>
   <select id="queryTagList" parameterType="cn.mycookies.pojo.po.TagDO" resultType="cn.mycookies.pojo.po.TagDO">
@@ -117,12 +108,6 @@
     </if>
       <if test="tagDesc != null">
         tag_desc=#{tagDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time=#{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time=#{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
