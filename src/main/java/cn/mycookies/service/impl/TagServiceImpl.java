@@ -120,7 +120,7 @@ public class TagServiceImpl implements TagService {
         }
         // 是否存在校验
         TagDO tagDOResult = tagMapper.queryByName(tagDO);
-        if (tagDOResult != null) {
+        if (tagDOResult != null && Objects.equals(tagDO.getId() ,tagDOResult.getId()) && StringUtils.equals(tagDO.getTagDesc(), tagDOResult.getTagDesc())) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.DATA_REPEAT.inValue(), ActionStatus.DATA_REPEAT.getDescription());
         }
 
@@ -158,7 +158,7 @@ public class TagServiceImpl implements TagService {
         TagDO param = new TagDO();
         param.setId(id);
         param.setType(type);
-
+        // todo 判断是否被绑定，如果没有被绑定则可以删除
         TagDO tagDOResult = tagMapper.queryById(param);
         if (tagDOResult == null || StringUtils.isEmpty(tagDOResult.getTagName())) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());

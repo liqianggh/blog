@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
+ * @author Jann Lee
  * @className TagController
  * @description 标签管理
- * @author Jann Lee
  * @date 2018-11-18 16:36
  **/
 @Controller
@@ -33,12 +33,9 @@ public class ManageTagController {
 
     @GetMapping
     @ApiOperation(value = "获取标签列表", response = TagDTO.class, responseContainer = "List")
-    public ServerResponse<PageInfo<TagDTO>> tagList(
-            @ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize,
-            @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum,
-             @ApiParam(value = "标签类型，是分类还是标签") @RequestParam(defaultValue = TagTypes.TAG_LABEL+"") Byte type) {
+    public ServerResponse<PageInfo<TagDTO>> tagList(@ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize, @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum, @ApiParam(value = "标签类型，是分类还是标签") @RequestParam(defaultValue = TagTypes.TAG_LABEL + "") Byte type) {
 
-        return ServerResponse.createBySuccess(tagService.listTags(pageNum, pageSize,type));
+        return ServerResponse.createBySuccess(tagService.listTags(pageNum, pageSize, type));
     }
 
     @PostMapping("")
@@ -53,10 +50,7 @@ public class ManageTagController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "修改标签", response = Boolean.class)
-    public ServerResponse updateTag(@RequestBody @Valid TagDO tagDO,
-                                    BindingResult bindingResult,
-                                    @RequestParam(name = "type",required = true)Byte type,
-                                    @PathVariable(name = "id", required = true) Integer id) {
+    public ServerResponse updateTag(@RequestBody @Valid TagDO tagDO, BindingResult bindingResult, @RequestParam(name = "type", required = true) Byte type, @PathVariable(name = "id", required = true) Integer id) {
 
         if (bindingResult != null && bindingResult.hasErrors()) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
@@ -68,19 +62,16 @@ public class ManageTagController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "查找标签", response = Boolean.class)
-    public ServerResponse<TagDTO> selectTag(
-            @PathVariable(name = "id", required = true) Integer id,
-            @RequestParam(name = "type", required =true) Byte type) {
+    public ServerResponse<TagDTO> selectTag(@PathVariable(name = "id", required = true) Integer id, @RequestParam(name = "type", required = true) Byte type) {
 
-        return tagService.getTagById(id,type);
+        return tagService.getTagById(id, type);
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除标签", response = Boolean.class)
-    public ServerResponse<TagDTO> deleteTag(@PathVariable(name = "id", required = true) Integer id,
-                                            @RequestParam(name = "type", required = true) Byte type) {
+    public ServerResponse<TagDTO> deleteTag(@PathVariable(name = "id", required = true) Integer id, @RequestParam(name = "type", required = true) Byte type) {
 
-        return tagService.deleteById(id,type);
-        }
+        return tagService.deleteById(id, type);
+    }
 
-        }
+}
