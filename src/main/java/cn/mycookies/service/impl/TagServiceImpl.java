@@ -1,9 +1,6 @@
 package cn.mycookies.service.impl;
 
-import cn.mycookies.common.ActionStatus;
-import cn.mycookies.common.DataStatus;
-import cn.mycookies.common.ServerResponse;
-import cn.mycookies.common.TagTypes;
+import cn.mycookies.common.*;
 import cn.mycookies.dao.TagMapper;
 import cn.mycookies.pojo.dto.TagAddDTO;
 import cn.mycookies.pojo.dto.TagDTO;
@@ -21,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class TagServiceImpl implements TagService {
@@ -75,6 +73,14 @@ public class TagServiceImpl implements TagService {
         List<TagVO> tagVOS = tagMapper.queryTagsOfBlog(blogId);
 
         return tagVOS;
+    }
+
+    @Override
+    public List<KeyValueVO<Integer, String>> getAllTagList(byte tagCategory) {
+        TagDO param = new TagDO();
+        param.setType(tagCategory);
+        List<TagDO> tagDOS = tagMapper.queryTagList(param);
+        return tagDOS.stream().map(tagDO -> new KeyValueVO<Integer, String>(tagDO.getId(),tagDO.getTagName())).collect(Collectors.toList());
     }
 
     private TagDTO convertTagToBo(TagDO tagDO) {

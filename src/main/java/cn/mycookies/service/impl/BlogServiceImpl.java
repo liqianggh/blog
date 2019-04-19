@@ -2,8 +2,13 @@ package cn.mycookies.service.impl;
 
 import cn.mycookies.common.*;
 import cn.mycookies.dao.BlogMapper;
+import cn.mycookies.dao.BlogTagsDOMapper;
 import cn.mycookies.pojo.dto.BlogDTO;
 import cn.mycookies.pojo.po.BlogDO;
+import cn.mycookies.pojo.po.BlogTagsDO;
+import cn.mycookies.pojo.po.BlogTagsDOExample;
+import cn.mycookies.pojo.po.TagDO;
+import cn.mycookies.pojo.vo.BlogDetailVO;
 import cn.mycookies.pojo.vo.BlogVO;
 import cn.mycookies.pojo.vo.IndexVO;
 import cn.mycookies.pojo.vo.TagVO;
@@ -22,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -33,6 +39,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private BlogTagsDOMapper blogTagsDOMapper;
 
     @Override
     public ServerResponse insertBlog(BlogDTO blogAdd) {
@@ -76,6 +85,17 @@ public class BlogServiceImpl implements BlogService {
         if (Objects.isNull(blogAdd) || Objects.isNull(blogAdd.getId()) || blogAdd.getId()==0) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(),ActionStatus.PARAMAS_ERROR.getDescription());
         }
+        Integer id = blogAdd.getId();
+        List<Integer> tagIds = blogAdd.getTags();
+        BlogTagsDOExample example = new BlogTagsDOExample();
+        BlogTagsDOExample.Criteria criteria = example.createCriteria();
+        criteria.andBlogIdEqualTo(id);
+        criteria.andTagIdIn(tagIds);
+        blogTagsDOMapper.deleteByExample(example);
+        for(Integer tagId : tagIds ){
+            blogTagsDOMapper.insert(new BlogTagsDO(null, tagId, id));
+        }
+
         int result = blogMapper.updateBlog(blogAdd);
         if (result ==0 ) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.NO_RESULT.inValue(),ActionStatus.NO_RESULT.getDescription());
@@ -105,6 +125,16 @@ public class BlogServiceImpl implements BlogService {
         }
 
         return ServerResponse.createBySuccess(blogVO);
+    }
+
+    @Override
+    public ServerResponse<BlogDO> getBlogById(Integer id) {
+
+        BlogDO blogDO = blogMapper.selectById(id,null);
+        if (Objects.isNull(blogDO)) {
+            return ServerResponse.createByErrorCodeMessage(ActionStatus.NO_RESULT.inValue(), ActionStatus.NO_RESULT.getDescription());
+        }
+        return ServerResponse.createBySuccess(blogDO);
     }
 
     @Override
@@ -143,6 +173,22 @@ public class BlogServiceImpl implements BlogService {
         return ServerResponse.createBySuccess(indexVO);
     }
 
+    @Override
+    public ServerResponse<BlogDetailVO> getBlogDetailVOById(Integer blogId) {
+        BlogDO blogDO = blogMapper.selectById(blogId, null);
+        List<Integer> tagIds= tagService.listTagsOfBlog(blogId).stream().map(TagVO::getId).collect(Collectors.toList());
+        BlogDetailVO blogDetailVO = BlogDetailVO.builder().categoryId(blogDO.getCategoryId())
+                .code(blogDO.getCode())
+                .content(blogDO.getContent())
+                .id(blogDO.getId())
+                .imgUrl(blogDO.getImgUrl())
+                .summary(blogDO.getSummary())
+                .tags(tagIds)
+                .title(blogDO.getTitle()).build();
+
+        return ServerResponse.createBySuccess(blogDetailVO);
+    }
+
     private BlogDTO getlastOrNext(Integer id, Integer page){
         BlogDO blogDO = blogMapper.selectLastOrNext(id,page);
         if (Objects.isNull(blogDO)){
@@ -168,6 +214,7 @@ public class BlogServiceImpl implements BlogService {
         blogVo.setLikeCount(blogDO.getLikeCount());
         blogVo.setTitle(blogDO.getTitle());
         blogVo.setCode(blogDO.getCode());
+        blogVo.setCategoryId(blogDO.getCategoryId());
         return blogVo;
     }
 }

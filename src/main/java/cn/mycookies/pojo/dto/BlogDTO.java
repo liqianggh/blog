@@ -1,8 +1,6 @@
 package cn.mycookies.pojo.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.JsonValueSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -11,6 +9,8 @@ import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
+
 @ApiModel("添加博客实体类")
 @Setter
 @Getter
@@ -29,7 +29,7 @@ public class BlogDTO {
     private Integer categoryId;
 
     @ApiModelProperty(value="标签id", required = false)
-    private Integer[] tags;
+    private List<Integer>  tags;
 
     @ApiModelProperty(value="图片url", required = false)
     private String imgUrl;

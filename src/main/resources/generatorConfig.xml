@@ -67,7 +67,9 @@
         </javaClientGenerator>
 
         <!--配置表-->
-         <!--<table tableName="photo" domainObjectName="PhotoDO" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>-->
+         <table tableName="blog_tags" domainObjectName="BlogTagsDO" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="false" enableUpdateByExample="true"  enableInsert="
+
+         true"></table>
 
         <!--<table tableName="tagDO" domainObjectName="Tag" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>-->
         <!--<table tableName="comment" domainObjectName="Comment" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableInsert="true"></table>-->

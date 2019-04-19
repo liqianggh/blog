@@ -1,5 +1,6 @@
 package cn.mycookies.service;
 
+import cn.mycookies.common.KeyValueVO;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.dto.TagAddDTO;
 import cn.mycookies.pojo.dto.TagDTO;
@@ -69,4 +70,6 @@ public interface TagService {
      * @return
      */
     List<TagVO> listTagsOfBlog(Integer blogId);
+
+    List<KeyValueVO<Integer, String>> getAllTagList(byte tagCategory);
 }

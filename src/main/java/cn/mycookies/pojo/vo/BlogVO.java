@@ -45,7 +45,7 @@ public class BlogVO {
 
     public String categoryName;
 
-    public String categoryId;
+    public Integer categoryId;
 
     public List<TagVO> tagList;
 

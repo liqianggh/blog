@@ -1,5 +1,6 @@
 package cn.mycookies.pojo.po;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +17,7 @@ public class BlogDO {
     private String title;
 
     private Integer categoryId;
-
+    @JsonIgnore
     private String tags;
 
     private String summary;

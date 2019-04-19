@@ -7,6 +7,6 @@ package cn.mycookies.common;
  * @date 2018-11-20 23:00
  **/
 public interface TagTypes {
-    public static final byte TAG_LABEL =1;
-    public static final byte TAG_CATEGORY = 2;
+     byte TAG_LABEL =1;
+     byte TAG_CATEGORY = 2;
 }

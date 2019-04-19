@@ -5,6 +5,8 @@ import cn.mycookies.common.DataStatus;
 import cn.mycookies.common.ProcessBindingResult;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.dto.BlogDTO;
+import cn.mycookies.pojo.po.BlogDO;
+import cn.mycookies.pojo.vo.BlogDetailVO;
 import cn.mycookies.pojo.vo.BlogVO;
 import cn.mycookies.service.BlogService;
 import com.github.pagehelper.PageInfo;
@@ -65,9 +67,9 @@ public class ManageBlogController {
 
     @GetMapping("/{id}")
     @ApiOperation(value ="查找博客",response=BlogVO.class)
-    public ServerResponse<BlogVO> getBlog(@ApiParam("博客id") @PathVariable Integer id){
+    public ServerResponse<BlogDetailVO> getBlog(@ApiParam("博客id") @PathVariable Integer id){
 
-        return blogService.getBlog(id,DataStatus.ALL,false,false);
+        return blogService.getBlogDetailVOById(id);
     }
 
 

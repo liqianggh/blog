@@ -2,9 +2,12 @@ package cn.mycookies.service;
 
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.dto.BlogDTO;
+import cn.mycookies.pojo.po.BlogDO;
+import cn.mycookies.pojo.vo.BlogDetailVO;
 import cn.mycookies.pojo.vo.BlogVO;
 import cn.mycookies.pojo.vo.IndexVO;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 
 public interface BlogService {
     /**
@@ -42,12 +45,15 @@ public interface BlogService {
      */
     ServerResponse<BlogVO> getBlog(Integer id, Byte isDeleted,boolean hashLastNext,boolean hasComments);
 
-    /**
-     * 点赞 浏览量 统计
-     * @param id
-     * @param type
-     * @return
-     */
+     ServerResponse<BlogDO> getBlogById(Integer id);
+
+
+        /**
+         * 点赞 浏览量 统计
+         * @param id
+         * @param type
+         * @return
+         */
     ServerResponse updateBlogCount(Integer id, String type);
 
     /**
@@ -56,4 +62,6 @@ public interface BlogService {
      * @return
      */
     ServerResponse<IndexVO> getIndexVO(boolean withBlogs);
+
+    ServerResponse<BlogDetailVO> getBlogDetailVOById(@Param("blogId") Integer blogId);
 }
