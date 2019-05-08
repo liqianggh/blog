@@ -7,6 +7,7 @@ import com.google.common.base.Preconditions;
 import java.io.Serializable;
 
 /**
+ *
  * @description 接口返回结果包装类
  * @author Jann Lee
  * @date 2018-11-17 19:24
