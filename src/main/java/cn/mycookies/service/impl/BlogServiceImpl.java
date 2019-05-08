@@ -90,7 +90,7 @@ public class BlogServiceImpl implements BlogService {
         BlogTagsDOExample example = new BlogTagsDOExample();
         BlogTagsDOExample.Criteria criteria = example.createCriteria();
         criteria.andBlogIdEqualTo(id);
-        criteria.andTagIdIn(tagIds);
+//        criteria.andTagIdIn(tagIds);
         blogTagsDOMapper.deleteByExample(example);
         for(Integer tagId : tagIds ){
             blogTagsDOMapper.insert(new BlogTagsDO(null, tagId, id));
@@ -151,9 +151,17 @@ public class BlogServiceImpl implements BlogService {
         }
     }
 
+    /**
+     * 获取首页所需数据
+     * @param withBlogs 结果集是否包含博客列表
+     * @return
+     */
     @Override
     public ServerResponse<IndexVO> getIndexVO(boolean withBlogs) {
         PageInfo<BlogVO> blogs = null;
+        /**
+         * 查询推荐或热门博客
+         */
         List<BlogVO> recommendList = blogMapper.selectHotOrRecommendBlogs(BlogStaticType.RECOMMEND_BLOG,5);
 
         List<BlogVO> clickRankList = blogMapper.selectHotOrRecommendBlogs(BlogStaticType.HOT_BLOG,5);

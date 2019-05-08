@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
+ *  标签管理controller
  * @author Jann Lee
  * @className TagController
- * @description 标签管理
  * @date 2018-11-18 16:36
  **/
 @Controller
