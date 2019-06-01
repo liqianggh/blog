@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 配置文件加密
  */
-@Configuration
+//@Configuration
 public class EncryptionPropertyConfig {
 
     @Value("*(&s2.1w2%")
