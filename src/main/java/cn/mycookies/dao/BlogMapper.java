@@ -1,6 +1,6 @@
 package cn.mycookies.dao;
 
-import cn.mycookies.pojo.dto.BlogDTO;
+import cn.mycookies.pojo.dto.BlogAddRequest;
 import cn.mycookies.pojo.po.BlogDO;
 import cn.mycookies.pojo.vo.BlogVO;
 import org.apache.ibatis.annotations.Param;
@@ -12,7 +12,7 @@ import java.util.List;
 public interface BlogMapper {
     int insert(BlogDO record);
 
-    int insertSelective(BlogDTO record);
+    int insertSelective(BlogAddRequest record);
 
     BlogDO selectById(@Param("id") Integer id, @Param("isDeleted") Byte isDeleted);
 
@@ -20,7 +20,7 @@ public interface BlogMapper {
 
     List<BlogVO> selectHotOrRecommendBlogs(@Param("code") int code,@Param("limit") int limit);
 
-    int updateBlog(BlogDTO blogDTO);
+    int updateBlog(BlogAddRequest blogAddRequest);
 
     /**
      * 上一条-1 或者 下一条1

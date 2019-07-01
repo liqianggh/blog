@@ -1,7 +1,8 @@
 package cn.mycookies.service;
 
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.pojo.dto.BlogDTO;
+import cn.mycookies.pojo.dto.BlogAddRequest;
+import cn.mycookies.pojo.dto.BlogListQueryRequest;
 import cn.mycookies.pojo.po.BlogDO;
 import cn.mycookies.pojo.vo.BlogDetailVO;
 import cn.mycookies.pojo.vo.BlogVO;
@@ -12,29 +13,24 @@ import org.apache.ibatis.annotations.Param;
 public interface BlogService {
     /**
      * 添加博客
-     * @param blogAdd
+     * @param blogAddRequest
      * @return
      */
-    ServerResponse insertBlog(BlogDTO blogAdd);
+    ServerResponse addBlog(BlogAddRequest blogAddRequest);
 
     /**
      * 查询博客列表
-     * @param pageNum
-     * @param pageSize
-     * @param categoryId 分类id
-     * @param tagId 标签id
-     * @param idDeleted 是否呗逻辑删除或存入草稿
-     * @param orderby 排序条件 如 createTime desc
      * @return
+     * @param queryRequest
      */
-    ServerResponse<PageInfo<BlogVO>> listBlogs(Integer pageNum, Integer pageSize, Integer categoryId, Integer tagId, Byte idDeleted, String orderby);
+    ServerResponse<PageInfo<BlogVO>> getBlogListInfos(BlogListQueryRequest queryRequest);
 
     /**
      * 更新博客
-     * @param blogAdd
+     * @param blogAddRequest
      * @return
      */
-    ServerResponse updateBlog(BlogDTO blogAdd);
+    ServerResponse updateBlog(BlogAddRequest blogAddRequest);
 
     /**
      * 获取一篇博客

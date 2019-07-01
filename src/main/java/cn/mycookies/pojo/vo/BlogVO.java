@@ -1,9 +1,7 @@
 package cn.mycookies.pojo.vo;
 
-import cn.mycookies.pojo.dto.BlogDTO;
+import cn.mycookies.pojo.dto.BlogAddRequest;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.JsonValueSerializer;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
@@ -49,9 +47,9 @@ public class BlogVO {
 
     public List<TagVO> tagList;
 
-    public BlogDTO last;
+    public BlogAddRequest last;
 
-    public BlogDTO next;
+    public BlogAddRequest next;
 
     PageInfo<CommentVO> comments;
 }

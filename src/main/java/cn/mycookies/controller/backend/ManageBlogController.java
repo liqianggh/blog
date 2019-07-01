@@ -1,11 +1,10 @@
 package cn.mycookies.controller.backend;
 
 import cn.mycookies.common.ActionStatus;
-import cn.mycookies.common.DataStatus;
 import cn.mycookies.common.ProcessBindingResult;
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.pojo.dto.BlogDTO;
-import cn.mycookies.pojo.po.BlogDO;
+import cn.mycookies.pojo.dto.BlogAddRequest;
+import cn.mycookies.pojo.dto.BlogListQueryRequest;
 import cn.mycookies.pojo.vo.BlogDetailVO;
 import cn.mycookies.pojo.vo.BlogVO;
 import cn.mycookies.service.BlogService;
@@ -33,36 +32,31 @@ public class ManageBlogController {
 
     @PostMapping
     @ApiOperation(value ="新增博客")
-    public ServerResponse addBlog(@RequestBody @Valid BlogDTO blogAdd, BindingResult bindingResult){
+    public ServerResponse addBlog(@RequestBody @Valid BlogAddRequest blogAddRequest, BindingResult bindingResult){
         if (bindingResult != null && bindingResult.hasErrors()) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
         }
 
-        return blogService.insertBlog(blogAdd);
+        return blogService.addBlog(blogAddRequest);
     }
 
     @GetMapping
     @ApiOperation(value ="分页查询列表博客",response = BlogVO.class,responseContainer = "List")
-    public ServerResponse<PageInfo<BlogVO>> getBlogs(@ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize,
-                                             @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum,
-    @ApiParam(value = "分类Id") @RequestParam(required = false) Integer categoryId,
-    @ApiParam(value = "分类Id") @RequestParam(required = false) Integer tagId,
-    @ApiParam(value = "是否被删除") @RequestParam(required = false) @Min(0)@Max(2)Byte idDeleted,
-    @ApiParam(value = "排序类型") @RequestParam(required = false,defaultValue = "create_time desc") String orderBy){
+    public ServerResponse<PageInfo<BlogVO>> getBlogList(BlogListQueryRequest blogListQueryRequest){
 
-        return blogService.listBlogs(pageNum,pageSize,categoryId,tagId,idDeleted,orderBy);
+        return blogService.listBlogs(blogListQueryRequest);
     }
 
     @PutMapping("/{id}")
     @ApiOperation(value ="修改博客")
-    public ServerResponse updateBlog(@RequestBody @Valid BlogDTO blogAdd, BindingResult bindingResult,
+    public ServerResponse updateBlog(@RequestBody @Valid BlogAddRequest blogAddRequest, BindingResult bindingResult,
                                      @ApiParam("博客id") @PathVariable Integer id){
         if (bindingResult != null && bindingResult.hasErrors()) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
         }
-        blogAdd.setId(id);
+        blogAddRequest.setId(id);
 
-        return blogService.updateBlog(blogAdd);
+        return blogService.updateBlog(blogAddRequest);
     }
 
     @GetMapping("/{id}")

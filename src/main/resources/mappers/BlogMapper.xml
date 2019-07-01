@@ -57,7 +57,7 @@
       #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.mycookies.pojo.dto.BlogDTO">
+  <insert id="insertSelective" parameterType="cn.mycookies.pojo.dto.BlogAddRequest">
     insert into blog
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="categoryId != null">
@@ -115,7 +115,7 @@
     </trim>
   </insert>
 
-  <update id="updateBlog" parameterType="cn.mycookies.pojo.dto.BlogDTO">
+  <update id="updateBlog" parameterType="cn.mycookies.pojo.dto.BlogAddRequest">
     update blog
     <set>
       <if test="categoryId != null">

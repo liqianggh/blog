@@ -3,11 +3,11 @@ package cn.mycookies.service.impl;
 import cn.mycookies.common.*;
 import cn.mycookies.dao.BlogMapper;
 import cn.mycookies.dao.BlogTagsDOMapper;
-import cn.mycookies.pojo.dto.BlogDTO;
+import cn.mycookies.pojo.dto.BlogAddRequest;
+import cn.mycookies.pojo.dto.BlogListQueryRequest;
 import cn.mycookies.pojo.po.BlogDO;
 import cn.mycookies.pojo.po.BlogTagsDO;
 import cn.mycookies.pojo.po.BlogTagsDOExample;
-import cn.mycookies.pojo.po.TagDO;
 import cn.mycookies.pojo.vo.BlogDetailVO;
 import cn.mycookies.pojo.vo.BlogVO;
 import cn.mycookies.pojo.vo.IndexVO;
@@ -44,12 +44,12 @@ public class BlogServiceImpl implements BlogService {
     private BlogTagsDOMapper blogTagsDOMapper;
 
     @Override
-    public ServerResponse insertBlog(BlogDTO blogAdd) {
-        if (Objects.isNull(blogAdd)  || StringUtils.isEmpty(blogAdd.getTitle())) {
+    public ServerResponse addBlog(BlogAddRequest blogAddRequest) {
+        if (Objects.isNull(blogAddRequest)  || StringUtils.isEmpty(blogAddRequest.getTitle())) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(),ActionStatus.PARAMAS_ERROR.getDescription());
         }
         // 校验title是否又重复的
-        int result = blogMapper.insertSelective(blogAdd);
+        int result = blogMapper.insertSelective(blogAddRequest);
 
         if (result ==0 ) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.NO_RESULT.inValue(),ActionStatus.NO_RESULT.getDescription());
@@ -58,12 +58,11 @@ public class BlogServiceImpl implements BlogService {
      }
 
     @Override
-    public ServerResponse<PageInfo<BlogVO>> listBlogs(Integer pageNum, Integer pageSize, Integer categoryId, Integer tagId, Byte isDeleted, String orderby) {
-        Page page = PageHelper.startPage(pageNum, pageSize);
-        String[] strs = orderby.trim().split(" ");
-        page.setOrderBy(strs[0] + " " + strs[1]);
+    public ServerResponse<PageInfo<BlogVO>> getBlogListInfos(BlogListQueryRequest queryRequest) {
+        Page page = PageHelper.startPage(queryRequest.getPageNum(), queryRequest.getPageSize());
+        page.setOrderBy(queryRequest.getSortField() + " " + queryRequest.getOrder());
 
-        List<BlogDO> blogDOList = blogMapper.selectBlogs(categoryId, tagId, isDeleted);
+        List<BlogDO> blogDOList = blogMapper.selectBlogs(queryRequest.getCategoryId(), queryRequest.getTagId(), queryRequest.getStatus());
 
         List<BlogVO> blogVOList = Lists.newArrayList();
         blogDOList.stream().forEach(blogDO -> {
@@ -81,12 +80,12 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public ServerResponse updateBlog(BlogDTO blogAdd) {
-        if (Objects.isNull(blogAdd) || Objects.isNull(blogAdd.getId()) || blogAdd.getId()==0) {
+    public ServerResponse updateBlog(BlogAddRequest blogAddRequest) {
+        if (Objects.isNull(blogAddRequest) || Objects.isNull(blogAddRequest.getId()) || blogAddRequest.getId()==0) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(),ActionStatus.PARAMAS_ERROR.getDescription());
         }
-        Integer id = blogAdd.getId();
-        List<Integer> tagIds = blogAdd.getTags();
+        Integer id = blogAddRequest.getId();
+        List<Integer> tagIds = blogAddRequest.getTags();
         BlogTagsDOExample example = new BlogTagsDOExample();
         BlogTagsDOExample.Criteria criteria = example.createCriteria();
         criteria.andBlogIdEqualTo(id);
@@ -96,7 +95,7 @@ public class BlogServiceImpl implements BlogService {
             blogTagsDOMapper.insert(new BlogTagsDO(null, tagId, id));
         }
 
-        int result = blogMapper.updateBlog(blogAdd);
+        int result = blogMapper.updateBlog(blogAddRequest);
         if (result ==0 ) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.NO_RESULT.inValue(),ActionStatus.NO_RESULT.getDescription());
         }
@@ -171,7 +170,7 @@ public class BlogServiceImpl implements BlogService {
 
         IndexVO indexVO = new IndexVO();
         if (withBlogs) {
-            blogs = listBlogs(1,10,null,null,DataStatus.NO_DELETED,"create_time desc").getData();
+            blogs = getBlogListInfos(1).getData();
             indexVO.setBlogList(blogs);
         }
         indexVO.setCategoryList(categoryVOS);
@@ -197,12 +196,12 @@ public class BlogServiceImpl implements BlogService {
         return ServerResponse.createBySuccess(blogDetailVO);
     }
 
-    private BlogDTO getlastOrNext(Integer id, Integer page){
+    private BlogAddRequest getlastOrNext(Integer id, Integer page){
         BlogDO blogDO = blogMapper.selectLastOrNext(id,page);
         if (Objects.isNull(blogDO)){
             return null;
         }
-        BlogDTO result = new BlogDTO();
+        BlogAddRequest result = new BlogAddRequest();
         result.setId(blogDO.getId());
         result.setTitle(blogDO.getTitle());
 

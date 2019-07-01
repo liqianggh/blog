@@ -3,6 +3,7 @@ package cn.mycookies.controller.user;
 import cn.mycookies.common.BlogStaticType;
 import cn.mycookies.common.DataStatus;
 import cn.mycookies.common.ServerResponse;
+import cn.mycookies.pojo.dto.BlogListQueryRequest;
 import cn.mycookies.pojo.vo.BlogVO;
 import cn.mycookies.pojo.vo.IndexVO;
 import cn.mycookies.service.BlogService;
@@ -27,13 +28,9 @@ public class BlogController {
 
     @GetMapping
     @ApiOperation(value ="分页查询列表博客",response = BlogVO.class,responseContainer = "List")
-    public ServerResponse<PageInfo<BlogVO>> getBlogs(@ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize,
-                                                     @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum,
-                                                     @ApiParam(value = "分类Id") @RequestParam(required = false) Integer categoryId,
-                                                     @ApiParam(value = "分类Id") @RequestParam(required = false) Integer tagId,
-                                                     @ApiParam(value = "排序类型") @RequestParam(required = false,defaultValue = "create_time desc") String orderBy){
+    public ServerResponse<PageInfo<BlogVO>> getBlogListInfos(BlogListQueryRequest queryRequest){
 
-        return blogService.listBlogs(pageNum,pageSize,categoryId,tagId, DataStatus.NO_DELETED,orderBy);
+        return blogService.getBlogListInfos(queryRequest);
     }
 
     @GetMapping("/{id}")
