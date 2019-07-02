@@ -1,28 +1,37 @@
 package cn.mycookies.dao;
 
-import cn.mycookies.pojo.dto.CommentDTO;
 import cn.mycookies.pojo.dto.UserDTO;
 import cn.mycookies.pojo.po.CommentDO;
+import cn.mycookies.pojo.po.CommentDOExample;
 import cn.mycookies.pojo.vo.CommentVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
 @Repository
-public interface  CommentMapper {
-    /**
-     * 添加评论
-     * @param record
-     * @return
-     */
+public interface CommentDOMapper {
+    long countByExample(CommentDOExample example);
+
+    int deleteByExample(CommentDOExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
     int insert(CommentDO record);
 
-    /**
-     * 添加评论
-     * @param record
-     * @return
-     */
-    int insertSelective(CommentDTO record);
+    int insertSelective(CommentDO record);
+
+    List<CommentDO> selectByExample(CommentDOExample example);
+
+    CommentDO selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") CommentDO record, @Param("example") CommentDOExample example);
+
+    int updateByExample(@Param("record") CommentDO record, @Param("example") CommentDOExample example);
+
+    int updateByPrimaryKeySelective(CommentDO record);
+
+    int updateByPrimaryKey(CommentDO record);
+
 
     /**
      * 删除评论 根据主键

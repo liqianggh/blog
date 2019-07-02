@@ -3,7 +3,10 @@ package cn.mycookies.dao;
 import cn.mycookies.pojo.po.BlogTagsDO;
 import cn.mycookies.pojo.po.BlogTagsDOExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+@Repository
 public interface BlogTagsDOMapper {
     long countByExample(BlogTagsDOExample example);
 
@@ -14,6 +17,8 @@ public interface BlogTagsDOMapper {
     int insert(BlogTagsDO record);
 
     int insertSelective(BlogTagsDO record);
+
+    List<BlogTagsDO> selectByExample(BlogTagsDOExample example);
 
     BlogTagsDO selectByPrimaryKey(Integer id);
 

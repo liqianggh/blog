@@ -4,7 +4,7 @@ import cn.mycookies.common.ActionStatus;
 import cn.mycookies.common.CommentType;
 import cn.mycookies.common.DataStatus;
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.dao.CommentMapper;
+import cn.mycookies.dao.CommentDOMapper;
 import cn.mycookies.pojo.dto.CommentDTO;
 import cn.mycookies.pojo.dto.UserDTO;
 import cn.mycookies.pojo.po.CommentDO;
@@ -28,7 +28,7 @@ import java.util.UUID;
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
-    private CommentMapper commentMapper;
+    private CommentDOMapper commentMapper;
 
     @Override
     @Transactional
@@ -69,13 +69,13 @@ public class CommentServiceImpl implements CommentService {
             } else {
                 // 会话id和回复reply email都在 说明是回复 直接插入
                 // todo sessionId以及targeId的合法性
-                insertResult = commentMapper.insertSelective(commentDTO);
+                insertResult = commentMapper.insertSelective(null);
             }
         } else {
             // 如果是留言或者
             UUID uuid = UUID.randomUUID();
             commentDTO.setSessionId(uuid.toString());
-            insertResult = commentMapper.insertSelective(commentDTO);
+            insertResult = commentMapper.insertSelective(null);
         }
         if (insertResult > 0) {
             return ServerResponse.createBySuccess();
@@ -96,7 +96,7 @@ public class CommentServiceImpl implements CommentService {
         }
         CommentDO commentDO = new CommentDO();
         commentDO.setEmail(email);
-        commentDO.setIsDeleted(isDeleted);
+        commentDO.setCommentStatus(Integer.valueOf(isDeleted));
         commentDO.setReplyEmail(repluEmail);
         commentDO.setTargetId(targetId);
         if (StringUtils.isNotBlank(sessionId)) {
@@ -131,7 +131,7 @@ public class CommentServiceImpl implements CommentService {
         } else {
             CommentDO commentDO = new CommentDO();
             commentDO.setId(commentId);
-            commentDO.setIsDeleted(isRealDelete);
+            commentDO.setCommentStatus(Integer.valueOf(isRealDelete));
             result = commentMapper.updateComment(commentDO);
         }
         if (result > 0) {

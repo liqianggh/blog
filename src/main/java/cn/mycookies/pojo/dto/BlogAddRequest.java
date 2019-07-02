@@ -1,11 +1,14 @@
 package cn.mycookies.pojo.dto;
 
+import cn.mycookies.pojo.po.BlogDO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.BeanUtils;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -22,13 +25,19 @@ public class BlogAddRequest {
     @ApiModelProperty(value = "博客id", hidden = true)
     private Integer id;
 
+    @NotNull
+    @ApiModelProperty(value = "分类id", required = true)
+    private Integer categoryId;
+
     @Length(min = 1, max = 20, message = "title长度需在1-20之间")
+    @NotEmpty
     @ApiModelProperty(value = "标题", required = true)
     private String title;
 
     @NotNull
-    @ApiModelProperty(value = "分类id", required = true)
-    private Integer categoryId;
+    @Length(min = 1)
+    @ApiModelProperty(value = "摘要", required = true)
+    private String summary;
 
     @ApiModelProperty(value = "标签id")
     private List<Integer> tags;
@@ -36,16 +45,12 @@ public class BlogAddRequest {
     @ApiModelProperty(value = "封面图片url")
     private String coverImgUrl;
 
-    @NotNull
-    @Length(min = 1)
-    @ApiModelProperty(value = "摘要", required = true)
-    private String summary;
+    @ApiModelProperty(value = "作者")
+    private String author;
 
     @ApiModelProperty(value = "正文", required = true)
     private String content;
 
-    @ApiModelProperty(value = "作者")
-    private String author;
     /**
      * 置顶 转载
      */
@@ -54,6 +59,12 @@ public class BlogAddRequest {
 
     @ApiModelProperty(value = "作为草稿，发布，删除", required = true)
     @NotNull
-    private Integer status;
+    private Integer isDeleted;
+
+    public BlogDO buildDO(){
+        BlogDO blogDO = new BlogDO();
+        BeanUtils.copyProperties(this, blogDO);
+        return blogDO;
+    }
 
 }
