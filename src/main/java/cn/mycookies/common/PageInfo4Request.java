@@ -1,18 +1,18 @@
 package cn.mycookies.common;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.mysql.jdbc.StringUtils;
 import lombok.Data;
+
 import java.util.Objects;
 
 /**
- * @description 请求参数中的分页数据接收
+ * 通用分页查询请求，分页查询的bean的基类
+ *
  * @author Jann Lee
  * @date 2019-05-08 23:43
  **/
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Data
+@JsonBean
 public class PageInfo4Request {
 
     /**
@@ -23,8 +23,12 @@ public class PageInfo4Request {
     /**
      * 默认排序字段
      */
-    private static final String defaultSortField = "id";
+    private static final String DEFAULT_SORT_FIELD = "id";
 
+    /**
+     * 通用查询关键词，用来进行模糊匹配
+     */
+    public String keyWord;
 
     /**
      * 当前页数
@@ -48,6 +52,7 @@ public class PageInfo4Request {
 
     /**
      * 当前页数默认值为1
+     *
      * @return
      */
     public int getPageNum() {
@@ -59,6 +64,7 @@ public class PageInfo4Request {
 
     /**
      * 每页大小默认为10
+     *
      * @return
      */
     public int getPageSize() {
@@ -70,23 +76,33 @@ public class PageInfo4Request {
 
     /**
      * 排序字段,默认是id
+     *
      * @return
      */
     public String getSortField() {
         if (StringUtils.isNullOrEmpty(sortField)) {
-            return defaultSortField;
+            return DEFAULT_SORT_FIELD;
         }
         return sortField;
     }
 
     /**
      * 默认为降序排序
+     *
      * @return
      */
     public String getOrder() {
-        if (StringUtils.isNullOrEmpty(order) || Objects.equals(DESC, order)){
+        if (StringUtils.isNullOrEmpty(order) || Objects.equals(DESC, order)) {
             return DESC;
         }
         return ASC;
+    }
+
+    /**
+     * 获取order by信息，共pageHelper使用
+     * @return
+     */
+    public String getOrderBy() {
+        return getSortField() + " " + getOrder();
     }
 }

@@ -2,7 +2,6 @@ package cn.mycookies.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.common.base.Preconditions;
 
 import java.io.Serializable;
 
@@ -83,7 +82,7 @@ public class ServerResponse<T> implements Serializable{
      * 序列化时忽略
      */
     @JsonIgnore
-    public  boolean isSuccess(){
+    public  boolean isOk(){
         return this.status==ActionStatus.NORMAL_RETURNED.inValue();
     }
 

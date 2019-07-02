@@ -52,6 +52,11 @@
             <artifactId>guava</artifactId>
             <version>20.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.3</version>
+        </dependency>
         <!-- 日志记录 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -127,19 +132,19 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <!-- mybatis生成代码插件 -->
-            <!--<plugin>-->
-                <!--<groupId>org.mybatis.generator</groupId>-->
-                <!--<artifactId>mybatis-generator-maven-plugin</artifactId>-->
-                <!--<version>1.3.7</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>Generate MyBatis Artifacts</id>-->
-                        <!--<goals>-->
-                            <!--<goal>generate</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.7</version>
+                <executions>
+                    <execution>
+                        <id>Generate MyBatis Artifacts</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

@@ -1,20 +1,22 @@
 package cn.mycookies.pojo.dto;
 
+import cn.mycookies.common.JsonBean;
 import cn.mycookies.common.PageInfo4Request;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
+ * 博客查询参数bean
+ *
  * @author Jann Lee
- * @description 博客查询参数bean
  * @date 2019-07-02 2:26
  **/
 @ApiModel("博客列表查询参数")
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class BlogListQueryRequest extends PageInfo4Request {
+@JsonBean
+public class BlogListRequest extends PageInfo4Request {
+
     /**
      * 分类id
      */

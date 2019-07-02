@@ -2,7 +2,6 @@ package cn.mycookies.common.exception;
 
 import cn.mycookies.common.ActionStatus;
 import cn.mycookies.common.ServerResponse;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.ConversionNotSupportedException;
@@ -13,7 +12,6 @@ import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.io.IOException;
@@ -159,6 +157,6 @@ public class GlobalExceptionHandler {
     private <T extends Throwable> ServerResponse<Boolean> resultFormat(Integer code, T ex) {
         ex.printStackTrace();
         log.error(String.format(logExceptionFormat, code, ex.getMessage()));
-        return ServerResponse.createByErrorCodeMessage(ActionStatus.SERVER_ERROR.inValue(), "服务端一次啊还给你");
+        return ServerResponse.createByErrorCodeMessage(ActionStatus.SERVER_ERROR.inValue(), "服务端异常");
     }
 }

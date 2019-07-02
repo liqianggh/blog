@@ -26,7 +26,7 @@ import javax.validation.Valid;
 @Api(description = "标签管理")
 @RequestMapping("manage/tags")
 @ResponseBody
-public class ManageTagController {
+public class ManageTagController extends BaseController{
 
     @Autowired
     private TagService tagService;

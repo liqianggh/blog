@@ -1,10 +1,9 @@
 package cn.mycookies.controller.backend;
 
-import cn.mycookies.common.ActionStatus;
-import cn.mycookies.common.ProcessBindingResult;
+import cn.mycookies.common.BaseController;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.dto.BlogAddRequest;
-import cn.mycookies.pojo.dto.BlogListQueryRequest;
+import cn.mycookies.pojo.dto.BlogListRequest;
 import cn.mycookies.pojo.vo.BlogDetailVO;
 import cn.mycookies.pojo.vo.BlogVO;
 import cn.mycookies.service.BlogService;
@@ -14,56 +13,52 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
+/**
+ * 博客管理端Controller
+ *
+ * @author Jann Lee
+ * @date 2019-07-02 22:18
+ */
 @RequestMapping("manage/blogs")
 @Api(description = "博客管理模块")
 @ResponseBody
 @Controller
-public class ManageBlogController {
+public class ManageBlogController extends BaseController {
 
     @Autowired
     private BlogService blogService;
 
     @PostMapping
     @ApiOperation(value ="新增博客")
-    public ServerResponse addBlog(@RequestBody @Valid BlogAddRequest blogAddRequest, BindingResult bindingResult){
-        if (bindingResult != null && bindingResult.hasErrors()) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
-        }
+    public ServerResponse addBlog(@RequestBody BlogAddRequest blogAddRequest){
+        validate(blogAddRequest);
 
-        return blogService.addBlog(blogAddRequest);
+        return blogService.createBlogInfo(blogAddRequest);
     }
 
     @GetMapping
     @ApiOperation(value ="分页查询列表博客",response = BlogVO.class,responseContainer = "List")
-    public ServerResponse<PageInfo<BlogVO>> getBlogList(BlogListQueryRequest blogListQueryRequest){
+    public ServerResponse<PageInfo<BlogVO>> getBlogList(BlogListRequest blogListRequest){
 
-        return blogService.getBlogListInfos(blogListQueryRequest);
-    }
+        return blogService.getBlogListInfos(blogListRequest);
+}
 
     @PutMapping("/{id}")
     @ApiOperation(value ="修改博客")
-    public ServerResponse updateBlog(@RequestBody @Valid BlogAddRequest blogAddRequest, BindingResult bindingResult,
-                                     @ApiParam("博客id") @PathVariable Integer id){
-        if (bindingResult != null && bindingResult.hasErrors()) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
-        }
-        blogAddRequest.setId(id);
+    public ServerResponse<Boolean> updateBlog(@ApiParam("博客id") @PathVariable Integer id,
+                                     @ApiParam @RequestBody BlogAddRequest blogAddRequest){
+        validate(blogAddRequest);
 
-        return blogService.updateBlog(blogAddRequest);
+        return blogService.updateBlog(id, blogAddRequest);
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value ="查找博客",response=BlogVO.class)
     public ServerResponse<BlogDetailVO> getBlog(@ApiParam("博客id") @PathVariable Integer id){
 
-        return blogService.getBlogDetailVOById(id);
+        return blogService.getBlogDetailInfo(id);
     }
 
 

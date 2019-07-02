@@ -1,47 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.mycookies.dao.TagMapper">
-  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.po.TagDO">
-    <constructor>
-      <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="tag_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="tag_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-    </constructor>
-  </resultMap>
-  <insert id="insert" parameterType="cn.mycookies.pojo.dto.TagAddDTO">
-    insert into tag (tag_name, tag_desc,type, create_time)
-    values (#{tagName,jdbcType=VARCHAR}, #{tagDesc,jdbcType=VARCHAR},#{type},now())
-  </insert>
-  <insert id="insertSelective" parameterType="cn.mycookies.pojo.po.TagDO">
-    insert into tag
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="tagName != null">
-        tag_name,
-      </if>
-      <if test="tagDesc != null">
-        tag_desc,
-      </if>
-        create_time,
-        update_time
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="tagName != null">
-        #{tagName,jdbcType=VARCHAR},
-      </if>
-      <if test="tagDesc != null">
-        #{tagDesc,jdbcType=VARCHAR},
-      </if>
-      now(),now()
-    </trim>
-  </insert>
+<mapper namespace="cn.mycookies.dao.TagDOMapper">
   <select id="queryTagList" parameterType="cn.mycookies.pojo.po.TagDO" resultType="cn.mycookies.pojo.po.TagDO">
     SELECT id,tag_name as tagName, tag_desc as tagDesc,`type`,create_time as createTime,update_time as updateTime from tag
     <where>

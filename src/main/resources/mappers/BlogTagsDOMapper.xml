@@ -69,6 +69,20 @@
   <sql id="Base_Column_List">
     id, tag_id, blog_id
   </sql>
+  <select id="selectByExample" parameterType="cn.mycookies.pojo.po.BlogTagsDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from blog_tags
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

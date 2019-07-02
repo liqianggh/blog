@@ -1,18 +1,13 @@
 package cn.mycookies.controller.user;
 
-import cn.mycookies.common.ActionStatus;
-import cn.mycookies.common.DataStatus;
-import cn.mycookies.common.ProcessBindingResult;
-import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.*;
 import cn.mycookies.pojo.dto.CommentDTO;
-import cn.mycookies.pojo.po.CommentDO;
 import cn.mycookies.pojo.vo.CommentVO;
 import cn.mycookies.service.CommentService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -32,7 +27,7 @@ import javax.validation.Valid;
 @ResponseBody
 @RequestMapping("comments")
 @CrossOrigin
-public class CommentController {
+public class CommentController extends BaseController {
 
     @Autowired
     private CommentService commentService;

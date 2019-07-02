@@ -1,9 +1,10 @@
 package cn.mycookies.controller.user;
 
+import cn.mycookies.common.BaseController;
 import cn.mycookies.common.BlogStaticType;
 import cn.mycookies.common.DataStatus;
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.pojo.dto.BlogListQueryRequest;
+import cn.mycookies.pojo.dto.BlogListRequest;
 import cn.mycookies.pojo.vo.BlogVO;
 import cn.mycookies.pojo.vo.IndexVO;
 import cn.mycookies.service.BlogService;
@@ -21,14 +22,14 @@ import org.springframework.web.bind.annotation.*;
 @ResponseBody
 @RequestMapping("blogs")
 @CrossOrigin
-public class BlogController {
+public class BlogController extends BaseController {
 
     @Autowired
     private BlogService blogService;
 
     @GetMapping
     @ApiOperation(value ="分页查询列表博客",response = BlogVO.class,responseContainer = "List")
-    public ServerResponse<PageInfo<BlogVO>> getBlogListInfos(BlogListQueryRequest queryRequest){
+    public ServerResponse<PageInfo<BlogVO>> getBlogListInfos(BlogListRequest queryRequest){
 
         return blogService.getBlogListInfos(queryRequest);
     }

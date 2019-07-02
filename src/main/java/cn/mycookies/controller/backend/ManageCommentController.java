@@ -1,5 +1,6 @@
 package cn.mycookies.controller.backend;
 
+import cn.mycookies.common.BaseController;
 import cn.mycookies.common.DataStatus;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.vo.CommentVO;
@@ -19,7 +20,7 @@ import javax.validation.constraints.Min;
 @Api(description = "用户评论模块")
 @ResponseBody
 @Controller
-public class ManageCommentController {
+public class ManageCommentController extends BaseController {
 
     @Autowired
     private CommentService commentService;

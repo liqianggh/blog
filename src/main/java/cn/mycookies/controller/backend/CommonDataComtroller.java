@@ -1,5 +1,6 @@
 package cn.mycookies.controller.backend;
 
+import cn.mycookies.common.BaseController;
 import cn.mycookies.common.KeyValueVO;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.common.TagTypes;
@@ -23,7 +24,7 @@ import java.util.List;
 @Api("公共数据接口")
 @RestController
 @RequestMapping("/common")
-public class CommonDataComtroller {
+public class CommonDataComtroller extends BaseController {
 
     @Autowired
     private TagService tagService;
