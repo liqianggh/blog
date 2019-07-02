@@ -44,7 +44,7 @@ public class ManageBlogController {
     @ApiOperation(value ="分页查询列表博客",response = BlogVO.class,responseContainer = "List")
     public ServerResponse<PageInfo<BlogVO>> getBlogList(BlogListQueryRequest blogListQueryRequest){
 
-        return blogService.listBlogs(blogListQueryRequest);
+        return blogService.getBlogListInfos(blogListQueryRequest);
     }
 
     @PutMapping("/{id}")
