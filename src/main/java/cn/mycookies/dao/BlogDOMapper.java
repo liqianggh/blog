@@ -6,10 +6,8 @@ import cn.mycookies.pojo.po.BlogDO;
 import cn.mycookies.pojo.po.BlogDOExample;
 import cn.mycookies.pojo.vo.BlogVO;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
 public interface BlogDOMapper {
 
     long countByExample(BlogDOExample example);

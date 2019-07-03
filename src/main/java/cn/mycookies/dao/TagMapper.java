@@ -4,10 +4,8 @@ import cn.mycookies.pojo.dto.TagVO;
 import cn.mycookies.pojo.po.TagDO;
 import cn.mycookies.pojo.po.TagDOExample;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
 public interface TagMapper {
     long countByExample(TagDOExample example);
 

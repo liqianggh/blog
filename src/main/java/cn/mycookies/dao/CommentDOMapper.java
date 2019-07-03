@@ -5,10 +5,8 @@ import cn.mycookies.pojo.po.CommentDO;
 import cn.mycookies.pojo.po.CommentDOExample;
 import cn.mycookies.pojo.vo.CommentVO;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
 public interface CommentDOMapper {
     long countByExample(CommentDOExample example);
 

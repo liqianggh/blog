@@ -3,10 +3,8 @@ package cn.mycookies.dao;
 import cn.mycookies.pojo.po.BlogTagsDO;
 import cn.mycookies.pojo.po.BlogTagsDOExample;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
 public interface BlogTagsDOMapper {
     long countByExample(BlogTagsDOExample example);
 
