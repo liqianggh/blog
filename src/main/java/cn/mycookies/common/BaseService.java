@@ -1,7 +1,9 @@
 package cn.mycookies.common;
 
+import cn.mycookies.pojo.po.BaseDO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,5 +85,14 @@ public class BaseService {
 
     protected ServerResponse resultError4DB(String msg) {
         return resultError(ActionStatus.DATABASE_ERROR.inValue(), msg);
+    }
+
+    protected void fillCreateTime(BaseDO baseDO){
+        Preconditions.checkNotNull(baseDO, "创建的类不能为nul");
+        baseDO.setCreateTime(System.currentTimeMillis());
+    }
+    protected void fillUpdateTime(BaseDO baseDO){
+        Preconditions.checkNotNull(baseDO, "要修改的类不能为nul");
+        baseDO.setUpdateTime(System.currentTimeMillis());
     }
 }

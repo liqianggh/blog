@@ -2,12 +2,10 @@ package cn.mycookies.controller.user;
 
 import cn.mycookies.common.BaseController;
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.pojo.dto.TagDTO;
-import cn.mycookies.pojo.vo.TagVO;
+import cn.mycookies.pojo.dto.TagVO;
 import cn.mycookies.service.TagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,13 +29,11 @@ public class TagController extends BaseController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping("/{type}")
-    @ApiOperation(value = "获取标签列表", response = TagDTO.class, responseContainer = "List")
+    @GetMapping("/{type:\\d+}")
+    @ApiOperation(value = "获取标签列表", response = TagVO.class, responseContainer = "List")
     @ResponseBody
-    public ServerResponse<List<TagVO>> tagList(@ApiParam(value = "标签类型，是分类还是标签") @PathVariable(required = true) Byte type) {
-        if (type !=1 && type != 2){
-            type = 2;
-        }
-        return tagService.listTagVOs(type);
+    public ServerResponse<List<TagVO>> getTagList(@PathVariable Integer type) {
+
+        return tagService.getAllTagListInfsByType(type);
     }
 }

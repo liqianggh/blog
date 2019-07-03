@@ -14,7 +14,6 @@ import cn.mycookies.pojo.po.BlogTagsDOExample;
 import cn.mycookies.pojo.vo.BlogDetailVO;
 import cn.mycookies.pojo.vo.BlogVO;
 import cn.mycookies.pojo.vo.IndexVO;
-import cn.mycookies.pojo.vo.TagVO;
 import cn.mycookies.utils.DateCalUtils;
 import cn.mycookies.utils.DateTimeUtil;
 import com.github.pagehelper.Page;
@@ -67,7 +66,7 @@ public class BlogService extends BaseService {
     /**
      * 更新博客
      *
-     * @param id 主鍵id
+     * @param id            主鍵id
      * @param updateRequest 更新请求参数
      * @return
      */
@@ -107,13 +106,14 @@ public class BlogService extends BaseService {
      * @return
      */
     private ServerResponse<Boolean> validateAndInitCreateRequest(BlogAddRequest addRequest, BlogDO blogDO) {
-        Preconditions.checkNotNull(addRequest, "添加参数不能为null");
+        Preconditions.checkNotNull(blogDO, "添加参数不能为null");
 
         return validateAndInitUpdateRequest(addRequest, blogDO);
     }
 
     /**
      * 校验更新参数， 然后规整参数
+     *
      * @param updateRequest
      * @param blogDO
      * @return
@@ -157,7 +157,8 @@ public class BlogService extends BaseService {
 
         List<BlogVO> blogVOList = blogDOList.stream().map(blogDO -> {
             BlogVO blogVO = convertBlogToVO(blogDO);
-            blogVO.setTagList(tagService.listTagsOfBlog(blogDO.getId()));
+            // todo 博客的标签
+//            blogVO.setTagList(tagService.getTagListOfBlog(blogDO.getId()));
             return blogVO;
         }).collect(Collectors.toList());
 
@@ -176,7 +177,8 @@ public class BlogService extends BaseService {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.NO_RESULT.inValue(), ActionStatus.NO_RESULT.getDescription());
         }
         BlogVO blogVO = convertBlogToVO(blogDO);
-        blogVO.setTagList(tagService.listTagsOfBlog(id));
+        // todo 博客的标签
+//        blogVO.setTagList(tagService.getTagListOfBlog(id));
         // 查询last next
         if (hasLastNext) {
             blogVO.setLast(getlastOrNext(id, false));
@@ -213,6 +215,7 @@ public class BlogService extends BaseService {
     }
 
     /**
+     * todo 优化
      * 获取首页所需数据
      *
      * @param withBlogs 结果集是否包含博客列表
@@ -224,19 +227,18 @@ public class BlogService extends BaseService {
          * 查询推荐或热门博客
          */
         List<BlogVO> recommendList = blogDOMapper.selectHotOrRecommendBlogs(BlogStaticType.RECOMMEND_BLOG, 5);
-
         List<BlogVO> clickRankList = blogDOMapper.selectHotOrRecommendBlogs(BlogStaticType.HOT_BLOG, 5);
-
-        List<TagVO> tagVOS = tagService.listTagVOs(TagTypes.TAG_LABEL).getData();
-        List<TagVO> categoryVOS = tagService.listTagVOs(TagTypes.TAG_CATEGORY).getData();
+        // todo 标签分类信息
+//        List<TagVO> tagVOS = tagService.listTagVOs(TagTypes.TAG_LABEL).getData();
+//        List<TagVO> categoryVOS = tagService.listTagVOs(TagTypes.TAG_CATEGORY).getData();
 
         IndexVO indexVO = new IndexVO();
         if (withBlogs) {
             blogs = getBlogListInfos(null).getData();
             indexVO.setBlogList(blogs);
         }
-        indexVO.setCategoryList(categoryVOS);
-        indexVO.setTagList(tagVOS);
+//        indexVO.setCategoryList(categoryVOS);
+//        indexVO.setTagList(tagVOS);
         indexVO.setRecommendList(recommendList);
         indexVO.setClickRankList(clickRankList);
         return ServerResponse.createBySuccess(indexVO);
@@ -255,15 +257,16 @@ public class BlogService extends BaseService {
         if (Objects.isNull(blogDO)) {
             return resultError4Param("博客不存在");
         }
-        // 获取博客的标签
-        List<Integer> tagIds = tagService.listTagsOfBlog(blogId).stream().map(TagVO::getId).collect(Collectors.toList());
-        return resultOk(BlogDetailVO.createFrom(blogDO, tagIds));
+        // todo 获取博客的标签
+//        List<Integer> tagIds = tagService.getTagListOfBlog(blogId).stream().map(TagVO::getId).collect(Collectors.toList());
+//        return resultOk(BlogDetailVO.createFrom(blogDO, tagIds));
+        return resultOk();
     }
 
     /**
      * 获取博客的上一篇或者下一篇
      *
-     * @param id 当前博客主键id
+     * @param id     当前博客主键id
      * @param isLast 是否是上一篇
      * @return
      */

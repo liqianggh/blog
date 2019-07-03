@@ -3,8 +3,7 @@ package cn.mycookies.controller.backend;
 import cn.mycookies.common.BaseController;
 import cn.mycookies.common.KeyValueVO;
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.common.TagTypes;
-import cn.mycookies.pojo.vo.BlogVO;
+import cn.mycookies.common.TagType;
 import cn.mycookies.service.TagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,8 +16,8 @@ import java.util.List;
 
 /**
  * 公共数据接口
+ *
  * @author Jann Lee
- * @description TODO
  * @date 2019-04-19 22:54
  **/
 @Api("公共数据接口")
@@ -31,19 +30,20 @@ public class CommonDataComtroller extends BaseController {
 
     /**
      * 获取所有博客分类
+     *
      * @return
      */
     @GetMapping("/all/categories")
-    @ApiOperation(value ="查找博客",response= BlogVO.class)
-    public ServerResponse<List<KeyValueVO<Integer, String>>> getAllCategoryInfos(){
-        return ServerResponse.createBySuccess(tagService.getAllTagList(TagTypes.TAG_CATEGORY));
+    @ApiOperation(value = "查找博客", response = KeyValueVO.class)
+    public ServerResponse<List<KeyValueVO<Integer, String>>> getAllCategoryInfos() {
+        return tagService.getAllTagList(TagType.CATEGORY.getCode());
     }
 
     /**
      * 获取所有博客标签
      */
     @GetMapping("/all/tags")
-    public ServerResponse<List<KeyValueVO<Integer,String>>> getAllTagInfos(){
-        return ServerResponse.createBySuccess(tagService.getAllTagList(TagTypes.TAG_LABEL));
+    public ServerResponse<List<KeyValueVO<Integer, String>>> getAllTagInfos() {
+        return tagService.getAllTagList(TagType.TAG.getCode());
     }
 }

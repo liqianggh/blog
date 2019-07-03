@@ -5,7 +5,7 @@ import cn.mycookies.dao.AlbumDOMapper;
 import cn.mycookies.dao.PhotoDOMapper;
 import cn.mycookies.pojo.dto.PhotoDTO;
 import cn.mycookies.pojo.dto.SimpleAlbumDTO;
-import cn.mycookies.pojo.vo.TagVO;
+import cn.mycookies.pojo.dto.TagVO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

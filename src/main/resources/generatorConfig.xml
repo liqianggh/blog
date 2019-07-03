@@ -69,8 +69,8 @@
         <!--配置表-->
         <!--<table tableName="blog" domainObjectName="BlogDO" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true" enableUpdateByExample="true"  enableInsert="true"></table>-->
         <!--<table tableName="blog_tags" domainObjectName="BlogTagsDO" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true" enableUpdateByExample="true"  enableInsert="true"></table>-->
-        <table tableName="blog_comment" domainObjectName="CommentDO" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true" enableUpdateByExample="true"  enableInsert="true"></table>
-        <!--<table tableName="tag" domainObjectName="TagDO" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true" enableUpdateByExample="true" enableInsert="true"></table>-->
+        <!--<table tableName="blog_comment" domainObjectName="CommentDO" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true" enableUpdateByExample="true"  enableInsert="true"></table>-->
+        <table tableName="blog_tag" domainObjectName="Tag" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true" enableUpdateByExample="true" enableInsert="true"></table>
         <!--<table tableName="photo" domainObjectName="PhotoDO" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true" enableUpdateByExample="true" enableInsert="true"></table>-->
         <!--<table tableName="album" domainObjectName="AlbumDO" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true" enableUpdateByExample="true" enableInsert="true"></table>-->
         <!--<table tableName="visitor" domainObjectName="VisitorDO" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true" enableUpdateByExample="true" enableInsert="true"></table>-->

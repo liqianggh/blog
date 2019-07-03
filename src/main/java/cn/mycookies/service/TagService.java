@@ -1,183 +1,196 @@
 package cn.mycookies.service;
 
-import cn.mycookies.common.ActionStatus;
+import cn.mycookies.common.BaseService;
 import cn.mycookies.common.KeyValueVO;
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.common.TagTypes;
-import cn.mycookies.dao.TagDOMapper;
-import cn.mycookies.pojo.dto.TagAddDTO;
-import cn.mycookies.pojo.dto.TagDTO;
+import cn.mycookies.dao.TagMapper;
+import cn.mycookies.pojo.dto.TagAddRequest;
+import cn.mycookies.pojo.dto.TagListRequest;
+import cn.mycookies.pojo.dto.TagUpdateRequest;
+import cn.mycookies.pojo.dto.TagVO;
 import cn.mycookies.pojo.po.TagDO;
-import cn.mycookies.pojo.vo.TagVO;
-import cn.mycookies.utils.DateTimeUtil;
+import cn.mycookies.pojo.po.TagDOExample;
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.lang3.StringUtils;
+import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * 标签service
+ *
+ * @author Jann Lee
+ * @date 2019-07-03 23:42
+ */
 @Service
-public class TagService {
+public class TagService extends BaseService {
 
     @Autowired
-    private TagDOMapper tagDOMapper;
+    private TagMapper tagMapper;
 
 
-    public PageInfo<TagDTO> listTags(int pageNum, int pageSize, Byte type) {
-        Page page = PageHelper.startPage(pageNum, pageSize);
-        PageHelper.orderBy("create_time desc");
-        TagDO param = new TagDO();
-        param.setType(type);
-        List<TagDO> tagDOList = tagDOMapper.queryTagList(param);
-
-        List<TagDTO> list = new ArrayList<>();
-        tagDOList.stream().forEach(tagDO -> {
-
-            TagDTO tagDTO = convertTagToBo(tagDO);
-            list.add(tagDTO);
-        });
+    /**
+     * 获取标签列表信息
+     *
+     * @param tagListRequest 标签查询请求
+     * @return
+     */
+    public ServerResponse<PageInfo<TagVO>> getTagListInfos(TagListRequest tagListRequest) {
+        Page page = getPage(tagListRequest);
+        TagDOExample example = new TagDOExample();
+        example.createCriteria().andTagTypeEqualTo(tagListRequest.getTagType());
+        List<TagDO> tagDOList = tagMapper.selectByExample(example);
         PageInfo pageInfo = page.toPageInfo();
-        pageInfo.setList(list);
-        return pageInfo;
+        pageInfo.setList(tagDOList.stream().map(TagVO::createFrom).collect(Collectors.toList()));
+
+        return resultOk(pageInfo);
     }
 
     /**
      * 获取tagVo列表
      *
-     * @param type
+     * @param tagType 类型
      * @return
      */
+    public ServerResponse<List<TagVO>> getAllTagListInfsByType(Integer tagType) {
 
-    public ServerResponse<List<TagVO>> listTagVOs(Byte type) {
+        return resultOk(getAllTagsByType(tagType).stream().map(TagVO::createFrom).collect(Collectors.toList()));
+    }
 
-        List<TagVO> tagList = null;
-        if (type == TagTypes.TAG_LABEL) {
-            tagList = tagDOMapper.queryTagBoList();
-        } else {
-            tagList = tagDOMapper.queryCategoryVOList();
+    /**
+     * 获取所有的k-v结构标签信息
+     *
+     * @param tagType
+     * @return
+     */
+    public ServerResponse<List<KeyValueVO<Integer, String>>> getAllTagList(Integer tagType) {
+
+        return resultOk(getAllTagsByType(tagType)
+                .stream()
+                .map(tagDO -> new KeyValueVO<Integer, String>(tagDO.getId(), tagDO.getTagName()))
+                .collect(Collectors.toList()));
+    }
+
+    /**
+     * 获取所有的标签，根据id
+     *
+     * @param tagType
+     * @return
+     */
+    private List<TagDO> getAllTagsByType(Integer tagType) {
+        TagDOExample tagDOExample = new TagDOExample();
+        tagDOExample.createCriteria().andTagTypeEqualTo(tagType);
+        return tagMapper.selectByExample(tagDOExample);
+    }
+
+    /**
+     * 添加标签
+     * @param tagAddRequest 请求参数
+     * @return
+     */
+    public ServerResponse<Boolean> createTagInfo(TagAddRequest tagAddRequest) {
+        TagDO tagDO = new TagDO();
+        ServerResponse<Boolean> validateResult = validateAndInitCreateRequest(tagAddRequest, tagDO);
+        if (!validateResult.isOk()) {
+            return validateResult;
         }
 
-        if (tagList == null || tagList.size() == 0) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.NO_RESULT.inValue(), ActionStatus.NO_RESULT.getDescription());
-        } else {
-            return ServerResponse.createBySuccess(tagList);
+        if (tagMapper.insert(tagDO) == 0) {
+            return resultError4DB("添加标签失败");
         }
+        return resultOk();
     }
 
+    /**
+     *
+     * todo 验证添加参数
+     * @param tagAddRequest 请求参数
+     * @param tagDO
+     * @return
+     */
+    private ServerResponse<Boolean> validateAndInitCreateRequest(TagAddRequest tagAddRequest, TagDO tagDO) {
+        Preconditions.checkNotNull(tagDO, "要添加的参数不能为null");
+        fillCreateTime(tagDO);
 
-    public List<TagVO> listTagsOfBlog(Integer blogId) {
-
-        List<TagVO> tagVOS = tagDOMapper.queryTagsOfBlog(blogId);
-
-        return tagVOS;
+        return validateAndInitUpdateRequest(tagAddRequest, tagDO);
     }
 
-
-    public List<KeyValueVO<Integer, String>> getAllTagList(byte tagCategory) {
-        TagDO param = new TagDO();
-        param.setType(tagCategory);
-        List<TagDO> tagDOS = tagDOMapper.queryTagList(param);
-        return tagDOS.stream().map(tagDO -> new KeyValueVO<Integer, String>(tagDO.getId(), tagDO.getTagName())).collect(Collectors.toList());
+    /**
+     * 更新标签
+     *
+     * @param id            主键id
+     * @param updateRequest 请求参数
+     * @return
+     */
+    public ServerResponse<Boolean> updateTagInfo(Integer id, TagUpdateRequest updateRequest) {
+        Preconditions.checkNotNull(id, "id信息不能为null");
+        TagDO tagDO = tagMapper.selectByPrimaryKey(id);
+        ServerResponse<Boolean> validateResult = validateAndInitUpdateRequest(updateRequest, tagDO);
+        if (!validateResult.isOk()) {
+            return validateResult;
+        }
+        if (tagMapper.updateByPrimaryKey(tagDO) == 0) {
+            return resultError4DB("更新失败");
+        }
+        return resultOk();
     }
 
-    private TagDTO convertTagToBo(TagDO tagDO) {
+    /**
+     * todo 校验逻辑
+     *
+     * @param updateRequest
+     * @param tagDO
+     * @return
+     */
+    public ServerResponse<Boolean> validateAndInitUpdateRequest(TagUpdateRequest updateRequest, TagDO tagDO) {
+        Preconditions.checkNotNull(updateRequest, "更新参数不能为null");
         if (Objects.isNull(tagDO)) {
-            return null;
+            return resultError4Param("要修改的数据不存在");
         }
-        TagDTO tagDTO = new TagDTO();
-        tagDTO.setId(tagDO.getId());
-        tagDTO.setTagName(tagDO.getTagName());
-        tagDTO.setTagDesc(tagDO.getTagDesc());
-        tagDTO.setType(tagDO.getType());
-        tagDTO.setCreateTime(DateTimeUtil.dateToStr(tagDO.getCreateTime()));
-        tagDTO.setUpdateTime(DateTimeUtil.dateToStr(tagDO.getUpdateTime()));
-        return tagDTO;
+        // 更新操作
+        if (Objects.isNull(tagDO)) {
+
+        }
+        return resultOk();
     }
 
+    /**
+     * 根据id获取详情
+     *
+     * @param id 主键id
+     * @return
+     */
+    public ServerResponse<TagVO> getTagDetailInfoById(Integer id) {
+        Preconditions.checkNotNull(id, "id信息不能为null");
+        TagDO tagDO = tagMapper.selectByPrimaryKey(id);
+        if (Objects.isNull(tagDO)) {
+            return resultError4Param("该标签不存在");
+        }
 
-    public ServerResponse<Boolean> insertTag(TagAddDTO tagAddDTO) {
-        if (tagAddDTO == null || tagAddDTO.getTagName() == null) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
-        }
-        TagDO param = new TagDO();
-        param.setTagName(tagAddDTO.getTagName());
-        param.setType(tagAddDTO.getType());
-        // 是否存在校验
-        TagDO tagDO = tagDOMapper.queryByName(param);
-        if (tagDO != null) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.DATA_REPEAT.inValue(), ActionStatus.DATA_REPEAT.getDescription());
-        }
-        Integer result = tagDOMapper.insert(null);
-        if (result == 0) {
-            return ServerResponse.createByError();
-        } else {
-            return ServerResponse.createBySuccess();
-        }
+        return resultOk(TagVO.createFrom(tagMapper.selectByPrimaryKey(id)));
     }
 
-
-    public ServerResponse updateTag(TagDO tagDO) {
-
-        if (tagDO == null || tagDO.getTagName() == null) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
-        }
-        // 是否存在校验
-        TagDO tagDOResult = tagDOMapper.queryByName(tagDO);
-        if (tagDOResult != null && Objects.equals(tagDO.getId(), tagDOResult.getId()) && StringUtils.equals(tagDO.getTagDesc(), tagDOResult.getTagDesc())) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.DATA_REPEAT.inValue(), ActionStatus.DATA_REPEAT.getDescription());
-        }
-
-        tagDOResult = tagDOMapper.queryById(tagDO);
-        if (tagDOResult == null) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
-        }
-
-        Integer result = tagDOMapper.updateTag(tagDO);
-        if (result > 0) {
-            return ServerResponse.createBySuccess(true);
-        } else {
-            return ServerResponse.createByError();
-        }
-    }
-
-
-    public ServerResponse<TagDTO> getTagById(Integer id, Byte type) {
-
-        if (id == 0) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
-        }
-        TagDO param = new TagDO();
-        param.setId(id);
-        param.setType(type);
-        TagDO tagDOResult = tagDOMapper.queryById(param);
-        if (tagDOResult == null || StringUtils.isEmpty(tagDOResult.getTagName())) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.NO_RESULT.inValue(), ActionStatus.NO_RESULT.getDescription());
-        }
-        return ServerResponse.createBySuccess(convertTagToBo(tagDOResult));
-    }
-
-
-    public ServerResponse<TagDTO> deleteById(Integer id, Byte type) {
-        TagDO param = new TagDO();
-        param.setId(id);
-        param.setType(type);
+    /**
+     * 根据主键id删除标签
+     *
+     * @param id 主键id
+     * @return
+     */
+    public ServerResponse<TagVO> deleteTagInfoById(Integer id) {
+        Preconditions.checkNotNull(id, "id信息不能为null");
         // todo 判断是否被绑定，如果没有被绑定则可以删除
-        TagDO tagDOResult = tagDOMapper.queryById(param);
-        if (tagDOResult == null || StringUtils.isEmpty(tagDOResult.getTagName())) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAM_ERROR_WITH_ERR_DATA.inValue(), ActionStatus.PARAM_ERROR_WITH_ERR_DATA.getDescription());
+        TagDO targetDO = tagMapper.selectByPrimaryKey(id);
+        if (Objects.isNull(targetDO)) {
+            return resultOk();
         }
-        int result = tagDOMapper.deleteById(param);
-        if (result > 0) {
-            return ServerResponse.createBySuccess();
-        } else {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.DATABASE_ERROR.inValue(), ActionStatus.DATABASE_ERROR.getDescription());
+        if (tagMapper.deleteByPrimaryKey(id) == 0) {
+            return resultError4DB("删除失败");
         }
+        return resultOk();
     }
 
 

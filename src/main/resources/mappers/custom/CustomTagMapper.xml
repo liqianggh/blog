@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.mycookies.dao.TagDOMapper">
-  <select id="queryTagList" parameterType="cn.mycookies.pojo.po.TagDO" resultType="cn.mycookies.pojo.po.TagDO">
-    SELECT id,tag_name as tagName, tag_desc as tagDesc,`type`,create_time as createTime,update_time as updateTime from tag
-    <where>
-      <if test="type != null">
-        type = #{type}
-      </if>
-    </where>
-  </select>
+<mapper namespace="cn.mycookies.dao.TagMapper">
 
-  <select id="queryByName" parameterType="cn.mycookies.pojo.dto.TagAddDTO" resultType="cn.mycookies.pojo.po.TagDO">
+  <select id="queryByName" parameterType="cn.mycookies.pojo.dto.TagAddRequest" resultType="cn.mycookies.pojo.po.TagDO">
     SELECT id,tag_name as tagName, tag_desc as tagDesc,type,create_time as createTime,update_time as updateTime
     FROM tag
     <where>
@@ -34,7 +26,7 @@
       </if>
     </where>
   </select>
-  <select id="queryTagBoList" resultType="cn.mycookies.pojo.vo.TagVO">
+  <select id="queryTagBoList" resultType="cn.mycookies.pojo.dto.TagVO">
       SELECT
         COUNT(t.blog_id) count, t.tag_id as id, t2.tag_name as tagName
     FROM
@@ -43,13 +35,13 @@
         tag t2 ON t.tag_id = t2.id AND t2.type = 1
     GROUP BY t.tag_id;
   </select>
-  <select id="queryTagsOfBlog" resultType="cn.mycookies.pojo.vo.TagVO">
+  <select id="queryTagsOfBlog" resultType="cn.mycookies.pojo.dto.TagVO">
     SELECT tag.tag_name as tagName ,tag.id
     FROM blog_tags
     LEFT JOIN tag on tag.id = blog_tags.tag_id and tag.type=1
     where blog_id = #{blogId}
   </select>
-  <select id="queryCategoryVOList" resultType="cn.mycookies.pojo.vo.TagVO">
+  <select id="queryCategoryVOList" resultType="cn.mycookies.pojo.dto.TagVO">
     SELECT
       COUNT(t.category_id) count, t.category_id as id, t2.tag_name as tagName
     FROM

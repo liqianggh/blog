@@ -1,21 +1,22 @@
 package cn.mycookies.pojo.po;
 
+import cn.mycookies.common.JsonBean;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
-import java.util.Date;
+/**
+ * 标签do
+ *
+ * @author Jann Lee
+ * @date 2019-07-03 22:34
+ */
 @Data
-@NotNull
-public class TagDO {
-    private Integer id;
+@JsonBean
+public class TagDO extends BaseDO{
 
     private String tagName;
 
     private String tagDesc;
 
-    private Byte type;
+    private Integer tagType;
 
-    private Date createTime;
-
-    private Date updateTime;
 }
