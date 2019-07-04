@@ -1,8 +1,10 @@
 package cn.mycookies.controller.user;
 
-import cn.mycookies.common.*;
-import cn.mycookies.pojo.dto.CommentDTO;
-import cn.mycookies.pojo.vo.CommentVO;
+import cn.mycookies.common.BaseController;
+import cn.mycookies.common.ServerResponse;
+import cn.mycookies.pojo.dto.CommentAddRequest;
+import cn.mycookies.pojo.dto.CommentListRequest;
+import cn.mycookies.pojo.vo.CommentListItemVO;
 import cn.mycookies.service.CommentService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -10,10 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 
 /**
@@ -34,38 +33,23 @@ public class CommentController extends BaseController {
 
     @PostMapping
     @ApiOperation(value = "添加评论")
-    public ServerResponse addComment(@RequestBody @Valid CommentDTO commentDTO, BindingResult bindingResult) {
-        if (bindingResult != null && bindingResult.hasErrors()) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ProcessBindingResult.process(bindingResult));
-        }
-
-        return commentService.insertComment(commentDTO);
+    public ServerResponse addComment(@RequestBody CommentAddRequest commentAddRequest) {
+        validate(commentAddRequest);
+        return commentService.addCommentInfo(commentAddRequest);
     }
 
-    @GetMapping("/{targetId}")
-    @ApiOperation(value = "获取评论列表", responseContainer = "PageInfo", response = CommentVO.class)
-    public ServerResponse<PageInfo<CommentVO>> comments(
-            @ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize,
-            @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum,
-            @ApiParam(value = "评论主体的id") @PathVariable Integer targetId,
-            @ApiParam(value = "对话的id") @RequestParam(required = false) String sessionId) {
+    @GetMapping("/{targetId:\\d+}")
+    @ApiOperation(value = "获取评论列表", responseContainer = "PageInfo", response = CommentListItemVO.class)
+    public ServerResponse<PageInfo<CommentListItemVO>> getCommentListInfos(@PathVariable Integer targetId, CommentListRequest commentListRequest) {
 
-        return commentService.listComments(pageNum, pageSize, null, null, targetId, sessionId, DataStatus.NO_DELETED);
+        return commentService.getCommentInfos(targetId, commentListRequest);
     }
-    @PutMapping("/like/{id}")
-    @ApiOperation(value = "获取评论列表", responseContainer = "PageInfo", response = CommentVO.class)
-    public ServerResponse<String> like(
-           @ApiParam(value ="评论的id") @PathVariable(value = "id",required = true) Integer id){
+    @PutMapping("/like/{commentId:\\+d}")
+    @ApiOperation(value = "给评论点赞", responseContainer = "PageInfo", response = Boolean.class)
+    public ServerResponse<String> addLikeCount(
+           @ApiParam(value ="评论的id") @PathVariable(value = "commentId") Integer id){
 
-        return commentService.updateCommentLikeCount(id);
-    }
-
-
-    @DeleteMapping("/{commentId}")
-    @ApiOperation(value = "删除评论和它相关的回复")
-    public ServerResponse deleteComments(@ApiParam(value = "评论的id") @RequestParam(required = true) Integer commentId) {
-
-        return commentService.deleteComment(commentId, DataStatus.NO_DELETED);
+        return commentService.addCommentLikeCount(id);
     }
 
 }

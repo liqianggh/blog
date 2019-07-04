@@ -44,7 +44,7 @@ public class BlogController extends BaseController {
     @PutMapping("/count/{id}")
     @ApiOperation(value ="修改博客统计，如点赞，浏览量，评论数",response=Boolean.class)
     public ServerResponse getBlog(@ApiParam("博客id") @PathVariable Integer id,
-                                  @ApiParam("操作类型，like，view，comment等")@RequestParam(defaultValue = BlogStaticType.LIKE) String type){
+                                  @ApiParam("操作类型，addLikeCount，view，comment等")@RequestParam(defaultValue = BlogStaticType.LIKE) String type){
         return blogService.updateBlogCount(id,type);
     }
 

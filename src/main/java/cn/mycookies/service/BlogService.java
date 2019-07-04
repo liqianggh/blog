@@ -186,7 +186,7 @@ public class BlogService extends BaseService {
         }
         //查询 评论列表
         if (hasComments) {
-            blogVO.setComments(commentService.listComments(1, 10, null, null, id, null, DataStatus.NO_DELETED).getData());
+//            blogVO.setComments(commentService.getCommentInfos(1, 10, null, null, id, null, DataStatus.NO_DELETED).getData());
         }
 
         return ServerResponse.createBySuccess(blogVO);

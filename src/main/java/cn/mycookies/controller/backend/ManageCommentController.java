@@ -1,9 +1,9 @@
 package cn.mycookies.controller.backend;
 
 import cn.mycookies.common.BaseController;
-import cn.mycookies.common.DataStatus;
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.pojo.vo.CommentVO;
+import cn.mycookies.pojo.dto.CommentListRequest;
+import cn.mycookies.pojo.vo.CommentListItemVO;
 import cn.mycookies.service.CommentService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -13,9 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
+/**
+ * 评论管理
+ *
+ * @author Jann Lee
+ * @date 2019-07-04 23:08
+ */
 @RequestMapping("manage/comments")
 @Api(description = "用户评论模块")
 @ResponseBody
@@ -25,21 +28,17 @@ public class ManageCommentController extends BaseController {
     @Autowired
     private CommentService commentService;
 
-    @DeleteMapping("/{commentId}")
-    @ApiOperation(value = "删除评论和它相关的回复")
-    public ServerResponse deleteComments(@ApiParam(value = "评论的id") @RequestParam(required = true) Integer commentId){
+    @DeleteMapping("/{id:\\d+}")
+    @ApiOperation(value = "删除评论和它相关的回复,如果有回复不能删除")
+    public ServerResponse deleteCommentInfos(@ApiParam(value = "评论的id") @PathVariable Integer id){
 
-        return commentService.deleteComment(commentId, DataStatus.DELETED);
+        return commentService.deleteCommentAndChildren(id);
     }
 
-    @GetMapping("/{targetId}")
-    @ApiOperation(value = "获取评论列表",responseContainer = "PageInfo",response = CommentVO.class)
-    public ServerResponse<PageInfo<CommentVO>> comments(@ApiParam(value = "当前页数") @RequestParam(defaultValue = "10") Integer pageSize,
-                                                        @ApiParam(value = "每页展示条数") @RequestParam(defaultValue = "1") Integer pageNum,
-                                                        @ApiParam(value = "评论的状态") @RequestParam(defaultValue = DataStatus.ALL+"")@Min(0)@Max(2) Byte isDeleted,
-                                                        @ApiParam(value = "评论主体的id") @PathVariable Integer targetId,
-                                                        @ApiParam(value = "对话的id") @RequestParam(required = false) String sessionId){
+    @GetMapping
+    @ApiOperation(value = "获取评论列表",responseContainer = "PageInfo",response = CommentListItemVO.class)
+    public ServerResponse<PageInfo<CommentListItemVO>> getCommentInfos(CommentListRequest commentListRequest){
 
-        return commentService.listComments(pageNum,pageSize,null,null,targetId,sessionId,isDeleted);
+        return commentService.getCommentInfos(null, commentListRequest);
     }
 }

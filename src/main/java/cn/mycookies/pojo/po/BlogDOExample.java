@@ -266,12 +266,12 @@ public class BlogDOExample {
         }
 
         public Criteria andTitleLike(String value) {
-            addCriterion("title like", value, "title");
+            addCriterion("title addLikeCount", value, "title");
             return (Criteria) this;
         }
 
         public Criteria andTitleNotLike(String value) {
-            addCriterion("title not like", value, "title");
+            addCriterion("title not addLikeCount", value, "title");
             return (Criteria) this;
         }
 
@@ -336,12 +336,12 @@ public class BlogDOExample {
         }
 
         public Criteria andSummaryLike(String value) {
-            addCriterion("summary like", value, "summary");
+            addCriterion("summary addLikeCount", value, "summary");
             return (Criteria) this;
         }
 
         public Criteria andSummaryNotLike(String value) {
-            addCriterion("summary not like", value, "summary");
+            addCriterion("summary not addLikeCount", value, "summary");
             return (Criteria) this;
         }
 
@@ -406,12 +406,12 @@ public class BlogDOExample {
         }
 
         public Criteria andImgUrlLike(String value) {
-            addCriterion("img_url like", value, "imgUrl");
+            addCriterion("img_url addLikeCount", value, "imgUrl");
             return (Criteria) this;
         }
 
         public Criteria andImgUrlNotLike(String value) {
-            addCriterion("img_url not like", value, "imgUrl");
+            addCriterion("img_url not addLikeCount", value, "imgUrl");
             return (Criteria) this;
         }
 
@@ -476,12 +476,12 @@ public class BlogDOExample {
         }
 
         public Criteria andAuthorLike(String value) {
-            addCriterion("author like", value, "author");
+            addCriterion("author addLikeCount", value, "author");
             return (Criteria) this;
         }
 
         public Criteria andAuthorNotLike(String value) {
-            addCriterion("author not like", value, "author");
+            addCriterion("author not addLikeCount", value, "author");
             return (Criteria) this;
         }
 

@@ -206,12 +206,12 @@ public class AlbumDOExample {
         }
 
         public Criteria andNameLike(String value) {
-            addCriterion("name like", value, "name");
+            addCriterion("name addLikeCount", value, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameNotLike(String value) {
-            addCriterion("name not like", value, "name");
+            addCriterion("name not addLikeCount", value, "name");
             return (Criteria) this;
         }
 
@@ -276,12 +276,12 @@ public class AlbumDOExample {
         }
 
         public Criteria andAlbumDescLike(String value) {
-            addCriterion("album_desc like", value, "albumDesc");
+            addCriterion("album_desc addLikeCount", value, "albumDesc");
             return (Criteria) this;
         }
 
         public Criteria andAlbumDescNotLike(String value) {
-            addCriterion("album_desc not like", value, "albumDesc");
+            addCriterion("album_desc not addLikeCount", value, "albumDesc");
             return (Criteria) this;
         }
 
@@ -346,12 +346,12 @@ public class AlbumDOExample {
         }
 
         public Criteria andCoverImgLike(String value) {
-            addCriterion("cover_img like", value, "coverImg");
+            addCriterion("cover_img addLikeCount", value, "coverImg");
             return (Criteria) this;
         }
 
         public Criteria andCoverImgNotLike(String value) {
-            addCriterion("cover_img not like", value, "coverImg");
+            addCriterion("cover_img not addLikeCount", value, "coverImg");
             return (Criteria) this;
         }
 

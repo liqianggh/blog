@@ -1,5 +1,6 @@
 package cn.mycookies.common;
 
+import cn.mycookies.common.exception.BusinessException;
 import cn.mycookies.pojo.po.BaseDO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -94,5 +95,15 @@ public class BaseService {
     protected void fillUpdateTime(BaseDO baseDO){
         Preconditions.checkNotNull(baseDO, "要修改的类不能为nul");
         baseDO.setUpdateTime(System.currentTimeMillis());
+    }
+
+    /**
+     * 判断对象是否存在，不存在抛出异常
+     * @param obj
+     */
+    public void checkExists(Object obj){
+        if (Objects.isNull(obj)) {
+            throw new BusinessException("数据不存在");
+        }
     }
 }

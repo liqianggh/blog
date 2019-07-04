@@ -39,5 +39,13 @@ public enum YesOrNoType {
         }
         return result;
     }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
 }
 

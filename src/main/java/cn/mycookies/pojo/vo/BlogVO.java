@@ -51,5 +51,5 @@ public class BlogVO {
 
     public BlogDetailVO next;
 
-    PageInfo<CommentVO> comments;
+    PageInfo<CommentListItemVO> comments;
 }

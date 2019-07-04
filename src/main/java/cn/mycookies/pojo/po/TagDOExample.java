@@ -205,12 +205,12 @@ public class TagDOExample {
         }
 
         public Criteria andTagNameLike(String value) {
-            addCriterion("tag_name like", value, "tagName");
+            addCriterion("tag_name addLikeCount", value, "tagName");
             return (Criteria) this;
         }
 
         public Criteria andTagNameNotLike(String value) {
-            addCriterion("tag_name not like", value, "tagName");
+            addCriterion("tag_name not addLikeCount", value, "tagName");
             return (Criteria) this;
         }
 
@@ -275,12 +275,12 @@ public class TagDOExample {
         }
 
         public Criteria andTagDescLike(String value) {
-            addCriterion("tag_desc like", value, "tagDesc");
+            addCriterion("tag_desc addLikeCount", value, "tagDesc");
             return (Criteria) this;
         }
 
         public Criteria andTagDescNotLike(String value) {
-            addCriterion("tag_desc not like", value, "tagDesc");
+            addCriterion("tag_desc not addLikeCount", value, "tagDesc");
             return (Criteria) this;
         }
 

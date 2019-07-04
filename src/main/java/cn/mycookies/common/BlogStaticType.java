@@ -7,7 +7,7 @@ package cn.mycookies.common;
  **/
 public interface BlogStaticType {
     // 增加统计类型
-    String  LIKE="like";
+    String  LIKE="addLikeCount";
 
     String  VIEW="view";
 

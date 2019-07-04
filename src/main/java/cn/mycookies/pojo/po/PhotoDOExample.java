@@ -266,12 +266,12 @@ public class PhotoDOExample {
         }
 
         public Criteria andImgUrlLike(String value) {
-            addCriterion("img_url like", value, "imgUrl");
+            addCriterion("img_url addLikeCount", value, "imgUrl");
             return (Criteria) this;
         }
 
         public Criteria andImgUrlNotLike(String value) {
-            addCriterion("img_url not like", value, "imgUrl");
+            addCriterion("img_url not addLikeCount", value, "imgUrl");
             return (Criteria) this;
         }
 
@@ -336,12 +336,12 @@ public class PhotoDOExample {
         }
 
         public Criteria andAltLike(String value) {
-            addCriterion("alt like", value, "alt");
+            addCriterion("alt addLikeCount", value, "alt");
             return (Criteria) this;
         }
 
         public Criteria andAltNotLike(String value) {
-            addCriterion("alt not like", value, "alt");
+            addCriterion("alt not addLikeCount", value, "alt");
             return (Criteria) this;
         }
 
