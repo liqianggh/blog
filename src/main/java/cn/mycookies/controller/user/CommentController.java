@@ -33,14 +33,14 @@ public class CommentController extends BaseController {
 
     @PostMapping
     @ApiOperation(value = "添加评论")
-    public ServerResponse addComment(@RequestBody CommentAddRequest commentAddRequest) {
+    public ServerResponse addComment( @ModelAttribute @RequestBody CommentAddRequest commentAddRequest) {
         validate(commentAddRequest);
         return commentService.addCommentInfo(commentAddRequest);
     }
 
     @GetMapping("/{targetId:\\d+}")
     @ApiOperation(value = "获取评论列表", responseContainer = "PageInfo", response = CommentListItemVO.class)
-    public ServerResponse<PageInfo<CommentListItemVO>> getCommentListInfos(@PathVariable Integer targetId, CommentListRequest commentListRequest) {
+    public ServerResponse<PageInfo<CommentListItemVO>> getCommentListInfos(@PathVariable Integer targetId, @ModelAttribute CommentListRequest commentListRequest) {
 
         return commentService.getCommentInfos(targetId, commentListRequest);
     }

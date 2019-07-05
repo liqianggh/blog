@@ -37,7 +37,7 @@ public class ManageCommentController extends BaseController {
 
     @GetMapping
     @ApiOperation(value = "获取评论列表",responseContainer = "PageInfo",response = CommentListItemVO.class)
-    public ServerResponse<PageInfo<CommentListItemVO>> getCommentInfos(CommentListRequest commentListRequest){
+    public ServerResponse<PageInfo<CommentListItemVO>> getCommentInfos(@ModelAttribute CommentListRequest commentListRequest){
 
         return commentService.getCommentInfos(null, commentListRequest);
     }

@@ -32,7 +32,7 @@ public class ManageBlogController extends BaseController {
 
     @PostMapping
     @ApiOperation(value ="新增博客")
-    public ServerResponse addBlog(@RequestBody BlogAddRequest blogAddRequest){
+    public ServerResponse addBlog(@ModelAttribute @RequestBody BlogAddRequest blogAddRequest){
         validate(blogAddRequest);
 
         return blogService.createBlogInfo(blogAddRequest);
@@ -40,15 +40,15 @@ public class ManageBlogController extends BaseController {
 
     @GetMapping
     @ApiOperation(value ="分页查询列表博客",response = BlogVO.class,responseContainer = "List")
-    public ServerResponse<PageInfo<BlogVO>> getBlogList(BlogListRequest blogListRequest){
+    public ServerResponse<PageInfo<BlogVO>> getBlogList(@ModelAttribute BlogListRequest blogListRequest){
 
         return blogService.getBlogListInfos(blogListRequest);
-}
+    }
 
     @PutMapping("/{id}")
     @ApiOperation(value ="修改博客")
     public ServerResponse<Boolean> updateBlog(@ApiParam("博客id") @PathVariable Integer id,
-                                     @ApiParam @RequestBody BlogAddRequest blogAddRequest){
+                                              @ModelAttribute @RequestBody BlogAddRequest blogAddRequest){
         validate(blogAddRequest);
 
         return blogService.updateBlog(id, blogAddRequest);

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseDO{
+public class UserDO extends BaseDO{
 
     private String userEmail;
 

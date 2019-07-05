@@ -23,7 +23,7 @@
     public static final ActionStatus EXPIRE_TIMESTAMP = new ActionStatus(1101, "Expire timestamp");
     public static final ActionStatus INVALID_PHONE_NUM = new ActionStatus(1201, "Invalid Telephone");
     public static final ActionStatus MUST_REVALIDATE = new ActionStatus(2000, "Must_ReValidate");
-    public static final ActionStatus USER_NOT_EXIST = new ActionStatus(2001, "User Not Exist");
+    public static final ActionStatus USER_NOT_EXIST = new ActionStatus(2001, "UserDO Not Exist");
     public static final ActionStatus REACH_REQUEST_LIMIT = new ActionStatus(2002, "Reach Upper Limit Per Hour");
     public static final ActionStatus TOO_FREQUENCY = new ActionStatus(2003, "Request Too Frequent");
     public static final ActionStatus CHAT_GROUP_MAXMEM_OVERFLOW = new ActionStatus(3001, "Exceeds the maximum limit,maximum is 50.");

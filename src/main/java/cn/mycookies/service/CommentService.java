@@ -9,7 +9,7 @@ import cn.mycookies.pojo.dto.CommentAddRequest;
 import cn.mycookies.pojo.dto.CommentListRequest;
 import cn.mycookies.pojo.po.CommentDO;
 import cn.mycookies.pojo.po.CommentExample;
-import cn.mycookies.pojo.po.User;
+import cn.mycookies.pojo.po.UserDO;
 import cn.mycookies.pojo.vo.CommentListItemVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
@@ -59,7 +59,7 @@ public class CommentService extends BaseService {
         if (!validateResult.isOk()) {
             return validateResult;
         }
-        if (commentMapper.insert(commentDO) == 0) {
+        if (commentMapper.insertSelective(commentDO) == 0) {
             return resultError4DB("评论失败");
         }
         return resultOk();
@@ -117,14 +117,14 @@ public class CommentService extends BaseService {
         }
 
         // 4. 校验用户信息，并更新或添加用户数据
-        User user;
+        UserDO user;
         ServerResponse<Boolean> updateResult = resultOk();
-        if (Objects.isNull(user = userService.getVisitorDOByEmail(email))) {
+        if (Objects.isNull(user = userService.getUserDOByEmail(email))) {
             String userName = commentAddRequest.getUserName();
             if (StringUtils.isEmpty(userName)) {
                 return resultError4Param("首次评论必须填写用户名");
             }
-            user = new User();
+            user = new UserDO();
             user.setUserEmail(email);
             user.setUserName(userName);
             user.setUserStatus(YesOrNoType.YES.getCode());
@@ -144,6 +144,7 @@ public class CommentService extends BaseService {
 
         BeanUtils.copyProperties(commentAddRequest, commentDO);
         commentDO.setTargetType(targetType.getCode());
+        fillCreateTime(commentDO);
         return resultOk();
     }
 

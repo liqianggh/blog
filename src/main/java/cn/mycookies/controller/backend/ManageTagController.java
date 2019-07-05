@@ -31,14 +31,14 @@ public class ManageTagController extends BaseController{
 
     @GetMapping
     @ApiOperation(value = "获取标签列表", response = TagVO.class, responseContainer = "List")
-    public ServerResponse<PageInfo<TagVO>> tagList(TagListRequest tagListRequest) {
+    public ServerResponse<PageInfo<TagVO>> tagList(@ModelAttribute TagListRequest tagListRequest) {
 
         return tagService.getTagListInfos(tagListRequest);
     }
 
     @PostMapping
     @ApiOperation(value = "添加标签", response = Boolean.class)
-    public ServerResponse<Boolean> addTag(@RequestBody TagAddRequest tagAddRequest) {
+    public ServerResponse<Boolean> addTag(@ModelAttribute @RequestBody TagAddRequest tagAddRequest) {
         validate(tagAddRequest);
         
         return tagService.createTagInfo(tagAddRequest);
@@ -46,7 +46,7 @@ public class ManageTagController extends BaseController{
 
     @PutMapping("/{id}")
     @ApiOperation(value = "修改标签", response = Boolean.class)
-    public ServerResponse updateTag(@RequestBody TagUpdateRequest tagUpdateRequest, @PathVariable(name = "id") Integer id) {
+    public ServerResponse updateTag(@ModelAttribute @RequestBody TagUpdateRequest tagUpdateRequest, @PathVariable(name = "id") Integer id) {
         validate(tagUpdateRequest);        
         
         return tagService.updateTagInfo(id, tagUpdateRequest);

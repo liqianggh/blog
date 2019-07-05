@@ -3,7 +3,7 @@ package cn.mycookies.service;
 import cn.mycookies.common.BaseService;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.dao.UserMapper;
-import cn.mycookies.pojo.po.User;
+import cn.mycookies.pojo.po.UserDO;
 import cn.mycookies.pojo.po.UserExample;
 import com.google.common.base.Preconditions;
 import org.apache.commons.collections4.CollectionUtils;
@@ -30,38 +30,38 @@ public class UserService extends BaseService {
      * @param visitorEmail
      * @return
      */
-    public User getVisitorDOByEmail(String visitorEmail){
-        Preconditions.checkArgument(StringUtils.isEmpty(visitorEmail), "邮箱不能为空");
+    public UserDO getUserDOByEmail(String visitorEmail){
+        Preconditions.checkArgument(StringUtils.isNotEmpty(visitorEmail), "邮箱不能为空");
 
         UserExample visitorExample = new UserExample();
         visitorExample.createCriteria().andUserEmailEqualTo(visitorEmail);
-        List<User> visitorDOS = userMapper.selectByExample(visitorExample);
+        List<UserDO> visitorDOS = userMapper.selectByExample(visitorExample);
         if (CollectionUtils.isNotEmpty(visitorDOS)) {
             return visitorDOS.get(0);
         }
         return null;
     }
 
-     public ServerResponse<Boolean> createUserInfo(User user){
-        Preconditions.checkNotNull(user);
-        if (StringUtils.isEmpty(user.getUserEmail()) || StringUtils.isEmpty(user.getUserName())) {
-            return resultError4Param("添加访客失败,参数" + user.toString());
+     public ServerResponse<Boolean> createUserInfo(UserDO userDO){
+        Preconditions.checkNotNull(userDO);
+        if (StringUtils.isEmpty(userDO.getUserEmail()) || StringUtils.isEmpty(userDO.getUserName())) {
+            return resultError4Param("添加访客失败,参数" + userDO.toString());
         }
-        fillCreateTime(user);
-        if (userMapper.insert(user) == 0) {
-            return resultError4DB("添加访客失败,参数" + user.toString());
+        fillCreateTime(userDO);
+        if (userMapper.insert(userDO) == 0) {
+            return resultError4DB("添加访客失败,参数" + userDO.toString());
         }
         return resultOk();
      }
 
-    public ServerResponse<Boolean> updateVisitorInfo(User user){
-        Preconditions.checkNotNull(user);
-        if (StringUtils.isEmpty(user.getUserEmail()) || StringUtils.isEmpty(user.getUserName())) {
-            return resultError4Param("更新访客失败,参数" + user.toString());
+    public ServerResponse<Boolean> updateVisitorInfo(UserDO userDO){
+        Preconditions.checkNotNull(userDO);
+        if (StringUtils.isEmpty(userDO.getUserEmail()) || StringUtils.isEmpty(userDO.getUserName())) {
+            return resultError4Param("更新访客失败,参数" + userDO.toString());
         }
-        fillUpdateTime(user);
-        if (userMapper.updateByPrimaryKeySelective(user) == 0) {
-            return resultError4DB("更用户信息失败,参数" + user.toString());
+        fillUpdateTime(userDO);
+        if (userMapper.updateByPrimaryKeySelective(userDO) == 0) {
+            return resultError4DB("更用户信息失败,参数" + userDO.toString());
         }
         return resultOk();
     }

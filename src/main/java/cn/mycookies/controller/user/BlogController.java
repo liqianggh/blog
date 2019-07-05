@@ -29,7 +29,7 @@ public class BlogController extends BaseController {
 
     @GetMapping
     @ApiOperation(value ="分页查询列表博客",response = BlogVO.class,responseContainer = "List")
-    public ServerResponse<PageInfo<BlogVO>> getBlogListInfos(BlogListRequest queryRequest){
+    public ServerResponse<PageInfo<BlogVO>> getBlogListInfos(@ModelAttribute BlogListRequest queryRequest){
 
         return blogService.getBlogListInfos(queryRequest);
     }
