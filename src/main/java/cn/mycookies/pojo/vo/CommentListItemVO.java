@@ -2,6 +2,7 @@ package cn.mycookies.pojo.vo;
 
 import cn.mycookies.common.CommentTargetType;
 import cn.mycookies.pojo.po.CommentDO;
+import cn.mycookies.utils.DateTimeUtil;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.Preconditions;
 import io.swagger.annotations.ApiModel;
@@ -55,6 +56,11 @@ public class CommentListItemVO {
     private String content;
 
     /**
+     * 创建时间
+     */
+    private String createTime;
+
+    /**
      * 评论下面的回复、回复之间的对话
      */
     private List<CommentListItemVO> childrenComments;
@@ -67,6 +73,7 @@ public class CommentListItemVO {
     public static CommentListItemVO createFrom(CommentDO commentDO){
         Preconditions.checkNotNull(commentDO, "构建vo的参数不能为null");
         CommentListItemVO targetVO = new CommentListItemVO();
+        targetVO.setCreateTime(DateTimeUtil.dateToStr(commentDO.getCreateTime()));
         BeanUtils.copyProperties(commentDO, targetVO);
         return targetVO;
     }

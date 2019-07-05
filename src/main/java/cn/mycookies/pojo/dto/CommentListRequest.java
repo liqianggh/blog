@@ -19,6 +19,13 @@ import javax.validation.constraints.NotNull;
 @JsonBean
 @ApiModel
 public class CommentListRequest extends PageInfo4Request {
+
+    /**
+     * 父级评论id
+     */
+    @ApiModelProperty("父级评论id，当查询一个留言下面的回复，对话时使用")
+    private Integer pid;
+
     /**
      * 被评论主体类型
      */

@@ -192,13 +192,17 @@ public class BlogService extends BaseService {
         return ServerResponse.createBySuccess(blogVO);
     }
 
-    public ServerResponse<BlogDO> getBlogById(Integer id) {
+    /**
+     * 根据id获取博客
+     * @param id
+     * @return
+     */
+    public BlogDO getBlogById(Integer id) {
 
-        BlogDO blogDO = blogDOMapper.selectByIdAndStatus(id, null);
-        if (Objects.isNull(blogDO)) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.NO_RESULT.inValue(), ActionStatus.NO_RESULT.getDescription());
+        if (Objects.isNull(id)) {
+            return null;
         }
-        return ServerResponse.createBySuccess(blogDO);
+       return blogDOMapper.selectByIdAndStatus(id, null);
     }
 
     public ServerResponse updateBlogCount(Integer id, String type) {

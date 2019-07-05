@@ -1,24 +1,30 @@
 package cn.mycookies.service;
 
 import cn.mycookies.common.BaseService;
+import cn.mycookies.common.CommentTargetType;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.common.YesOrNoType;
-import cn.mycookies.common.exception.BusinessException;
 import cn.mycookies.dao.CommentMapper;
 import cn.mycookies.pojo.dto.CommentAddRequest;
 import cn.mycookies.pojo.dto.CommentListRequest;
 import cn.mycookies.pojo.po.CommentDO;
 import cn.mycookies.pojo.po.CommentExample;
+import cn.mycookies.pojo.po.User;
 import cn.mycookies.pojo.vo.CommentListItemVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.annotation.concurrent.NotThreadSafe;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 评论相关service
@@ -33,21 +39,26 @@ public class CommentService extends BaseService {
     @Resource
     private CommentMapper commentMapper;
 
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private BlogService blogService;
+
+
     /**
      * 添加评论
      *
      * @param commentAddRequest
      * @return
      */
-    @Transactional(rollbackFor = BusinessException.class)
+    @Transactional(rollbackFor = RuntimeException.class)
     public ServerResponse<Boolean> addCommentInfo(CommentAddRequest commentAddRequest) {
         CommentDO commentDO = new CommentDO();
         ServerResponse<Boolean> validateResult = validateAndInitAddRequest(commentAddRequest, commentDO);
         if (!validateResult.isOk()) {
             return validateResult;
         }
-        // todo 处理用户信息
-
         if (commentMapper.insert(commentDO) == 0) {
             return resultError4DB("评论失败");
         }
@@ -62,10 +73,78 @@ public class CommentService extends BaseService {
      * @return
      */
     private ServerResponse<Boolean> validateAndInitAddRequest(CommentAddRequest commentAddRequest, CommentDO commentDO) {
-//        if (commentAddRequest == null || StringUtils.isEmpty(commentAddRequest.getContent()) || StringUtils.isEmpty(commentAddRequest.getUserEmail()) || commentAddRequest.get() == null) {
-//            return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ActionStatus.PARAMAS_ERROR.getDescription());
-//        }
-        return null;
+        String email = commentAddRequest.getUserEmail();
+        Integer targetId = commentAddRequest.getTargetId();
+        CommentTargetType targetType = commentAddRequest.getTargetType();
+        String content = commentAddRequest.getContent();
+
+        Preconditions.checkNotNull(commentDO, "内部参数错误");
+        Preconditions.checkArgument(StringUtils.isNotEmpty(email), "邮箱不能为空");
+        Preconditions.checkNotNull(targetId, "被评论的主体不能为null");
+        Preconditions.checkNotNull(commentAddRequest, "评论信息不能为null");
+        Preconditions.checkArgument(StringUtils.isNotEmpty(content), "评论内容不能为空");
+        commentDO.setContent(commentAddRequest.getContent());
+
+        Integer pid = commentAddRequest.getPid();
+        // 1.pid不为null表明是回复信息，需要判断被回复的评论是否存在
+        if (Objects.nonNull(pid)) {
+            if (Objects.isNull(commentMapper.selectByPrimaryKey(pid))) {
+                return resultError4Param("被回复的主体不存在");
+            }
+        }
+        // 2. 如果是博客留言
+        switch (targetType) {
+            case ARTICLE:
+                // 判断博客是否存在
+                if (Objects.isNull(blogService.getBlogById(targetId))) {
+                    return resultError4Param("被评论的主体不存在");
+                }
+                break;
+            //3. 如果是留言板, 被评论的是一个留言，如果targetId不存在则等于pid
+            case MESSAGE_BOARD:
+
+                break;
+            case COMMENT_REPLY:
+                if (Objects.isNull(pid)) {
+                    return resultError4Param("父级评论不存在");
+                }
+                if (Objects.isNull(commentMapper.selectByPrimaryKey(targetId))) {
+                    return resultError4Param("被回复的主体不存在");
+                }
+                break;
+            default:
+                return resultError4Param("被评论的主体不明确");
+        }
+
+        // 4. 校验用户信息，并更新或添加用户数据
+        User user;
+        ServerResponse<Boolean> updateResult = resultOk();
+        if (Objects.isNull(user = userService.getVisitorDOByEmail(email))) {
+            String userName = commentAddRequest.getUserName();
+            if (StringUtils.isEmpty(userName)) {
+                return resultError4Param("首次评论必须填写用户名");
+            }
+            user = new User();
+            user.setUserEmail(email);
+            user.setUserName(userName);
+            user.setUserStatus(YesOrNoType.YES.getCode());
+            // 添加用户信息
+            updateResult = userService.createUserInfo(user);
+            // 判断用户名是否存在
+        } else {
+            if (Objects.nonNull(commentAddRequest.getUserName()) && !Objects.equals(user.getUserName(), commentAddRequest.getUserName())) {
+                user.setUserName(commentAddRequest.getUserName());
+                fillUpdateTime(user);
+                updateResult = userService.updateVisitorInfo(user);
+            }
+        }
+        if (!updateResult.isOk()) {
+            return updateResult;
+        }
+
+        BeanUtils.copyProperties(commentAddRequest, commentDO);
+        commentDO.setTargetType(targetType.getCode());
+        return resultOk();
     }
 
     /**
@@ -77,25 +156,29 @@ public class CommentService extends BaseService {
      * @return
      */
     public ServerResponse<PageInfo<CommentListItemVO>> getCommentInfos(Integer targetId, CommentListRequest commentListRequest) {
-        Page page = getPage(commentListRequest);
         Preconditions.checkNotNull(commentListRequest, "评论请求参数不能为null");
-        Preconditions.checkNotNull(commentListRequest.getTargetType(), "主体类型不能为null");
-        Preconditions.checkNotNull(targetId, "主体id不能为null");
+        Integer pid = commentListRequest.getPid();
+        CommentTargetType targetType = commentListRequest.getTargetType();
+        Preconditions.checkNotNull(targetType, "主体类型不能为null");
+        // 如果时留言板消息的话，当pid为null时，targetId可以为null
+        Page page = getPage(commentListRequest);
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria()
-                .andTargetIdEqualTo(targetId)
-                .andTargetTypeEqualTo(commentListRequest.getTargetType().getCode())
+                .andTargetTypeEqualTo(targetType.getCode())
                 .andCommentStatusEqualTo(YesOrNoType.YES.getCode());
         commentExample.setOrderByClause(page.getOrderBy());
-
-        List<CommentDO> commentList = commentMapper.selectByExample(commentExample);
-//        // 日期转换
-//        commentList.stream().forEach(commentTemp -> {
-//            commentTemp.setCreateTimeStr(DateTimeUtil.dateToStr(commentDO.getCreateTime()));
-//        });
-
+        List<CommentDO> commentList;
+        if (Objects.nonNull(pid)) {
+            commentExample.createCriteria().andTargetIdEqualTo(targetId);
+         } else if (Objects.nonNull(targetId)) {
+            commentExample.createCriteria().andTargetIdEqualTo(targetId);
+         } else if (!Objects.equals(targetType, CommentTargetType.MESSAGE_BOARD)){
+            return resultError4Param("参数不合法");
+         }
+        commentList  = commentMapper.selectByExample(commentExample);
+        List<CommentListItemVO>  resultList =  commentList.stream().map(CommentListItemVO::createFrom).collect(Collectors.toList());
         PageInfo pageInfo = page.toPageInfo();
-        pageInfo.setList(commentList);
+        pageInfo.setList(resultList);
 
         return resultOk(pageInfo);
     }
@@ -106,9 +189,16 @@ public class CommentService extends BaseService {
      * @param commentId 评论id
      * @return
      */
-    public ServerResponse<Boolean> deleteCommentAndChildren(Integer commentId) {
+    public ServerResponse<Boolean> deleteCommentInfo(Integer commentId) {
         Preconditions.checkNotNull(commentId, "要删除的评论id不能为null");
-
+        CommentExample commentExample = new CommentExample();
+        commentExample.createCriteria().andPidEqualTo(commentId);
+        if (CollectionUtils.isNotEmpty(commentMapper.selectByExample(commentExample))){
+            return resultError4Param("当前评论有回复哦");
+        }
+        if (commentMapper.deleteByPrimaryKey(commentId) == 0) {
+            return resultError4DB("删除失败");
+        }
         return resultOk();
     }
 

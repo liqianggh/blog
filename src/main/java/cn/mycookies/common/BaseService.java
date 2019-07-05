@@ -5,6 +5,8 @@ import cn.mycookies.pojo.po.BaseDO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.base.Preconditions;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +22,7 @@ public class BaseService {
 
     protected Logger logger = LoggerFactory.getLogger(getClass().getName());
 
-
+    protected Cache localCache = CacheBuilder.newBuilder().build();
     /**
      * 分页信息
      */

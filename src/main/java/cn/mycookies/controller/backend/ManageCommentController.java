@@ -29,10 +29,10 @@ public class ManageCommentController extends BaseController {
     private CommentService commentService;
 
     @DeleteMapping("/{id:\\d+}")
-    @ApiOperation(value = "删除评论和它相关的回复,如果有回复不能删除")
+    @ApiOperation(value = "删除评论,如果有回复不能删除")
     public ServerResponse deleteCommentInfos(@ApiParam(value = "评论的id") @PathVariable Integer id){
 
-        return commentService.deleteCommentAndChildren(id);
+        return commentService.deleteCommentInfo(id);
     }
 
     @GetMapping

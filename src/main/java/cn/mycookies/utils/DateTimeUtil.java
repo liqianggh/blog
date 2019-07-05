@@ -30,7 +30,13 @@ public class DateTimeUtil {
         DateTime dateTime = new DateTime(date);
         return dateTime.toString(regex);
     }
-
+    public static String dateToStr(Long timestamp) {
+        if(timestamp==null){
+            return StringUtils.EMPTY;
+        }
+        DateTime dateTime = new DateTime(timestamp);
+        return dateTime.toString(STANDARD_FORMAT);
+    }
 
    public static String dateToStr(Date date) {
         if(date==null){
