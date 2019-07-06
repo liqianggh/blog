@@ -1,6 +1,6 @@
 package cn.mycookies.pojo.vo;
 
-import cn.mycookies.pojo.dto.TagVO;
+import cn.mycookies.pojo.dto.TagWithCountVO;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
@@ -28,8 +28,8 @@ public class IndexVO {
 
     public List<BlogVO> clickRankList;
 
-    public List<TagVO> categoryList;
+    public List<TagWithCountVO> categoryList;
 
-    public List<TagVO> tagList;
+    public List<TagWithCountVO> tagList;
 
 }

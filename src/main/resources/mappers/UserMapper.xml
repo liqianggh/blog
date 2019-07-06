@@ -76,7 +76,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from userDO
+    from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,21 +87,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from userDO
+    from user
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from userDO
+    delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="cn.mycookies.pojo.po.UserExample">
-    delete from userDO
+    delete from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="cn.mycookies.pojo.po.UserDO">
-    insert into userDO (id, user_email, user_name,
+    insert into user (id, user_email, user_name,
       create_time, update_time, user_status
       )
     values (#{id,jdbcType=INTEGER}, #{userEmail,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
@@ -109,7 +109,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.mycookies.pojo.po.UserDO">
-    insert into userDO
+    insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -152,13 +152,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="cn.mycookies.pojo.po.UserExample" resultType="java.lang.Long">
-    select count(*) from userDO
+    select count(*) from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update userDO
+    update user
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
@@ -184,7 +184,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update userDO
+    update user
     set id = #{record.id,jdbcType=INTEGER},
       user_email = #{record.userEmail,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
@@ -196,7 +196,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="cn.mycookies.pojo.po.UserDO">
-    update userDO
+    update user
     <set>
       <if test="userEmail != null">
         user_email = #{userEmail,jdbcType=VARCHAR},
@@ -217,7 +217,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.mycookies.pojo.po.UserDO">
-    update userDO
+    update user
     set user_email = #{userEmail,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=BIGINT},

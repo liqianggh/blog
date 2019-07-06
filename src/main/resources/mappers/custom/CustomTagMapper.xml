@@ -3,11 +3,11 @@
 <mapper namespace="cn.mycookies.dao.TagMapper">
 
   <select id="queryByName" parameterType="cn.mycookies.pojo.dto.TagAddRequest" resultType="cn.mycookies.pojo.po.TagDO">
-    SELECT id,tag_name as tagName, tag_desc as tagDesc,type,create_time as createTime,update_time as updateTime
-    FROM tag
+    select
+    <include refid="Base_Column_List"/>
     <where>
-    <if test="type != null">
-      type = #{type}
+    <if test="tagType != null">
+      tag_type = #{tagType}
     </if>
     <if test="tagName != null">
       and tag_name= #{tagName}
@@ -15,44 +15,42 @@
     </where>
   </select>
   <select id="queryById" parameterType="cn.mycookies.pojo.po.TagDO" resultType="cn.mycookies.pojo.po.TagDO">
-    SELECT id,tag_name as tagName, tag_desc as tagDesc,create_time as createTime,update_time as updateTime
-    FROM tag
+    SELECT
+    <include refid="Base_Column_List"/>
     <where>
-      <if test="type != null">
-        type = #{type}
+      <if test="tagType != null">
+        tag_type = #{tagType}
       </if>
       <if test="id != null">
         and id= #{id}
       </if>
     </where>
   </select>
-  <select id="queryTagBoList" resultType="cn.mycookies.pojo.dto.TagVO">
+  <select id="selectTagList" resultType="cn.mycookies.pojo.dto.TagWithCountVO">
       SELECT
-        COUNT(t.blog_id) count, t.tag_id as id, t2.tag_name as tagName
+        COUNT(t.blog_id) as   blogCount, t.tag_id as id, t2.tag_name as tagName
     FROM
         blog_tags t
             LEFT JOIN
-        tag t2 ON t.tag_id = t2.id AND t2.type = 1
-    GROUP BY t.tag_id;
+        blog_tag t2 ON t.tag_id = t2.id
   </select>
-  <select id="queryTagsOfBlog" resultType="cn.mycookies.pojo.dto.TagVO">
-    SELECT tag.tag_name as tagName ,tag.id
+  <select id="selectTagsOfBlog" resultType="cn.mycookies.pojo.po.TagDO">
+    SELECT blog_tag.tag_name as tagName ,blog_tag.id
     FROM blog_tags
-    LEFT JOIN tag on tag.id = blog_tags.tag_id and tag.type=1
+    LEFT JOIN blog_tag on blog_tag.id = blog_tags.tag_id
     where blog_id = #{blogId}
   </select>
-  <select id="queryCategoryVOList" resultType="cn.mycookies.pojo.dto.TagVO">
+  <select id="selectCategoryList" resultType="cn.mycookies.pojo.dto.TagWithCountVO">
     SELECT
-      COUNT(t.category_id) count, t.category_id as id, t2.tag_name as tagName
+      COUNT(t.category_id)  as blogCount, t.category_id as id, t2.tag_name as tagName
     FROM
       blog t
-
       LEFT JOIN
-      tag t2 ON t.category_id = t2.id AND t2.type = 2
+      blog_tag t2 ON t.category_id = t2.id
     GROUP BY t.category_id;
   </select>
   <update id="updateTag" parameterType="cn.mycookies.pojo.po.TagDO">
-      UPDATE tag
+      UPDATE blog_tag
     <set>
        <if test="tagName != null">
       tag_name=#{tagName,jdbcType=VARCHAR},
@@ -65,7 +63,7 @@
   </update>
   <delete id="deleteById" parameterType="int">
     DELETE 
-    FROM tag
+    FROM blog_tag
     WHERE id=#{id,jdbcType=INTEGER} 
   </delete>
 </mapper>

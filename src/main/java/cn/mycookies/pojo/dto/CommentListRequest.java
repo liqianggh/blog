@@ -1,8 +1,9 @@
 package cn.mycookies.pojo.dto;
 
 import cn.mycookies.common.CommentTargetType;
-import cn.mycookies.common.JsonBean;
 import cn.mycookies.common.PageInfo4Request;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,8 +17,8 @@ import javax.validation.constraints.NotNull;
  * @date 2019-07-04 21:50
  **/
 @Data
-@JsonBean
 @ApiModel
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class CommentListRequest extends PageInfo4Request {
 
     /**

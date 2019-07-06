@@ -1,7 +1,6 @@
 package cn.mycookies.pojo.vo;
 
 import cn.mycookies.pojo.dto.TagVO;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
@@ -16,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @ApiModel("评论回复实体类")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BlogVO {
 
     public Integer id;

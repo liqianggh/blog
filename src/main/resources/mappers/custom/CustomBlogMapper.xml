@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.mycookies.dao.BlogDOMapper">
+<mapper namespace="cn.mycookies.dao.BlogMapper">
     <update id="updateBlog" parameterType="cn.mycookies.pojo.dto.BlogAddRequest">
         update blog
         <set>
@@ -65,8 +65,8 @@
             <if test="categoryId != null">
                 and t.category_id=#{categoryId}
             </if>
-            <if test="blogStatus != null">
-                and t.blog_status=#{blogStatus}
+            <if test="status != null">
+                and t.blog_status=#{status}
             </if>
         </where>
     </select>

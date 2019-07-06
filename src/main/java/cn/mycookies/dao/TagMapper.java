@@ -1,6 +1,6 @@
 package cn.mycookies.dao;
 
-import cn.mycookies.pojo.dto.TagVO;
+import cn.mycookies.pojo.dto.TagWithCountVO;
 import cn.mycookies.pojo.po.TagDO;
 import cn.mycookies.pojo.po.TagDOExample;
 import org.apache.ibatis.annotations.Param;
@@ -41,9 +41,9 @@ public interface TagMapper {
 
     int deleteById(TagDO TagDO);
 
-    List<TagVO> queryTagBoList();
+    List<TagWithCountVO> selectTagList();
 
-    List<TagVO> queryTagsOfBlog(Integer blogId);
+    List<TagWithCountVO> selectCategoryList();
 
-    List<TagVO> queryCategoryVOList();
+    List<TagDO> selectTagsOfBlog(Integer blogId);
 }

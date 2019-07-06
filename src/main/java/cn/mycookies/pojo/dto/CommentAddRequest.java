@@ -1,6 +1,8 @@
 package cn.mycookies.pojo.dto;
 
 import cn.mycookies.common.CommentTargetType;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -8,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -22,6 +25,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @ToString
 @ApiModel("评论")
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class CommentAddRequest {
 
     @ApiModelProperty("被回复的评论id")
@@ -37,6 +41,7 @@ public class CommentAddRequest {
 
     @ApiModelProperty("用户邮箱")
     @NotEmpty
+    @Email(message = "邮箱格式不合法")
     private String userEmail;
 
     @ApiModelProperty("用户名称")

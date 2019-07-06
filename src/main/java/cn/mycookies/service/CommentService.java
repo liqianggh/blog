@@ -143,6 +143,7 @@ public class CommentService extends BaseService {
         }
 
         BeanUtils.copyProperties(commentAddRequest, commentDO);
+        commentDO.setUserName(user.getUserName());
         commentDO.setTargetType(targetType.getCode());
         fillCreateTime(commentDO);
         return resultOk();

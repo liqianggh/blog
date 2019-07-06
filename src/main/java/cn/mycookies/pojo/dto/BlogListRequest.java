@@ -33,6 +33,6 @@ public class BlogListRequest extends PageInfo4Request {
      * 状态吗
      */
     @ApiModelProperty(name = "状态")
-    private Byte status;
+    private Integer status;
 
 }

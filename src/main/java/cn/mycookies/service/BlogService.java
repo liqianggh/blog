@@ -2,13 +2,11 @@ package cn.mycookies.service;
 
 import cn.mycookies.common.*;
 import cn.mycookies.common.exception.BusinessException;
-import cn.mycookies.dao.BlogDOMapper;
+import cn.mycookies.dao.BlogMapper;
 import cn.mycookies.dao.BlogTagsDOMapper;
-import cn.mycookies.pojo.dto.BlogAddRequest;
-import cn.mycookies.pojo.dto.BlogListRequest;
-import cn.mycookies.pojo.dto.BlogUpdateRequest;
+import cn.mycookies.pojo.dto.*;
 import cn.mycookies.pojo.po.BlogDO;
-import cn.mycookies.pojo.po.BlogDOExample;
+import cn.mycookies.pojo.po.BlogExample;
 import cn.mycookies.pojo.po.BlogTagsDO;
 import cn.mycookies.pojo.po.BlogTagsDOExample;
 import cn.mycookies.pojo.vo.BlogDetailVO;
@@ -24,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -31,8 +31,11 @@ import java.util.stream.Collectors;
 @Service
 public class BlogService extends BaseService {
 
-    @Autowired
-    private BlogDOMapper blogDOMapper;
+    @Resource
+    private BlogMapper blogMapper;
+
+    @Resource
+    private BlogTagsDOMapper blogTagsDOMapper;
 
     @Autowired
     private TagService tagService;
@@ -40,8 +43,6 @@ public class BlogService extends BaseService {
     @Autowired
     private CommentService commentService;
 
-    @Autowired
-    private BlogTagsDOMapper blogTagsDOMapper;
 
     /**
      * 添加新的博客
@@ -56,7 +57,7 @@ public class BlogService extends BaseService {
         if (!validateResult.isOk()) {
             return validateResult;
         }
-        if (blogDOMapper.insertSelective(blogDO) == 0) {
+        if (blogMapper.insertSelective(blogDO) == 0) {
             return resultError4DB();
         }
 
@@ -73,7 +74,7 @@ public class BlogService extends BaseService {
     @Transactional(rollbackFor = BusinessException.class)
     public ServerResponse<Boolean> updateBlog(Integer id, BlogUpdateRequest updateRequest) {
         Preconditions.checkNotNull(id, "更新时id参数不能为null");
-        BlogDO blogDO = blogDOMapper.selectByIdAndStatus(id, null);
+        BlogDO blogDO = blogMapper.selectByIdAndStatus(id, null);
         ServerResponse<Boolean> validateResult = validateAndInitUpdateRequest(updateRequest, blogDO);
         if (!validateResult.isOk()) {
             return validateResult;
@@ -91,7 +92,7 @@ public class BlogService extends BaseService {
                 throw new BusinessException(ActionStatus.DATABASE_ERROR.inValue(), "添加标签过程失败");
             }
         }
-        if (blogDOMapper.updateByPrimaryKey(blogDO) == 0) {
+        if (blogMapper.updateByPrimaryKey(blogDO) == 0) {
             throw new BusinessException(ActionStatus.DATABASE_ERROR.inValue(), "更新过程失败");
         }
         return resultOk();
@@ -126,9 +127,9 @@ public class BlogService extends BaseService {
         // 标题是否存在/发生变化
         String newTitle = updateRequest.getTitle();
         String oldTitle = blogDO.getTitle();
-        BlogDOExample blogDOExample = new BlogDOExample();
+        BlogExample blogDOExample = new BlogExample();
         blogDOExample.createCriteria().andTitleEqualTo(newTitle);
-        if (Objects.equals(newTitle, oldTitle) || CollectionUtils.isNotEmpty(blogDOMapper.selectByExample(blogDOExample))) {
+        if (Objects.equals(newTitle, oldTitle) || CollectionUtils.isNotEmpty(blogMapper.selectByExample(blogDOExample))) {
             resultError4Param("标题[" + updateRequest.getTitle() + "]已存在");
         }
         blogDO.setTitle(newTitle);
@@ -153,12 +154,11 @@ public class BlogService extends BaseService {
         Preconditions.checkNotNull(queryRequest, "查询参数不能为null");
         Page page = getPage(queryRequest);
 
-        List<BlogDO> blogDOList = blogDOMapper.selectBlogs(queryRequest);
+        List<BlogDO> blogDOList = blogMapper.selectBlogs(queryRequest);
 
         List<BlogVO> blogVOList = blogDOList.stream().map(blogDO -> {
             BlogVO blogVO = convertBlogToVO(blogDO);
-            // todo 博客的标签
-//            blogVO.setTagList(tagService.getTagListOfBlog(blogDO.getId()));
+            blogVO.setTagList(tagService.getTagListByBlogId(blogDO.getId()));
             return blogVO;
         }).collect(Collectors.toList());
 
@@ -167,27 +167,27 @@ public class BlogService extends BaseService {
         return ServerResponse.createBySuccess(pageInfo);
     }
 
-
-    public ServerResponse<BlogVO> getBlog(Integer id, Byte isDeleted, boolean hasLastNext, boolean hasComments) {
-        if (isDeleted == DataStatus.ALL) {
-            isDeleted = null;
-        }
-        BlogDO blogDO = blogDOMapper.selectByPrimaryKey(id);
+    /**
+     * 获取博客详情
+     *
+     * @param id
+     * @return
+     */
+    public ServerResponse<BlogVO> getBlogDetailsInfo(Integer id) {
+        BlogDO blogDO = blogMapper.selectByPrimaryKey(id);
         if (Objects.isNull(blogDO)) {
-            return ServerResponse.createByErrorCodeMessage(ActionStatus.NO_RESULT.inValue(), ActionStatus.NO_RESULT.getDescription());
+            return resultError4Param("数据不存在");
         }
         BlogVO blogVO = convertBlogToVO(blogDO);
-        // todo 博客的标签
-//        blogVO.setTagList(tagService.getTagListOfBlog(id));
+        // 博客的标签
+        blogVO.setTagList(tagService.getTagListByBlogId(id));
         // 查询last next
-        if (hasLastNext) {
-            blogVO.setLast(getlastOrNext(id, false));
-            blogVO.setNext(getlastOrNext(id, true));
-        }
+        blogVO.setLast(getlastOrNext(id, false));
+        blogVO.setNext(getlastOrNext(id, true));
         //查询 评论列表
-        if (hasComments) {
-//            blogVO.setComments(commentService.getCommentInfos(1, 10, null, null, id, null, DataStatus.NO_DELETED).getData());
-        }
+        CommentListRequest commentListRequest = new CommentListRequest();
+        commentListRequest.setTargetType(CommentTargetType.ARTICLE);
+        blogVO.setComments(commentService.getCommentInfos(id, commentListRequest).getData());
 
         return ServerResponse.createBySuccess(blogVO);
     }
@@ -202,15 +202,15 @@ public class BlogService extends BaseService {
         if (Objects.isNull(id)) {
             return null;
         }
-       return blogDOMapper.selectByIdAndStatus(id, null);
+       return blogMapper.selectByIdAndStatus(id, null);
     }
 
     public ServerResponse updateBlogCount(Integer id, String type) {
-        BlogDO blogDO = blogDOMapper.selectByIdAndStatus(id, DataStatus.NO_DELETED);
+        BlogDO blogDO = blogMapper.selectByIdAndStatus(id, DataStatus.NO_DELETED);
         if (Objects.isNull(blogDO)) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ActionStatus.PARAMAS_ERROR.getDescription());
         }
-        int result = blogDOMapper.updateBlogCount(id, type);
+        int result = blogMapper.updateBlogCount(id, type);
         if (result == 0) {
             return ServerResponse.createByError();
         } else {
@@ -230,19 +230,21 @@ public class BlogService extends BaseService {
         /**
          * 查询推荐或热门博客
          */
-        List<BlogVO> recommendList = blogDOMapper.selectHotOrRecommendBlogs(BlogStaticType.RECOMMEND_BLOG, 5);
-        List<BlogVO> clickRankList = blogDOMapper.selectHotOrRecommendBlogs(BlogStaticType.HOT_BLOG, 5);
-        // todo 标签分类信息
-//        List<TagVO> tagVOS = tagService.listTagVOs(TagTypes.TAG_LABEL).getData();
-//        List<TagVO> categoryVOS = tagService.listTagVOs(TagTypes.TAG_CATEGORY).getData();
-
+        List<BlogVO> recommendList = blogMapper.selectHotOrRecommendBlogs(BlogStaticType.RECOMMEND_BLOG, 5);
+        List<BlogVO> clickRankList = blogMapper.selectHotOrRecommendBlogs(BlogStaticType.HOT_BLOG, 5);
+        // 标签分类信息
+        List<TagWithCountVO> tagVOS = tagService.getTagListByTagType(TagType.TAG);
+        List<TagWithCountVO> categoryVOS = tagService.getTagListByTagType(TagType.CATEGORY);
+        // 博客内容
         IndexVO indexVO = new IndexVO();
         if (withBlogs) {
-            blogs = getBlogListInfos(null).getData();
+            BlogListRequest blogListRequest = new BlogListRequest();
+            blogListRequest.setStatus(YesOrNoType.YES.getCode());
+            blogs = getBlogListInfos(blogListRequest).getData();
             indexVO.setBlogList(blogs);
         }
-//        indexVO.setCategoryList(categoryVOS);
-//        indexVO.setTagList(tagVOS);
+        indexVO.setCategoryList(categoryVOS);
+        indexVO.setTagList(tagVOS);
         indexVO.setRecommendList(recommendList);
         indexVO.setClickRankList(clickRankList);
         return ServerResponse.createBySuccess(indexVO);
@@ -257,14 +259,13 @@ public class BlogService extends BaseService {
     public ServerResponse<BlogDetailVO> getBlogDetailInfo(Integer blogId) {
         Preconditions.checkNotNull(blogId, "博客id不能为null");
 
-        BlogDO blogDO = blogDOMapper.selectByPrimaryKey(blogId);
+        BlogDO blogDO = blogMapper.selectByPrimaryKey(blogId);
         if (Objects.isNull(blogDO)) {
             return resultError4Param("博客不存在");
         }
-        // todo 获取博客的标签
-//        List<Integer> tagIds = tagService.getTagListOfBlog(blogId).stream().map(TagVO::getId).collect(Collectors.toList());
-//        return resultOk(BlogDetailVO.createFrom(blogDO, tagIds));
-        return resultOk();
+        // 获取博客的标签
+        List<Integer> tagIds = tagService.getTagListByBlogId(blogId).stream().map(TagVO::getId).collect(Collectors.toList());
+        return resultOk(BlogDetailVO.createFrom(blogDO, tagIds));
     }
 
     /**
@@ -276,7 +277,7 @@ public class BlogService extends BaseService {
      */
     private BlogDetailVO getlastOrNext(Integer id, boolean isLast) {
         Preconditions.checkNotNull(id, "主键id不能为null");
-        BlogDO blogDO = blogDOMapper.selectLastOrNext(id, isLast);
+        BlogDO blogDO = blogMapper.selectLastOrNext(id, isLast);
         if (Objects.isNull(blogDO)) {
             return null;
         }
@@ -285,9 +286,9 @@ public class BlogService extends BaseService {
 
     private BlogVO convertBlogToVO(BlogDO blogDO) {
         BlogVO blogVo = new BlogVO();
-        blogVo.setCalcTime(DateCalUtils.format(blogDO.getCreateTime()));
+        blogVo.setCalcTime(DateCalUtils.format(new Date(blogDO.getCreateTime())));
         blogVo.setContent(blogDO.getContent());
-        blogVo.setCreateTime(DateTimeUtil.dateToStr(blogDO.getCreateTime(), DateTimeUtil.DATE_FORMAT));
+        blogVo.setCreateTime(DateTimeUtil.dateToStr(blogDO.getCreateTime()));
         blogVo.setUpdateTime(DateTimeUtil.dateToStr(blogDO.getUpdateTime()));
         blogVo.setId(blogDO.getId());
         blogVo.setSummary(blogDO.getSummary());

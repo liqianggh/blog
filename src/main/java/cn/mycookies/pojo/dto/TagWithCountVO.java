@@ -8,36 +8,28 @@ import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
 /**
- * @ClassName TagVO
- * @Description 标签的bo类
- * @Author Jann Lee
- * @Date 2018-11-18 17:08
+ * @author Jann Lee
+ * @date 2019-07-06 19:06
  **/
 @Setter
 @Getter
 @NoArgsConstructor
-public class TagVO {
+public class TagWithCountVO {
 
     private Integer id;
 
     private String tagName;
 
-    private Integer tagType;
-
-    private String tagDesc;
-
-    private Long createTime;
-
-    private Long updateTime;
+    private Integer blogCount;
 
     /**
      * 构建vo
      * @param tagDO
      * @return
      */
-    public static TagVO createFrom(TagDO tagDO) {
+    public static TagWithCountVO createFrom(TagDO tagDO) {
         Preconditions.checkNotNull(tagDO, "构建vo时参数不能为null");
-        TagVO tagVO = new TagVO();
+        TagWithCountVO tagVO = new TagWithCountVO();
         BeanUtils.copyProperties(tagDO, tagVO);
         return tagVO;
     }

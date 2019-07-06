@@ -3,19 +3,18 @@ package cn.mycookies.service;
 import cn.mycookies.common.BaseService;
 import cn.mycookies.common.KeyValueVO;
 import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.TagType;
 import cn.mycookies.dao.TagMapper;
-import cn.mycookies.pojo.dto.TagAddRequest;
-import cn.mycookies.pojo.dto.TagListRequest;
-import cn.mycookies.pojo.dto.TagUpdateRequest;
-import cn.mycookies.pojo.dto.TagVO;
+import cn.mycookies.pojo.dto.*;
 import cn.mycookies.pojo.po.TagDO;
 import cn.mycookies.pojo.po.TagDOExample;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -29,9 +28,8 @@ import java.util.stream.Collectors;
 @Service
 public class TagService extends BaseService {
 
-    @Autowired
+    @Resource
     private TagMapper tagMapper;
-
 
     /**
      * 获取标签列表信息
@@ -194,4 +192,21 @@ public class TagService extends BaseService {
     }
 
 
+    public List<TagVO> getTagListByBlogId(Integer blogId) {
+        if (Objects.isNull(blogId)) {
+            return Lists.newArrayList();
+        }
+        return  tagMapper.selectTagsOfBlog(blogId).stream()
+                .map(TagVO::createFrom)
+                .collect(Collectors.toList());
+    }
+
+    public List<TagWithCountVO> getTagListByTagType(TagType tagType) {
+        Preconditions.checkNotNull(tagType, "标签类型不能为null");
+        if (Objects.equals(tagType, TagType.CATEGORY)) {
+            return tagMapper.selectCategoryList();
+        } else {
+            return tagMapper.selectTagList();
+        }
+    }
 }

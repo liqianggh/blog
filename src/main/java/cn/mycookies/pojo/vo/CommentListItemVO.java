@@ -3,7 +3,6 @@ package cn.mycookies.pojo.vo;
 import cn.mycookies.common.CommentTargetType;
 import cn.mycookies.pojo.po.CommentDO;
 import cn.mycookies.utils.DateTimeUtil;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.Preconditions;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
@@ -22,8 +21,9 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @ApiModel("评论回复实体类")
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CommentListItemVO {
+
+    private Integer id;
 
     /**
      * 被回复的id
@@ -54,6 +54,11 @@ public class CommentListItemVO {
      * 评论内容
      */
     private String content;
+
+    /**
+     * 点赞数
+     */
+    private Integer likeCount;
 
     /**
      * 创建时间
