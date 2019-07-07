@@ -5,10 +5,7 @@ import cn.mycookies.common.exception.BusinessException;
 import cn.mycookies.dao.BlogMapper;
 import cn.mycookies.dao.BlogTagsDOMapper;
 import cn.mycookies.pojo.dto.*;
-import cn.mycookies.pojo.po.BlogDO;
-import cn.mycookies.pojo.po.BlogExample;
-import cn.mycookies.pojo.po.BlogTagsDO;
-import cn.mycookies.pojo.po.BlogTagsDOExample;
+import cn.mycookies.pojo.po.*;
 import cn.mycookies.pojo.vo.BlogDetailVO;
 import cn.mycookies.pojo.vo.BlogVO;
 import cn.mycookies.pojo.vo.IndexVO;
@@ -17,7 +14,9 @@ import cn.mycookies.utils.DateTimeUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,10 +56,15 @@ public class BlogService extends BaseService {
         if (!validateResult.isOk()) {
             return validateResult;
         }
-        if (blogMapper.insertSelective(blogDO) == 0) {
+        if ( blogMapper.insertSelective(blogDO) == 0) {
             return resultError4DB();
         }
-
+        Integer blogId = blogDO.getId();
+        List<Integer> tags = addRequest.getTags();
+        if (CollectionUtils.isNotEmpty(tags)) {
+            tagService.deleteTagsByBlogId(blogId);
+            tagService.createBlogTags(blogId, tags);
+        }
         return resultOk();
     }
 
@@ -108,7 +112,7 @@ public class BlogService extends BaseService {
      */
     private ServerResponse<Boolean> validateAndInitCreateRequest(BlogAddRequest addRequest, BlogDO blogDO) {
         Preconditions.checkNotNull(blogDO, "添加参数不能为null");
-
+        fillCreateTime(blogDO);
         return validateAndInitUpdateRequest(addRequest, blogDO);
     }
 
@@ -132,12 +136,25 @@ public class BlogService extends BaseService {
         if (Objects.equals(newTitle, oldTitle) || CollectionUtils.isNotEmpty(blogMapper.selectByExample(blogDOExample))) {
             resultError4Param("标题[" + updateRequest.getTitle() + "]已存在");
         }
-        blogDO.setTitle(newTitle);
         // 分类是否存在
-
+        Integer categoryId = updateRequest.getCategoryId();
+        if (Objects.nonNull(categoryId)) {
+            if (CollectionUtils.isEmpty(tagService.getTagListByTypeAndIds(TagType.CATEGORY, Lists.newArrayList(categoryId)))) {
+                return resultError4Param("分类信息不存在");
+            }
+        }
         // 标签是否存在
-
-        // code、status规整
+        List<Integer> tags = updateRequest.getTags();
+        if (CollectionUtils.isNotEmpty(tags)) {
+            List<TagDO> tagDOS = tagService.getTagListByTypeAndIds(TagType.TAG, Lists.newArrayList(tags));
+            if (CollectionUtils.isNotEmpty(tagDOS)) {
+                updateRequest.setTags(tagDOS.stream().map(TagDO::getId).collect(Collectors.toList()));
+            }
+        }
+        BeanUtils.copyProperties(updateRequest, blogDO);
+        // todo  code、status规整
+        fillUpdateTime(blogDO);
+        blogDO.setBlogStatus(updateRequest.getStatus());
         if (Objects.isNull(blogDO)) {
             return resultError4Param("当前数据不存在");
         }

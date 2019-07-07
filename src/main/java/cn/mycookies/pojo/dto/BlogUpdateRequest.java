@@ -19,7 +19,6 @@ import java.util.List;
 @Data
 public class BlogUpdateRequest {
 
-    @NotNull
     @ApiModelProperty(value = "分类id", required = true)
     private Integer categoryId;
 

@@ -71,7 +71,7 @@ public class PageInfo4Request {
         if (Objects.isNull(pageNum) || pageNum == 0) {
             return 10;
         }
-        return pageSize;
+        return pageSize == null ? 10 : pageSize;
     }
 
     /**

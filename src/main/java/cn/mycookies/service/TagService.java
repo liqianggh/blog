@@ -4,19 +4,24 @@ import cn.mycookies.common.BaseService;
 import cn.mycookies.common.KeyValueVO;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.common.TagType;
+import cn.mycookies.dao.BlogTagsDOMapper;
 import cn.mycookies.dao.TagMapper;
 import cn.mycookies.pojo.dto.*;
+import cn.mycookies.pojo.po.BlogTagsDO;
+import cn.mycookies.pojo.po.BlogTagsDOExample;
 import cn.mycookies.pojo.po.TagDO;
 import cn.mycookies.pojo.po.TagDOExample;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -30,6 +35,9 @@ public class TagService extends BaseService {
 
     @Resource
     private TagMapper tagMapper;
+
+    @Resource
+    private BlogTagsDOMapper blogTagsDOMapper;
 
     /**
      * 获取标签列表信息
@@ -103,6 +111,7 @@ public class TagService extends BaseService {
         return resultOk();
     }
 
+
     /**
      *
      * todo 验证添加参数
@@ -172,6 +181,18 @@ public class TagService extends BaseService {
         return resultOk(TagVO.createFrom(tagMapper.selectByPrimaryKey(id)));
     }
 
+    public List<TagDO> getTagListByTypeAndIds(TagType tagType, List<Integer> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return Lists.newArrayList();
+        }
+        TagDOExample tagDOExample = new TagDOExample();
+        tagDOExample.createCriteria().andTagTypeEqualTo(tagType.getCode()).andIdIn(ids);
+        if (Objects.nonNull(tagType)) {
+            tagDOExample.createCriteria().andTagTypeEqualTo(tagType.getCode());
+        }
+        return tagMapper.selectByExample(tagDOExample);
+    }
+
     /**
      * 根据主键id删除标签
      *
@@ -209,4 +230,29 @@ public class TagService extends BaseService {
             return tagMapper.selectTagList();
         }
     }
+
+    /**
+     * 删除博客关联的标签
+     * @param blogId
+     */
+    public boolean deleteTagsByBlogId(Integer blogId) {
+        Preconditions.checkNotNull(blogId, "博客id不能为null");
+        BlogTagsDOExample example = new BlogTagsDOExample();
+        example.createCriteria().andBlogIdEqualTo(blogId);
+        return blogTagsDOMapper.deleteByExample(example) > 0;
+    }
+
+    /**
+     *
+     */
+    public boolean createBlogTags(Integer blogId, List<Integer> tagIds){
+        Preconditions.checkNotNull(blogId, "博客id不能为null");
+        Preconditions.checkArgument(CollectionUtils.isNotEmpty(tagIds), "标签id列表不能为空");
+        AtomicInteger count = new AtomicInteger();
+        tagIds.stream().forEach( tagId -> {
+            count.addAndGet(blogTagsDOMapper.insert(new BlogTagsDO(null, tagId, blogId)));
+        });
+        return count.intValue() == tagIds.size();
+    }
+
 }
