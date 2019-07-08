@@ -11,7 +11,6 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -20,10 +19,10 @@ import org.springframework.web.bind.annotation.*;
  * @author Jann Lee
  * @date 2018-11-18 16:36
  **/
-@Controller
+
 @Api(description = "标签管理")
 @RequestMapping("manage/tags")
-@ResponseBody
+@RestController
 public class ManageTagController extends BaseController{
 
     @Autowired
@@ -38,28 +37,30 @@ public class ManageTagController extends BaseController{
 
     @PostMapping
     @ApiOperation(value = "添加标签", response = Boolean.class)
-    public ServerResponse<Boolean> addTag(@ModelAttribute @RequestBody TagAddRequest tagAddRequest) {
+    @ModelAttribute
+    public ServerResponse<Boolean> addTag(@RequestBody TagAddRequest tagAddRequest) {
         validate(tagAddRequest);
-        
+
         return tagService.createTagInfo(tagAddRequest);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id:\\d+}")
     @ApiOperation(value = "修改标签", response = Boolean.class)
-    public ServerResponse updateTag(@ModelAttribute @RequestBody TagUpdateRequest tagUpdateRequest, @PathVariable(name = "id") Integer id) {
-        validate(tagUpdateRequest);        
-        
+    @ModelAttribute
+    public ServerResponse<Boolean> updateTag(@PathVariable(name = "id") Integer id, @RequestBody TagUpdateRequest tagUpdateRequest) {
+        validate(tagUpdateRequest);
+
         return tagService.updateTagInfo(id, tagUpdateRequest);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:\\d+}")
     @ApiOperation(value = "查找标签", response = Boolean.class)
     public ServerResponse<TagVO> selectTag(@PathVariable(name = "id") Integer id) {
 
         return tagService.getTagDetailInfoById(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id:\\d+}")
     @ApiOperation(value = "删除标签", response = Boolean.class)
     public ServerResponse<TagVO> deleteTag(@PathVariable(name = "id") Integer id) {
 

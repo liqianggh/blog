@@ -2,6 +2,7 @@ package cn.mycookies.pojo.dto;
 
 import cn.mycookies.common.JsonBean;
 import cn.mycookies.common.PageInfo4Request;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -16,5 +17,6 @@ public class TagListRequest extends PageInfo4Request {
     /**
      * 标签类型
      */
+    @JsonProperty(value = "tag_type")
     private Integer tagType;
 }

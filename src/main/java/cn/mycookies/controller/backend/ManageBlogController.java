@@ -12,7 +12,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,8 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("manage/blogs")
 @Api(description = "博客管理模块")
-@ResponseBody
-@Controller
+@RestController
 public class ManageBlogController extends BaseController {
 
     @Autowired
@@ -32,7 +30,8 @@ public class ManageBlogController extends BaseController {
 
     @PostMapping
     @ApiOperation(value ="新增博客")
-    public ServerResponse addBlog(@ModelAttribute @RequestBody BlogAddRequest blogAddRequest){
+    @ModelAttribute
+    public ServerResponse addBlog(@RequestBody BlogAddRequest blogAddRequest){
         validate(blogAddRequest);
 
         return blogService.createBlogInfo(blogAddRequest);
@@ -47,8 +46,9 @@ public class ManageBlogController extends BaseController {
 
     @PutMapping("/{id}")
     @ApiOperation(value ="修改博客")
+    @ModelAttribute
     public ServerResponse<Boolean> updateBlog(@ApiParam("博客id") @PathVariable Integer id,
-                                              @ModelAttribute @RequestBody BlogAddRequest blogAddRequest){
+                                              @RequestBody BlogAddRequest blogAddRequest){
         validate(blogAddRequest);
 
         return blogService.updateBlog(id, blogAddRequest);

@@ -11,7 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -21,11 +20,10 @@ import org.springframework.web.bind.annotation.*;
  * @author Jann Lee
  * @date 2018-11-20 12:20
  **/
-@Controller
 @Api(description = "用户评论模块")
-@ResponseBody
 @RequestMapping("comments")
 @CrossOrigin
+@RestController
 public class CommentController extends BaseController {
 
     @Autowired

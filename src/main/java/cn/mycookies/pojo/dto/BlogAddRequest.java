@@ -1,6 +1,5 @@
 package cn.mycookies.pojo.dto;
 
-import cn.mycookies.common.JsonBean;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -12,7 +11,6 @@ import lombok.Data;
  */
 @ApiModel("添加博客实体类")
 @Data
-@JsonBean
 public class BlogAddRequest extends BlogUpdateRequest{
 
 

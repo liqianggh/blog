@@ -10,7 +10,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,8 +20,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("manage/comments")
 @Api(description = "用户评论模块")
-@ResponseBody
-@Controller
+@RestController
 public class ManageCommentController extends BaseController {
 
     @Autowired

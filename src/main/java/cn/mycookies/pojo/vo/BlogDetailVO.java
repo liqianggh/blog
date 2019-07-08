@@ -37,10 +37,13 @@ public class BlogDetailVO {
 
     public List<Integer> tags;
 
+    private Byte status;
+
     public static BlogDetailVO createFrom(BlogDO blogDO, List<Integer> tagIds){
         BlogDetailVO blogDetailVO = new BlogDetailVO();
         BeanUtils.copyProperties(blogDO, blogDetailVO);
         blogDetailVO.setTags(tagIds);
+        blogDetailVO.setStatus(blogDO.getBlogStatus());
         return blogDetailVO;
     }
 }
