@@ -33,6 +33,7 @@
         blog_tags t
             LEFT JOIN
         blog_tag t2 ON t.tag_id = t2.id
+    GROUP BY id
   </select>
   <select id="selectTagsOfBlog" resultType="cn.mycookies.pojo.po.TagDO">
     SELECT blog_tag.tag_name as tagName ,blog_tag.id
