@@ -1,6 +1,6 @@
 package cn.mycookies.pojo.vo;
 
-import cn.mycookies.pojo.po.BlogDO;
+import cn.mycookies.pojo.po.BlogWithBLOBs;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +29,8 @@ public class BlogDetailVO {
 
     public String content;
 
+    public String htmlContent;
+
     public String imgUrl;
 
     public Integer code;
@@ -39,7 +41,7 @@ public class BlogDetailVO {
 
     private Byte status;
 
-    public static BlogDetailVO createFrom(BlogDO blogDO, List<Integer> tagIds){
+    public static BlogDetailVO createFrom(BlogWithBLOBs blogDO, List<Integer> tagIds){
         BlogDetailVO blogDetailVO = new BlogDetailVO();
         BeanUtils.copyProperties(blogDO, blogDetailVO);
         blogDetailVO.setTags(tagIds);

@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @ToString
-@ApiModel("评论回复实体类")
+@ApiModel("博客vo")
 public class BlogVO {
 
     public Integer id;
@@ -23,7 +23,7 @@ public class BlogVO {
 
     public String summary;
 
-    public String content;
+    public String htmlContent;
 
     public String imgUrl;
 

@@ -44,6 +44,9 @@ public class BlogUpdateRequest {
     @ApiModelProperty(value = "正文", required = true)
     private String content;
 
+    @ApiModelProperty(value = "html格式正文", required = true)
+    private String htmlContent;
+
     @ApiModelProperty(value = "作为草稿，发布，删除", required = true)
     @NotNull
     private Byte status;

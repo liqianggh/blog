@@ -50,7 +50,7 @@ public class BlogService extends BaseService {
      * @return
      */
     public ServerResponse createBlogInfo(BlogAddRequest addRequest) {
-        BlogDO blogDO = new BlogDO();
+        BlogWithBLOBs blogDO = new BlogWithBLOBs();
         // 校验参数
         ServerResponse<Boolean> validateResult = validateAndInitCreateRequest(addRequest, blogDO);
         if (!validateResult.isOk()) {
@@ -78,8 +78,8 @@ public class BlogService extends BaseService {
     @Transactional(rollbackFor = BusinessException.class)
     public ServerResponse<Boolean> updateBlog(Integer id, BlogUpdateRequest updateRequest) {
         Preconditions.checkNotNull(id, "更新时id参数不能为null");
-        BlogDO blogDO = blogMapper.selectByIdAndStatus(id, null);
-        ServerResponse<Boolean> validateResult = validateAndInitUpdateRequest(updateRequest, blogDO);
+        BlogWithBLOBs blogWithBLOBs = blogMapper.selectByIdAndStatus(id, null);
+        ServerResponse<Boolean> validateResult = validateAndInitUpdateRequest(updateRequest, blogWithBLOBs);
         if (!validateResult.isOk()) {
             return validateResult;
         }
@@ -96,7 +96,7 @@ public class BlogService extends BaseService {
                 throw new BusinessException(ActionStatus.DATABASE_ERROR.inValue(), "添加标签过程失败");
             }
         }
-        if (blogMapper.updateByPrimaryKey(blogDO) == 0) {
+        if (blogMapper.updateByPrimaryKeyWithBLOBs(blogWithBLOBs) == 0) {
             throw new BusinessException(ActionStatus.DATABASE_ERROR.inValue(), "更新过程失败");
         }
         return resultOk();
@@ -110,7 +110,7 @@ public class BlogService extends BaseService {
      * @param blogDO     要添加的do
      * @return
      */
-    private ServerResponse<Boolean> validateAndInitCreateRequest(BlogAddRequest addRequest, BlogDO blogDO) {
+    private ServerResponse<Boolean> validateAndInitCreateRequest(BlogAddRequest addRequest, BlogWithBLOBs blogDO) {
         Preconditions.checkNotNull(blogDO, "添加参数不能为null");
         fillCreateTime(blogDO);
         return validateAndInitUpdateRequest(addRequest, blogDO);
@@ -123,7 +123,7 @@ public class BlogService extends BaseService {
      * @param blogDO
      * @return
      */
-    private ServerResponse<Boolean> validateAndInitUpdateRequest(BlogUpdateRequest updateRequest, BlogDO blogDO) {
+    private ServerResponse<Boolean> validateAndInitUpdateRequest(BlogUpdateRequest updateRequest, BlogWithBLOBs blogDO) {
         Preconditions.checkNotNull(updateRequest, "更新参数不能为null");
         if (Objects.isNull(blogDO)) {
             return resultError4Param("数据不存在");
@@ -174,7 +174,7 @@ public class BlogService extends BaseService {
         List<BlogDO> blogDOList = blogMapper.selectBlogs(queryRequest);
 
         List<BlogVO> blogVOList = blogDOList.stream().map(blogDO -> {
-            BlogVO blogVO = convertBlogToVO(blogDO);
+            BlogVO blogVO = convertBlogDOToVO(blogDO);
             blogVO.setTagList(tagService.getTagListByBlogId(blogDO.getId()));
             return blogVO;
         }).collect(Collectors.toList());
@@ -191,7 +191,7 @@ public class BlogService extends BaseService {
      * @return
      */
     public ServerResponse<BlogVO> getBlogDetailsInfo(Integer id) {
-        BlogDO blogDO = blogMapper.selectByPrimaryKey(id);
+        BlogWithBLOBs blogDO = blogMapper.selectByPrimaryKey(id);
         if (Objects.isNull(blogDO)) {
             return resultError4Param("数据不存在");
         }
@@ -276,7 +276,7 @@ public class BlogService extends BaseService {
     public ServerResponse<BlogDetailVO> getBlogDetailInfo(Integer blogId) {
         Preconditions.checkNotNull(blogId, "博客id不能为null");
 
-        BlogDO blogDO = blogMapper.selectByPrimaryKey(blogId);
+        BlogWithBLOBs blogDO = blogMapper.selectByPrimaryKey(blogId);
         if (Objects.isNull(blogDO)) {
             return resultError4Param("博客不存在");
         }
@@ -298,13 +298,21 @@ public class BlogService extends BaseService {
         if (Objects.isNull(blogDO)) {
             return null;
         }
-        return BlogDetailVO.createFrom(blogDO, null);
+        BlogDetailVO blogDetail = new BlogDetailVO();
+        blogDetail.setId(blogDO.getId());
+        blogDetail.setTitle(blogDO.getTitle());
+        blogDetail.setCategoryId(blogDO.getCategoryId());
+        return blogDetail;
     }
 
-    private BlogVO convertBlogToVO(BlogDO blogDO) {
+    private BlogVO convertBlogToVO(BlogWithBLOBs blogDO) {
+        BlogVO blogVo =convertBlogDOToVO(blogDO);
+        blogVo.setHtmlContent(blogDO.getHtmlContent());
+        return blogVo;
+    }
+    private BlogVO convertBlogDOToVO(BlogDO blogDO) {
         BlogVO blogVo = new BlogVO();
         blogVo.setCalcTime(DateCalUtils.format(new Date(blogDO.getCreateTime())));
-        blogVo.setContent(blogDO.getContent());
         blogVo.setCreateTime(DateTimeUtil.dateToStr(blogDO.getCreateTime()));
         blogVo.setUpdateTime(DateTimeUtil.dateToStr(blogDO.getUpdateTime()));
         blogVo.setId(blogDO.getId());

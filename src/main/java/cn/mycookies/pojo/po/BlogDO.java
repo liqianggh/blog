@@ -28,6 +28,4 @@ public class BlogDO  extends  BaseDO{
     private Integer commentCount;
 
     private Byte blogStatus;
-
-    private String content;
 }

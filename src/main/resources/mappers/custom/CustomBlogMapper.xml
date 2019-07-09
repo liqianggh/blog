@@ -70,7 +70,7 @@
             </if>
         </where>
     </select>
-    <select id="selectByIdAndStatus" resultType="cn.mycookies.pojo.po.BlogDO">
+    <select id="selectByIdAndStatus" resultType="cn.mycookies.pojo.po.BlogWithBLOBs">
         SELECT
         id,title,
         img_url as imgUrl,

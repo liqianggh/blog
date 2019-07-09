@@ -16,8 +16,9 @@
     <result column="update_time" jdbcType="BIGINT" property="updateTime" />
     <result column="blog_status" jdbcType="TINYINT" property="blogStatus" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.mycookies.pojo.po.BlogDO">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.mycookies.pojo.po.BlogWithBLOBs">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="html_content" jdbcType="LONGVARCHAR" property="htmlContent" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -82,7 +83,7 @@
     create_time, update_time, blog_status
   </sql>
   <sql id="Blob_Column_List">
-    content
+    content, html_content
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="cn.mycookies.pojo.po.BlogExample" resultMap="ResultMapWithBLOBs">
     select
@@ -144,7 +145,7 @@
       #{commentCount,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, 
       #{blogStatus,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="cn.mycookies.pojo.po.BlogDO">
+  <insert id="insertSelective" keyProperty="id" parameterType="cn.mycookies.pojo.po.BlogDO" useGeneratedKeys="true">
     insert into blog
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -189,6 +190,9 @@
       <if test="content != null">
         content,
       </if>
+      <if test="htmlContent != null">
+        html_content,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -232,6 +236,9 @@
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="htmlContent != null">
+        #{htmlContent,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -306,7 +313,8 @@
       create_time = #{record.createTime,jdbcType=BIGINT},
       update_time = #{record.updateTime,jdbcType=BIGINT},
       blog_status = #{record.blogStatus,jdbcType=TINYINT},
-      content = #{record.content,jdbcType=LONGVARCHAR}
+      content = #{record.content,jdbcType=LONGVARCHAR},
+      html_content = #{record.htmlContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -389,7 +397,8 @@
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT},
       blog_status = #{blogStatus,jdbcType=TINYINT},
-      content = #{content,jdbcType=LONGVARCHAR}
+      content = #{content,jdbcType=LONGVARCHAR},
+      html_content = #{htmlContent,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.mycookies.pojo.po.BlogDO">

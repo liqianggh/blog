@@ -4,6 +4,7 @@ import cn.mycookies.pojo.dto.BlogAddRequest;
 import cn.mycookies.pojo.dto.BlogListRequest;
 import cn.mycookies.pojo.po.BlogDO;
 import cn.mycookies.pojo.po.BlogExample;
+import cn.mycookies.pojo.po.BlogWithBLOBs;
 import cn.mycookies.pojo.vo.BlogVO;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,29 +17,29 @@ public interface BlogMapper {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(BlogDO record);
+    int insert(BlogWithBLOBs record);
 
-    int insertSelective(BlogDO record);
+    int insertSelective(BlogWithBLOBs record);
 
-    List<BlogDO> selectByExampleWithBLOBs(BlogExample example);
+    List<BlogWithBLOBs> selectByExampleWithBLOBs(BlogExample example);
 
     List<BlogDO> selectByExample(BlogExample example);
 
-    BlogDO selectByPrimaryKey(Integer id);
+    BlogWithBLOBs selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") BlogDO record, @Param("example") BlogExample example);
+    int updateByExampleSelective(@Param("record") BlogWithBLOBs record, @Param("example") BlogExample example);
 
-    int updateByExampleWithBLOBs(@Param("record") BlogDO record, @Param("example") BlogExample example);
+    int updateByExampleWithBLOBs(@Param("record") BlogWithBLOBs record, @Param("example") BlogExample example);
 
     int updateByExample(@Param("record") BlogDO record, @Param("example") BlogExample example);
 
-    int updateByPrimaryKeySelective(BlogDO record);
+    int updateByPrimaryKeySelective(BlogWithBLOBs record);
 
-    int updateByPrimaryKeyWithBLOBs(BlogDO record);
+    int updateByPrimaryKeyWithBLOBs(BlogWithBLOBs record);
 
     int updateByPrimaryKey(BlogDO record);
 
-    BlogDO selectByIdAndStatus(@Param("id") Integer id, @Param("blogStatus") Byte blogStatus);
+    BlogWithBLOBs selectByIdAndStatus(@Param("id") Integer id, @Param("blogStatus") Byte blogStatus);
 
     List<BlogDO> selectBlogs(BlogListRequest blogListRequest);
 
