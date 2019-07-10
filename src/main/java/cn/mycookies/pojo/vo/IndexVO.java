@@ -19,7 +19,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @ToString
-@ApiModel("首页")
 public class IndexVO {
 
     public PageInfo<BlogVO> blogList;
