@@ -165,15 +165,15 @@ public class CommentService extends BaseService {
         // 如果时留言板消息的话，当pid为null时，targetId可以为null
         Page page = getPage(commentListRequest);
         CommentExample commentExample = new CommentExample();
-        commentExample.createCriteria()
-                .andTargetTypeEqualTo(targetType.getCode())
+        CommentExample.Criteria criteria = commentExample.createCriteria();
+        criteria.andTargetTypeEqualTo(targetType.getCode())
                 .andCommentStatusEqualTo(YesOrNoType.YES.getCode());
         commentExample.setOrderByClause(page.getOrderBy());
         List<CommentDO> commentList;
         if (Objects.nonNull(pid)) {
-            commentExample.createCriteria().andTargetIdEqualTo(targetId);
+            criteria.andTargetIdEqualTo(targetId);
          } else if (Objects.nonNull(targetId)) {
-            commentExample.createCriteria().andTargetIdEqualTo(targetId);
+            criteria.andTargetIdEqualTo(targetId);
          } else if (!Objects.equals(targetType, CommentTargetType.MESSAGE_BOARD)){
             return resultError4Param("参数不合法");
          }
