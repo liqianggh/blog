@@ -62,7 +62,7 @@
             <if test="tagId != null">
                 b.tag_id=#{tagId}
             </if>
-            <if test="categoryId != null">
+            <if test="categoryId != null and categoryId != 0">
                 and t.category_id=#{categoryId}
             </if>
             <if test="status != null">
