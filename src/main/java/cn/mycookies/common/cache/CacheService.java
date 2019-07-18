@@ -9,31 +9,14 @@ package cn.mycookies.common.cache;
 public interface CacheService<T> {
 
     /**
-     * 增加并返回
-     * @param key
+     * 限制留言
+     * @param
      */
-    boolean isDataExists(String key);
+    boolean isValidComment(String key);
 
     /**
-     * 针对数字类型的先增加后返回
+     * 限制访问统计和点赞
      * @param key
-     * @return
      */
-    long incrAndGet(String key);
-
-    /**
-     * 获取数据
-     * @param key
-     * @return
-     */
-    T get(String key);
-
-    /**
-     * 存数据
-     * @param key
-     * @param value
-     * @return
-     */
-    boolean set(String key, T value);
-
+    boolean isValidViewOrLike(String key);
 }

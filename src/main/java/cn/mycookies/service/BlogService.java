@@ -205,6 +205,9 @@ public class BlogService extends BaseService {
         CommentListRequest commentListRequest = new CommentListRequest();
         commentListRequest.setTargetType(CommentTargetType.ARTICLE);
         blogVO.setComments(commentService.getCommentInfos(id, commentListRequest).getData());
+        if (isValidViewOrLike(id.toString())) {
+            updateBlogCount(id, BlogStaticType.VIEW);
+        }
 
         return ServerResponse.createBySuccess(blogVO);
     }

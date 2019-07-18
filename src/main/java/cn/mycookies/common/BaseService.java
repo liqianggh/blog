@@ -1,15 +1,17 @@
 package cn.mycookies.common;
 
+import cn.mycookies.common.cache.impl.CacheService4LocalCache;
 import cn.mycookies.common.exception.BusinessException;
 import cn.mycookies.pojo.po.BaseDO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.base.Preconditions;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.mysql.jdbc.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 /**
@@ -20,9 +22,32 @@ import java.util.Objects;
  */
 public class BaseService {
 
-    protected Logger logger = LoggerFactory.getLogger(getClass().getName());
+    @Resource
+    private CacheService4LocalCache cacheService4LocalCache;
 
-    protected Cache localCache = CacheBuilder.newBuilder().build();
+    protected boolean isValidViewOrLike(String targetId) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String ip =request.getHeader("X-Real-Ip");
+        if (StringUtils.isNullOrEmpty(ip) || StringUtils.isNullOrEmpty(targetId)) {
+            return Boolean.FALSE;
+        }
+        return cacheService4LocalCache.isValidViewOrLike(String.join("_", ip, targetId));
+    }
+
+    protected boolean isValidComment() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String ip =request.getHeader("X-Real-Ip");
+        if (StringUtils.isNullOrEmpty(ip)) {
+            return Boolean.FALSE;
+        }
+        return cacheService4LocalCache.isValidComment(ip);
+    }
+
+    private String getIP(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return request.getHeader("X-Real-Ip");
+    }
+
     /**
      * 分页信息
      */

@@ -54,6 +54,9 @@ public class CommentService extends BaseService {
      */
     @Transactional(rollbackFor = RuntimeException.class)
     public ServerResponse<Boolean> addCommentInfo(CommentAddRequest commentAddRequest) {
+        if (!isValidComment()){
+            return resultError("评论过于频繁，请稍后再试");
+        }
         CommentDO commentDO = new CommentDO();
         ServerResponse<Boolean> validateResult = validateAndInitAddRequest(commentAddRequest, commentDO);
         if (!validateResult.isOk()) {
@@ -212,6 +215,9 @@ public class CommentService extends BaseService {
      * @return
      */
     public ServerResponse<String> addCommentLikeCount(Integer commentId) {
+        if (!isValidViewOrLike(String.valueOf(commentId))) {
+            return resultError4DB("您已经点过赞了");
+        }
         CommentDO commentDO = commentMapper.selectByPrimaryKey(commentId);
         checkExists(commentDO);
         fillUpdateTime(commentDO);
