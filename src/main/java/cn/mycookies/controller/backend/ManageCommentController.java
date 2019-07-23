@@ -1,6 +1,6 @@
 package cn.mycookies.controller.backend;
 
-import cn.mycookies.common.BaseController;
+import cn.mycookies.common.basic.BaseController;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.dto.CommentListRequest;
 import cn.mycookies.pojo.vo.CommentListItemVO;

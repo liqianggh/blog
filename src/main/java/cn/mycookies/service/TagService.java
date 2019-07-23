@@ -3,7 +3,7 @@ package cn.mycookies.service;
 import cn.mycookies.common.BaseService;
 import cn.mycookies.common.KeyValueVO;
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.common.TagType;
+import cn.mycookies.common.enums.TagType;
 import cn.mycookies.dao.BlogMapper;
 import cn.mycookies.dao.BlogTagsDOMapper;
 import cn.mycookies.dao.TagMapper;

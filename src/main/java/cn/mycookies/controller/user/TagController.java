@@ -1,6 +1,6 @@
 package cn.mycookies.controller.user;
 
-import cn.mycookies.common.BaseController;
+import cn.mycookies.common.basic.BaseController;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.dto.TagVO;
 import cn.mycookies.service.TagService;

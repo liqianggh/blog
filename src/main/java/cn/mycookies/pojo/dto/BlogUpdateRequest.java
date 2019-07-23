@@ -1,6 +1,5 @@
 package cn.mycookies.pojo.dto;
 
-import cn.mycookies.common.JsonBean;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -15,7 +14,6 @@ import java.util.List;
  * @author Jann Lee
  * @date 2019-07-02 23:03
  **/
-@JsonBean
 @Data
 public class BlogUpdateRequest {
 

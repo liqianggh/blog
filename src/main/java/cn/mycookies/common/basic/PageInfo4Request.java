@@ -1,4 +1,4 @@
-package cn.mycookies.common;
+package cn.mycookies.common.basic;
 
 import com.mysql.jdbc.StringUtils;
 import lombok.Data;
@@ -12,7 +12,6 @@ import java.util.Objects;
  * @date 2019-05-08 23:43
  **/
 @Data
-@JsonBean
 public class PageInfo4Request {
 
     /**

@@ -1,6 +1,6 @@
 package cn.mycookies.controller.backend;
 
-import cn.mycookies.common.BaseController;
+import cn.mycookies.common.basic.BaseController;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.dto.BlogAddRequest;
 import cn.mycookies.pojo.dto.BlogListRequest;
@@ -28,9 +28,8 @@ public class ManageBlogController extends BaseController {
     @Autowired
     private BlogService blogService;
 
-    @PostMapping
     @ApiOperation(value ="新增博客")
-    @ModelAttribute
+    @PostMapping
     public ServerResponse addBlog(@RequestBody BlogAddRequest blogAddRequest){
         validate(blogAddRequest);
 
@@ -46,7 +45,6 @@ public class ManageBlogController extends BaseController {
 
     @PutMapping("/{id}")
     @ApiOperation(value ="修改博客")
-    @ModelAttribute
     public ServerResponse<Boolean> updateBlog(@ApiParam("博客id") @PathVariable Integer id,
                                               @RequestBody BlogAddRequest blogAddRequest){
         validate(blogAddRequest);
@@ -61,6 +59,11 @@ public class ManageBlogController extends BaseController {
         return blogService.getBlogDetailInfo(id);
     }
 
+    @DeleteMapping("/{id}")
+    @ApiOperation(value ="删除博客")
+    public ServerResponse<Boolean> deleteBlog(@ApiParam("博客id") @PathVariable Integer id){
 
+        return blogService.deleteBlogInfo(id);
+    }
 
 }

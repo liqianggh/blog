@@ -1,6 +1,5 @@
 package cn.mycookies.pojo.dto;
 
-import cn.mycookies.common.JsonBean;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -20,7 +19,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Getter
 @ToString
-@JsonBean
+
 public class TagUpdateRequest {
 
     @Length(min = 1,max = 10,message = "tagName长度需在1-10之间")

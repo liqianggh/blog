@@ -1,6 +1,5 @@
 package cn.mycookies.pojo.dto;
 
-import cn.mycookies.common.JsonBean;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +15,7 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @ToString
-@JsonBean
+
 public class TagVO4Blog {
 
     private Integer id;

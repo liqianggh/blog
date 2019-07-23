@@ -1,4 +1,4 @@
-package cn.mycookies.common;
+package cn.mycookies.common.enums;
 
 /**
  * 标签类别美剧

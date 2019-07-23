@@ -1,9 +1,9 @@
 package cn.mycookies.controller.backend;
 
-import cn.mycookies.common.BaseController;
+import cn.mycookies.common.basic.BaseController;
 import cn.mycookies.common.KeyValueVO;
 import cn.mycookies.common.ServerResponse;
-import cn.mycookies.common.TagType;
+import cn.mycookies.common.enums.TagType;
 import cn.mycookies.service.TagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

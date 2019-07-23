@@ -1,7 +1,6 @@
 package cn.mycookies.pojo.dto;
 
- import cn.mycookies.common.JsonBean;
-import io.swagger.annotations.ApiModel;
+ import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,7 +15,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@JsonBean
+
 public class TagAddRequest extends TagUpdateRequest{
 
 }

@@ -1,5 +1,6 @@
 package cn.mycookies.common;
 
+import cn.mycookies.common.basic.PageInfo4Request;
 import cn.mycookies.common.cache.impl.CacheService4LocalCache;
 import cn.mycookies.common.exception.BusinessException;
 import cn.mycookies.pojo.po.BaseDO;

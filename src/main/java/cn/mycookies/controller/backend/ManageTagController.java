@@ -1,6 +1,6 @@
 package cn.mycookies.controller.backend;
 
-import cn.mycookies.common.BaseController;
+import cn.mycookies.common.basic.BaseController;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.pojo.dto.TagAddRequest;
 import cn.mycookies.pojo.dto.TagListRequest;
@@ -37,7 +37,6 @@ public class ManageTagController extends BaseController{
 
     @PostMapping
     @ApiOperation(value = "添加标签", response = Boolean.class)
-    @ModelAttribute
     public ServerResponse<Boolean> addTag(@RequestBody TagAddRequest tagAddRequest) {
         validate(tagAddRequest);
 
@@ -46,7 +45,6 @@ public class ManageTagController extends BaseController{
 
     @PutMapping("/{id:\\d+}")
     @ApiOperation(value = "修改标签", response = Boolean.class)
-    @ModelAttribute
     public ServerResponse<Boolean> updateTag(@PathVariable(name = "id") Integer id, @RequestBody TagUpdateRequest tagUpdateRequest) {
         validate(tagUpdateRequest);
 

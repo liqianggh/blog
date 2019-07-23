@@ -1,6 +1,5 @@
 package cn.mycookies.pojo.po;
 
-import cn.mycookies.common.JsonBean;
 import lombok.Data;
 
 /**
@@ -10,7 +9,6 @@ import lombok.Data;
  * @date 2019-07-03 22:34
  */
 @Data
-@JsonBean
 public class TagDO extends BaseDO{
 
     private String tagName;

@@ -1,6 +1,7 @@
 package cn.mycookies.service;
 
 import cn.mycookies.common.*;
+import cn.mycookies.common.enums.TagType;
 import cn.mycookies.common.exception.BusinessException;
 import cn.mycookies.dao.BlogMapper;
 import cn.mycookies.dao.BlogTagsDOMapper;
@@ -170,7 +171,7 @@ public class BlogService extends BaseService {
     public ServerResponse<PageInfo<BlogVO>> getBlogListInfos(BlogListRequest queryRequest) {
         Preconditions.checkNotNull(queryRequest, "查询参数不能为null");
         Page page = getPage(queryRequest);
-
+        queryRequest.setStatus(DataStatus.NO_DELETED);
         List<BlogDO> blogDOList = blogMapper.selectBlogs(queryRequest);
 
         List<BlogVO> blogVOList = blogDOList.stream().map(blogDO -> {
@@ -191,7 +192,7 @@ public class BlogService extends BaseService {
      * @return
      */
     public ServerResponse<BlogVO> getBlogDetailsInfo(Integer id) {
-        BlogWithBLOBs blogDO = blogMapper.selectByPrimaryKey(id);
+        BlogWithBLOBs blogDO = blogMapper.selectByIdAndStatus(id, DataStatus.NO_DELETED);
         if (Objects.isNull(blogDO)) {
             return resultError4Param("数据不存在");
         }
@@ -259,7 +260,7 @@ public class BlogService extends BaseService {
         IndexVO indexVO = new IndexVO();
         if (withBlogs) {
             BlogListRequest blogListRequest = new BlogListRequest();
-            blogListRequest.setStatus(YesOrNoType.YES.getCode());
+            blogListRequest.setStatus(DataStatus.NO_DELETED);
             blogs = getBlogListInfos(blogListRequest).getData();
             indexVO.setBlogList(blogs);
         }
@@ -327,5 +328,25 @@ public class BlogService extends BaseService {
         blogVo.setCode(blogDO.getCode());
         blogVo.setCategoryId(blogDO.getCategoryId());
         return blogVo;
+    }
+
+    /**
+     * 逻辑删除博客
+     * @param id 博客主键id
+     * @return
+     */
+    public ServerResponse<Boolean> deleteBlogInfo(Integer id) {
+        Preconditions.checkNotNull(id, "要删除的博客id不能未空");
+        BlogDO blogDO = getBlogById(id);
+        if (Objects.isNull(blogDO)) {
+            return resultOk();
+        }
+        fillUpdateTime(blogDO);
+        blogDO.setBlogStatus(DataStatus.DELETED);
+        int result = blogMapper.updateByPrimaryKey(blogDO);
+        if (result == 0) {
+            return resultError4DB("删除失败");
+        }
+        return resultOk();
     }
 }

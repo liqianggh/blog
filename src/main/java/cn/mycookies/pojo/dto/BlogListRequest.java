@@ -1,7 +1,6 @@
 package cn.mycookies.pojo.dto;
 
-import cn.mycookies.common.JsonBean;
-import cn.mycookies.common.PageInfo4Request;
+import cn.mycookies.common.basic.PageInfo4Request;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,7 +13,6 @@ import lombok.Data;
  **/
 @ApiModel("博客列表查询参数")
 @Data
-@JsonBean
 public class BlogListRequest extends PageInfo4Request {
 
     /**
@@ -33,6 +31,6 @@ public class BlogListRequest extends PageInfo4Request {
      * 状态吗
      */
     @ApiModelProperty(name = "状态")
-    private Integer status;
+    private Byte status;
 
 }

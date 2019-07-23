@@ -1,5 +1,6 @@
-package cn.mycookies.common;
+package cn.mycookies.common.basic;
 
+import cn.mycookies.common.ActionStatus;
 import cn.mycookies.common.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
