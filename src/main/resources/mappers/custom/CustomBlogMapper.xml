@@ -99,10 +99,10 @@
         <where>
             <choose>
                 <when test="!isLast">
-                     id &gt; #{id} and blog_status = 0 order by id asc
+                     id &gt; #{id} and blog_status = 1 order by id asc
                 </when>
                 <otherwise>
-                     id &lt; #{id} and blog_status = 0 order by id desc
+                     id &lt; #{id} and blog_status = 1 order by id desc
                 </otherwise>
             </choose>
         </where>
@@ -117,7 +117,7 @@
         like_count as likeCount,view_count as viewCount,blog_status blogStatus
         from blog
         <where>
-            blog_status=0
+            blog_status=1
             <if test="code == 2">
                 and code= #{code}
             </if>
