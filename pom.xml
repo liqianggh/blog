@@ -5,8 +5,8 @@
 
     <groupId>com.mycookies</groupId>
     <artifactId>myblog</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <version>0.0.1-RELEASE</version>
+    <packaging>war</packaging>
 
     <name>myblog</name>
     <description>The blogDO of Jann Lee</description>

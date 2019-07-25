@@ -5,10 +5,10 @@ spring:
       property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
     datasource:
       driver-class-name: com.mysql.jdbc.Driver
-      url : jdbc:mysql://140.143.xxx:3306/test_blog?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
-      username: root
-      password: sqlpw
-#可以用data.name表示
+      url : jdbc:mysql://数据库ip:3306/库名?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
+      username: 数据库用户名
+      password: 数据库密码
+#七牛云配置，用来生成token用的
 qiniu:
     ak: xx
     sk: xx
