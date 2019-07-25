@@ -51,7 +51,7 @@
         SELECT
         t.id,t.title,
         t.img_url as imgUrl,
-        t.summary,content,
+        t.summary,content,t.html_content as htmlContent,
         t.code,t.create_time as createTime,t.update_time updateTime,
         t.like_count as likeCount,t.view_count as viewCount,t.blog_status blogStatus
         from blog t
@@ -75,7 +75,7 @@
         id,title,
         img_url as imgUrl,
         category_id as categoryId,
-        summary,content,
+        summary,content,html_content as htmlContent,
         code,create_time as createTime,
         like_count as likeCount,view_count as viewCount,blog_status blogStatus
         from blog
