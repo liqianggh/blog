@@ -7,6 +7,7 @@ import cn.mycookies.common.YesOrNoType;
 import cn.mycookies.dao.CommentMapper;
 import cn.mycookies.pojo.dto.CommentAddRequest;
 import cn.mycookies.pojo.dto.CommentListRequest;
+import cn.mycookies.pojo.po.BlogDO;
 import cn.mycookies.pojo.po.CommentDO;
 import cn.mycookies.pojo.po.CommentExample;
 import cn.mycookies.pojo.po.UserDO;
@@ -182,11 +183,28 @@ public class CommentService extends BaseService {
          }
         commentList  = commentMapper.selectByExample(commentExample);
         List<CommentListItemVO>  resultList =  commentList.stream().map(CommentListItemVO::createFrom).collect(Collectors.toList());
+        /**
+         * 查询每个留言的评论
+         */
+        resultList.forEach(item ->{
+            item.setChildrenComments(getCommentReplyById(item.getId()).stream().map(CommentListItemVO::createFrom).collect(Collectors.toList()));
+        });
         PageInfo pageInfo = page.toPageInfo();
         pageInfo.setList(resultList);
 
         return resultOk(pageInfo);
     }
+
+    public List<CommentDO> getCommentReplyById(int id) {
+        CommentExample commentExample = new CommentExample();
+        CommentExample.Criteria criteria = commentExample.createCriteria();
+        criteria.andTargetTypeEqualTo(CommentTargetType.COMMENT_REPLY.getCode())
+                .andCommentStatusEqualTo(YesOrNoType.YES.getCode());
+        commentExample.setOrderByClause("create_time");
+
+        return commentMapper.selectByExample(commentExample);
+    }
+
 
     /**
      * 删除评论
