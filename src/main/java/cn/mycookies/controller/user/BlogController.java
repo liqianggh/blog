@@ -24,6 +24,8 @@ public class BlogController extends BaseController {
     @Autowired
     private BlogService blogService;
 
+
+
     @GetMapping
     @ApiOperation(value ="分页查询列表博客",response = BlogVO.class,responseContainer = "List")
     public ServerResponse<PageInfo<BlogVO>> getBlogListInfos(@ModelAttribute BlogListRequest queryRequest){

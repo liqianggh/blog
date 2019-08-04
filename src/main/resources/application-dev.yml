@@ -13,3 +13,4 @@ qiniu:
     ak: xx
     sk: xx
     bucket: blog_v3
+    url-prefix: 图片url前缀
