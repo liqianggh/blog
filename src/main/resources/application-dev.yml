@@ -13,3 +13,7 @@ qiniu:
     ak: xx
     sk: xx
     bucket: blog_v3
+img_prefix: 图片前缀（图片存储在七牛云）
+cookie:
+      name: authentation
+      max-age: 7200

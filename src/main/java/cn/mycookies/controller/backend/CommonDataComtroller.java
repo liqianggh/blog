@@ -34,7 +34,7 @@ public class CommonDataComtroller extends BaseController {
      * @return
      */
     @GetMapping("/all/categories")
-    @ApiOperation(value = "查找博客", response = KeyValueVO.class)
+    @ApiOperation(value = "获取博客分类", response = KeyValueVO.class)
     public ServerResponse<List<KeyValueVO<Integer, String>>> getAllCategoryInfos() {
         return tagService.getAllTagList(TagType.CATEGORY.getCode());
     }

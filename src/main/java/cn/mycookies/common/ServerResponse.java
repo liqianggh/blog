@@ -97,5 +97,8 @@ public class ServerResponse<T> implements Serializable{
         return msg;
     }
 
-
+    @Override
+    public String toString() {
+        return "{" + "status: " + status + ", msg:'" + msg + '\'' + ", data:" + data + '}';
+    }
 }
