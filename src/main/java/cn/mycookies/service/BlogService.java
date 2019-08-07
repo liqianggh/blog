@@ -16,9 +16,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import com.mysql.jdbc.StringUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +45,8 @@ public class BlogService extends BaseService {
     @Autowired
     private CommentService commentService;
 
+    @Value("${qiniu.url-prefix}")
+    private String imgPrefix;
 
     /**
      * 添加新的博客
@@ -177,6 +181,9 @@ public class BlogService extends BaseService {
         List<BlogVO> blogVOList = blogDOList.stream().map(blogDO -> {
             BlogVO blogVO = convertBlogDOToVO(blogDO);
             blogVO.setTagList(tagService.getTagListByBlogId(blogDO.getId()));
+            if (!StringUtils.isNullOrEmpty(blogDO.getImgUrl())) {
+                blogVO.setImgUrl(imgPrefix + blogDO.getImgUrl());
+            }
             return blogVO;
         }).collect(Collectors.toList());
 
