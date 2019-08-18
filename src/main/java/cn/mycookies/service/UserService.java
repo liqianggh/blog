@@ -3,14 +3,24 @@ package cn.mycookies.service;
 import cn.mycookies.common.BaseService;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.dao.UserMapper;
+import cn.mycookies.pojo.dto.UserLoginRequest;
 import cn.mycookies.pojo.po.UserDO;
 import cn.mycookies.pojo.po.UserExample;
 import com.google.common.base.Preconditions;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.web.context.HttpRequestResponseHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.annotation.Resource;
+import javax.print.attribute.standard.Severity;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -24,6 +34,12 @@ public class UserService extends BaseService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Value("${cookie.name}")
+    private String cookieName;
+
+    @Value("${cookie.max-age}")
+    private Integer maxAge;
 
     /**
      * 根据邮箱获取访客信息
@@ -64,6 +80,22 @@ public class UserService extends BaseService {
             return resultError4DB("更用户信息失败,参数" + userDO.toString());
         }
         return resultOk();
+    }
+
+    public ServerResponse<Boolean> login(HttpServletRequest servletRequest, HttpServletResponse servletResponse,UserLoginRequest userLoginRequest) {
+        setUserInfo2Cookie(servletRequest, servletResponse);
+        return resultOk();
+    }
+
+    private void setUserInfo2Cookie(HttpServletRequest request, HttpServletResponse response){
+        // 2.2 将合法的权限重新赋值到用户信息中，生成token并返回
+        String token = "123456";
+        // 将tocken设置到Cookie中，返回给客户端
+        Cookie cookie = new Cookie(cookieName, token);
+        cookie.setMaxAge(maxAge);
+        String cookiePath = request.getContextPath() + "/";
+        cookie.setPath(cookiePath);
+        response.addCookie(cookie);
     }
 
 }

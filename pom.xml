@@ -9,7 +9,7 @@
     <packaging>war</packaging>
 
     <name>myblog</name>
-    <description>The blogDO of Jann Lee</description>
+    <description>The blog of Jann Lee</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -124,6 +124,16 @@
             <groupId>com.qiniu</groupId>
             <artifactId>qiniu-java-sdk</artifactId>
             <version>[7.2.0, 7.2.99]</version>
+        </dependency>
+        <!--Spring Security-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opensaml</groupId>
+            <artifactId>openws</artifactId>
+            <version>1.4.2-1</version>
         </dependency>
     </dependencies>
 
