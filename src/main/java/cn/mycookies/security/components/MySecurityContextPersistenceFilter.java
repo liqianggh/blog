@@ -10,7 +10,6 @@ import org.springframework.security.web.context.HttpRequestResponseHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.security.web.context.SecurityContextRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.FilterChain;
@@ -30,7 +29,7 @@ import java.util.Objects;
  * @author liqiang
  * @datetime 2019-08-07 16:38:06
  */
-@Component
+//@Component
 public class MySecurityContextPersistenceFilter extends SecurityContextPersistenceFilter {
     static final String FILTER_APPLIED = "__spring_security_scpf_applied";
 

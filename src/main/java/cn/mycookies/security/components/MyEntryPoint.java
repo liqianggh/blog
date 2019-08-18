@@ -3,7 +3,6 @@ package cn.mycookies.security.components;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,7 @@ import java.io.IOException;
  * @author liqiang
  * @datetime 2019/8/7 14:58
  **/
-@Component
+//@Component
 public class MyEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
