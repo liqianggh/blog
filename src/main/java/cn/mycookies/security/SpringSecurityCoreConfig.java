@@ -5,6 +5,7 @@ import cn.mycookies.security.components.MyLogoutSuccessHandler;
 import cn.mycookies.security.components.MySecurityContextPersistenceFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -16,7 +17,7 @@ import org.springframework.security.web.context.SecurityContextPersistenceFilter
  * @author liqiang
  * @datetime 2019/8/7 14:52
  **/
-//@Configuration
+@Configuration
 public class SpringSecurityCoreConfig extends WebSecurityConfigurerAdapter {
     /**
      * 没有登录时进行的处理

@@ -1,6 +1,6 @@
 package cn.mycookies.security;
 
-        import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
 /**
  * SpringSecurity 配置, 让spring security 的拦截器前置
