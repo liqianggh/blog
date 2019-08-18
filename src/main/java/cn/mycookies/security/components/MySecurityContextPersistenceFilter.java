@@ -90,7 +90,7 @@ public class MySecurityContextPersistenceFilter extends SecurityContextPersisten
 //            }
 //        }
         // 假数据
-        if (Objects.nonNull(cookie)) {
+        if (Objects.isNull(cookie)) {
             SecurityUserDetail securityUserDetail = new SecurityUserDetail();
             securityUserDetail.setId(1L);
             securityUserDetail.setUserName("李强");
