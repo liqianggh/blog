@@ -30,6 +30,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * 博客管理的service
+ *
+ * @author Jann Lee
+ * @date 2019-08-18 11:00
+ */
 @Service
 public class BlogService extends BaseService {
 
@@ -67,7 +73,6 @@ public class BlogService extends BaseService {
         Integer blogId = blogDO.getId();
         List<Integer> tags = addRequest.getTags();
         if (CollectionUtils.isNotEmpty(tags)) {
-            tagService.deleteTagsByBlogId(blogId);
             tagService.createBlogTags(blogId, tags);
         }
         return resultOk();
@@ -235,6 +240,11 @@ public class BlogService extends BaseService {
 
     public ServerResponse updateBlogCount(Integer id, String type) {
         BlogDO blogDO = blogMapper.selectByIdAndStatus(id, DataStatus.NO_DELETED);
+
+        if (!isValidViewOrLike(type+"_blog_"+id)) {
+            return resultOk();
+        }
+
         if (Objects.isNull(blogDO)) {
             return ServerResponse.createByErrorCodeMessage(ActionStatus.PARAMAS_ERROR.inValue(), ActionStatus.PARAMAS_ERROR.getDescription());
         }

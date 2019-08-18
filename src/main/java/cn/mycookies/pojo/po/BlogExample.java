@@ -434,6 +434,76 @@ public class BlogExample {
             return (Criteria) this;
         }
 
+        public Criteria andBlogCatalogIsNull() {
+            addCriterion("blog_catalog is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogCatalogIsNotNull() {
+            addCriterion("blog_catalog is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogCatalogEqualTo(String value) {
+            addCriterion("blog_catalog =", value, "blogCatalog");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogCatalogNotEqualTo(String value) {
+            addCriterion("blog_catalog <>", value, "blogCatalog");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogCatalogGreaterThan(String value) {
+            addCriterion("blog_catalog >", value, "blogCatalog");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogCatalogGreaterThanOrEqualTo(String value) {
+            addCriterion("blog_catalog >=", value, "blogCatalog");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogCatalogLessThan(String value) {
+            addCriterion("blog_catalog <", value, "blogCatalog");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogCatalogLessThanOrEqualTo(String value) {
+            addCriterion("blog_catalog <=", value, "blogCatalog");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogCatalogLike(String value) {
+            addCriterion("blog_catalog like", value, "blogCatalog");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogCatalogNotLike(String value) {
+            addCriterion("blog_catalog not like", value, "blogCatalog");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogCatalogIn(List<String> values) {
+            addCriterion("blog_catalog in", values, "blogCatalog");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogCatalogNotIn(List<String> values) {
+            addCriterion("blog_catalog not in", values, "blogCatalog");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogCatalogBetween(String value1, String value2) {
+            addCriterion("blog_catalog between", value1, value2, "blogCatalog");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogCatalogNotBetween(String value1, String value2) {
+            addCriterion("blog_catalog not between", value1, value2, "blogCatalog");
+            return (Criteria) this;
+        }
+
         public Criteria andAuthorIsNull() {
             addCriterion("author is null");
             return (Criteria) this;

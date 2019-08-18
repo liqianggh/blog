@@ -17,6 +17,8 @@ public class BlogDO  extends  BaseDO{
 
     private String imgUrl;
 
+    private String blogCatalog;
+
     private String author;
 
     private Integer code;
