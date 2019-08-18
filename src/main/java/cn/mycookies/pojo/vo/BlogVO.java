@@ -1,5 +1,6 @@
 package cn.mycookies.pojo.vo;
 
+import cn.mycookies.pojo.dto.CatalogItem;
 import cn.mycookies.pojo.dto.TagVO;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiModel;
@@ -24,6 +25,8 @@ public class BlogVO {
     public String summary;
 
     public String htmlContent;
+
+    List<CatalogItem> catalogs;
 
     public String imgUrl;
 

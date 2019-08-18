@@ -12,6 +12,7 @@ import cn.mycookies.pojo.vo.BlogVO;
 import cn.mycookies.pojo.vo.IndexVO;
 import cn.mycookies.utils.DateCalUtils;
 import cn.mycookies.utils.DateTimeUtil;
+import cn.mycookies.utils.JsonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
@@ -242,7 +243,7 @@ public class BlogService extends BaseService {
         BlogDO blogDO = blogMapper.selectByIdAndStatus(id, DataStatus.NO_DELETED);
 
         if (!isValidViewOrLike(type+"_blog_"+id)) {
-            return resultOk();
+            return resultError();
         }
 
         if (Objects.isNull(blogDO)) {
@@ -329,6 +330,8 @@ public class BlogService extends BaseService {
     private BlogVO convertBlogToVO(BlogWithBLOBs blogDO) {
         BlogVO blogVo =convertBlogDOToVO(blogDO);
         blogVo.setHtmlContent(blogDO.getHtmlContent());
+        List<CatalogItem> catalogItems = JsonUtil.stringToObj(blogDO.getBlogCatalog(), List.class, CatalogItem.class);
+        blogVo.setCatalogs(catalogItems);
         return blogVo;
     }
     private BlogVO convertBlogDOToVO(BlogDO blogDO) {

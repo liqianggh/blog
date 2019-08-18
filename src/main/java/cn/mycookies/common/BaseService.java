@@ -28,8 +28,8 @@ public class BaseService {
 
     protected boolean isValidViewOrLike(String targetId) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        String ip =request.getHeader("X-Real-Ip");
-        if (StringUtils.isNullOrEmpty(ip) || StringUtils.isNullOrEmpty(targetId)) {
+        String ip =request.getHeader("X-Real-Ip") + "";
+        if (StringUtils.isNullOrEmpty(targetId)) {
             return Boolean.FALSE;
         }
         return cacheService4LocalCache.isValidViewOrLike(String.join("_", ip, targetId));

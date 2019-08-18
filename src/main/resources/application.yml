@@ -17,4 +17,4 @@ mybatis:
 # 打印sql
 logging:
   level:
-     cn.mycookies.dao : debug
+     cn.mycookies.dao : error

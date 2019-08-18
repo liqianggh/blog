@@ -75,6 +75,7 @@
         id,title,
         img_url as imgUrl,
         category_id as categoryId,
+        blog_catalog as blogCatalog,
         summary,content,html_content as htmlContent,
         code,create_time as createTime,
         like_count as likeCount,view_count as viewCount,blog_status blogStatus
