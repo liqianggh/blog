@@ -17,3 +17,7 @@ qiniu:
 cookie:
       name: authentation
       max-age: 7200
+jwt:
+  secret: 039bdc5203c0ca96f34745ae9c8513b217c4e5cbfaab1a103c7efe85a0892d11
+  expiration: 86400
+  cbcSecret: 070e6a12c046c62cc80266662900cf1b
