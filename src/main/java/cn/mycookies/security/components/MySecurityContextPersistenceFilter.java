@@ -1,10 +1,13 @@
 package cn.mycookies.security.components;
 
-import cn.mycookies.security.SecurityUserDetail;
+import cn.mycookies.utils.JwtTokenUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.context.HttpRequestResponseHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
@@ -23,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 保存认证信息到seurityContext中
@@ -48,6 +52,9 @@ public class MySecurityContextPersistenceFilter extends SecurityContextPersisten
     public MySecurityContextPersistenceFilter(SecurityContextRepository repo) {
         this.repo = repo;
     }
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     /**
      * 处理SecurityContextHolder的过滤器
@@ -78,34 +85,41 @@ public class MySecurityContextPersistenceFilter extends SecurityContextPersisten
         }
         // 从cookie中获取认证信息，并设置到安全上下文中
         Cookie cookie = WebUtils.getCookie(request, cookieName);
-        UsernamePasswordAuthenticationToken authentication = null;
-//        if (!Objects.isNull(cookie)) {
-//            final String authToken = cookie.getValue();
-//             if (rolesOptional.isPresent()) {
-//                UserDetails userDetails = jwtTokenUtil.parseTokenToUserDetails(authToken);
-//                if (Objects.nonNull(userDetails)) {
-//                    authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//                }
-//            }
-//        }
-        // 假数据
-        if (Objects.isNull(cookie)) {
-            SecurityUserDetail securityUserDetail = new SecurityUserDetail();
-            securityUserDetail.setId(1L);
-            securityUserDetail.setUserName("李强");
-            securityUserDetail.setRole("ROLE_ADMIN");
-            authentication = new UsernamePasswordAuthenticationToken(securityUserDetail, null, securityUserDetail.getAuthorities());
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        String cookieToken = null;
+        if (!Objects.isNull(cookie)) {
+            cookieToken = cookie.getValue();
         }
+        String authToken = request.getHeader(cookieName);
+        if (!StringUtils.isBlank(cookieToken)) {
+            authToken = cookieToken;
+        }
+
+        UsernamePasswordAuthenticationToken authentication = null;
+        if (!Objects.isNull(authToken)) {
+            Optional<String> roleOptional = jwtTokenUtil.getRolesFromToken(authToken);
+             if (roleOptional.isPresent()) {
+                UserDetails userDetails = jwtTokenUtil.parseTokenToUserDetails(authToken);
+                if (Objects.nonNull(userDetails)) {
+                    authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                }
+            }
+        }
+        // 假数据
+//        if (Objects.isNull(cookie)) {
+//            SecurityUserDetail securityUserDetail = new SecurityUserDetail();
+//            securityUserDetail.setId(1L);
+//            securityUserDetail.setUserName("李强");
+//            securityUserDetail.setRole("ROLE_ADMIN");
+//            authentication = new UsernamePasswordAuthenticationToken(securityUserDetail, null, securityUserDetail.getAuthorities());
+//            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//        }
         HttpRequestResponseHolder holder = new HttpRequestResponseHolder(request,
                 response);
         SecurityContext contextBeforeChainExecution = repo.loadContext(holder);
         try {
             // 将认证信息放入context中
-            if (!Objects.isNull(authentication)) {
-                contextBeforeChainExecution.setAuthentication(authentication);
-            }
+            contextBeforeChainExecution.setAuthentication(authentication);
             SecurityContextHolder.setContext(contextBeforeChainExecution);
 
             chain.doFilter(holder.getRequest(), holder.getResponse());

@@ -9,11 +9,9 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.crypto.SecretKey;
 import java.io.Serializable;
 import java.util.*;
@@ -50,8 +48,8 @@ public class JwtTokenUtil implements Serializable {
 
     private SecretKey key;
 
-    @Resource
-    private PasswordEncoder passwordEncoder;
+//    @Resource
+//    private PasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void init() throws DecoderException {
@@ -176,19 +174,19 @@ public class JwtTokenUtil implements Serializable {
 
     }
 
-    private boolean isPasswordValid(String token, UserDetails userDetails) {
-        Optional<String> passwordOpt = getCustomFromToken(token, CLAIM_KEY_PASSWORD);
-        Optional<String> ivOpt = getCustomFromToken(token, CLAIM_KEY_IV);
-        String password = "";
-        String iv = "";
-        if (passwordOpt.isPresent()) {
-            password = passwordOpt.get();
-        }
-        if (ivOpt.isPresent()) {
-            iv = ivOpt.get();
-        }
-        return passwordEncoder.matches(password, userDetails.getPassword());
-    }
+//    private boolean isPasswordValid(String token, UserDetails userDetails) {
+//        Optional<String> passwordOpt = getCustomFromToken(token, CLAIM_KEY_PASSWORD);
+//        Optional<String> ivOpt = getCustomFromToken(token, CLAIM_KEY_IV);
+//        String password = "";
+//        String iv = "";
+//        if (passwordOpt.isPresent()) {
+//            password = passwordOpt.get();
+//        }
+//        if (ivOpt.isPresent()) {
+//            iv = ivOpt.get();
+//        }
+//        return passwordEncoder.matches(password, userDetails.getPassword());
+//    }
 
     private Date generateExpirationDate() {
         return new Date(System.currentTimeMillis() + expiration * 1000);

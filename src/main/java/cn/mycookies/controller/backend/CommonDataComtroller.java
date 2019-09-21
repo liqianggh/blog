@@ -1,10 +1,11 @@
 package cn.mycookies.controller.backend;
 
-import cn.mycookies.common.basic.BaseController;
 import cn.mycookies.common.KeyValueVO;
 import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.basic.BaseController;
 import cn.mycookies.common.enums.TagType;
 import cn.mycookies.service.TagService;
+import cn.mycookies.utils.JwtTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class CommonDataComtroller extends BaseController {
 
     @Autowired
     private TagService tagService;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     /**
      * 获取所有博客分类
