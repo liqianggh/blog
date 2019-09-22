@@ -3,6 +3,7 @@ package cn.mycookies.service;
 import cn.mycookies.common.BaseService;
 import cn.mycookies.common.ServerResponse;
 import cn.mycookies.dao.UserMapper;
+import cn.mycookies.pojo.dto.UserLoginRequest;
 import cn.mycookies.pojo.po.UserDO;
 import cn.mycookies.pojo.po.UserExample;
 import cn.mycookies.security.SecurityUserDetail;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 访客信息管理servcie
@@ -34,6 +36,12 @@ public class UserService extends BaseService {
 
     @Value("${cookie.max-age}")
     private Integer maxAge;
+
+    @Value("${user.username}")
+    private String username;
+
+    @Value("${user.password}")
+    private String password;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -79,7 +87,10 @@ public class UserService extends BaseService {
         return resultOk();
     }
 
-    public ServerResponse<String> login( ) {
+    public ServerResponse<String> login(UserLoginRequest userLoginRequest) {
+        if (!Objects.equals(userLoginRequest.getUserName(), username) || !StringUtils.equals(userLoginRequest.getPassword(), password)) {
+            return ServerResponse.createByErrorMessage("用户名或密码错误");
+        }
         // 2.2 将合法的权限重新赋值到用户信息中，生成token并返回
         SecurityUserDetail securityUserDetail = new SecurityUserDetail();
         securityUserDetail.setId(1L);

@@ -28,10 +28,10 @@ public class LoginController extends BaseController {
 
     @PostMapping("/login")
     @ApiOperation(value ="登录")
-    public ServerResponse<String> login(HttpServletRequest request, HttpServletResponse response, @RequestBody UserLoginRequest userLoginRequest){
+    public ServerResponse<String> login(@RequestBody UserLoginRequest userLoginRequest){
         validate(userLoginRequest);
 
-        return userService.login();
+        return userService.login(userLoginRequest);
     }
     @GetMapping("/logout")
     @ApiOperation(value ="登录")

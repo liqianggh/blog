@@ -1,23 +1,26 @@
 server:
   port: 8088
 spring:
-    jackson:
-      property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
-    datasource:
-      driver-class-name: com.mysql.jdbc.Driver
-      url : jdbc:mysql://数据库ip:3306/库名?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
-      username: 数据库用户名
-      password: 数据库密码
-#七牛云配置，用来生成token用的
+  jackson:
+    property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url : jdbc:mysql://140.143.26.185:3306/test_blog?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: sqlpw
+#可以用data.name表示
 qiniu:
-    ak: xx
-    sk: xx
-    bucket: blog_v3
-    img_prefix: 图片前缀（图片存储在七牛云）
+  ak: DRDAFWBE9MeinK6xVG4S2TWgAK41836kT9GfXVcx
+  sk: RhBOxkzzL5EgSIQq7lYVOyosZ271WcqHNmYWxPlW
+  bucket: blog_v3
+  url-prefix: http://source.mycookies.cn/
 cookie:
-      name: authentation
+      name: X-Token
       max-age: 7200
 jwt:
   secret: 039bdc5203c0ca96f34745ae9c8513b217c4e5cbfaab1a103c7efe85a0892d11
   expiration: 86400
   cbcSecret: 070e6a12c046c62cc80266662900cf1b
+user:
+  username: liqiang
+  password: 123455
