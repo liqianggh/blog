@@ -1,19 +1,12 @@
 package cn.mycookies.controller;
 
-import cn.mycookies.common.CommonService;
-import cn.mycookies.common.ServerResponse;
-import com.google.gson.annotations.SerializedName;
-import com.qiniu.http.Client;
-import com.qiniu.util.*;
+import cn.mycookies.service.CommonService;
+import cn.mycookies.common.base.ServerResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.net.URI;
-import java.security.GeneralSecurityException;
 
 /**
  * 生成七牛云token
@@ -28,6 +21,7 @@ public class QiNiuTokenController {
     private CommonService commonService;
     @GetMapping
     public ServerResponse<String> generateUploadToken(){
+
         return commonService.getQiniuUploadToken();
     }
 

@@ -2,10 +2,10 @@ package cn.mycookies.dao;
 
 import cn.mycookies.pojo.dto.BlogAddRequest;
 import cn.mycookies.pojo.dto.BlogListRequest;
-import cn.mycookies.pojo.po.BlogDO;
-import cn.mycookies.pojo.po.BlogExample;
-import cn.mycookies.pojo.po.BlogWithBLOBs;
-import cn.mycookies.pojo.vo.BlogVO;
+import cn.mycookies.pojo.meta.BlogDO;
+import cn.mycookies.pojo.meta.BlogExample;
+import cn.mycookies.pojo.meta.BlogWithBLOBs;
+import cn.mycookies.pojo.vo.BlogDetail4UserVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public interface BlogMapper {
 
     List<BlogDO> selectBlogs(BlogListRequest blogListRequest);
 
-    List<BlogVO> selectHotOrRecommendBlogs(@Param("code") int code, @Param("limit") int limit);
+    List<BlogDetail4UserVO> selectHotOrRecommendBlogs(@Param("code") int code, @Param("limit") int limit);
 
     int updateBlog(BlogAddRequest blogAddRequest);
 

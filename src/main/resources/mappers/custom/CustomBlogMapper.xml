@@ -46,7 +46,7 @@
         </set>
         where id = #{blogId}
     </update>
-    <select id="selectBlogs" resultType="cn.mycookies.pojo.po.BlogDO">
+    <select id="selectBlogs" resultType="cn.mycookies.pojo.meta.BlogDO">
 
         SELECT
         t.id,t.title,
@@ -70,7 +70,7 @@
             </if>
         </where>
     </select>
-    <select id="selectByIdAndStatus" resultType="cn.mycookies.pojo.po.BlogWithBLOBs">
+    <select id="selectByIdAndStatus" resultType="cn.mycookies.pojo.meta.BlogWithBLOBs">
         SELECT
         id,title,
         img_url as imgUrl,
@@ -89,7 +89,7 @@
             </if>
         </where>
     </select>
-    <select id="selectLastOrNext" resultType="cn.mycookies.pojo.po.BlogDO">
+    <select id="selectLastOrNext" resultType="cn.mycookies.pojo.meta.BlogDO">
         SELECT
         id,title,
         img_url as imgUrl,
@@ -109,7 +109,7 @@
         </where>
         LIMIT 1
     </select>
-    <select id="selectHotOrRecommendBlogs" resultType="cn.mycookies.pojo.vo.BlogVO">
+    <select id="selectHotOrRecommendBlogs" resultType="cn.mycookies.pojo.vo.BlogDetail4UserVO">
         SELECT
         id,title,
         img_url as imgUrl,

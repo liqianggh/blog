@@ -1,7 +1,7 @@
 package cn.mycookies.dao;
 
-import cn.mycookies.pojo.po.UserDO;
-import cn.mycookies.pojo.po.UserExample;
+import cn.mycookies.pojo.meta.UserDO;
+import cn.mycookies.pojo.meta.UserExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

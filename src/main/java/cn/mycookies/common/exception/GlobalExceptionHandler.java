@@ -1,7 +1,7 @@
 package cn.mycookies.common.exception;
 
-import cn.mycookies.common.ActionStatus;
-import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.constants.ActionStatus;
+import cn.mycookies.common.base.ServerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.ConversionNotSupportedException;

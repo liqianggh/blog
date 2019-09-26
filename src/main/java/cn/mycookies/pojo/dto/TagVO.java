@@ -1,7 +1,7 @@
 package cn.mycookies.pojo.dto;
 
-import cn.mycookies.pojo.po.TagDO;
-import cn.mycookies.utils.DateTimeUtil;
+import cn.mycookies.common.utils.DateTimeUtil;
+import cn.mycookies.pojo.meta.TagDO;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +9,8 @@ import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
 /**
- * @ClassName TagVO
- * @Description 标签的bo类
+ * 标签的bo类
+ *
  * @Author Jann Lee
  * @Date 2018-11-18 17:08
  **/
@@ -33,8 +33,6 @@ public class TagVO {
 
     /**
      * 构建vo
-     * @param tagDO
-     * @return
      */
     public static TagVO createFrom(TagDO tagDO) {
         Preconditions.checkNotNull(tagDO, "构建vo时参数不能为null");

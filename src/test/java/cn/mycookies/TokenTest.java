@@ -1,11 +1,9 @@
 package cn.mycookies;
 
-import cn.mycookies.security.SecurityUserDetail;
-import cn.mycookies.utils.JwtTokenUtil;
+import cn.mycookies.common.security.SecurityUserDetail;
+import cn.mycookies.common.utils.JwtTokenUtil;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
 /**
  * @author liqiang

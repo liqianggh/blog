@@ -1,21 +1,14 @@
 package cn.mycookies.pojo.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
- * @ClassName TagVO
- * @Description 标签的bo类
- * @Author Jann Lee
- * @Date 2018-11-18 17:08
+ *  标签的bo类
+ *
+ * @author Jann Lee
+ * @date 2018-11-18 17:08
  **/
-@Setter
-@Getter
-@NoArgsConstructor
-@ToString
-
+@Data
 public class TagVO4Blog {
 
     private Integer id;

@@ -1,7 +1,7 @@
 package cn.mycookies.controller.user;
 
-import cn.mycookies.common.basic.BaseController;
-import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.base.BaseController;
+import cn.mycookies.common.base.ServerResponse;
 import cn.mycookies.pojo.dto.CommentAddRequest;
 import cn.mycookies.pojo.dto.CommentListRequest;
 import cn.mycookies.pojo.vo.CommentListItemVO;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 /**
- * @className TagController
- * @description 评论管理
+ * 评论相关接口
+ *
  * @author Jann Lee
  * @date 2018-11-20 12:20
  **/

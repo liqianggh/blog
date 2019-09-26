@@ -1,7 +1,7 @@
 package cn.mycookies.pojo.dto;
 
-import cn.mycookies.common.CommentTargetType;
-import cn.mycookies.common.basic.PageInfo4Request;
+import cn.mycookies.common.constants.CommentTargetType;
+import cn.mycookies.common.base.PageInfo4Request;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.annotations.ApiModel;

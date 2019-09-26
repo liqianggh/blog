@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mycookies.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.po.UserDO">
+  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.meta.UserDO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
@@ -70,7 +70,7 @@
   <sql id="Base_Column_List">
     id, user_email, user_name, create_time, update_time, user_status
   </sql>
-  <select id="selectByExample" parameterType="cn.mycookies.pojo.po.UserExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.mycookies.pojo.meta.UserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -94,13 +94,13 @@
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.mycookies.pojo.po.UserExample">
+  <delete id="deleteByExample" parameterType="cn.mycookies.pojo.meta.UserExample">
     delete from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.mycookies.pojo.po.UserDO">
+  <insert id="insert" parameterType="cn.mycookies.pojo.meta.UserDO">
     insert into user (id, user_email, user_name,
       create_time, update_time, user_status
       )
@@ -108,7 +108,7 @@
       #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{userStatus,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.mycookies.pojo.po.UserDO">
+  <insert id="insertSelective" parameterType="cn.mycookies.pojo.meta.UserDO">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -151,7 +151,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.mycookies.pojo.po.UserExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="cn.mycookies.pojo.meta.UserExample" resultType="java.lang.Long">
     select count(*) from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -195,7 +195,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.mycookies.pojo.po.UserDO">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.mycookies.pojo.meta.UserDO">
     update user
     <set>
       <if test="userEmail != null">
@@ -216,7 +216,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.mycookies.pojo.po.UserDO">
+  <update id="updateByPrimaryKey" parameterType="cn.mycookies.pojo.meta.UserDO">
     update user
     set user_email = #{userEmail,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},

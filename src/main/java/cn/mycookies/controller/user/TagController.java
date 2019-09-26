@@ -1,7 +1,7 @@
 package cn.mycookies.controller.user;
 
-import cn.mycookies.common.basic.BaseController;
-import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.base.BaseController;
+import cn.mycookies.common.base.ServerResponse;
 import cn.mycookies.pojo.dto.TagVO;
 import cn.mycookies.service.TagService;
 import io.swagger.annotations.Api;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @className TagController
- * @description TODO
+ * 标签相关接口
+ *
  * @author Jann Lee
  * @date 2018-11-21 0:03
  **/

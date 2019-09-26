@@ -1,6 +1,6 @@
 package cn.mycookies.pojo.dto;
 
-import cn.mycookies.common.basic.PageInfo4Request;
+import cn.mycookies.common.base.PageInfo4Request;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

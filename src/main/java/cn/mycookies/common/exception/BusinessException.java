@@ -1,6 +1,6 @@
 package cn.mycookies.common.exception;
 
-import cn.mycookies.common.ActionStatus;
+import cn.mycookies.common.constants.ActionStatus;
 
 /**
  * @description 自定义业务异常

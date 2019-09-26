@@ -2,11 +2,9 @@ package cn.mycookies.pojo.dto;
 
 import lombok.*;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class PhotoDTO {
     private String name;
 }

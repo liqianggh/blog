@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mycookies.dao.TagMapper">
 
-  <select id="queryByName" parameterType="cn.mycookies.pojo.dto.TagAddRequest" resultType="cn.mycookies.pojo.po.TagDO">
+  <select id="queryByName" parameterType="cn.mycookies.pojo.dto.TagAddRequest" resultType="cn.mycookies.pojo.meta.TagDO">
     select
     <include refid="Base_Column_List"/>
     <where>
@@ -14,7 +14,7 @@
     </if>
     </where>
   </select>
-  <select id="queryById" parameterType="cn.mycookies.pojo.po.TagDO" resultType="cn.mycookies.pojo.po.TagDO">
+  <select id="queryById" parameterType="cn.mycookies.pojo.meta.TagDO" resultType="cn.mycookies.pojo.meta.TagDO">
     SELECT
     <include refid="Base_Column_List"/>
     <where>
@@ -35,7 +35,7 @@
         blog_tag t2 ON t.tag_id = t2.id
     GROUP BY id
   </select>
-  <select id="selectTagsOfBlog" resultType="cn.mycookies.pojo.po.TagDO">
+  <select id="selectTagsOfBlog" resultType="cn.mycookies.pojo.meta.TagDO">
     SELECT blog_tag.tag_name as tagName ,blog_tag.id
     FROM blog_tags
     LEFT JOIN blog_tag on blog_tag.id = blog_tags.tag_id
@@ -50,7 +50,7 @@
       blog_tag t2 ON t.category_id = t2.id
     GROUP BY t.category_id;
   </select>
-  <update id="updateTag" parameterType="cn.mycookies.pojo.po.TagDO">
+  <update id="updateTag" parameterType="cn.mycookies.pojo.meta.TagDO">
       UPDATE blog_tag
     <set>
        <if test="tagName != null">

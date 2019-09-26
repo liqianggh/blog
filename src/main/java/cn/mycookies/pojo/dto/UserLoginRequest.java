@@ -1,6 +1,5 @@
 package cn.mycookies.pojo.dto;
 
-import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 

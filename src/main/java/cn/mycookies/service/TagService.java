@@ -1,14 +1,14 @@
 package cn.mycookies.service;
 
-import cn.mycookies.common.BaseService;
 import cn.mycookies.common.KeyValueVO;
-import cn.mycookies.common.ServerResponse;
-import cn.mycookies.common.enums.TagType;
+import cn.mycookies.common.base.BaseService;
+import cn.mycookies.common.base.ServerResponse;
+import cn.mycookies.common.constants.TagType;
 import cn.mycookies.dao.BlogMapper;
 import cn.mycookies.dao.BlogTagsDOMapper;
 import cn.mycookies.dao.TagMapper;
 import cn.mycookies.pojo.dto.*;
-import cn.mycookies.pojo.po.*;
+import cn.mycookies.pojo.meta.*;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
@@ -48,6 +48,7 @@ public class TagService extends BaseService {
      */
     public ServerResponse<PageInfo<TagVO>> getTagListInfos(TagListRequest tagListRequest) {
         Preconditions.checkNotNull(tagListRequest, "请求参数不能为null");
+
         Page page = getPage(tagListRequest);
         TagDOExample example = new TagDOExample();
         if (Objects.nonNull(tagListRequest.getTagType())) {
@@ -91,6 +92,7 @@ public class TagService extends BaseService {
     private List<TagDO> getAllTagsByType(Integer tagType) {
         TagDOExample tagDOExample = new TagDOExample();
         tagDOExample.createCriteria().andTagTypeEqualTo(tagType);
+
         return tagMapper.selectByExample(tagDOExample);
     }
 
@@ -175,102 +177,125 @@ public class TagService extends BaseService {
         tagDO.setTagDesc(updateRequest.getTagDesc());
         tagDO.setTagType(updateRequest.getTagType());
         fillUpdateTime(tagDO);
+
         return resultOk();
     }
-        /**
-         * 根据id获取详情
-         *
-         * @param id 主键id
-         * @return
-         */
-        public ServerResponse<TagVO> getTagDetailInfoById (Integer id){
-            Preconditions.checkNotNull(id, "id信息不能为null");
-            TagDO tagDO = tagMapper.selectByPrimaryKey(id);
-            if (Objects.isNull(tagDO)) {
-                return resultError4Param("该标签不存在");
-            }
 
-            return resultOk(TagVO.createFrom(tagMapper.selectByPrimaryKey(id)));
+    /**
+     * 根据id获取详情
+     *
+     * @param id 主键id
+     * @return
+     */
+    public ServerResponse<TagVO> getTagDetailInfoById(Integer id) {
+        Preconditions.checkNotNull(id, "id信息不能为null");
+        TagDO tagDO = tagMapper.selectByPrimaryKey(id);
+        if (Objects.isNull(tagDO)) {
+            return resultError4Param("该标签不存在");
         }
 
-        public List<TagDO> getTagListByTypeAndIds (TagType tagType, List < Integer > ids){
-            if (CollectionUtils.isEmpty(ids)) {
-                return Lists.newArrayList();
-            }
-            TagDOExample tagDOExample = new TagDOExample();
-            tagDOExample.createCriteria().andTagTypeEqualTo(tagType.getCode()).andIdIn(ids);
-            if (Objects.nonNull(tagType)) {
-                tagDOExample.createCriteria().andTagTypeEqualTo(tagType.getCode());
-            }
-            return tagMapper.selectByExample(tagDOExample);
+        return resultOk(TagVO.createFrom(tagMapper.selectByPrimaryKey(id)));
+    }
+
+    public List<TagDO> getTagListByTypeAndIds(TagType tagType, List<Integer> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return Lists.newArrayList();
+        }
+        TagDOExample tagDOExample = new TagDOExample();
+        tagDOExample.createCriteria().andTagTypeEqualTo(tagType.getCode()).andIdIn(ids);
+        if (Objects.nonNull(tagType)) {
+            tagDOExample.createCriteria().andTagTypeEqualTo(tagType.getCode());
         }
 
-        /**
-         * 根据主键id删除标签
-         *
-         * @param id 主键id
-         * @return
-         */
-        public ServerResponse<TagVO> deleteTagInfoById (Integer id){
-            Preconditions.checkNotNull(id, "id信息不能为null");
-            BlogTagsDOExample example = new BlogTagsDOExample();
-            example.createCriteria().andTagIdEqualTo(id);
-            BlogExample blogExample = new BlogExample();
-            blogExample.createCriteria().andCategoryIdEqualTo(id);
+        return tagMapper.selectByExample(tagDOExample);
+    }
 
-            if (CollectionUtils.isNotEmpty(blogTagsDOMapper.selectByExample(example))
-                    || CollectionUtils.isNotEmpty((blogTagsDOMapper.selectByExample(example)))) {
-                return resultError4Param("改标签正在被使用");
-            }
-            TagDO targetDO = tagMapper.selectByPrimaryKey(id);
-            if (Objects.isNull(targetDO)) {
-                return resultOk();
-            }
-            if (tagMapper.deleteByPrimaryKey(id) == 0) {
-                return resultError4DB("删除失败");
-            }
+    /**
+     * 根据主键id删除标签
+     *
+     * @param id 主键id
+     * @return
+     */
+    public ServerResponse<TagVO> deleteTagInfoById(Integer id) {
+        Preconditions.checkNotNull(id, "id信息不能为null");
+        BlogTagsDOExample example = new BlogTagsDOExample();
+        example.createCriteria().andTagIdEqualTo(id);
+        BlogExample blogExample = new BlogExample();
+        blogExample.createCriteria().andCategoryIdEqualTo(id);
+
+        if (CollectionUtils.isNotEmpty(blogTagsDOMapper.selectByExample(example))
+                || CollectionUtils.isNotEmpty((blogTagsDOMapper.selectByExample(example)))) {
+            return resultError4Param("改标签正在被使用");
+        }
+        TagDO targetDO = tagMapper.selectByPrimaryKey(id);
+        if (Objects.isNull(targetDO)) {
             return resultOk();
         }
-
-
-        public List<TagVO> getTagListByBlogId (Integer blogId){
-            if (Objects.isNull(blogId)) {
-                return Lists.newArrayList();
-            }
-            return tagMapper.selectTagsOfBlog(blogId).stream().filter(Objects::nonNull).map(TagVO::createFrom).collect(Collectors.toList());
+        if (tagMapper.deleteByPrimaryKey(id) == 0) {
+            return resultError4DB("删除失败");
         }
-
-        public List<TagWithCountVO> getTagListByTagType (TagType tagType){
-            Preconditions.checkNotNull(tagType, "标签类型不能为null");
-            if (Objects.equals(tagType, TagType.CATEGORY)) {
-                return tagMapper.selectCategoryList();
-            } else {
-                return tagMapper.selectTagList();
-            }
-        }
-
-        /**
-         * 删除博客关联的标签
-         * @param blogId
-         */
-        public boolean deleteTagsByBlogId (Integer blogId){
-            Preconditions.checkNotNull(blogId, "博客id不能为null");
-            BlogTagsDOExample example = new BlogTagsDOExample();
-            example.createCriteria().andBlogIdEqualTo(blogId);
-            return blogTagsDOMapper.deleteByExample(example) > 0;
-        }
-
-        /**
-         *
-         */
-        public boolean createBlogTags (Integer blogId, List < Integer > tagIds){
-            Preconditions.checkNotNull(blogId, "博客id不能为null");
-            Preconditions.checkArgument(CollectionUtils.isNotEmpty(tagIds), "标签id列表不能为空");
-            AtomicInteger count = new AtomicInteger();
-            tagIds.stream().forEach(tagId -> {
-                count.addAndGet(blogTagsDOMapper.insert(new BlogTagsDO(null, tagId, blogId)));
-            });
-            return count.intValue() == tagIds.size();
-        }
-
+        return resultOk();
     }
+
+
+    public List<TagVO> getTagListByBlogId(Integer blogId) {
+        if (Objects.isNull(blogId)) {
+            return Lists.newArrayList();
+        }
+
+        return tagMapper.selectTagsOfBlog(blogId)
+                .stream()
+                .filter(Objects::nonNull)
+                .map(TagVO::createFrom)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 根据类型获取标签
+     *
+     * @param tagType   标签类型
+     * @return
+     */
+    public List<TagWithCountVO> getTagListByTagType(TagType tagType) {
+        Preconditions.checkNotNull(tagType, "标签类型不能为null");
+        if (Objects.equals(tagType, TagType.CATEGORY)) {
+            return tagMapper.selectCategoryList();
+        } else {
+            return tagMapper.selectTagList();
+        }
+    }
+
+
+    /**
+     * 删除博客关联的标签
+     *
+     * @param blogId
+     */
+    public boolean deleteTagsByBlogId(Integer blogId) {
+        Preconditions.checkNotNull(blogId, "博客id不能为null");
+
+        BlogTagsDOExample example = new BlogTagsDOExample();
+        example.createCriteria().andBlogIdEqualTo(blogId);
+        return blogTagsDOMapper.deleteByExample(example) > 0;
+    }
+
+    /**
+     * 给博客绑定标签
+     *
+     * @param blogId    博客id
+     * @param tagIds    标签集合
+     * @return
+     */
+    public boolean bindTags2Blog(Integer blogId, List<Integer> tagIds) {
+        Preconditions.checkNotNull(blogId, "博客id不能为null");
+        Preconditions.checkArgument(CollectionUtils.isNotEmpty(tagIds), "标签id列表不能为空");
+
+        AtomicInteger count = new AtomicInteger();
+        tagIds.stream().forEach(tagId -> {
+            count.addAndGet(blogTagsDOMapper.insert(new BlogTagsDO(null, tagId, blogId)));
+        });
+
+        return count.intValue() == tagIds.size();
+    }
+
+}

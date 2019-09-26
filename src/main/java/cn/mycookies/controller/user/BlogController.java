@@ -1,10 +1,10 @@
 package cn.mycookies.controller.user;
 
-import cn.mycookies.common.basic.BaseController;
-import cn.mycookies.common.BlogStaticType;
-import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.base.BaseController;
+import cn.mycookies.common.constants.BlogStaticType;
+import cn.mycookies.common.base.ServerResponse;
 import cn.mycookies.pojo.dto.BlogListRequest;
-import cn.mycookies.pojo.vo.BlogVO;
+import cn.mycookies.pojo.vo.BlogDetail4UserVO;
 import cn.mycookies.pojo.vo.IndexVO;
 import cn.mycookies.service.BlogService;
 import com.github.pagehelper.PageInfo;
@@ -14,7 +14,12 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
+/**
+ * 博客相关接口
+ *
+ * @author Jann Lee
+ * @date 2019-09-27 0:22
+ */
 @Api("博客相关接口")
 @RequestMapping("blogs")
 @CrossOrigin
@@ -25,15 +30,15 @@ public class BlogController extends BaseController {
     private BlogService blogService;
 
     @GetMapping
-    @ApiOperation(value ="分页查询列表博客",response = BlogVO.class,responseContainer = "List")
-    public ServerResponse<PageInfo<BlogVO>> getBlogListInfos(@ModelAttribute BlogListRequest queryRequest){
+    @ApiOperation(value ="分页查询列表博客",response = BlogDetail4UserVO.class,responseContainer = "List")
+    public ServerResponse<PageInfo<BlogDetail4UserVO>> getBlogListInfos(@ModelAttribute BlogListRequest queryRequest){
 
         return blogService.getBlogListInfos(queryRequest);
     }
 
     @GetMapping("/{id:\\d+}")
-    @ApiOperation(value ="获取博客详情",response=BlogVO.class)
-    public ServerResponse<BlogVO> getBlog(@ApiParam("博客id") @PathVariable Integer id){
+    @ApiOperation(value ="获取博客详情",response= BlogDetail4UserVO.class)
+    public ServerResponse<BlogDetail4UserVO> getBlog(@ApiParam("博客id") @PathVariable Integer id){
 
         return blogService.getBlogDetailsInfo(id);
     }

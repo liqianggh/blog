@@ -1,13 +1,13 @@
 package cn.mycookies.service;
 
-import cn.mycookies.common.BaseService;
-import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.base.BaseService;
+import cn.mycookies.common.base.ServerResponse;
 import cn.mycookies.dao.UserMapper;
 import cn.mycookies.pojo.dto.UserLoginRequest;
-import cn.mycookies.pojo.po.UserDO;
-import cn.mycookies.pojo.po.UserExample;
-import cn.mycookies.security.SecurityUserDetail;
-import cn.mycookies.utils.JwtTokenUtil;
+import cn.mycookies.pojo.meta.UserDO;
+import cn.mycookies.pojo.meta.UserExample;
+import cn.mycookies.common.security.SecurityUserDetail;
+import cn.mycookies.common.utils.JwtTokenUtil;
 import com.google.common.base.Preconditions;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

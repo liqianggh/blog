@@ -1,26 +1,25 @@
 package cn.mycookies.pojo.vo;
 
-import cn.mycookies.common.CommentTargetType;
-import cn.mycookies.pojo.po.CommentDO;
-import cn.mycookies.utils.DateTimeUtil;
+import cn.mycookies.common.constants.CommentTargetType;
+import cn.mycookies.common.utils.DateTimeUtil;
+import cn.mycookies.pojo.meta.CommentDO;
 import com.google.common.base.Preconditions;
 import io.swagger.annotations.ApiModel;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 
 /**
- * 评论vo
+ * 评论列表vo
+ *
+ * @author Jann Lee
+ * @date 2019-09-27 0:16
  */
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
-@ToString
-@ApiModel("评论回复实体类")
+@ApiModel("评论类")
 public class CommentListItemVO {
 
     private Integer id;
@@ -72,10 +71,11 @@ public class CommentListItemVO {
 
     /**
      * 构建vo根据do
+     *
      * @param commentDO
      * @return
      */
-    public static CommentListItemVO createFrom(CommentDO commentDO){
+    public static CommentListItemVO createFrom(CommentDO commentDO) {
         Preconditions.checkNotNull(commentDO, "构建vo的参数不能为null");
         CommentListItemVO targetVO = new CommentListItemVO();
         targetVO.setCreateTime(DateTimeUtil.dateToStr(commentDO.getCreateTime()));

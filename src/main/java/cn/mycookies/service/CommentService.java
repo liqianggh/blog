@@ -1,16 +1,15 @@
 package cn.mycookies.service;
 
-import cn.mycookies.common.BaseService;
-import cn.mycookies.common.CommentTargetType;
-import cn.mycookies.common.ServerResponse;
-import cn.mycookies.common.YesOrNoType;
+import cn.mycookies.common.base.BaseService;
+import cn.mycookies.common.constants.CommentTargetType;
+import cn.mycookies.common.base.ServerResponse;
+import cn.mycookies.common.constants.YesOrNoType;
 import cn.mycookies.dao.CommentMapper;
 import cn.mycookies.pojo.dto.CommentAddRequest;
 import cn.mycookies.pojo.dto.CommentListRequest;
-import cn.mycookies.pojo.po.BlogDO;
-import cn.mycookies.pojo.po.CommentDO;
-import cn.mycookies.pojo.po.CommentExample;
-import cn.mycookies.pojo.po.UserDO;
+import cn.mycookies.pojo.meta.CommentDO;
+import cn.mycookies.pojo.meta.CommentExample;
+import cn.mycookies.pojo.meta.UserDO;
 import cn.mycookies.pojo.vo.CommentListItemVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;

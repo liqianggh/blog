@@ -5,8 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
+ * k-v结果封装
+ *
  * @author Jann Lee
- * @description TODO
  * @date 2019-04-19 22:57
  **/
 @Data

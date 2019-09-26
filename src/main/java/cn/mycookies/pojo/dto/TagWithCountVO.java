@@ -1,19 +1,17 @@
 package cn.mycookies.pojo.dto;
 
-import cn.mycookies.pojo.po.TagDO;
+import cn.mycookies.pojo.meta.TagDO;
 import com.google.common.base.Preconditions;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 /**
+ * 标签vo
+ *
  * @author Jann Lee
  * @date 2019-07-06 19:06
  **/
-@Setter
-@Getter
-@NoArgsConstructor
+@Data
 public class TagWithCountVO {
 
     private Integer id;

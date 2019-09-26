@@ -1,7 +1,7 @@
 package cn.mycookies.controller.backend;
 
-import cn.mycookies.common.basic.BaseController;
-import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.base.BaseController;
+import cn.mycookies.common.base.ServerResponse;
 import cn.mycookies.pojo.dto.TagAddRequest;
 import cn.mycookies.pojo.dto.TagListRequest;
 import cn.mycookies.pojo.dto.TagUpdateRequest;

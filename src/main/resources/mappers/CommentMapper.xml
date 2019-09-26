@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mycookies.dao.CommentMapper">
-  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.po.CommentDO">
+  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.meta.CommentDO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="pid" jdbcType="INTEGER" property="pid" />
     <result column="target_id" jdbcType="INTEGER" property="targetId" />
@@ -77,7 +77,7 @@
     id, pid, target_id, target_type, user_email, user_name, user_icon, content, like_count, 
     create_time, update_time, comment_status
   </sql>
-  <select id="selectByExample" parameterType="cn.mycookies.pojo.po.CommentExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.mycookies.pojo.meta.CommentExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -101,13 +101,13 @@
     delete from comment_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.mycookies.pojo.po.CommentExample">
+  <delete id="deleteByExample" parameterType="cn.mycookies.pojo.meta.CommentExample">
     delete from comment_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.mycookies.pojo.po.CommentDO">
+  <insert id="insert" parameterType="cn.mycookies.pojo.meta.CommentDO">
     insert into comment_info (id, pid, target_id, 
       target_type, user_email, user_name, 
       user_icon, content, like_count, 
@@ -119,7 +119,7 @@
       #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{commentStatus,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.mycookies.pojo.po.CommentDO">
+  <insert id="insertSelective" parameterType="cn.mycookies.pojo.meta.CommentDO">
     insert into comment_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -198,7 +198,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.mycookies.pojo.po.CommentExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="cn.mycookies.pojo.meta.CommentExample" resultType="java.lang.Long">
     select count(*) from comment_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -266,7 +266,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.mycookies.pojo.po.CommentDO">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.mycookies.pojo.meta.CommentDO">
     update comment_info
     <set>
       <if test="pid != null">
@@ -305,7 +305,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.mycookies.pojo.po.CommentDO">
+  <update id="updateByPrimaryKey" parameterType="cn.mycookies.pojo.meta.CommentDO">
     update comment_info
     set pid = #{pid,jdbcType=INTEGER},
       target_id = #{targetId,jdbcType=INTEGER},

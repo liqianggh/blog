@@ -1,9 +1,9 @@
 package cn.mycookies.controller.backend;
 
-import cn.mycookies.common.ServerResponse;
-import cn.mycookies.common.basic.BaseController;
+import cn.mycookies.common.base.ServerResponse;
+import cn.mycookies.common.base.BaseController;
 import cn.mycookies.pojo.dto.UserLoginRequest;
-import cn.mycookies.security.SecurityUserDetail;
+import cn.mycookies.common.security.SecurityUserDetail;
 import cn.mycookies.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class LoginController extends BaseController {
         return userService.login(userLoginRequest);
     }
     @GetMapping("/logout")
-    @ApiOperation(value ="登录")
+    @ApiOperation(value ="登出")
     public ServerResponse<Boolean> logout(HttpServletRequest request, HttpServletResponse response){
         Cookie cookie = new Cookie("X-Token", "");
         cookie.setMaxAge(0);

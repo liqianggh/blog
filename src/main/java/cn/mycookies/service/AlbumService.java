@@ -1,6 +1,6 @@
 package cn.mycookies.service;
 
-import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.base.ServerResponse;
 import cn.mycookies.dao.AlbumDOMapper;
 import cn.mycookies.dao.PhotoDOMapper;
 import cn.mycookies.pojo.dto.PhotoDTO;
@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 /**
+ * 相册管理相关service
+ *
  * @author Jann Lee
  * @date 2018-11-29
  */
@@ -23,12 +25,6 @@ public class AlbumService {
     PhotoDOMapper photoDOMapper;
 
     public ServerResponse<List<SimpleAlbumDTO>> listSimpleAlbums(int type, int limit) {
-        if (type == 1) {
-
-        } else {
-
-        }
-
 
         return null;
     }

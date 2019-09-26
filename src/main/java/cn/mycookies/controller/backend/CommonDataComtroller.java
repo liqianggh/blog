@@ -1,11 +1,10 @@
 package cn.mycookies.controller.backend;
 
 import cn.mycookies.common.KeyValueVO;
-import cn.mycookies.common.ServerResponse;
-import cn.mycookies.common.basic.BaseController;
-import cn.mycookies.common.enums.TagType;
+import cn.mycookies.common.base.BaseController;
+import cn.mycookies.common.base.ServerResponse;
+import cn.mycookies.common.constants.TagType;
 import cn.mycookies.service.TagService;
-import cn.mycookies.utils.JwtTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +28,6 @@ public class CommonDataComtroller extends BaseController {
     @Autowired
     private TagService tagService;
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
     /**
      * 获取所有博客分类
      *
@@ -40,6 +36,7 @@ public class CommonDataComtroller extends BaseController {
     @GetMapping("/all/categories")
     @ApiOperation(value = "获取博客分类", response = KeyValueVO.class)
     public ServerResponse<List<KeyValueVO<Integer, String>>> getAllCategoryInfos() {
+
         return tagService.getAllTagList(TagType.CATEGORY.getCode());
     }
 
@@ -48,6 +45,7 @@ public class CommonDataComtroller extends BaseController {
      */
     @GetMapping("/all/tags")
     public ServerResponse<List<KeyValueVO<Integer, String>>> getAllTagInfos() {
+
         return tagService.getAllTagList(TagType.TAG.getCode());
     }
 }

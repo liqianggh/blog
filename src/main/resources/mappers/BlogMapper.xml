@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mycookies.dao.BlogMapper">
-  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.po.BlogDO">
+  <resultMap id="BaseResultMap" type="cn.mycookies.pojo.meta.BlogDO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="category_id" jdbcType="INTEGER" property="categoryId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
@@ -17,7 +17,7 @@
     <result column="update_time" jdbcType="BIGINT" property="updateTime" />
     <result column="blog_status" jdbcType="TINYINT" property="blogStatus" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.mycookies.pojo.po.BlogWithBLOBs">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.mycookies.pojo.meta.BlogWithBLOBs">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
     <result column="html_content" jdbcType="LONGVARCHAR" property="htmlContent" />
   </resultMap>
@@ -86,7 +86,7 @@
   <sql id="Blob_Column_List">
     content, html_content
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="cn.mycookies.pojo.po.BlogExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs" parameterType="cn.mycookies.pojo.meta.BlogExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -102,7 +102,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="cn.mycookies.pojo.po.BlogExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.mycookies.pojo.meta.BlogExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -128,13 +128,13 @@
     delete from blog
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.mycookies.pojo.po.BlogExample">
+  <delete id="deleteByExample" parameterType="cn.mycookies.pojo.meta.BlogExample">
     delete from blog
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.mycookies.pojo.po.BlogWithBLOBs">
+  <insert id="insert" parameterType="cn.mycookies.pojo.meta.BlogWithBLOBs">
     insert into blog (id, category_id, title, 
       summary, img_url, blog_catalog, 
       author, code, view_count, 
@@ -148,7 +148,7 @@
       #{updateTime,jdbcType=BIGINT}, #{blogStatus,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR}, 
       #{htmlContent,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective"  keyProperty="id" useGeneratedKeys="true" parameterType="cn.mycookies.pojo.po.BlogWithBLOBs">
+  <insert id="insertSelective"  keyProperty="id" useGeneratedKeys="true" parameterType="cn.mycookies.pojo.meta.BlogWithBLOBs">
     insert into blog
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -251,7 +251,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.mycookies.pojo.po.BlogExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="cn.mycookies.pojo.meta.BlogExample" resultType="java.lang.Long">
     select count(*) from blog
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -355,7 +355,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.mycookies.pojo.po.BlogWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.mycookies.pojo.meta.BlogWithBLOBs">
     update blog
     <set>
       <if test="categoryId != null">
@@ -406,7 +406,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.mycookies.pojo.po.BlogWithBLOBs">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.mycookies.pojo.meta.BlogWithBLOBs">
     update blog
     set category_id = #{categoryId,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
@@ -425,7 +425,7 @@
       html_content = #{htmlContent,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.mycookies.pojo.po.BlogDO">
+  <update id="updateByPrimaryKey" parameterType="cn.mycookies.pojo.meta.BlogDO">
     update blog
     set category_id = #{categoryId,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},

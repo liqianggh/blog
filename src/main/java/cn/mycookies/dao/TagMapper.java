@@ -1,8 +1,8 @@
 package cn.mycookies.dao;
 
 import cn.mycookies.pojo.dto.TagWithCountVO;
-import cn.mycookies.pojo.po.TagDO;
-import cn.mycookies.pojo.po.TagDOExample;
+import cn.mycookies.pojo.meta.TagDO;
+import cn.mycookies.pojo.meta.TagDOExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package cn.mycookies.common;
 
-import cn.mycookies.utils.JsonUtil;
+import cn.mycookies.common.utils.JsonUtil;
 import com.google.common.collect.Lists;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;

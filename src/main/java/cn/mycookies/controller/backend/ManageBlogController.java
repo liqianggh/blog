@@ -1,11 +1,11 @@
 package cn.mycookies.controller.backend;
 
-import cn.mycookies.common.basic.BaseController;
-import cn.mycookies.common.ServerResponse;
+import cn.mycookies.common.base.BaseController;
+import cn.mycookies.common.base.ServerResponse;
 import cn.mycookies.pojo.dto.BlogAddRequest;
 import cn.mycookies.pojo.dto.BlogListRequest;
-import cn.mycookies.pojo.vo.BlogDetailVO;
-import cn.mycookies.pojo.vo.BlogVO;
+import cn.mycookies.pojo.vo.BlogDetail4AdminVO;
+import cn.mycookies.pojo.vo.BlogDetail4UserVO;
 import cn.mycookies.service.BlogService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -30,20 +30,20 @@ public class ManageBlogController extends BaseController {
 
     @ApiOperation(value ="新增博客")
     @PostMapping
-    public ServerResponse addBlog(@RequestBody BlogAddRequest blogAddRequest){
+    public ServerResponse<Boolean> addBlog(@RequestBody BlogAddRequest blogAddRequest){
         validate(blogAddRequest);
 
         return blogService.createBlogInfo(blogAddRequest);
     }
 
     @GetMapping
-    @ApiOperation(value ="分页查询列表博客",response = BlogVO.class,responseContainer = "List")
-    public ServerResponse<PageInfo<BlogVO>> getBlogList(@ModelAttribute BlogListRequest blogListRequest){
+    @ApiOperation(value ="分页查询列表博客",response = BlogDetail4UserVO.class,responseContainer = "List")
+    public ServerResponse<PageInfo<BlogDetail4UserVO>> getBlogList(@ModelAttribute BlogListRequest blogListRequest){
 
         return blogService.getBlogListInfos(blogListRequest);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id:\\d+}")
     @ApiOperation(value ="修改博客")
     public ServerResponse<Boolean> updateBlog(@ApiParam("博客id") @PathVariable Integer id,
                                               @RequestBody BlogAddRequest blogAddRequest){
@@ -52,14 +52,14 @@ public class ManageBlogController extends BaseController {
         return blogService.updateBlog(id, blogAddRequest);
     }
 
-    @GetMapping("/{id}")
-    @ApiOperation(value ="查找博客",response=BlogVO.class)
-    public ServerResponse<BlogDetailVO> getBlog(@ApiParam("博客id") @PathVariable Integer id){
+    @GetMapping("/{id:\\d+}")
+    @ApiOperation(value ="查找博客",response= BlogDetail4UserVO.class)
+    public ServerResponse<BlogDetail4AdminVO> getBlog(@ApiParam("博客id") @PathVariable Integer id){
 
         return blogService.getBlogDetailInfo(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id:\\d+}")
     @ApiOperation(value ="删除博客")
     public ServerResponse<Boolean> deleteBlog(@ApiParam("博客id") @PathVariable Integer id){
 

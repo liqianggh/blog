@@ -1,6 +1,6 @@
 package cn.mycookies.pojo.dto;
 
-import cn.mycookies.common.basic.PageInfo4Request;
+import cn.mycookies.common.base.PageInfo4Request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
