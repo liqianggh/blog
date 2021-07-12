@@ -15,12 +15,18 @@ npm run build
 
 # 进入生成的文件夹
 cd dist
+echo "当前目录：$(pwd)"
 
 # 如果是发布到自定义域名
 # echo 'www.example.com' > CNAME
 
+echo "执行命令：git init"
 git init
+
+echo "执行命令：git checkout -b gh-pages && git add ."
 git checkout -b gh-pages && git add .
+
+echo "git commit -m 'deploy'"
 git commit -m 'deploy'
 
 # 如果发布到 https://<USERNAME>.github.io/<REPO>
@@ -30,7 +36,8 @@ if [[ ${GITHUB_TOKEN} ]]  && [[ ${GITEE_TOKEN} ]]; then
     # ${GITHUB_TOKEN} 和 ${GITEE_TOKEN} 都是环境变量；travis-ci 构建时会传入变量
     git push --force --quiet "https://liqianggh:${GITHUB_TOKEN}@github.com/blog.git" gh-pages
 else
-    echo "使用 ssh 公钥部署 gh-pages"
+    echo "当前分支: ${git branch}"
+    echo "执行命令：push -f git@github.com:liqianggh/blog.git gh-pages"
     git push -f git@github.com:liqianggh/blog.git gh-pages
 fi
 cd "${ROOT_DIR}"
