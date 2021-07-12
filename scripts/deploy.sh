@@ -18,7 +18,7 @@ cd dist
 echo "当前目录：$(pwd)"
 
 # 如果是发布到自定义域名
-# echo 'www.example.com' > CNAME
+echo 'www.mycookies.cn' > CNAME
 
 echo "执行命令：git init"
 git init
