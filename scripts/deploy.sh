@@ -8,6 +8,9 @@ ROOT_DIR=$(cd `dirname $0`/..; pwd)
 set -e
 
 cd "${ROOT_DIR}/docs"
+sudo rm -rf  ./dist
+echo "删除目录：$(pwd)/dist"
+
 
 # 生成静态文件
 npm install
@@ -36,7 +39,7 @@ if [[ ${GITHUB_TOKEN} ]]  && [[ ${GITEE_TOKEN} ]]; then
     # ${GITHUB_TOKEN} 和 ${GITEE_TOKEN} 都是环境变量；travis-ci 构建时会传入变量
     git push --force --quiet "https://liqianggh:${GITHUB_TOKEN}@github.com/blog.git" gh-pages
 else
-    echo "执行命令：push -f git@github.com:liqianggh/blog.git gh-pages"
+    echo "执行命令：git push -f git@github.com:liqianggh/blog.git gh-pages"
     git push -f git@github.com:liqianggh/blog.git gh-pages
 fi
 cd "${ROOT_DIR}"

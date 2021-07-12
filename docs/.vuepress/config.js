@@ -4,7 +4,7 @@
 module.exports = {
   port: '4000',
   dest: 'dist',
-  base: '/blog/',
+  base: '/',
   title: 'Java填坑笔记',
   description: 'Java 填坑记录',
   head: [['link', { rel: 'icon', href: `/favicon.ico` }]],
