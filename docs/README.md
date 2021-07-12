@@ -8,3 +8,6 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © liqiang
 ---
 ## Hello Index
 > 📚 
+
+
+<Vssue :title="$title" />

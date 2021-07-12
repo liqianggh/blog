@@ -93,6 +93,20 @@ module.exports = {
         headerAnchorSelector: '.header-anchor',
       },
     ],
+    // 留言板插件
+    [
+      '@vssue/vuepress-plugin-vssue',
+      {
+      // 设置 `platform` 而不是 `api`
+      platform: 'github',
+
+      // 其他的 Vssue 配置
+      owner: ' @liqianggh',
+      repo: 'blog',
+      clientId: 'Iv1.c9856659dc639401',
+      clientSecret: 'b9492a31a9d97956bf554ccdeb1e62c01327d759',  
+      },
+    ],
     ['@vuepress/back-to-top', true],
     [
       '@vuepress/pwa',
