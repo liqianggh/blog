@@ -3,7 +3,7 @@
 MySQL使用了B+Tree作为底层数据结构，能够实现快速高效的数据查询功能。工作中可怕的是没有建立索引，比这更可怕的是建好了索引又没有使用到。
 本文将围绕着如何优雅的使用索引，图文并茂地和大家一起探讨索引的正确打开姿势，不谈底层原理，只求工作实战。
 
-### 1. 索引的特点
+## 1. 索引的特点
 
 page之间是双链表形式，而每个page内部的数据则是单链表形式存在。当进行数据查询时，会限定位到具体的page，然后在page中通过二分查找具体的记录。
 
@@ -49,7 +49,7 @@ INSERT INTO `test_table` VALUES
 COMMIT;
 ```
 
-###  2. 正确创建索引
+##  2. 正确创建索引
 
 > 尽量使用自增长主键
 
@@ -171,7 +171,7 @@ select c, d from test_table  where a = 1 and b = 2 order by c;
  select field_list from t where id_card = reverse('input_id_card_string');
 ```
 
-### 3. 正确使用索引
+## 3. 正确使用索引
 
 建立合适的索引是前提，想要取得理想的查询性能，还应保证能够用到索引。避免索引失效即是优化。
 
@@ -331,7 +331,7 @@ explain select  * from test_table where a="zhangsan" and b="12222222222" and c =
 
 ![](https://source.mycookies.cn/202006110034_91.png?ERROR)
 
-###  4. 总结
+##  4. 总结
 
 索引并不是什么高深的技术，从底层来看，不过是一个数据结构罢了。要想使用好索引，一定要先将B+Tree理解透彻，在此基础上对于日常使用和面试则是信手拈来。
 
@@ -340,7 +340,7 @@ explain select  * from test_table where a="zhangsan" and b="12222222222" and c =
 在工作中，各个公司的版本可能大不相同，会存在一些奇奇怪怪，不确定的问题。所以为了验证索引的有效性，强烈推荐把主要的查询sql都通过explain查看一下执行计划，是否会用到索引。
 
 ## 参考资料：
-[1]  《MySQL 45讲》—极客时间
-[2]  《InnoDB存储引擎》
-[3]  《高性能MySQL》
-[4]     https://dev.mysql.com/doc/refman/8.0/en/ 
+ 1.《MySQL 45讲》—极客时间
+ 2.《InnoDB存储引擎》
+ 3.《高性能MySQL》
+ 4. https://dev.mysql.com/doc/refman/8.0/en/ 
