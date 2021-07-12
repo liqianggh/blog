@@ -6,3 +6,5 @@
 ## 📚 资料
 
 ## 🚪 传送
+
+<Vssue :title="$title" />

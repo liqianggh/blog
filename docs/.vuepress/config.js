@@ -99,12 +99,11 @@ module.exports = {
       {
       // 设置 `platform` 而不是 `api`
       platform: 'github',
-
       // 其他的 Vssue 配置
-      owner: ' @liqianggh',
+      owner: 'liqianggh',
       repo: 'blog',
-      clientId: 'Iv1.c9856659dc639401',
-      clientSecret: 'b9492a31a9d97956bf554ccdeb1e62c01327d759',  
+      clientId: '556b3313997ea5ab29a0',
+      clientSecret: '9de4dfc608df823bef8fa05805e00882d436c66d',  
       },
     ],
     ['@vuepress/back-to-top', true],
