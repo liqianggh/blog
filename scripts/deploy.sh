@@ -32,6 +32,5 @@ if [[ ${GITHUB_TOKEN} ]]  && [[ ${GITEE_TOKEN} ]]; then
 else
     echo "使用 ssh 公钥部署 gh-pages"
     git push -f git@github.com:liqianggh/blog.git gh-pages
-    git push -f git@gitee.com:liqianggh/blog.git gh-pages
 fi
 cd "${ROOT_DIR}"
