@@ -15,7 +15,7 @@ module.exports = {
     },
   },
   themeConfig: {
-    logo: 'https://raw.githubusercontent.com/liqianggh/images/dev/common/javaTKBJ-1.jpeg',
+    logo: 'https://github.com/liqianggh/blog/blob/master/docs/.vuepress/public/images/javaTKBJ-1.jpeg?raw=true',
     repo: 'liqianggh/blog',
     repoLabel: 'Github',
     docsDir: 'docs',
@@ -30,55 +30,55 @@ module.exports = {
         lastUpdated: '上次更新',
         nav: [
           {
-            text: '框架',
-            link: '/framework/',
+            text: 'MySQL',
+            link: '/mysql/',
           },
           {
-            text: '单元测试',
+            text: '测试',
             link: '/test/',
           },
-          {
-            text: '✨ Java系列',
-            ariaLabel: 'Java',
-            items: [
-              {
-                text: 'Java 教程 📚',
-                link: 'https://liqianggh.github.io/java-tutorial/',
-                target: '_blank',
-                rel: '',
-              },
-              {
-                text: 'JavaCore 教程 📚',
-                link: 'https://liqianggh.github.io/javacore/',
-                target: '_blank',
-                rel: '',
-              },
-              {
-                text: 'JavaTech 教程 📚',
-                link: 'https://liqianggh.github.io/JavaTKBJ/',
-                target: '_blank',
-                rel: '',
-              },
-              {
-                text: 'Spring 教程 📚',
-                link: 'https://liqianggh.github.io/spring-tutorial/',
-                target: '_blank',
-                rel: '',
-              },
-              {
-                text: 'Spring Boot 教程 📚',
-                link: 'https://liqianggh.github.io/spring-boot-tutorial/',
-                target: '_blank',
-                rel: '',
-              },
-            ],
-          },
-          {
-            text: '🎯 博客',
-            link: 'https://www.mycookies.cn',
-            target: '_blank',
-            rel: '',
-          },
+          // {
+          //   text: '✨ Java系列',
+          //   ariaLabel: 'Java',
+          //   items: [
+          //     {
+          //       text: 'Java 教程 📚',
+          //       link: 'https://liqianggh.github.io/java-tutorial/',
+          //       target: '_blank',
+          //       rel: '',
+          //     },
+          //     {
+          //       text: 'JavaCore 教程 📚',
+          //       link: 'https://liqianggh.github.io/javacore/',
+          //       target: '_blank',
+          //       rel: '',
+          //     },
+          //     {
+          //       text: 'JavaTech 教程 📚',
+          //       link: 'https://liqianggh.github.io/JavaTKBJ/',
+          //       target: '_blank',
+          //       rel: '',
+          //     },
+          //     {
+          //       text: 'Spring 教程 📚',
+          //       link: 'https://liqianggh.github.io/spring-tutorial/',
+          //       target: '_blank',
+          //       rel: '',
+          //     },
+          //     {
+          //       text: 'Spring Boot 教程 📚',
+          //       link: 'https://liqianggh.github.io/spring-boot-tutorial/',
+          //       target: '_blank',
+          //       rel: '',
+          //     },
+          //   ],
+          // },
+          // {
+          //   text: '🎯 博客',
+          //   link: 'https://www.mycookies.cn',
+          //   target: '_blank',
+          //   rel: '',
+          // },
         ],
         sidebar: 'auto',
         sidebarDepth: 2,
