@@ -15,7 +15,7 @@ module.exports = {
     },
   },
   themeConfig: {
-    logo: 'https://github.com/liqianggh/blog/blob/master/docs/.vuepress/public/images/javaTKBJ-1.jpeg?raw=true',
+    logo: 'https://source.mycookies.cn/3f4fb78ab4aec2948d6c40584c235b9e.jpeg',
     repo: 'liqianggh/blog',
     repoLabel: 'Github',
     docsDir: 'docs',

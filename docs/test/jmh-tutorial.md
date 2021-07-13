@@ -1,6 +1,39 @@
-# JMH使用教程
+---
+title: "JMH使用教程"
+date: "2021-07-13"
+description: "基准测试，JMH教程，JMH用法，微基准测试"
+footer: CC-BY-SA-4.0 Licensed | Copyright © liqiang
+---
+
+## 概述
+* ArrayList 和 LinkedList谁更快？
+* 二维数组行优先和列优先哪种方式遍历更优？
+* StringBuilder 和 StringBuffer性能差异多少？
+
+在工作中我们有很多性能对比测试的需求，为了能得出正确的结论，避免受到不必要的挑战，我们需要给出量化的测试结果。
+
+所以掌握一种科学的，量化对比测试方法很有必要，尤其是对于从事底层开发来说，这是一项必会的技能。
+
+### 基准测试
+基准测试（Benckmarking）是指通过设计科学的测试方法、测试工具和测试系统，实现对一类测试对象的某项性能指标进行定量的和可对比的测试。
+
+例如，对计算机CPU进行浮点运算、数据访问的带宽和延迟等指标的基准测试，可以使用户清楚地了解每一款CPU的运算性能及作业吞吐能力是否满足应用程序的要求.
+
+### JMH 是什么
+JMH（Java Microbenchmark Harness）是一个用来构建，执行和分析 Java 和其他面向 JVM 的语言的微基准测试工具包。
+
+所谓微基准指的是其测试精读最高可达**纳秒**级别，使得应用场景更广，测试结果更加精准；而Harness则就表明了其不仅能够进行测试，还集成了生成测试报告的能力，当代码执行完毕后，可以轻而易举地生成图片和报表。
+TODO： 图片
+
+JMH 与 JVM 是同一团队开发的，所以针对虚拟机的各种优化 JMH 也会考虑在内。是比较靠谱的一个基准测试工具，在很多开源框架中也使用JMH做性能测试。
+
 ## QuickStart
-### 构建Benchmark应用
+### 命令行中构建 <Badge text="推荐" type="tip"/>
+
+在测试大型项目时，通常将基准测试保存在单独的子项目（模块）中，通过构建依赖关系来依赖测试模块。通常不建议在IDE中运行基准测试，因为基准测试运行的环境通常不受控制。
+
+虽推荐使用命令行的方式，但是很多人仍然你喜欢使用IDE。IDE的具体使用教程请移步 https://github.com/openjdk/jmh。此处介绍命令行的方式构建基准测试程序。
+
 Step 1. 配置基准测试项目。使用以下命令，可以基于 maven 模板，在test文件夹下生成一个 JMH 驱动的项目。
 ```shell
 $ mvn archetype:generate \
@@ -25,36 +58,60 @@ Step 3: 运行基准测试。当项目构建完成后，你会得到包含所有
 ```shell
 java -jar target/benchmarks.jar
 ```
-使用-h运行以查看可用的命令行选项。
+### IDE中构建基准测试
+TODO
 
-在处理大型项目时，通常将基准测试保存在单独的子项目（模块）中，通过构建依赖关系来依赖测试模块。
+## JMH 注意事项
+想要获得准确的测试结果，我们必须模拟程序的真实执行场景，排除JVM优化和其他无关操作对执行结果的影响。
+### JVM，操作系统优化
+无效代码消除(Dead Code Elimination)，在运行时不是所有代码都会执行。当JVM认为一段逻辑执行后没有结果输出或者外部影响，就会将当前代码判定为DeadCode，从而不会执行这段代码。
+```java
+    @Benchmark
+    public void measureWrong() {
+        // 这是错误的：结果没有被使用，整个计算将会被编译器优化。
+        Math.log(x);
+    }
+```
+常量折叠（Constant Folding），是通过对编译时常量或常量表达式进行计算来简化代码。它是无效代码消除的另一种形式。
+```java
+   @Benchmark
+    public void measureWrong() {
+        // 常量折叠
+        int x = 7 * 8 / 2;
+        int y = 4;
+        // 常量传播（也属于常量折叠）
+        return x + y;
+    }
+```
+以上代码经过编译器的常量折叠优化后，会直接返回一个数值，无需额外计算，具体代码如下：
+```java
+    @Benchmark
+    public void measureWrong() {
+        return 32;
+    }
+```
 
-虽推荐使用命令行的方式，但是很多人仍然你喜欢使用IDE。用户体验因不同的ide而异，但我们在这里将概一般情况。通常不建议在IDE中运行基准测试，因为基准测试运行的环境通常不受控制。
+JVM是解释执行语言，Java代码会先编译成二进制码（.class文件），然后加载到JVM中，在运行时时在转换成机器码执行。HotSpot自适应优化器在执行期间收集有关程序热点的信息，会将热点编译为机器码以提高程序的秩序速度。
+
+方法内联（Inlining）是JVM非常重要的一个优化，内联是一种优化已编译源源码的方式，通常将最常执行的方法调用（也称之为热点），在运行时替换为方法主体，以便减少调用成本。比如 A 方法内调用 B 方法，则编译器可能会将 B 方法的代码编译进 A 方法体中，以提高 A 方法的执行速度。
+
+TODO: code
+
+### 资源释放与销毁
+测试时往往会依赖于一些参数和外部资源，这些和测试目标无关的操作，不应当计入测试报告中。
+比如测试文件随机访问性能时，我们要在每次此时执行之前生成测试文件；测试HashMap和ConcurrentHashmap的性能区别时，我们要预先构建出相应的测试数据。
+```java
+// 错误代码示例
+
+```
 
 ### Hello World: 让JMH程序跑起来
-
 ```java
 public class JMHSample_01_HelloWorld {
-
-    /* This is our first benchmark method.
-     * JMH works as follows: users annotate the methods with @Benchmark, and then JMH produces the generated code to run this particular benchmark as reliably as possible. In general one might think about @Benchmark methods as the benchmark "payload", the things we want to measure. The surrounding infrastructure is provided by the harness itself.
-     * Read the Javadoc for @Benchmark annotation for complete semantics and restrictions. At this point we only note that the methods names are non-essential, and it only matters that the methods are marked with @Benchmark. You can have multiple benchmark methods within the same class.
-     * Note: if the benchmark method never finishes, then JMH run never finishes as well. If you throw an exception from the method body the JMH run ends abruptly for this benchmark and JMH will run the next benchmark down the list.
-     * Although this benchmark measures "nothing" it is a good showcase for the overheads the infrastructure bear on the code you measure in the method. There are no magical infrastructures which incur no overhead, and it is important to know what are the infra overheads you are dealing with. You might find this thought unfolded in future examples by having the "baseline" measurements to compare against.
-     */
-
     @Benchmark
     public void wellHelloThere() {
         // this method was intentionally left blank.
     }
-
-    /* ============================== HOW TO RUN THIS TEST: ====================================
-     * You are expected to see the run with large number of iterations, and very large throughput numbers. You can see that as the estimate of the harness overheads per method call. In most of our measurements, it is down to several cycles per call.
-     * a) Via command-line:    $ mvn clean install    $ java -jar target/benchmarks.jar JMHSample_01
-     * JMH generates self-contained JARs, bundling JMH together with it. The runtime options for the JMH are available with "-h":    $ java -jar target/benchmarks.jar -h
-     * b) Via the Java API:    (see the JMH homepage for possible caveats when running from IDE:      http://openjdk.java.net/projects/code-tools/jmh/)
-     */
-
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(JMHSample_01_HelloWorld.class.getSimpleName())
@@ -66,6 +123,10 @@ public class JMHSample_01_HelloWorld {
 
 }
 ```
+
+
+
+
 
 ## BenchmarkModes： 你想要哪些指标，测试吞吐量还是执行时间？
 
@@ -3125,4 +3186,679 @@ public class JMHSample_32_BulkWarmup {
 
 ## SecurityManager
 
+一些有针对性的测试可能会关心是否安装了 SecurityManager。由于 JMH 本身需要执行特权操作，因此盲目安装 SecurityManager 是不够的，因为 JMH 基础架构会失败。
+ 
+在这个例子中，我们想要测量 System.getProperty 在安装 SecurityManager 的情况下的性能。为此，我们有两个带有辅助方法的状态类。一种读取默认的 JMH 安全策略（我们随 JMH 提供一种），并安装安全管理器；另一个确保未安装 SecurityManager。
 
+如果您需要测试的受限安全策略，建议您获取 /jmh-security-minimal.policy，其中包含运行 JMH 基准测试所需的最低权限，在那里合并新权限，在临时生成新策略文件位置，并改为加载该策略文件。还有 /jmh-security-minimal-runner.policy，它包含运行 JMH 工具的最小权限，如果你想使用 JVM 参数来装备 SecurityManager。
+
+```java
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+public class JMHSample_33_SecurityManager {
+
+    /*
+     * Some targeted tests may care about SecurityManager being installed.
+     * Since JMH itself needs to do privileged actions, it is not enough
+     * to blindly install the SecurityManager, as JMH infrastructure will fail.
+     */
+
+    /*
+     * In this example, we want to measure the performance of System.getProperty
+     * with SecurityManager installed or not. To do this, we have two state classes
+     * with helper methods. One that reads the default JMH security policy (we ship one
+     * with JMH), and installs the security manager; another one that makes sure
+     * the SecurityManager is not installed.
+     *
+     * If you need a restricted security policy for the tests, you are advised to
+     * get /jmh-security-minimal.policy, that contains the minimal permissions
+     * required for JMH benchmark to run, merge the new permissions there, produce new
+     * policy file in a temporary location, and load that policy file instead.
+     * There is also /jmh-security-minimal-runner.policy, that contains the minimal
+     * permissions for the JMH harness to run, if you want to use JVM args to arm
+     * the SecurityManager.
+     */
+
+    @State(Scope.Benchmark)
+    public static class SecurityManagerInstalled {
+        @Setup
+        public void setup() throws IOException, NoSuchAlgorithmException, URISyntaxException {
+            URI policyFile = JMHSample_33_SecurityManager.class.getResource("/jmh-security.policy").toURI();
+            Policy.setPolicy(Policy.getInstance("JavaPolicy", new URIParameter(policyFile)));
+            System.setSecurityManager(new SecurityManager());
+        }
+
+        @TearDown
+        public void tearDown() {
+            System.setSecurityManager(null);
+        }
+    }
+
+    @State(Scope.Benchmark)
+    public static class SecurityManagerEmpty {
+        @Setup
+        public void setup() throws IOException, NoSuchAlgorithmException, URISyntaxException {
+            System.setSecurityManager(null);
+        }
+    }
+
+    @Benchmark
+    public String testWithSM(SecurityManagerInstalled s) throws InterruptedException {
+        return System.getProperty("java.home");
+    }
+
+    @Benchmark
+    public String testWithoutSM(SecurityManagerEmpty s) throws InterruptedException {
+        return System.getProperty("java.home");
+    }
+
+    /*
+     * ============================== HOW TO RUN THIS TEST: ====================================
+     *
+     * You can run this test:
+     *
+     * a) Via the command line:
+     *    $ mvn clean install
+     *    $ java -jar target/benchmarks.jar JMHSample_33 -f 1
+     *    (we requested 5 warmup iterations, 5 forks; there are also other options, see -h))
+     *
+     * b) Via the Java API:
+     *    (see the JMH homepage for possible caveats when running from IDE:
+     *      http://openjdk.java.net/projects/code-tools/jmh/)
+     */
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(JMHSample_33_SecurityManager.class.getSimpleName())
+                .warmupIterations(5)
+                .measurementIterations(5)
+                .forks(1)
+                .build();
+
+        new Runner(opt).run();
+    }
+
+}
+```
+
+## SafeLooping
+JMHSample_11_Loops 警告在@Benchmark 方法中使用循环的危险。然而，有时需要遍历数据集中的多个元素。没有循环就很难做到这一点，因此我们需要设计一个方案安全循环。
+
+假设我们要测试在不同的参数下，work()方法执行耗时情况。这模仿了一个常见的用例，当多个实例具有相同的实现，但测量不同的数据。This mimics a frequent use case when multiple instances with the same implementation, but different data, is measured.
+
+
+每个基准都需要控制。我们通过检查基准成本随着任务规模的增加而线性增长，对我们的基准进行了微不足道的控制。如果不是，那么就会发生错误。
+
+```java
+@State(Scope.Thread)
+@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Fork(3)
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+public class JMHSample_34_SafeLooping {
+
+    /*
+     * JMHSample_11_Loops warns about the dangers of using loops in @Benchmark methods.
+     * Sometimes, however, one needs to traverse through several elements in a dataset.
+     * This is hard to do without loops, and therefore we need to devise a scheme for
+     * safe looping.
+     */
+
+    /*
+     * Suppose we want to measure how much it takes to execute work() with different
+     * arguments. This mimics a frequent use case when multiple instances with the same
+     * implementation, but different data, is measured.
+     */
+
+    static final int BASE = 42;
+
+    static int work(int x) {
+        return BASE + x;
+    }
+
+    /*
+     * Every benchmark requires control. We do a trivial control for our benchmarks
+     * by checking the benchmark costs are growing linearly with increased task size.
+     * If it doesn't, then something wrong is happening.
+     */
+
+    @Param({"1", "10", "100", "1000"})
+    int size;
+
+    int[] xs;
+
+    @Setup
+    public void setup() {
+        xs = new int[size];
+        for (int c = 0; c < size; c++) {
+            xs[c] = c;
+        }
+    }
+
+    /*
+     * First, the obviously wrong way: "saving" the result into a local variable would not
+     * work. A sufficiently smart compiler will inline work(), and figure out only the last
+     * work() call needs to be evaluated. Indeed, if you run it with varying $size, the score
+     * will stay the same!
+     * 首先，明显错误的方式：将结果“保存”到局部变量中是行不通的。
+     * 一个足够聪明的编译器将内联 work()，并找出只需要评估最后一个 work() 调用。事实上，如果你用不同的 $size 运行它，分数将保持不变！
+     */
+
+    @Benchmark
+    public int measureWrong_1() {
+        int acc = 0;
+        for (int x : xs) {
+            acc = work(x);
+        }
+        return acc;
+    }
+
+    /*
+     * Second, another wrong way: "accumulating" the result into a local variable. While
+     * it would force the computation of each work() method, there are software pipelining
+     * effects in action, that can merge the operations between two otherwise distinct work()
+     * bodies. This will obliterate the benchmark setup.
+     *
+     * In this example, HotSpot does the unrolled loop, merges the $BASE operands into a single
+     * addition to $acc, and then does a bunch of very tight stores of $x-s. The final performance
+     * depends on how much of the loop unrolling happened *and* how much data is available to make
+     * the large strides.
+     * 另外一种错误方式就是将结果累加到一个局部变量中。虽然他会强制计算每一个work（）方法，但是由于软件流水线的作用，可以合并两个的work()方法体之间的不同操作。这将消除基准设置。
+     * 
+     * 这个例子中，HotSpot 执行展开循环，将 $BASE操作数合并一个操作加到$acc中，然后执行一堆非常紧凑的 $x-s 存储。
+       最终的性能取决于循环展开发生了多少和有多少数据可用于大步前进.
+     */
+
+    @Benchmark
+    public int measureWrong_2() {
+        int acc = 0;
+        for (int x : xs) {
+            acc += work(x);
+        }
+        return acc;
+    }
+
+    /*
+     * Now, let's see how to measure these things properly. A very straight-forward way to
+     * break the merging is to sink each result to Blackhole. This will force runtime to compute
+     * every work() call in full. (We would normally like to care about several concurrent work()
+     * computations at once, but the memory effects from Blackhole.consume() prevent those optimization
+     * on most runtimes).
+     * 
+     * 现在，让我们看看如何正确测试这些chagn'ji。打破合并的一个非常直接的方法是将每个结果下沉到 Blackhole。这将强制运行时完整执行每个 work() 计算。 （我们通常希望同时关注多个并发 work() 计算，但是 Blackhole.consume() 的内存效应阻止了大多数运行时的优化）。
+     */
+
+    @Benchmark
+    public void measureRight_1(Blackhole bh) {
+        for (int x : xs) {
+            bh.consume(work(x));
+        }
+    }
+
+    /*
+     * 注意事项：DANGEROUS AREA, PLEASE READ THE DESCRIPTION BELOW.
+     *
+     * Sometimes, the cost of sinking the value into a Blackhole is dominating the nano-benchmark score.
+     * In these cases, one may try to do a make-shift "sinker" with non-inlineable method. This trick is
+     * *very* VM-specific, and can only be used if you are verifying the generated code (that's a good
+     * strategy when dealing with nano-benchmarks anyway).
+     *
+     * You SHOULD NOT use this trick in most cases. Apply only where needed.
+     *
+     * 有时，将值放入 Blackhole 的成本在 nano-benchmark 分数中占主导地位。
+     * 在这些情况下，人们可能会尝试使用不可内联的方法来做一个临时的“sinker” 。这个技巧是特定于 VM 的，只有在验证生成的代码时才能使用
+     * 
+     */
+
+    @Benchmark
+    public void measureRight_2() {
+        for (int x : xs) {
+            sink(work(x));
+        }
+    }
+
+    @CompilerControl(CompilerControl.Mode.DONT_INLINE)
+    public static void sink(int v) {
+        // IT IS VERY IMPORTANT TO MATCH THE SIGNATURE TO AVOID AUTOBOXING.
+        // The method intentionally does nothing.
+    }
+
+
+    /*
+     * ============================== HOW TO RUN THIS TEST: ====================================
+     *
+     * You might notice measureWrong_1 does not depend on $size, measureWrong_2 has troubles with
+     * linearity, and otherwise much faster than both measureRight_*. You can also see measureRight_2
+     * is marginally faster than measureRight_1.
+     * 
+     * 从执行结果中可以发现，measureWrong_1的执行结果不依赖于 $size参数，而measureWrong_2 的执行性能不是增长，否则比 measureRight_ 快得多。
+     * 您还可以看到 measureRight_2 略快于 measureRight_1。
+     * 
+     * You can run this test:
+     *
+     * a) Via the command line:
+     *    $ mvn clean install
+     *    $ java -jar target/benchmarks.jar JMHSample_34
+     *
+     * b) Via the Java API:
+     *    (see the JMH homepage for possible caveats when running from IDE:
+     *      http://openjdk.java.net/projects/code-tools/jmh/)
+     */
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(JMHSample_34_SafeLooping.class.getSimpleName())
+                .forks(3)
+                .build();
+
+        new Runner(opt).run();
+    }
+
+}
+```
+## Profilers
+这个例子是profiler（分析器）的概览。
+
+JMH有一些很便利的profiler来帮助我们理解benchmark。虽然这些分析器不能替代成熟的外部分析器，但在许多情况下，这些分析器很容易快速发现基准测试行为。
+
+当你正在对基准代码本身进行多次调整时，快速获得结果非常重要。
+
+可以使用-lprof列出所有profiler。本例中只展示常用的一些。许多profiler有他们自己的选项，通过-prof `<profiler-name/>:help`获取。
+
+因为不同的profiler做不同的事情，很难在一个基准测试中展示所有profiler的行为。因为有好几个例子。
+
+## BranchPrediction： 分支预测
+
+## What is ?
+xxx运行优化
+
+此示例用作针对常规数据集的警告。
+
+由于简单的生成策略，或者只是因为对常规数据集感觉更好，因此很容易将常规数据集用于基准测试。
+
+不幸的是，它经常事与愿违：已知常规数据集可以通过软件和硬件很好地进行优化。
+
+这个例子来展示分支预测优化。
+
+想象一下我们的基准测试根据数组内容选择分支，因为我们正在通过它进行流式传输。
+
+```java
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Fork(5)
+@State(Scope.Benchmark)
+public class JMHSample_36_BranchPrediction {
+
+    /*
+     * This sample serves as a warning against regular data sets.
+     *
+     * It is very tempting to present a regular data set to benchmark, either due to
+     * naive generation strategy, or just from feeling better about regular data sets.
+     * Unfortunately, it frequently backfires: the regular datasets are known to be
+     * optimized well by software and hardware. This example exploits one of these
+     * optimizations: branch prediction.
+     *
+     * Imagine our benchmark selects the branch based on the array contents, as
+     * we are streaming through it:
+     */
+
+    private static final int COUNT = 1024 * 1024;
+
+    private byte[] sorted;
+    private byte[] unsorted;
+
+    @Setup
+    public void setup() {
+        sorted = new byte[COUNT];
+        unsorted = new byte[COUNT];
+        Random random = new Random(1234);
+        random.nextBytes(sorted);
+        random.nextBytes(unsorted);
+        Arrays.sort(sorted);
+    }
+
+    @Benchmark
+    @OperationsPerInvocation(COUNT)
+    public void sorted(Blackhole bh1, Blackhole bh2) {
+        for (byte v : sorted) {
+            if (v > 0) {
+                bh1.consume(v);
+            } else {
+                bh2.consume(v);
+            }
+        }
+    }
+
+    @Benchmark
+    @OperationsPerInvocation(COUNT)
+    public void unsorted(Blackhole bh1, Blackhole bh2) {
+        for (byte v : unsorted) {
+            if (v > 0) {
+                bh1.consume(v);
+            } else {
+                bh2.consume(v);
+            }
+        }
+    }
+
+    /*
+        There is a substantial difference in performance for these benchmarks!
+        It is explained by good branch prediction in "sorted" case, and branch mispredicts in "unsorted"
+        case. -prof perfnorm conveniently highlights that, with larger "branch-misses", and larger "CPI"
+        for "unsorted" case:
+
+        这些基准测试的性能存在显着差异！
+        它可以通过“已排序”情况下的良好分支预测和“未排序”情况下的分支预测错误来解释。 -prof perfnorm 可以明显看出，具有更多的“分支未命中”和更多的“CPI”对于“未分类”的情况：
+        Benchmark                                                       Mode  Cnt   Score    Error  Units
+        JMHSample_36_BranchPrediction.sorted                            avgt   25   2.160 ±  0.049  ns/op
+        JMHSample_36_BranchPrediction.sorted:·CPI                       avgt    5   0.286 ±  0.025   #/op
+        JMHSample_36_BranchPrediction.sorted:·branch-misses             avgt    5  ≈ 10⁻⁴            #/op
+        JMHSample_36_BranchPrediction.sorted:·branches                  avgt    5   7.606 ±  1.742   #/op
+        JMHSample_36_BranchPrediction.sorted:·cycles                    avgt    5   8.998 ±  1.081   #/op
+        JMHSample_36_BranchPrediction.sorted:·instructions              avgt    5  31.442 ±  4.899   #/op
+        JMHSample_36_BranchPrediction.unsorted                          avgt   25   5.943 ±  0.018  ns/op
+        JMHSample_36_BranchPrediction.unsorted:·CPI                     avgt    5   0.775 ±  0.052   #/op
+        JMHSample_36_BranchPrediction.unsorted:·branch-misses           avgt    5   0.529 ±  0.026   #/op  <--- OOPS
+        JMHSample_36_BranchPrediction.unsorted:·branches                avgt    5   7.841 ±  0.046   #/op
+        JMHSample_36_BranchPrediction.unsorted:·cycles                  avgt    5  24.793 ±  0.434   #/op
+        JMHSample_36_BranchPrediction.unsorted:·instructions            avgt    5  31.994 ±  2.342   #/op
+        It is an open question if you want to measure only one of these tests. In many cases, you have to measure
+        both to get the proper best-case and worst-case estimate!
+     */
+
+
+    /*
+     * ============================== HOW TO RUN THIS TEST: ====================================
+     *
+     * You can run this test:
+     *
+     * a) Via the command line:
+     *    $ mvn clean install
+     *    $ java -jar target/benchmarks.jar JMHSample_36
+     *
+     * b) Via the Java API:
+     *    (see the JMH homepage for possible caveats when running from IDE:
+     *      http://openjdk.java.net/projects/code-tools/jmh/)
+     */
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(".*" + JMHSample_36_BranchPrediction.class.getSimpleName() + ".*")
+                .build();
+        new Runner(opt).run();
+    }
+
+}
+```
+## CacheAccess
+
+此示例用作来提醒缓存访问模式中的细微差异。 许多性能差异可以通过测试访问内存的方式来解释。 在下面的示例中，我们以行优先或列优先遍历矩阵：
+
+```java
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Fork(5)
+@State(Scope.Benchmark)
+public class JMHSample_37_CacheAccess {
+
+    /*
+     * This sample serves as a warning against subtle differences in cache access patterns.
+     *
+     * Many performance differences may be explained by the way tests are accessing memory.
+     * In the example below, we walk the matrix either row-first, or col-first:
+     */
+
+    private final static int COUNT = 4096;
+    private final static int MATRIX_SIZE = COUNT * COUNT;
+
+    private int[][] matrix;
+
+    @Setup
+    public void setup() {
+        matrix = new int[COUNT][COUNT];
+        Random random = new Random(1234);
+        for (int i = 0; i < COUNT; i++) {
+            for (int j = 0; j < COUNT; j++) {
+                matrix[i][j] = random.nextInt();
+            }
+        }
+    }
+
+    @Benchmark
+    @OperationsPerInvocation(MATRIX_SIZE)
+    public void colFirst(Blackhole bh) {
+        for (int c = 0; c < COUNT; c++) {
+            for (int r = 0; r < COUNT; r++) {
+                bh.consume(matrix[r][c]);
+            }
+        }
+    }
+
+    @Benchmark
+    @OperationsPerInvocation(MATRIX_SIZE)
+    public void rowFirst(Blackhole bh) {
+        for (int r = 0; r < COUNT; r++) {
+            for (int c = 0; c < COUNT; c++) {
+                bh.consume(matrix[r][c]);
+            }
+        }
+    }
+
+    /*
+        Notably, colFirst accesses are much slower, and that's not a surprise: Java's multidimensional
+        arrays are actually rigged, being one-dimensional arrays of one-dimensional arrays. Therefore,
+        pulling n-th element from each of the inner array induces more cache misses, when matrix is large.
+        -prof perfnorm conveniently highlights that, with >2 cache misses per one benchmark op:
+        Benchmark                                                 Mode  Cnt   Score    Error  Units
+        JMHSample_37_MatrixCopy.colFirst                          avgt   25   5.306 ±  0.020  ns/op
+        JMHSample_37_MatrixCopy.colFirst:·CPI                     avgt    5   0.621 ±  0.011   #/op
+        JMHSample_37_MatrixCopy.colFirst:·L1-dcache-load-misses   avgt    5   2.177 ±  0.044   #/op <-- OOPS
+        JMHSample_37_MatrixCopy.colFirst:·L1-dcache-loads         avgt    5  14.804 ±  0.261   #/op
+        JMHSample_37_MatrixCopy.colFirst:·LLC-loads               avgt    5   2.165 ±  0.091   #/op
+        JMHSample_37_MatrixCopy.colFirst:·cycles                  avgt    5  22.272 ±  0.372   #/op
+        JMHSample_37_MatrixCopy.colFirst:·instructions            avgt    5  35.888 ±  1.215   #/op
+        JMHSample_37_MatrixCopy.rowFirst                          avgt   25   2.662 ±  0.003  ns/op
+        JMHSample_37_MatrixCopy.rowFirst:·CPI                     avgt    5   0.312 ±  0.003   #/op
+        JMHSample_37_MatrixCopy.rowFirst:·L1-dcache-load-misses   avgt    5   0.066 ±  0.001   #/op
+        JMHSample_37_MatrixCopy.rowFirst:·L1-dcache-loads         avgt    5  14.570 ±  0.400   #/op
+        JMHSample_37_MatrixCopy.rowFirst:·LLC-loads               avgt    5   0.002 ±  0.001   #/op
+        JMHSample_37_MatrixCopy.rowFirst:·cycles                  avgt    5  11.046 ±  0.343   #/op
+        JMHSample_37_MatrixCopy.rowFirst:·instructions            avgt    5  35.416 ±  1.248   #/op
+        So, when comparing two different benchmarks, you have to follow up if the difference is caused
+        by the memory locality issues.
+     */
+
+    /*
+     * ============================== HOW TO RUN THIS TEST: ====================================
+     *
+     * You can run this test:
+     *
+     * a) Via the command line:
+     *    $ mvn clean install
+     *    $ java -jar target/benchmarks.jar JMHSample_37
+     *
+     * b) Via the Java API:
+     *    (see the JMH homepage for possible caveats when running from IDE:
+     *      http://openjdk.java.net/projects/code-tools/jmh/)
+     */
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(".*" + JMHSample_37_CacheAccess.class.getSimpleName() + ".*")
+                .build();
+
+        new Runner(opt).run();
+    }
+
+}
+```
+## PerInvokeSetup
+这个例子突出了非稳态基准测试中的常见错误。
+
+假设我们要测试对数组进行冒泡排序的耗时。
+我们天真地认为可以使用随机（未排序）值填充数组，并一遍又一遍地调用sort测试：
+
+```java
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Fork(5)
+public class JMHSample_38_PerInvokeSetup {
+
+    /*
+     * This example highlights the usual mistake in non-steady-state benchmarks.
+     *
+     * Suppose we want to test how long it takes to bubble sort an array. Naively,
+     * we could make the test that populates an array with random (unsorted) values,
+     * and calls sort on it over and over again:
+     *
+     * 此示例突显非稳态基准测试(non-steady-state benchmarks)中的常见错误。
+     *
+     * 假设我们要测试对数组进行冒泡排序的耗时。
+     * 天真地，我们可以使用随机（未排序）值填充数组，并一遍又一遍地调用sort测试：
+     */
+
+    private void bubbleSort(byte[] b) {
+        boolean changed = true;
+        while (changed) {
+            changed = false;
+            for (int c = 0; c < b.length - 1; c++) {
+                if (b[c] > b[c + 1]) {
+                    byte t = b[c];
+                    b[c] = b[c + 1];
+                    b[c + 1] = t;
+                    changed = true;
+                }
+            }
+        }
+    }
+
+    // Could be an implicit State instead, but we are going to use it
+    // as the dependency in one of the tests below
+    // 可能是一个隐式状态，但我们将在下面的一个测试中依赖它
+
+    @State(Scope.Benchmark)
+    public static class Data {
+
+        @Param({"1", "16", "256"})
+        int count;
+
+        byte[] arr;
+
+        @Setup
+        public void setup() {
+            arr = new byte[count];
+            Random random = new Random(1234);
+            random.nextBytes(arr);
+        }
+    }
+
+    @Benchmark
+    public byte[] measureWrong(Data d) {
+        bubbleSort(d.arr);
+        return d.arr;
+    }
+
+    /*
+     * The method above is subtly wrong: it sorts the random array on the first invocation
+     * only. Every subsequent call will "sort" the already sorted array. With bubble sort,
+     * that operation would be significantly faster!
+     *
+     * This is how we might *try* to measure it right by making a copy in Level.Invocation
+     * setup. However, this is susceptible to the problems described in Level.Invocation
+     * Javadocs, READ AND UNDERSTAND THOSE DOCS BEFORE USING THIS APPROACH.
+     *
+     * 上面的方法是巧妙的错误：它只在第一次调用时对随机数组进行排序。
+     * 后续每个调用都将"排序"已排序的数组。
+     * 通过冒泡排序，操作速度会明显加快！
+     *
+     * 我们可以尝试通过在Level.Invocation中制作数组的副本来正确测量它。
+     * 在使用Level.Invocation这些方法之前请阅读并理解这些文档。
+     */
+
+    @State(Scope.Thread)
+    public static class DataCopy {
+        byte[] copy;
+
+        @Setup(Level.Invocation)
+        public void setup2(Data d) {
+            copy = Arrays.copyOf(d.arr, d.arr.length);
+        }
+    }
+
+    @Benchmark
+    public byte[] measureNeutral(DataCopy d) {
+        bubbleSort(d.copy);
+        return d.copy;
+    }
+
+    /*
+     * In an overwhelming majority of cases, the only sensible thing to do is to suck up
+     * the per-invocation setup costs into a benchmark itself. This work well in practice,
+     * especially when the payload costs dominate the setup costs.
+     *
+     * 在绝大多数情况下，唯一明智的做法是将每次调用设置成本吸收到基准测试本身。
+     *
+     * 这在实践中很有效，特别是当有效载荷成本主导设置成本时
+     * （即：测试本身耗时远远大于准备数据时，准备数据时间对测试本身的影响可以忽略）。
+     */
+
+    @Benchmark
+    public byte[] measureRight(Data d) {
+        byte[] c = Arrays.copyOf(d.arr, d.arr.length);
+        bubbleSort(c);
+        return c;
+    }
+
+    /*
+        Benchmark                                   (count)  Mode  Cnt      Score     Error  Units
+
+        JMHSample_38_PerInvokeSetup.measureWrong          1  avgt   25      2.408 Â±   0.011  ns/op
+        JMHSample_38_PerInvokeSetup.measureWrong         16  avgt   25      8.286 Â±   0.023  ns/op
+        JMHSample_38_PerInvokeSetup.measureWrong        256  avgt   25     73.405 Â±   0.018  ns/op
+
+        JMHSample_38_PerInvokeSetup.measureNeutral        1  avgt   25     15.835 Â±   0.470  ns/op
+        JMHSample_38_PerInvokeSetup.measureNeutral       16  avgt   25    112.552 Â±   0.787  ns/op
+        JMHSample_38_PerInvokeSetup.measureNeutral      256  avgt   25  58343.848 Â± 991.202  ns/op
+
+        JMHSample_38_PerInvokeSetup.measureRight          1  avgt   25      6.075 Â±   0.018  ns/op
+        JMHSample_38_PerInvokeSetup.measureRight         16  avgt   25    102.390 Â±   0.676  ns/op
+        JMHSample_38_PerInvokeSetup.measureRight        256  avgt   25  58812.411 Â± 997.951  ns/op
+
+        We can clearly see that "measureWrong" provides a very weird result: it "sorts" way too fast.
+        "measureNeutral" is neither good or bad: while it prepares the data for each invocation correctly,
+        the timing overheads are clearly visible. These overheads can be overwhelming, depending on
+        the thread count and/or OS flavor.
+
+        明显可以看出"measureWrong"跑出来一个奇怪的结果：它的排序太快了。
+        "measureNeutral"一般般：它正确地为每个调用准备数据，时间开销清晰可见。在不同的线程数 和/或 OS风格下，这些开销可能会非常大。
+     */
+
+    /*
+     * ============================== HOW TO RUN THIS TEST: ====================================
+     *
+     * You can run this test:
+     *
+     * a) Via the command line:
+     *    $ mvn clean install
+     *    $ java -jar target/benchmarks.jar JMHSample_38
+     *
+     * b) Via the Java API:
+     *    (see the JMH homepage for possible caveats when running from IDE:
+     *      http://openjdk.java.net/projects/code-tools/jmh/)
+     */
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(".*" + JMHSample_38_PerInvokeSetup.class.getSimpleName() + ".*")
+                .output("JMHSample_38_PerInvokeSetup.sampleLog")
+                .build();
+
+        new Runner(opt).run();
+    }
+
+}
+```
