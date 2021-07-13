@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "rimraf dist && rimraf .temp",
     "build": "npm run clean && vuepress build",
-    "start": "vuepress dev ./ --temp .temp",
+    "start": "vuepress dev ./",
     "lint": "markdownlint -r markdownlint-rule-emphasis-style -c ./.markdownlint.json **/*.md -i node_modules",
     "lint:fix": "markdownlint -f -r markdownlint-rule-emphasis-style -c ./.markdownlint.json **/*.md -i node_modules",
     "show-help": "vuepress --help",

@@ -87,6 +87,9 @@ module.exports = {
   },
   plugins: [
     [
+      '@vuepress/container',
+    ],
+    [
       '@vuepress/active-header-links',
       {
         sidebarLinkSelector: '.sidebar-link',
@@ -103,10 +106,9 @@ module.exports = {
       owner: 'liqianggh',
       repo: 'blog',
       clientId: '556b3313997ea5ab29a0',
-      clientSecret: '9de4dfc608df823bef8fa05805e00882d436c66d',  
-      },
-    ],
-    ['@vuepress/back-to-top', true],
+      clientSecret: '49271bf6819717c6c1bd10fb83190d2c0442d9d6',  
+      }],
+    ['@vuepress/plugin-back-to-top', true],
     [
       '@vuepress/pwa',
       {
