@@ -124,5 +124,22 @@ export default {
 
 ### 三级标题
 
-### 四级标题
+#### 四级标题
+```
+
+```java
+public class JMHSample_01_HelloWorld {
+
+    @Benchmark
+    public void wellHelloThere() {
+    }
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(JMHSample_01_HelloWorld.class.getSimpleName())
+                .forks(1)
+                .build();
+
+        new Runner(opt).run();
+    }
 ```
