@@ -323,10 +323,11 @@ public class JMHSample4ParamsSetup {
 2. 如果是内部类，则必须声明为静态内部类（public static class ...)
 3. 必须包含无参构造函数
 
-
 ### State Scope
-State 对象在整个基准测试过程中可以被重复使用，可以通过Scope枚举指定 State 的作用域。
+State 对象在整个基准测试过程中可以被重复使用，可以通过Scope枚举指定 State 的作用域。State作用域一共有三种：
+
 Benchmark：同一类型的State对象将会在所有线程之间共享，即只会创建一个全局状态对象。
+Thread：：同一类型的State对象，每个线程都会创建一个，即线程间不同享。
 Group：同一类型的所有State对象将会在同一执行组内的所有线程共享，即每个执行组都会创建一个状态对象。
 
 ### Default State
@@ -629,336 +630,16 @@ public class JMHSample_07_FixtureLevelInvocation {
 
 ```
 :::
+## 避免 JVM 优化
+很多情况下基准测试的失败，都是由JVM优化导致的。所以在进行基准测试时，我们必须要考虑JVM优化对我们测试方法的影响。
+### @Forking
+众所周知，JVM 擅长配置 profile-guided 的化。但是这对进准测试并不友好，因为不同的测试可以将它们配置混合在一起， 然后为每个测试呈现一致的异常的结果。
 
-## DeadCode
-许多基准测试的失败是因为Dead-Code的消除：编译器非常智能可以推断出一些冗余的计算并彻底消除。如果被消除的部分是我们的基准测试代码，我们的基准测试将是无效的。
+forking（运行在不同的进程中）每个测试都可以帮助规避这个问题。
 
-如下示例代码，
-::: details 代码示例
-```java
-package org.openjdk.jmh.samples;
-
-import org.openjdk.jmh.annotations.*;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
-
-import java.util.concurrent.TimeUnit;
-
-@State(Scope.Thread)
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.NANOSECONDS)
-public class JMHSample_08_DeadCode {
-
-    /*
-     * The downfall of many benchmarks is Dead-Code Elimination (DCE): compilers
-     * are smart enough to deduce some computations are redundant and eliminate
-     * them completely. If the eliminated part was our benchmarked code, we are
-     * in trouble.
-     *
-     * Fortunately, JMH provides the essential infrastructure to fight this
-     * where appropriate: returning the result of the computation will ask JMH
-     * to deal with the result to limit dead-code elimination (returned results
-     * are implicitly consumed by Blackholes, see JMHSample_09_Blackholes).
-     */
-
-    private double x = Math.PI;
-
-    @Benchmark
-    public void baseline() {
-        // do nothing, this is a baseline
-    }
-    // 错误示例：由于计算结果没有被使用，所以整个计算过程被优化（忽略），执行效果和baseLine()方法一样
-    @Benchmark
-    public void measureWrong() {
-        // This is wrong: result is not used and the entire computation is optimized away.
-        Math.log(x);
-    }
-
-    @Benchmark
-    public double measureRight() {
-        // This is correct: the result is being used.
-        return Math.log(x);
-    }
-
-    /*
-     * ============================== HOW TO RUN THIS TEST: ====================================
-     *
-     * You can see the unrealistically fast calculation in with measureWrong(),
-     * while realistic measurement with measureRight().
-     *
-     * You can run this test:
-     *
-     * a) Via the command line:
-     *    $ mvn clean install
-     *    $ java -jar target/benchmarks.jar JMHSample_08 -f 1
-     *    (we requested single fork; there are also other options, see -h)
-     *
-     * b) Via the Java API:
-     *    (see the JMH homepage for possible caveats when running from IDE:
-     *      http://openjdk.java.net/projects/code-tools/jmh/)
-     */
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(JMHSample_08_DeadCode.class.getSimpleName())
-                .forks(1)
-                .build();
-
-        new Runner(opt).run();
-    }
-
-}
-```
+::: warning
+使用non-forked运行仅用于调试目的，而不是用于实际基准测试，JMH默认会fork所有的test。
 :::
-
-### BlackHole：消除DeadCode
-幸运的是，JMH提供了必要的基础设施来应对这一情况，返回计算结果将要求JMH处理结果以限制死代码消除。
-
-首选需要确认的是你的基准测试是否返回多个结果，你应该考虑一下两个问题（注意：如果你只会产生一个结果，应该使用更易读的明确return，就像JMHSample_08_DeadCode。不要使用明确的Blackholes来降低您的基准代码的可读性！）
-
-::: details 代码示例
-```java
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.NANOSECONDS)
-@State(Scope.Thread)
-public class JMHSample_09_Blackholes {
-
-    double x1 = Math.PI;
-    double x2 = Math.PI * 2;
-
-    /*
-     * Baseline measurement: how much single Math.sampleLog costs.
-     */
-
-    @Benchmark
-    public double baseline() {
-        return Math.log(x1);
-    }
-
-    /*
-     * 虽然Math.log(x2)计算是完整的，但Math.log(x1)是冗余的，并被优化了。
-     */
-
-    @Benchmark
-    public double measureWrong() {
-        Math.log(x1);
-        return Math.log(x2);
-    }
-
-    /*
-     * 选择一: 合并多个结果并返回，这在Math.log()方法计算量比较大的情况下是可以的，合并结果不会对结果产生太大影响。
-     */
-
-    @Benchmark
-    public double measureRight_1() {
-        return Math.log(x1) + Math.log(x2);
-    }
-
-    /*
-     * 选择二: 显示使用Blackhole对象，并将结果值传入Blackhole.consume方法中。
-     * （Blackhole就像@State对象的一种特殊实现，JMH自动绑定）
-     */
-
-    @Benchmark
-    public void measureRight_2(Blackhole bh) {
-        bh.consume(Math.log(x1));
-        bh.consume(Math.log(x2));
-    }
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(JMHSample_09_Blackholes.class.getSimpleName())
-                .forks(1)
-                .build();
-
-        new Runner(opt).run();
-    }
-```
-:::
-
-### ConstantFold 常量折叠
-死代码消除的另一种形式是常量折叠。
-
-如果JVM发现不管怎么计算，计算结果都是不变的，它可以巧妙地优化它。在我们的case中，这就意味着我们可以把计算移到JMH之外。
-
-可以通过@State对象的非final类型的字段读取输入，根据这些值计算结果，准售这些规则就能防止DCE。
-
-::: details 代码示例
-```java
-@State(Scope.Thread)
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.NANOSECONDS)
-public class JMHSample_10_ConstantFold {
-
- 
-    private double x = Math.PI;
-
-    private final double wrongX = Math.PI;
-
-    @Benchmark
-    public double baseline() {
-        // simply return the value, this is a baseline
-        return Math.PI;
-    }
-
-    @Benchmark
-    public double measureWrong_1() {
-        // This is wrong: the source is predictable, and computation is foldable.
-        return Math.log(Math.PI);
-    }
-
-    @Benchmark
-    public double measureWrong_2() {
-        // This is wrong: the source is predictable, and computation is foldable.
-        return Math.log(wrongX);
-    }
-
-    @Benchmark
-    public double measureRight() {
-        // This is correct: the source is not predictable.
-        return Math.log(x);
-    }
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(JMHSample_10_ConstantFold.class.getSimpleName())
-                .forks(1)
-                .output("JMHSample_10_ConstantFold.sampleLog")
-                .build();
-
-        new Runner(opt).run();
-    }
-}
-```
-:::
-
-## Loops循环
-在基准测试方法中进行循环操作是一种不好的做法！
-
-循环是为了最大限度地减少调用测试方法，通过在循环内部而不是内部进行操作方法调用？？？。不要相信这个论点，当我们允许优化器合并循环迭代时，你会看到很多奇怪的事情发生。
-
-::: details 代码示例
-```java
-@State(Scope.Thread)
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.NANOSECONDS)
-public class JMHSample_11_Loops {
-
-    /*
-     * It would be tempting for users to do loops within the benchmarked method.
-     * (This is the bad thing Caliper taught everyone). These tests explain why
-     * this is a bad idea.
-     *
-     * Looping is done in the hope of minimizing the overhead of calling the
-     * test method, by doing the operations inside the loop instead of inside
-     * the method call. Don't buy this argument; you will see there is more
-     * magic happening when we allow optimizers to merge the loop iterations.
-     *
-     * 在基准测试方法中做循环是很诱人的。这是Caliper教给大家的坏事情。以下测试告诉你原因。
-     *
-     * 循环是为了通过在循环内而不是在方法调用内部进行操作来最小化调用测试方法的开销。？？？
-     * 不要买这个论点;当我们允许优化器合并循环迭代时，你会发现有更多的魔法发生。
-     */
-
-    /*
-     * Suppose we want to measure how much it takes to sum two integers:
-     */
-
-    int x = 1;
-    int y = 2;
-
-    /*
-     * This is what you do with JMH.
-     */
-
-    @Benchmark
-    public int measureRight() {
-        return (x + y);
-    }
-
-    /*
-     * The following tests emulate the naive looping.
-     * This is the Caliper-style benchmark.
-     *
-     * Caliper风格的基准测试
-     */
-
-    private int reps(int reps) {
-        int s = 0;
-        for (int i = 0; i < reps; i++) {
-            s += (x + y);
-        }
-        return s;
-    }
-
-    /*
-     * We would like to measure this with different repetitions count.
-     * Special annotation is used to get the individual operation cost.
-     */
-
-    @Benchmark
-    @OperationsPerInvocation(1)
-    public int measureWrong_1() {
-        return reps(1);
-    }
-
-    @Benchmark
-    @OperationsPerInvocation(10)
-    public int measureWrong_10() {
-        return reps(10);
-    }
-
-    @Benchmark
-    @OperationsPerInvocation(100)
-    public int measureWrong_100() {
-        return reps(100);
-    }
-
-    @Benchmark
-    @OperationsPerInvocation(1000)
-    public int measureWrong_1000() {
-        return reps(1000);
-    }
-
-    @Benchmark
-    @OperationsPerInvocation(10000)
-    public int measureWrong_10000() {
-        return reps(10000);
-    }
-
-    @Benchmark
-    @OperationsPerInvocation(100000)
-    public int measureWrong_100000() {
-        return reps(100000);
-    }
-
-    /*
-     *
-     * 你可能已经注意到，循环次数越多，统计出来的时间越短。到目前为止，每次操作的时间已经是1/20 ns，远远超过硬件的实际能力。
-     *
-     * 发生这种情况是因为循环被大量unrolled/pipelined，并且要从循环中提升要测量的操作。规则：不要过度使用循环，依靠JMH来正确测量。
-     */
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(JMHSample_11_Loops.class.getSimpleName())
-                .forks(1)
-                .output("JMHSample_11_Loops.sampleLog")
-                .build();
-
-        new Runner(opt).run();
-    }
-
-}
-```
-:::
-
-## Forking
-使用non-forked运行仅用于调试目的，而不是用于实际性能运行
-
-众所周知，JVM 擅长配置 profile-guided 的优化。但是这对进准测试并不友好，因为不同的测试可以将它们的 profile-guided 混合在一起， 然后为每个测试呈现“一致坏”的代码。forking（运行在不同的进程中）每个测试都可以帮助规避这个问题。
 
 ::: details 代码示例
 ```java
@@ -972,11 +653,8 @@ public class JMHSample_12_Forking {
      * for benchmarks, because different tests can mix their profiles together,
      * and then render the "uniformly bad" code for every test. Forking (running
      * in a separate process) each test can help to evade this issue.
-     *
+     * 
      * JMH will fork the tests by default.
-     *
-     * JVM擅长profile-guided优化。但这对基准不友好，因为不同的测试可以把他们的profiles混合在一起，
-     * 然后为每一个测试渲染"uniformly bad"代码？？？。forking（运行在不同的进程）每个测试可以避免这个问题。
      *
      * JMH默认fork所有test。
      */
@@ -1109,20 +787,37 @@ public class JMHSample_12_Forking {
 }
 ```
 :::
+
 ### RunToRun 
-Forking 还允许估计运行到运行的差异。JVM 是复杂的系统，它们固有的不确定性。
-这要求我们始终将运行间差异视为我们实验中的影响之一。幸运的是，foking模式下聚合了多个JVM启动的结果。
+Forking 还允许预估每次运行之间的的差异。毕竟 JVM 是个非常复杂的系统，所以它包含了很多不确定性。
 
+这就要求我们始终将运行间的差异的视为我们实验中的影响之一，幸运的是，foking 模式下聚合了多个 JVM 运行的结果。
 
-
-为了方便地引入易于量化的运行间差异，we build the workload which performance differs from run to run. ？？？。请注意，许多工作负载将具有类似的行为，但我们人为地这样做是为了说明这一点。
+为了引入易于量化的运行间差异，我们建立了工作负载（同时运行多个进程），其性能在运行间有所不同。请注意，许多工作负载会有类似的行为，但我们人为地这样做是为了说明一个问题。
 
 ::: details 代码示例
 ```java
+
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class JMHSample_13_RunToRun {
+
+    /*
+     * Forking also allows to estimate run-to-run variance.
+     *
+     * JVMs are complex systems, and the non-determinism is inherent for them.
+     * This requires us to always account the run-to-run variance as the one
+     * of the effects in our experiments.
+     *
+     * Luckily, forking aggregates the results across several JVM launches.
+     */
+
+    /*
+     * In order to introduce readily measurable run-to-run variance, we build
+     * the workload which performance differs from run to run. Note that many workloads
+     * will have the similar behavior, but we do that artificially to make a point.
+     */
 
     @State(Scope.Thread)
     public static class SleepyState {
@@ -1130,7 +825,6 @@ public class JMHSample_13_RunToRun {
 
         @Setup
         public void setup() {
-            // 每次fork都会执行，fork相当于重复多次某个被标记@Benchmark注解的方法，但它会合并结果。
             sleepTime = (long) (Math.random() * 1000);
         }
     }
@@ -1156,13 +850,30 @@ public class JMHSample_13_RunToRun {
     public void fork_2(SleepyState s) throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(s.sleepTime);
     }
- 
+
+    /*
+     * ============================== HOW TO RUN THIS TEST: ====================================
+     *
+     * Note the baseline is random within [0..1000] msec; and both forked runs
+     * are estimating the average 500 msec with some confidence.
+     *
+     * You can run this test:
+     *
+     * a) Via the command line:
+     *    $ mvn clean install
+     *    $ java -jar target/benchmarks.jar JMHSample_13 -wi 0 -i 3
+     *    (we requested no warmup, 3 measurement iterations; there are also other options, see -h)
+     *
+     * b) Via the Java API:
+     *    (see the JMH homepage for possible caveats when running from IDE:
+     *      http://openjdk.java.net/projects/code-tools/jmh/)
+     */
+
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(JMHSample_13_RunToRun.class.getSimpleName())
                 .warmupIterations(0)
                 .measurementIterations(3)
-                .output("JMHSample_13_RunToRun.sampleLog")
                 .build();
 
         new Runner(opt).run();
@@ -1172,95 +883,69 @@ public class JMHSample_13_RunToRun {
 ```
 :::
 
-## Asymmetric
-目前为止，我们的测试都是对称的：所有的线程都运行相同的代码。是时候了解非对称测试了。JMH提供了@Group注解来把几个方法绑定到一起，所有线程都分布在测试方法中。
+### DeadCode：编译器优化
+许多基准测试的失败是因为Dead-Code的消除：编译器非常智能可以推断出一些冗余的计算并彻底消除。如果被消除的部分是我们的基准测试代码，我们的基准测试将是无效的。
 
-每个执行组包含一个或多个线程。特定执行组中的每个线程执行 @Group 注释的 @Benchmark 方法之一。多个执行组可以参与运行。运行中的总线程数四舍五入到执行组大小，这将只允许完整的执行组。
-
-      以下示例含义：
-       a)定义执行组"g"，它有3个线程来执行inc()，1个线程来执行get()，每个分组共有4个线程；
-       b)如果我们用4个线程来运行这个测试用例，我们将会有一个单独的执行组。通常，用4*N个线程来创建N个执行组。
-       c)每个执行组内共享一个@State实例：也就是执行组内共享counter，而不是跨组共享。
-
+如下示例代码，
 ::: details 代码示例
 ```java
-@State(Scope.Group)
+package org.openjdk.jmh.samples;
+
+import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.RunnerException;
+import org.openjdk.jmh.runner.options.Options;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
+
+import java.util.concurrent.TimeUnit;
+
+@State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
-public class JMHSample_15_Asymmetric {
+public class JMHSample_08_DeadCode {
 
     /*
-     * So far all the tests were symmetric: the same code was executed in all the threads.
-     * At times, you need the asymmetric test. JMH provides this with the notion of @Group,
-     * which can bind several methods together, and all the threads are distributed among
-     * the test methods.
+     * The downfall of many benchmarks is Dead-Code Elimination (DCE): compilers
+     * are smart enough to deduce some computations are redundant and eliminate
+     * them completely. If the eliminated part was our benchmarked code, we are
+     * in trouble.
      *
-     * Each execution group contains of one or more threads. Each thread within a particular
-     * execution group executes one of @Group-annotated @Benchmark methods. Multiple execution
-     * groups may participate in the run. The total thread count in the run is rounded to the
-     * execution group size, which will only allow the full execution groups.
-     *
-     * Note that two state scopes: Scope.Benchmark and Scope.Thread are not covering all
-     * the use cases here -- you either share everything in the state, or share nothing.
-     * To break this, we have the middle ground Scope.Group, which marks the state to be
-     * shared within the execution group, but not among the execution groups.
-     *
-     * Putting this all together, the example below means:
-     *  a) define the execution group "g", with 3 threads executing inc(), and 1 thread
-     *     executing get(), 4 threads per group in total;
-     *  b) if we run this test case with 4 threads, then we will have a single execution
-     *     group. Generally, running with 4*N threads will create N execution groups, etc.;
-     *  c) each execution group has one @State instance to share: that is, execution groups
-     *     share the counter within the group, but not across the groups.
-     *
-     * 到目前位置，我们的测试都是对称的：所有的线程都运行相同的代码。
-     * 是时候了解非对称测试了。JMH提供了@Group注解来把几个方法绑定到一起，所有线程都分布在测试方法中。
-     *
-     * 每个执行组包含一个或者多个线程。特定执行组中的每个线程执行@Group-annotated @Benchmark方法之一。
-     * 多个执行组可以参与运行。运行中的总线程数将四舍五入为执行组大小，这将只允许完整的执行组。？？？
-     *
-     * 注意那两个状态的作用域：Scope.Benchmark 和 Scope.Thread没有在这个用例中覆盖 -- 你要么在状态中共享每个东西，要么不共享。
-     * 我们使用Scope.Group状态用来表明在执行组内共享，而不在组间共享。
-     *
-     * 以下事例含义：
-     *  a)定义执行组"g"，它有3个线程来执行inc()，1个线程来执行get()，每个分组共有4个线程；
-     *  b)如果我们用4个线程来运行这个测试用例，我们将会有一个单独的执行组。通常，用4*N个线程来创建N个执行组。
-     *  c)每个执行组内共享一个@State实例：也就是执行组内共享counter，而不是跨组共享。
+     * Fortunately, JMH provides the essential infrastructure to fight this
+     * where appropriate: returning the result of the computation will ask JMH
+     * to deal with the result to limit dead-code elimination (returned results
+     * are implicitly consumed by Blackholes, see JMHSample_09_Blackholes).
      */
 
-    private AtomicInteger counter;
+    private double x = Math.PI;
 
-    @Setup
-    public void up() {
-        counter = new AtomicInteger();
+    @Benchmark
+    public void baseline() {
+        // do nothing, this is a baseline
+    }
+    // 错误示例：由于计算结果没有被使用，所以整个计算过程被优化（忽略），执行效果和baseLine()方法一样
+    @Benchmark
+    public void measureWrong() {
+        // This is wrong: result is not used and the entire computation is optimized away.
+        Math.log(x);
     }
 
     @Benchmark
-    @Group("g")
-    @GroupThreads(3)
-    public int inc() {
-        return counter.incrementAndGet();
-    }
-
-    @Benchmark
-    @Group("g")
-    @GroupThreads(1)
-    public int get() {
-        return counter.get();
+    public double measureRight() {
+        // This is correct: the result is being used.
+        return Math.log(x);
     }
 
     /*
      * ============================== HOW TO RUN THIS TEST: ====================================
      *
-     * You will have the distinct metrics for inc() and get() from this run.
-     *
-     * 在此次运行中我们讲分别获得inc()和get()的指标。
+     * You can see the unrealistically fast calculation in with measureWrong(),
+     * while realistic measurement with measureRight().
      *
      * You can run this test:
      *
      * a) Via the command line:
      *    $ mvn clean install
-     *    $ java -jar target/benchmarks.jar JMHSample_15 -f 1
+     *    $ java -jar target/benchmarks.jar JMHSample_08 -f 1
      *    (we requested single fork; there are also other options, see -h)
      *
      * b) Via the Java API:
@@ -1270,9 +955,8 @@ public class JMHSample_15_Asymmetric {
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
-                .include(JMHSample_15_Asymmetric.class.getSimpleName())
+                .include(JMHSample_08_DeadCode.class.getSimpleName())
                 .forks(1)
-                .output("JMHSample_15_Asymmetric.sampleLog")
                 .build();
 
         new Runner(opt).run();
@@ -1282,337 +966,73 @@ public class JMHSample_15_Asymmetric {
 ```
 :::
 
-## CompilerController
+### BlackHole：防止DeadCode被优化
+幸运的是，JMH提供了必要的基础设施来应对这一情况，返回计算结果将要求JMH处理结果以限制死代码消除。
 
-Method Inlining: 方法内联，是JVM对代码的编译优化，常见的编译优化 @see http://www.importnew.com/2009.html
-
-Java编程语言中虚拟方法调用的频率是一个重要的优化瓶颈。一旦Java HotSpot自适应优化器在执行期间收集有关程序热点的信息，它不仅将热点编译为本机代码，而且还对该代码执行大量方法内联。
-
-内联有很多好处。 它大大降低了方法调用的动态频率，从而节省了执行这些方法调用所需的时间。但更重要的是，内联会产生更大的代码块供优化器处理，这就大大提高了传统编译器优化的效率，克服了提高Java编程语言性能的主要障碍。
-
-内联与其他代码优化是协同的，因为它使它们更有效。随着Java HotSpot编译器的成熟，对大型内联代码块进行操作的能力将为未来一系列更高级的优化打开大门。
-
-
-我们使用HotSpot特定的功能来告诉编译器我们想对特定的方法做什么， 为了演示效果，我们在这个例子中写了三个测试方法。
+首选需要确认的是你的基准测试是否返回多个结果，如果你只会产生一个结果，应该使用更易读的明确return，就像JMHSample_08_DeadCode。不要使用明确的Blackholes来降低您的基准代码的可读性！
 
 ::: details 代码示例
 ```java
-@State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
-public class JMHSample_16_CompilerControl {
-
-    /*
-     * We can use HotSpot-specific functionality to tell the compiler what
-     * do we want to do with particular methods. To demonstrate the effects,
-     * we end up with 3 methods in this sample.
-     *
-     * 我们使用HotSpot特定的功能来告诉编译器我们想对特定的方法做怎么。
-     * 为了证明这种效果，我们在这个例子中写了三个测试方法。
-     */
-
-    /**
-     *
-     * 这是我们的目标：
-     *  - 第一个方法禁止内敛
-     *  - 第二个方法强制内敛
-     *  - 第三个方法禁止编译
-     *
-     * 我们甚至可以将注释直接放在基准测试方法中，但这更清楚地表达了意图。
-     */
-
-    public void target_blank() {
-        // this method was intentionally left blank
-        // 方法故意留空
-    }
-
-    @CompilerControl(CompilerControl.Mode.DONT_INLINE)
-    public void target_dontInline() {
-        // this method was intentionally left blank
-    }
-
-    @CompilerControl(CompilerControl.Mode.INLINE)
-    public void target_inline() {
-        // this method was intentionally left blank
-    }
-
-    /**
-     * Exclude the method from the compilation.
-     */
-    @CompilerControl(CompilerControl.Mode.EXCLUDE)
-    public void target_exclude() {
-        // this method was intentionally left blank
-    }
-
-    /*
-     * These method measures the calls performance.
-     * 这些方法来测量调用性能。
-     */
-
-    @Benchmark
-    public void baseline() {
-        // this method was intentionally left blank
-    }
-
-    @Benchmark
-    public void blank() {
-        target_blank();
-    }
-
-    @Benchmark
-    public void dontinline() {
-        target_dontInline();
-    }
-
-    @Benchmark
-    public void inline() {
-        target_inline();
-    }
-
-    @Benchmark
-    public void exclude() {
-        target_exclude();
-    }
-}
-```
-:::
-
- ## SyncIterations
- 事实证明如果你用多线程来跑benchmark，你启动和停止工作线程的方式会严重影响性能。
-
- 通常的做法是，让所有的线程都挂起在一些有序的屏障上，然后让他们一起开始。然而，这种做法是不奏效的：没有谁能够保证工作线程在同一时间开始，这就意味着其他工作线程在更好的条件下运行，从而扭曲了结果。
-
-更好的解决方案是引入虚假迭代，增加执行迭代的线程，然后将系统自动切换为测试任务。在减速期间可以做同样的事情，这听起来很复杂，但是JMH已经帮你处理好了。
-::: details 代码示例
-```java
 @State(Scope.Thread)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
-public class JMHSample_17_SyncIterations {
-
-    /*
-     * This is the another thing that is enabled in JMH by default.
-     *
-     * Suppose we have this simple benchmark.
-     */
-
-    private double src;
-
-    @Benchmark
-    public double test() {
-        double s = src;
-        for (int i = 0; i < 1000; i++) {
-            s = Math.sin(s);
-        }
-        return s;
-    }
-
-    /*
-     * It turns out if you run the benchmark with multiple threads,
-     * the way you start and stop the worker threads seriously affects
-     * performance.
-     *
-     * The natural way would be to park all the threads on some sort
-     * of barrier, and the let them go "at once". However, that does
-     * not work: there are no guarantees the worker threads will start
-     * at the same time, meaning other worker threads are working
-     * in better conditions, skewing the result.
-     *
-     * The better solution would be to introduce bogus iterations,
-     * ramp up the threads executing the iterations, and then atomically
-     * shift the system to measuring stuff. The same thing can be done
-     * during the rampdown. This sounds complicated, but JMH already
-     * handles that for you.
-     *
-     */
-
-    /*
-     * ============================== HOW TO RUN THIS TEST: ====================================
-     *
-     * You will need to oversubscribe the system to make this effect
-     * clearly visible; however, this effect can also be shown on the
-     * unsaturated systems.*
-     *
-     * Note the performance of -si false version is more flaky, even
-     * though it is "better". This is the false improvement, granted by
-     * some of the threads executing in solo. The -si true version more stable
-     * and coherent.
-     *
-     * -si true is enabled by default.
-     *
-     * Say, $CPU is the number of CPUs on your machine.
-     *
-     * You can run this test with:
-     *
-     * a) Via the command line:
-     *    $ mvn clean install
-     *    $ java -jar target/benchmarks.jar JMHSample_17 \
-     *        -w 1s -r 1s -f 1 -t ${CPU*16} -si {true|false}
-     *    (we requested shorter warmup/measurement iterations, single fork,
-     *     lots of threads, and changeable "synchronize iterations" option)
-     *
-     * b) Via the Java API:
-     *    (see the JMH homepage for possible caveats when running from IDE:
-     *      http://openjdk.java.net/projects/code-tools/jmh/)
-     */
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(JMHSample_17_SyncIterations.class.getSimpleName())
-                .warmupTime(TimeValue.seconds(1))
-                .measurementTime(TimeValue.seconds(1))
-                .threads(Runtime.getRuntime().availableProcessors()*16)
-                .forks(1)
-                .syncIterations(true) // try to switch to "false"
-                .build();
-
-        new Runner(opt).run();
-    }
-
-}
-```
-:::
-## Control
-
-有时你需要进入控制思想以获得关于过渡变化的信息。为此，我们有实验状态对象，Control，它在我们运行时被JMH更新。 ？？？
-
- 在这个例子中，我们想要估计简单的AtomicBoolean的ping / pong速度。幸的是，以天真的方式执行此操作将会锁定其中一个线程，因为ping / pong的执行不能完美配对。 如果线程即结束执行，我们需要"逃生舱口"来终止循环。
- ::: details 代码示例
-```java
- @State(Scope.Group)
-public class JMHSample_18_Control {
-
-    /*
-     * Sometimes you need the tap into the harness mind to get the info
-     * on the transition change. For this, we have the experimental state object,
-     * Control, which is updated by JMH as we go.
-     */
-
-    /*
-     * In this example, we want to estimate the ping-pong speed for the simple
-     * AtomicBoolean. Unfortunately, doing that in naive manner will livelock
-     * one of the threads, because the executions of ping/pong are not paired
-     * perfectly. We need the escape hatch to terminate the loop if threads
-     * are about to leave the measurement.
-     */
-
-    public final AtomicBoolean flag = new AtomicBoolean();
-
-    @Benchmark
-    @Group("pingpong")
-    public void ping(Control cnt) {
-        while (!cnt.stopMeasurement && !flag.compareAndSet(false, true)) {
-            // this body is intentionally left blank
-        }
-    }
-
-    @Benchmark
-    @Group("pingpong")
-    public void pong(Control cnt) {
-        while (!cnt.stopMeasurement && !flag.compareAndSet(true, false)) {
-            // this body is intentionally left blank
-        }
-    }
-
-    /*
-     * ============================== HOW TO RUN THIS TEST: ====================================
-     *
-     * You can run this test:
-     *
-     * a) Via the command line:
-     *    $ mvn clean install
-     *    $ java -jar target/benchmarks.jar JMHSample_18 -t 2 -f 1
-     *    (we requested 2 threads and single fork; there are also other options, see -h)
-     *
-     * b) Via the Java API:
-     *    (see the JMH homepage for possible caveats when running from IDE:
-     *      http://openjdk.java.net/projects/code-tools/jmh/)
-     */
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(JMHSample_18_Control.class.getSimpleName())
-                .threads(2)
-                .forks(1)
-                .build();
-
-        new Runner(opt).run();
-    }
-
-}
- ```
-:::
-
-##  Annotations
-除了运行时所有的命令行选项外，我们还可以通过注解给一些基准测试提供默认值。在你处理大量基准测试时这个很有用，其中一些需要特别处理。
-
-注解可以放在class上，来影响这个class中所有的基准测试方法。规则是，靠近作用域的注解有优先权：比如，方法上的注解可以覆盖类上的注解；命令行优先级最高。
-
-::: details 代码示例
-```java
-@State(Scope.Thread)
-@OutputTimeUnit(TimeUnit.MICROSECONDS)
-@Fork(1)
-public class JMHSample_20_Annotations {
+public class JMHSample_09_Blackholes {
 
     double x1 = Math.PI;
+    double x2 = Math.PI * 2;
 
     /*
-     * In addition to all the command line options usable at run time,
-     * we have the annotations which can provide the reasonable defaults
-     * for the some of the benchmarks. This is very useful when you are
-     * dealing with lots of benchmarks, and some of them require
-     * special treatment.
-     *
-     * Annotation can also be placed on class, to have the effect over
-     * all the benchmark methods in the same class. The rule is, the
-     * annotation in the closest scope takes the precedence: i.e.
-     * the method-based annotation overrides class-based annotation,
-     * etc.
+     * Baseline measurement: how much single Math.sampleLog costs.
      */
 
     @Benchmark
-    @Warmup(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)
-    @Measurement(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)
-    public double measure() {
+    public double baseline() {
         return Math.log(x1);
     }
 
     /*
-     * ============================== HOW TO RUN THIS TEST: ====================================
-     *
-     * Note JMH honors the default annotation settings. You can always override
-     * the defaults via the command line or API.
-     *
-     * You can run this test:
-     *
-     * a) Via the command line:
-     *    $ mvn clean install
-     *    $ java -jar target/benchmarks.jar JMHSample_20
-     *
-     * b) Via the Java API:
-     *    (see the JMH homepage for possible caveats when running from IDE:
-     *      http://openjdk.java.net/projects/code-tools/jmh/)
+     * 虽然Math.log(x2)计算是完整的，但Math.log(x1)是冗余的，并被优化了。
      */
+
+    @Benchmark
+    public double measureWrong() {
+        Math.log(x1);
+        return Math.log(x2);
+    }
+
+    /*
+     * 选择一: 合并多个结果并返回，这在Math.log()方法计算量比较大的情况下是可以的，合并结果不会对结果产生太大影响。
+     */
+
+    @Benchmark
+    public double measureRight_1() {
+        return Math.log(x1) + Math.log(x2);
+    }
+
+    /*
+     * 选择二: 显示使用Blackhole对象，并将结果值传入Blackhole.consume方法中。
+     * （Blackhole就像@State对象的一种特殊实现，JMH自动绑定）
+     */
+
+    @Benchmark
+    public void measureRight_2(Blackhole bh) {
+        bh.consume(Math.log(x1));
+        bh.consume(Math.log(x2));
+    }
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
-                .include(JMHSample_20_Annotations.class.getSimpleName())
+                .include(JMHSample_09_Blackholes.class.getSimpleName())
+                .forks(1)
                 .build();
 
         new Runner(opt).run();
     }
-
 }
 ```
 :::
-
-
-## ConsumeCPU
-有时您需要测试烧毁一些循环而不做任何事情。在许多情况下，您“确实”希望烧毁循环而不是等待。
-
-对于这种场景，我们有基础设施支持。Blackhole不仅可以消耗数值，还可以消耗时间！运行此测试以熟悉JMH的这一部分。
-(注意：在使用静态方法时，因为大多数用例都在测试代码的深处，传递Blackhole会变得很繁琐)
-
+### BlackHole#ConsumeCPU：消耗CPU的时钟周期
+有时我们可能仅仅需要测试消耗CPU资源，这时也可以通过  Blackhole.consumeCPU方法实现。
 
 ::: details 代码示例
 ```java
@@ -1703,6 +1123,746 @@ public class JMHSample_21_ConsumeCPU {
 }
 ```
 :::
+
+### ConstantFold 常量折叠
+死代码消除的另一种形式是常量折叠。
+
+如果JVM发现不管怎么计算，计算结果都是不变的，它可以巧妙地优化它。在我们的case中，这就意味着我们可以把计算移到JMH之外。
+
+可以通过@State对象的非final类型的字段读取输入，根据这些值计算结果，遵守这些规则就能防止DeadCode。
+
+::: details 代码示例
+```java
+@State(Scope.Thread)
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+public class JMHSample_10_ConstantFold {
+
+ 
+    private double x = Math.PI;
+
+    private final double wrongX = Math.PI;
+
+    @Benchmark
+    public double baseline() {
+        // 基础case：简单返回一个常量结果
+        return Math.PI;
+    }
+
+    @Benchmark
+    public double measureWrong_1() {
+        // 错误示例: 结果可预测，计算会被折叠 「参数为常量」
+        return Math.log(Math.PI);
+    }
+
+    @Benchmark
+    public double measureWrong_2() {
+        // 错误示例: 结果可预测，计算会被折叠 「参数为常量」
+        return Math.log(wrongX);
+    }
+
+    @Benchmark
+    public double measureRight() {
+        // 正确示例: 结果不可预测，参数作为变量传入
+        return Math.log(x);
+    }
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(JMHSample_10_ConstantFold.class.getSimpleName())
+                .forks(1)
+                .output("JMHSample_10_ConstantFold.sampleLog")
+                .build();
+        new Runner(opt).run();
+    }
+}
+```
+:::
+
+### CompilerController： 编译控制
+方法内联（Method Inlining），是JVM对代码的编译优化，常见的编译优化可以从参考http://www.importnew.com/2009.html
+Java编程语言中虚拟方法调用的频率是一个重要的优化瓶颈。一旦Java HotSpot自适应优化器在执行期间收集有关程序热点的信息，它不仅将热点编译为本机代码，而且还对该代码执行大量方法内联。
+内联有很多好处。 它大大降低了方法调用的动态频率，从而节省了执行这些方法调用所需的时间。但更重要的是，内联会产生更大的代码块供优化器处理，这就大大提高了传统编译器优化的效率，克服了提高Java编程语言性能的主要障碍。
+内联与其他代码优化是协同的，因为它使它们更有效。随着Java HotSpot编译器的成熟，对大型内联代码块进行操作的能力将为未来一系列更高级的优化打开大门。
+
+关于编译控制，JMH提供了三个选项供我们选择：TODO
+1. CompilerControl.Mode.DONT_INLINE：
+2. CompilerControl.Mode.INLINE：
+3. CompilerControl.Mode.EXCLUDE：
+我们使用HotSpot特定的功能来告诉编译器我们想对特定的方法做什么， 为了演示效果，我们在这个例子中写了三个测试方法。
+::: details 代码示例
+```java
+@State(Scope.Thread)
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+public class JMHSample_16_CompilerControl {
+
+    /*
+     * We can use HotSpot-specific functionality to tell the compiler what
+     * do we want to do with particular methods. To demonstrate the effects,
+     * we end up with 3 methods in this sample.
+     *
+     * 我们使用HotSpot特定的功能来告诉编译器我们想对特定的方法做怎么。
+     * 为了证明这种效果，我们在这个例子中写了三个测试方法。
+     */
+
+    /**
+     *
+     * 这是我们的目标：
+     *  - 第一个方法禁止内敛
+     *  - 第二个方法强制内敛
+     *  - 第三个方法禁止编译
+     *
+     * 我们甚至可以将注释直接放在基准测试方法中，但这更清楚地表达了意图。
+     */
+
+    public void target_blank() {
+        // this method was intentionally left blank
+        // 方法故意留空
+    }
+
+    @CompilerControl(CompilerControl.Mode.DONT_INLINE)
+    public void target_dontInline() {
+        // this method was intentionally left blank
+    }
+
+    @CompilerControl(CompilerControl.Mode.INLINE)
+    public void target_inline() {
+        // this method was intentionally left blank
+    }
+
+    /**
+     * Exclude the method from the compilation.
+     */
+    @CompilerControl(CompilerControl.Mode.EXCLUDE)
+    public void target_exclude() {
+        // this method was intentionally left blank
+    }
+
+    /*
+     * These method measures the calls performance.
+     * 这些方法来测量调用性能。
+     */
+
+    @Benchmark
+    public void baseline() {
+        // this method was intentionally left blank
+    }
+
+    @Benchmark
+    public void blank() {
+        target_blank();
+    }
+
+    @Benchmark
+    public void dontinline() {
+        target_dontInline();
+    }
+
+    @Benchmark
+    public void inline() {
+        target_inline();
+    }
+
+    @Benchmark
+    public void exclude() {
+        target_exclude();
+    }
+}
+```
+:::
+
+## Loops 循环
+把你的基准代码放在你的基准方法中的一个循环里是很诱人的，以便在每次调用基准方法时重复更多的次数（以减少基准方法调用的开销）。然而，JVM非常善于优化循环，所以你最终得到的结果可能与你预期的不同。一般来说，你应该避免基准方法中的循环，除非它们是你想测量的代码的一部分（而不是在你想测量的代码周围）。
+::: details 代码示例
+```java
+@State(Scope.Thread)
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+public class JMHSample_11_Loops {
+
+    /*
+     * 假设我们要测试两个整数相加的性能
+     */
+
+    int x = 1;
+    int y = 2;
+
+    /*
+     * This is what you do with JMH.
+     */
+
+    @Benchmark
+    public int measureRight() {
+        return (x + y);
+    }
+
+    /*
+     * The following tests emulate the naive looping.
+     * This is the Caliper-style benchmark.
+     *
+     * Caliper风格的基准测试
+     */
+
+    private int reps(int reps) {
+        int s = 0;
+        for (int i = 0; i < reps; i++) {
+            s += (x + y);
+        }
+        return s;
+    }
+
+    /*
+     * We would like to measure this with different repetitions count.
+     * Special annotation is used to get the individual operation cost.
+     */
+
+    @Benchmark
+    @OperationsPerInvocation(1)
+    public int measureWrong_1() {
+        return reps(1);
+    }
+
+    @Benchmark
+    @OperationsPerInvocation(10)
+    public int measureWrong_10() {
+        return reps(10);
+    }
+
+    @Benchmark
+    @OperationsPerInvocation(100)
+    public int measureWrong_100() {
+        return reps(100);
+    }
+
+    @Benchmark
+    @OperationsPerInvocation(1000)
+    public int measureWrong_1000() {
+        return reps(1000);
+    }
+
+    @Benchmark
+    @OperationsPerInvocation(10000)
+    public int measureWrong_10000() {
+        return reps(10000);
+    }
+
+    @Benchmark
+    @OperationsPerInvocation(100000)
+    public int measureWrong_100000() {
+        return reps(100000);
+    }
+
+    /*
+     *
+     * 你可能已经注意到，循环次数越多，统计出来的时间越短。到目前为止，每次操作的时间已经是1/20 ns，远远超过硬件的实际能力。
+     *
+     * 发生这种情况是因为循环被大量展开。所以：不要过度使用循环，依靠JMH来正确测量。
+     */
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(JMHSample_11_Loops.class.getSimpleName())
+                .forks(1)
+                .output("JMHSample_11_Loops.sampleLog")
+                .build();
+
+        new Runner(opt).run();
+    }
+
+}
+```
+:::
+
+### @OperationsPerInvocation
+OperationsPerInvocation注解可以让基准测试进行不止一个操作，并让JMH适当地调整结果。
+
+例如，一个使用内部循环的基准方法有多个操作，需要想测量单个操作的性能。通常OperationsPerInvocation设置值一般和for循环的次数一致。
+
+```java
+    @Benchmark
+    @OperationsPerInvocation(10)
+    public void test() {
+         for (int i = 0; i < 10; i++) {
+             // do something
+         }
+    }
+```   
+### BadCase：循环展开
+循环展开能够降低循环开销，为具有多个功能单元的处理器提供指令级并行，也有利于指令流水线的调度。例如：
+原始代码：
+```java
+     for (i = 1; i <= 60; i++) {
+        a[i] = a[i] * b + c;
+     }
+```
+展开后实际执行的代码：
+```java
+     for (i = 1; i <= 60; i+=3) {
+       a[i] = a[i] * b + c;
+       a[i+1] = a[i+1] * b + c;
+       a[i+2] = a[i+2] * b + c;
+     }
+```
+
+### SafeLooping
+JMHSample_11_Loops 示例介绍了我们在 @Benchmark 方法中使用循环的危险性。然而，有时需要遍历数据集中的多个元素。没有循环就很难做到这一点，因此我们需要设计一个方案安全循环。
+
+如何在基准测试中安全地循环？我们只需要进行简单地控制，通过检查基准成本随着任务规模的增加而线性增长，如果不是，那么就说明发生了"错误"。
+
+假设我们要测试在不同的参数下，work()方法执行耗时情况。这里模拟了一个常见的用例，使用不同的参数调对同相同的方法实现进行测试。
+::: details 代码示例
+```java
+@State(Scope.Thread)
+@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Fork(3)
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+public class JMHSample_34_SafeLooping {
+
+    /*
+     * JMHSample_11_Loops warns about the dangers of using loops in @Benchmark methods.
+     * Sometimes, however, one needs to traverse through several elements in a dataset.
+     * This is hard to do without loops, and therefore we need to devise a scheme for
+     * safe looping.
+     */
+
+    /*
+     * Suppose we want to measure how much it takes to execute work() with different
+     * arguments. This mimics a frequent use case when multiple instances with the same
+     * implementation, but different data, is measured.
+     */
+
+    static final int BASE = 42;
+
+    static int work(int x) {
+        return BASE + x;
+    }
+
+    /*
+     * Every benchmark requires control. We do a trivial control for our benchmarks
+     * by checking the benchmark costs are growing linearly with increased task size.
+     * If it doesn't, then something wrong is happening.
+     */
+
+    @Param({"1", "10", "100", "1000"})
+    int size;
+
+    int[] xs;
+
+    @Setup
+    public void setup() {
+        xs = new int[size];
+        for (int c = 0; c < size; c++) {
+            xs[c] = c;
+        }
+    }
+
+    /*
+     * First, the obviously wrong way: "saving" the result into a local variable would not
+     * work. A sufficiently smart compiler will inline work(), and figure out only the last
+     * work() call needs to be evaluated. Indeed, if you run it with varying $size, the score
+     * will stay the same!
+     *
+     * 首先，明显错误的方式：将结果“保存”到局部变量中是行不通的。
+     * 一个足够聪明的编译器将内联 work()方法，只需要测试最后一次 work() 调用即可。事实上，如果你用不同的 $size 运行它，结果都是一样的！
+     */
+
+    @Benchmark
+    public int measureWrong_1() {
+        int acc = 0;
+        for (int x : xs) {
+            acc = work(x);
+        }
+        return acc;
+    }
+
+    /*
+     * Second, another wrong way: "accumulating" the result into a local variable. While
+     * it would force the computation of each work() method, there are software pipelining
+     * effects in action, that can merge the operations between two otherwise distinct work()
+     * bodies. This will obliterate the benchmark setup.
+     *
+     * In this example, HotSpot does the unrolled loop, merges the $BASE operands into a single
+     * addition to $acc, and then does a bunch of very tight stores of $x-s. The final performance
+     * depends on how much of the loop unrolling happened *and* how much data is available to make
+     * the large strides.
+     *
+     * 另外一种错误方式就是将结果累加到一个局部变量中。虽然他会强制计算每一个work（）方法，但是由于软件流水线的作用，可以合并两个原本不同的的work()之间的不同操作。这将使得基准测试的设置失效。
+     * 
+     * 这个例子中，HotSpot 执行展开循环，将 $BASE操作数合并一个操作加到$acc中，然后对$x-s做了一些非常紧凑的压缩。
+     * 最终的性能取决于有多少循环被展开以及有多少数据可以用来做大跨度。张开的原理示意可以见上一小节「循环展开」
+     */
+
+    @Benchmark
+    public int measureWrong_2() {
+        int acc = 0;
+        for (int x : xs) {
+            acc += work(x);
+        }
+        return acc;
+    }
+
+    /*
+     * Now, let's see how to measure these things properly. A very straight-forward way to
+     * break the merging is to sink each result to Blackhole. This will force runtime to compute
+     * every work() call in full. (We would normally like to care about several concurrent work()
+     * computations at once, but the memory effects from Blackhole.consume() prevent those optimization
+     * on most runtimes).
+     * 
+     * 现在，让我们看看如何正确测量这些东西。打破合并的一个非常直接的方法是将每个结果下沉到黑洞。
+     * 这将迫使运行时完整地计算每个work()调用。我们通常希望同时关注多个并发 work() 计算，但是 Blackhole.consume() 的内存效应阻止了大多数运行时的优化）。
+     */
+
+    @Benchmark
+    public void measureRight_1(Blackhole bh) {
+        for (int x : xs) {
+            bh.consume(work(x));
+        }
+    }
+
+    /*
+     * 注意事项：DANGEROUS AREA, PLEASE READ THE DESCRIPTION BELOW.
+     *
+     * Sometimes, the cost of sinking the value into a Blackhole is dominating the nano-benchmark score.
+     * In these cases, one may try to do a make-shift "sinker" with non-inlineable method. This trick is
+     * *very* VM-specific, and can only be used if you are verifying the generated code (that's a good
+     * strategy when dealing with nano-benchmarks anyway).
+     *
+     * You SHOULD NOT use this trick in most cases. Apply only where needed.
+     *
+     * 有时，将值放入 Blackhole 的成本在**纳秒级别的基准测试**中占比很高，会影响测试结果。
+     * 在这些情况下，人们可能会尝试使用不可内联的方法来做一个临时的“sinker” 。这个技巧是针对虚拟机的，只有在你验证生成的代码时才能使用（无论如何，在处理纳米基准时这是一个好的策略）。
+     * 
+     * 注意：在大多数情况下，你不应该使用这个技巧。只在需要的时候使用。
+     */
+
+    @Benchmark
+    public void measureRight_2() {
+        for (int x : xs) {
+            sink(work(x));
+        }
+    }
+
+    @CompilerControl(CompilerControl.Mode.DONT_INLINE)
+    public static void sink(int v) {
+        // IT IS VERY IMPORTANT TO MATCH THE SIGNATURE TO AVOID AUTOBOXING.
+        // The method intentionally does nothing.
+    }
+
+
+    /*
+     * ============================== HOW TO RUN THIS TEST: ====================================
+     *
+     * You might notice measureWrong_1 does not depend on $size, measureWrong_2 has troubles with
+     * linearity, and otherwise much faster than both measureRight_*. You can also see measureRight_2
+     * is marginally faster than measureRight_1.
+     * 
+     * 从执行结果中可以发现，measureWrong_1的执行结果不依赖于 $size参数，而measureWrong_2 的执行性能不是增长，否则比 measureRight_ 快得多。
+     * 您还可以看到 measureRight_2 略快于 measureRight_1。
+     * 
+     * You can run this test:
+     *
+     * a) Via the command line:
+     *    $ mvn clean install
+     *    $ java -jar target/benchmarks.jar JMHSample_34
+     *
+     * b) Via the Java API:
+     *    (see the JMH homepage for possible caveats when running from IDE:
+     *      http://openjdk.java.net/projects/code-tools/jmh/)
+     */
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(JMHSample_34_SafeLooping.class.getSimpleName())
+                .forks(3)
+                .build();
+
+        new Runner(opt).run();
+    }
+
+}
+```
+:::
+ ::: tip Tips
+    1. 观察测量结果是否随测量数据规模线性增长？如果不是，则可能有问题
+    2. 使用 BlackHole 防止JVM循环展开优化
+    3. 对于`纳秒`级的基准测试，可以会尝试使用不可内联的方法来做一个临时的“sinker"，必要时可以这样做！
+ :::
+
+## Asymmetric：非对称试验
+目前为止，我们的测试都是对称的：所有的线程都运行相同的代码。接下来我们一起学习一下非对称测试。
+
+JMH引入了Group的概念，并提供了@Group注解来把几个方法绑定到一起，所有线程都分布在测试方法中。
+
+每个执行组包含一个或者多个线程。特定执行组中的每个线程执行一个@Group标记的 benchmark方法，多个执行组可以参与运行时，运行中的总线程数将四舍五入为执行组大小，这将保证所有执行组都是完整的。
+
+注意那两个状态的作用域：Scope.Benchmark 和 Scope.Thread没有在这个用例中覆盖，表明你要么在状态中共享每个东西，要么不共享。我们使用Scope.Group状态用来表明在执行组内共享，而不在组间共享。
+
+::: details 代码示例
+```java
+@State(Scope.Group)
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+public class JMHSample_15_Asymmetric {
+
+    /*
+     * So far all the tests were symmetric: the same code was executed in all the threads.
+     * At times, you need the asymmetric test. JMH provides this with the notion of @Group,
+     * which can bind several methods together, and all the threads are distributed among
+     * the test methods.
+     *
+     * Each execution group contains of one or more threads. Each thread within a particular
+     * execution group executes one of @Group-annotated @Benchmark methods. Multiple execution
+     * groups may participate in the run. The total thread count in the run is rounded to the
+     * execution group size, which will only allow the full execution groups.
+     *
+     * Note that two state scopes: Scope.Benchmark and Scope.Thread are not covering all
+     * the use cases here -- you either share everything in the state, or share nothing.
+     * To break this, we have the middle ground Scope.Group, which marks the state to be
+     * shared within the execution group, but not among the execution groups.
+     *
+     * Putting this all together, the example below means:
+     *  a) define the execution group "g", with 3 threads executing inc(), and 1 thread
+     *     executing get(), 4 threads per group in total;
+     *  b) if we run this test case with 4 threads, then we will have a single execution
+     *     group. Generally, running with 4*N threads will create N execution groups, etc.;
+     *  c) each execution group has one @State instance to share: that is, execution groups
+     *     share the counter within the group, but not across the groups.
+     *
+     * 到目前位置，我们的测试都是对称的：所有的线程都运行相同的代码。
+     * 是时候了解非对称测试了。JMH提供了@Group注解来把几个方法绑定到一起，所有线程都分布在测试方法中。
+     *
+     * 每个执行组包含一个或者多个线程。特定执行组中的每个线程执行一个@Group标记的 benchmark方法
+     * 多个执行组可以参与运行时，运行中的总线程数将四舍五入为执行组大小，这将保证所有执行组都是完整的。
+     *
+     * 注意那两个状态的作用域：Scope.Benchmark 和 Scope.Thread没有在这个用例中覆盖，表明你要么在状态中共享每个东西，要么不共享。我们使用Scope.Group状态用来表明在执行组内共享，而不在组间共享。
+     *
+     * 以下事例含义：
+     *  a)定义执行组"g"，它有3个线程来执行inc()，1个线程来执行get()，每个分组共有4个线程；
+     *  b)如果我们用4个线程来运行这个测试用例，我们将会有一个单独的执行组。通常，用4*N个线程来创建N个执行组。
+     *  c)每个执行组内共享一个@State实例：也就是执行组内共享counter，而不是跨组共享。
+     */
+
+    private AtomicInteger counter;
+
+    @Setup
+    public void up() {
+        counter = new AtomicInteger();
+    }
+
+    @Benchmark
+    @Group("g")
+    @GroupThreads(3)
+    public int inc() {
+        return counter.incrementAndGet();
+    }
+
+    @Benchmark
+    @Group("g")
+    @GroupThreads(1)
+    public int get() {
+        return counter.get();
+    }
+
+    /*
+     * ============================== HOW TO RUN THIS TEST: ====================================
+     *
+     * You will have the distinct metrics for inc() and get() from this run.
+     *
+     * 在此次运行中我们讲分别获得inc()和get()的指标。
+     *
+     * You can run this test:
+     *
+     * a) Via the command line:
+     *    $ mvn clean install
+     *    $ java -jar target/benchmarks.jar JMHSample_15 -f 1
+     *    (we requested single fork; there are also other options, see -h)
+     *
+     * b) Via the Java API:
+     *    (see the JMH homepage for possible caveats when running from IDE:
+     *      http://openjdk.java.net/projects/code-tools/jmh/)
+     */
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(JMHSample_15_Asymmetric.class.getSimpleName())
+                .forks(1)
+                .output("JMHSample_15_Asymmetric.sampleLog")
+                .build();
+
+        new Runner(opt).run();
+    }
+
+}
+```
+:::
+
+
+ ## SyncIterations
+事实证明如果你用多线程来跑benchmark，你启动和停止工作线程的方式会严重影响性能。
+
+通常的做法是，让所有的线程都挂起在一些有序的屏障上，然后让他们一起开始。
+然而，这种做法是不奏效的：没有谁能够保证工作线程在同一时间开始，这就意味着其他工作线程在更好的条件下运行，从而扭曲了结果。
+
+更好的解决方案是引入虚假迭代，增加执行迭代的线程，然后将系统自动切换为测试任务。在减速期间可以做同样的事情，这听起来很复杂，但是JMH已经帮你处理好了。
+
+syncIterations设置为true时，先让线程池预热，都预热完成后让所有线程同时进行基准测试，测试完等待所有线程都结束再关闭线程池。这样能够更加真实的模拟线上多线程并发执行的情况。
+::: details 代码示例
+```java
+@State(Scope.Thread)
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
+public class JMHSample_17_SyncIterations {
+
+    /*
+     * This is the another thing that is enabled in JMH by default.
+     *
+     * Suppose we have this simple benchmark.
+     */
+
+    private double src;
+
+    @Benchmark
+    public double test() {
+        double s = src;
+        for (int i = 0; i < 1000; i++) {
+            s = Math.sin(s);
+        }
+        return s;
+    }
+
+    /*
+     * It turns out if you run the benchmark with multiple threads,
+     * the way you start and stop the worker threads seriously affects
+     * performance.
+     *
+     * The natural way would be to park all the threads on some sort
+     * of barrier, and the let them go "at once". However, that does
+     * not work: there are no guarantees the worker threads will start
+     * at the same time, meaning other worker threads are working
+     * in better conditions, skewing the result.
+     *
+     * The better solution would be to introduce bogus iterations,
+     * ramp up the threads executing the iterations, and then atomically
+     * shift the system to measuring stuff. The same thing can be done
+     * during the rampdown. This sounds complicated, but JMH already
+     * handles that for you.
+     *
+     */
+
+    /*
+     * ============================== HOW TO RUN THIS TEST: ====================================
+     *
+     * You will need to oversubscribe the system to make this effect
+     * clearly visible; however, this effect can also be shown on the
+     * unsaturated systems.*
+     *
+     * Note the performance of -si false version is more flaky, even
+     * though it is "better". This is the false improvement, granted by
+     * some of the threads executing in solo. The -si true version more stable
+     * and coherent.
+     *
+     * -si true is enabled by default.
+     *
+     * Say, $CPU is the number of CPUs on your machine.
+     *
+     * You can run this test with:
+     *
+     * a) Via the command line:
+     *    $ mvn clean install
+     *    $ java -jar target/benchmarks.jar JMHSample_17 \
+     *        -w 1s -r 1s -f 1 -t ${CPU*16} -si {true|false}
+     *    (we requested shorter warmup/measurement iterations, single fork,
+     *     lots of threads, and changeable "synchronize iterations" option)
+     *
+     * b) Via the Java API:
+     *    (see the JMH homepage for possible caveats when running from IDE:
+     *      http://openjdk.java.net/projects/code-tools/jmh/)
+     */
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(JMHSample_17_SyncIterations.class.getSimpleName())
+                .warmupTime(TimeValue.seconds(1))
+                .measurementTime(TimeValue.seconds(1))
+                .threads(Runtime.getRuntime().availableProcessors()*16)
+                .forks(1)
+                .syncIterations(true) // try to switch to "false"
+                .build();
+
+        new Runner(opt).run();
+    }
+
+}
+```
+:::
+
+##  Annotations：配置基准测试
+
+除了运行时所有的命令行选项外，我们还可以通过注解给一些基准测试提供默认值。在你处理大量基准测试时这个很有用，其中一些需要特别处理。
+
+注解可以放在class上，来影响这个class中所有的基准测试方法。规则是，靠近作用域的注解有优先权：比如，方法上的注解可以覆盖类上的注解；命令行优先级最高。
+
+::: details 代码示例
+```java
+@State(Scope.Thread)
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
+@Fork(1)
+public class JMHSample_20_Annotations {
+
+    double x1 = Math.PI;
+
+    /*
+     * In addition to all the command line options usable at run time,
+     * we have the annotations which can provide the reasonable defaults
+     * for the some of the benchmarks. This is very useful when you are
+     * dealing with lots of benchmarks, and some of them require
+     * special treatment.
+     *
+     * Annotation can also be placed on class, to have the effect over
+     * all the benchmark methods in the same class. The rule is, the
+     * annotation in the closest scope takes the precedence: i.e.
+     * the method-based annotation overrides class-based annotation,
+     * etc.
+     */
+
+    @Benchmark
+    @Warmup(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)
+    @Measurement(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)
+    public double measure() {
+        return Math.log(x1);
+    }
+
+    /*
+     * ============================== HOW TO RUN THIS TEST: ====================================
+     *
+     * Note JMH honors the default annotation settings. You can always override
+     * the defaults via the command line or API.
+     *
+     * You can run this test:
+     *
+     * a) Via the command line:
+     *    $ mvn clean install
+     *    $ java -jar target/benchmarks.jar JMHSample_20
+     *
+     * b) Via the Java API:
+     *    (see the JMH homepage for possible caveats when running from IDE:
+     *      http://openjdk.java.net/projects/code-tools/jmh/)
+     */
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(JMHSample_20_Annotations.class.getSimpleName())
+                .build();
+
+        new Runner(opt).run();
+    }
+
+}
+```
+:::
+
 
 ## FalseSharing 
 
@@ -1912,7 +2072,6 @@ public class JMHSample_22_FalseSharing {
 
 在一些奇怪的情况下，您需要根据当前代码的结果为基准代码获得单独的吞吐量/时间度量。
 为了适配这种情况，JMH提供了可选的注解 @AuxCounters， 它能够将@State对象作为承载用户计数器的对象。
-
 
 AuxCounters注释可用于将State对象标记为辅助辅助结果的承载者。 使用此注释标记类将使 JMH 将其公共字段和返回结果的公共方法视为二级基准指标的基础。
 特性：
@@ -3459,184 +3618,6 @@ public class JMHSample_33_SecurityManager {
 ```
 :::
 
-## SafeLooping
-JMHSample_11_Loops 警告在@Benchmark 方法中使用循环的危险。然而，有时需要遍历数据集中的多个元素。没有循环就很难做到这一点，因此我们需要设计一个方案安全循环。
-
-假设我们要测试在不同的参数下，work()方法执行耗时情况。这模仿了一个常见的用例，当多个实例具有相同的实现，但测量不同的数据。This mimics a frequent use case when multiple instances with the same implementation, but different data, is measured.
-
-
-每个基准都需要控制。我们通过检查基准成本随着任务规模的增加而线性增长，对我们的基准进行了微不足道的控制。如果不是，那么就会发生错误。
-
-::: details 代码示例
-```java
-@State(Scope.Thread)
-@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
-@Fork(3)
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.NANOSECONDS)
-public class JMHSample_34_SafeLooping {
-
-    /*
-     * JMHSample_11_Loops warns about the dangers of using loops in @Benchmark methods.
-     * Sometimes, however, one needs to traverse through several elements in a dataset.
-     * This is hard to do without loops, and therefore we need to devise a scheme for
-     * safe looping.
-     */
-
-    /*
-     * Suppose we want to measure how much it takes to execute work() with different
-     * arguments. This mimics a frequent use case when multiple instances with the same
-     * implementation, but different data, is measured.
-     */
-
-    static final int BASE = 42;
-
-    static int work(int x) {
-        return BASE + x;
-    }
-
-    /*
-     * Every benchmark requires control. We do a trivial control for our benchmarks
-     * by checking the benchmark costs are growing linearly with increased task size.
-     * If it doesn't, then something wrong is happening.
-     */
-
-    @Param({"1", "10", "100", "1000"})
-    int size;
-
-    int[] xs;
-
-    @Setup
-    public void setup() {
-        xs = new int[size];
-        for (int c = 0; c < size; c++) {
-            xs[c] = c;
-        }
-    }
-
-    /*
-     * First, the obviously wrong way: "saving" the result into a local variable would not
-     * work. A sufficiently smart compiler will inline work(), and figure out only the last
-     * work() call needs to be evaluated. Indeed, if you run it with varying $size, the score
-     * will stay the same!
-     * 首先，明显错误的方式：将结果“保存”到局部变量中是行不通的。
-     * 一个足够聪明的编译器将内联 work()，并找出只需要评估最后一个 work() 调用。事实上，如果你用不同的 $size 运行它，分数将保持不变！
-     */
-
-    @Benchmark
-    public int measureWrong_1() {
-        int acc = 0;
-        for (int x : xs) {
-            acc = work(x);
-        }
-        return acc;
-    }
-
-    /*
-     * Second, another wrong way: "accumulating" the result into a local variable. While
-     * it would force the computation of each work() method, there are software pipelining
-     * effects in action, that can merge the operations between two otherwise distinct work()
-     * bodies. This will obliterate the benchmark setup.
-     *
-     * In this example, HotSpot does the unrolled loop, merges the $BASE operands into a single
-     * addition to $acc, and then does a bunch of very tight stores of $x-s. The final performance
-     * depends on how much of the loop unrolling happened *and* how much data is available to make
-     * the large strides.
-     * 另外一种错误方式就是将结果累加到一个局部变量中。虽然他会强制计算每一个work（）方法，但是由于软件流水线的作用，可以合并两个的work()方法体之间的不同操作。这将消除基准设置。
-     * 
-     * 这个例子中，HotSpot 执行展开循环，将 $BASE操作数合并一个操作加到$acc中，然后执行一堆非常紧凑的 $x-s 存储。
-       最终的性能取决于循环展开发生了多少和有多少数据可用于大步前进.
-     */
-
-    @Benchmark
-    public int measureWrong_2() {
-        int acc = 0;
-        for (int x : xs) {
-            acc += work(x);
-        }
-        return acc;
-    }
-
-    /*
-     * Now, let's see how to measure these things properly. A very straight-forward way to
-     * break the merging is to sink each result to Blackhole. This will force runtime to compute
-     * every work() call in full. (We would normally like to care about several concurrent work()
-     * computations at once, but the memory effects from Blackhole.consume() prevent those optimization
-     * on most runtimes).
-     * 
-     * 现在，让我们看看如何正确测试这些chagn'ji。打破合并的一个非常直接的方法是将每个结果下沉到 Blackhole。这将强制运行时完整执行每个 work() 计算。 （我们通常希望同时关注多个并发 work() 计算，但是 Blackhole.consume() 的内存效应阻止了大多数运行时的优化）。
-     */
-
-    @Benchmark
-    public void measureRight_1(Blackhole bh) {
-        for (int x : xs) {
-            bh.consume(work(x));
-        }
-    }
-
-    /*
-     * 注意事项：DANGEROUS AREA, PLEASE READ THE DESCRIPTION BELOW.
-     *
-     * Sometimes, the cost of sinking the value into a Blackhole is dominating the nano-benchmark score.
-     * In these cases, one may try to do a make-shift "sinker" with non-inlineable method. This trick is
-     * *very* VM-specific, and can only be used if you are verifying the generated code (that's a good
-     * strategy when dealing with nano-benchmarks anyway).
-     *
-     * You SHOULD NOT use this trick in most cases. Apply only where needed.
-     *
-     * 有时，将值放入 Blackhole 的成本在 nano-benchmark 分数中占主导地位。
-     * 在这些情况下，人们可能会尝试使用不可内联的方法来做一个临时的“sinker” 。这个技巧是特定于 VM 的，只有在验证生成的代码时才能使用
-     * 
-     */
-
-    @Benchmark
-    public void measureRight_2() {
-        for (int x : xs) {
-            sink(work(x));
-        }
-    }
-
-    @CompilerControl(CompilerControl.Mode.DONT_INLINE)
-    public static void sink(int v) {
-        // IT IS VERY IMPORTANT TO MATCH THE SIGNATURE TO AVOID AUTOBOXING.
-        // The method intentionally does nothing.
-    }
-
-
-    /*
-     * ============================== HOW TO RUN THIS TEST: ====================================
-     *
-     * You might notice measureWrong_1 does not depend on $size, measureWrong_2 has troubles with
-     * linearity, and otherwise much faster than both measureRight_*. You can also see measureRight_2
-     * is marginally faster than measureRight_1.
-     * 
-     * 从执行结果中可以发现，measureWrong_1的执行结果不依赖于 $size参数，而measureWrong_2 的执行性能不是增长，否则比 measureRight_ 快得多。
-     * 您还可以看到 measureRight_2 略快于 measureRight_1。
-     * 
-     * You can run this test:
-     *
-     * a) Via the command line:
-     *    $ mvn clean install
-     *    $ java -jar target/benchmarks.jar JMHSample_34
-     *
-     * b) Via the Java API:
-     *    (see the JMH homepage for possible caveats when running from IDE:
-     *      http://openjdk.java.net/projects/code-tools/jmh/)
-     */
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(JMHSample_34_SafeLooping.class.getSimpleName())
-                .forks(3)
-                .build();
-
-        new Runner(opt).run();
-    }
-
-}
-```
-:::
 ## Profilers
 这个例子是profiler（分析器）的概览。
 
