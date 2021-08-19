@@ -100,10 +100,25 @@ java -jar target/benchmarks.jar
 :::
 
 JVM是解释执行语言，Java代码会先编译成二进制码（.class文件），然后加载到JVM中，在运行时时在转换成机器码执行。HotSpot自适应优化器在执行期间收集有关程序热点的信息，会将热点编译为机器码以提高程序的秩序速度。
+
 **方法内联（Inlining）**是JVM非常重要的一个优化，内联是一种优化已编译源源码的方式，通常将最常执行的方法调用（也称之为热点），在运行时替换为方法主体，以便减少调用成本。比如 A 方法内调用 B 方法，则编译器可能会将 B 方法的代码编译进 A 方法体中，以提高 A 方法的执行速度。
+::: details 代码示例
+```java
+    private int addFour(int x1 , int x2 , int x3 , int x4) {
+        return addTwo(x1 , x2) + addTwo(x3, x4);
+    }
+    
+    private int addTwo(int x1 , int x2) {
+        return x1 + x2;
+    }
 
-TODO: code
-
+    // 内联后
+    private int addFour(int x1 , int x2 , int x3 , int x4) {
+        // return addTwo(x1 , x2) + addTwo(x3, x4);
+        return x1 + x2 + x3 + x4;
+    }
+```
+:::
 ### 资源释放与销毁
 测试时往往会依赖于一些参数和外部资源，这些和测试目标无关的操作，不应当计入测试报告中。
 比如测试文件随机访问性能时，我们要在每次此时执行之前生成测试文件；测试HashMap和ConcurrentHashmap的性能区别时，我们要预先构建出相应的测试数据。
@@ -275,7 +290,7 @@ public class JMHSample4ParamsSetup {
 比如在测试文件随机读取性能时，我们要先生成不同的测试文件；测试HashMap和ConcurrentHashMap的读取性能时，我们需要先创建相应的对象并设置初始值；或者说我们需要将基准测试过程中的某个结果记录到一个变量中。
 
 这一类数据在JMH中统称为“状态”变量。状态变量需要再特定的状态类（@State注解修饰）中声明，然后可以将该状态类的实例作为参数提供给基准测试方法。这些类的实例会在需要时初始化，，并在整个基准测试过程中重复使用。
- 
+
 以下是两个是两个状态类，可以忽略类名，只需要在对应类上加上@State即可。
 
 ::: details 代码示例
@@ -497,6 +512,7 @@ public class JMHSample_06_FixtureLevel {
 
 4. 目前的实现允许在这个级别的辅助方法执行与基准调用本身重叠，在多线程基准测试中，当一个执行{@link Benchmark}方法的工作线程执行时，可能会得到的是状态数据被其他线程执行了{@link TearDown}方法。
    
+
 ::: details 代码示例
 ```java
 /**
@@ -1387,7 +1403,7 @@ OperationsPerInvocation注解可以让基准测试进行不止一个操作，并
              // do something
          }
     }
-```   
+```
 ### BadCase：循环展开
 循环展开能够降低循环开销，为具有多个功能单元的处理器提供指令级并行，也有利于指令流水线的调度。例如：
 原始代码：
@@ -1412,6 +1428,7 @@ JMHSample_11_Loops 示例介绍了我们在 @Benchmark 方法中使用循环的�
 
 假设我们要测试在不同的参数下，work()方法执行耗时情况。这里模拟了一个常见的用例，使用不同的参数调对同相同的方法实现进行测试。
 ::: details 代码示例
+
 ```java
 @State(Scope.Thread)
 @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
@@ -1590,6 +1607,69 @@ public class JMHSample_34_SafeLooping {
     2. 使用 BlackHole 防止JVM循环展开优化
     3. 对于`纳秒`级的基准测试，可以会尝试使用不可内联的方法来做一个临时的“sinker"，必要时可以这样做！
  :::
+## @Params：不同参数组合测试
+在很多场景下，一个基准测试需要再不同的配置下运行。这些需要额外的控制，或者需要验证在不同参数下程序的性能变化。
+::: tips 多个参数组合
+如果多个参数的情况，JMH会计算参数的笛卡尔积，在针对每种情况进行测试。
+:::
+
+::: details 代码示例
+```java
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Fork(1)
+@State(Scope.Benchmark)
+public class JMHSample_27_Params {
+
+    /**
+     * In many cases, the experiments require walking the configuration space
+     * for a benchmark. This is needed for additional control, or investigating
+     * how the workload performance changes with different settings.
+     */
+
+    @Param({"1", "31", "65", "101", "103"})
+    public int arg;
+
+    @Param({"0", "1", "2", "4", "8", "16", "32"})
+    public int certainty;
+
+    @Benchmark
+    public boolean bench() {
+        return BigInteger.valueOf(arg).isProbablePrime(certainty);
+    }
+
+    /*
+     * ============================== HOW TO RUN THIS TEST: ====================================
+     *
+     * Note the performance is different with different parameters.
+     *
+     * You can run this test:
+     *
+     * a) Via the command line:
+     *    $ mvn clean install
+     *    $ java -jar target/benchmarks.jar JMHSample_27
+     *
+     *    You can juggle parameters through the command line, e.g. with "-p arg=41,42"
+     *
+     * b) Via the Java API:
+     *    (see the JMH homepage for possible caveats when running from IDE:
+     *      http://openjdk.java.net/projects/code-tools/jmh/)
+     */
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(JMHSample_27_Params.class.getSimpleName())
+//                .param("arg", "41", "42") // Use this to selectively constrain/override parameters
+                .build();
+
+        new Runner(opt).run();
+    }
+
+}
+```
+:::
 
 ## Asymmetric：非对称试验
 目前为止，我们的测试都是对称的：所有的线程都运行相同的代码。接下来我们一起学习一下非对称测试。
@@ -1710,6 +1790,7 @@ public class JMHSample_15_Asymmetric {
 
 syncIterations设置为true时，先让线程池预热，都预热完成后让所有线程同时进行基准测试，测试完等待所有线程都结束再关闭线程池。这样能够更加真实的模拟线上多线程并发执行的情况。
 ::: details 代码示例
+
 ```java
 @State(Scope.Thread)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -1798,7 +1879,7 @@ public class JMHSample_17_SyncIterations {
 ```
 :::
 
-##  Annotations：配置基准测试
+##  Annotations：注解 or API
 
 除了运行时所有的命令行选项外，我们还可以通过注解给一些基准测试提供默认值。在你处理大量基准测试时这个很有用，其中一些需要特别处理。
 
@@ -1864,7 +1945,7 @@ public class JMHSample_20_Annotations {
 :::
 
 
-## FalseSharing 
+## FalseSharing ：消除伪共享
 
 伪共享引发的错误可能让你大吃一惊。若干两个线程访问内存中两个相邻的值，它们很可能修改的是同一缓存行上的值，这就导致程序的执行明显变慢。
 
@@ -2066,13 +2147,11 @@ public class JMHSample_22_FalseSharing {
 
 ```
 :::
-## Inheritance :
-在某些特殊情况下，   我们可以使用模版模式通过抽象方法来分离实现。
-
-  经验法则是：如果一些类有@Benchmark方法，那么它所有的子类都继承@Benchmark方法。 注意，因为我们只知道编译期间的类型层次结构，所以只能在同一个编译会话期间使用。也就是说，在JMH编译之后混合扩展benchmark类的子类将不起作用。
-
-注释现在有两个可能的地方，这时采用就近原则，离得近的生效。验证~~
-
+## 最佳实践： 
+### Inheritance: 模板方法
+在有些场景下下，我们可以使用模版模式通过抽象方法来分离实现。
+经验法则是：如果一些类有@Benchmark方法，那么它所有的子类都继承@Benchmark方法。 注意，因为我们只知道编译期间的类型层次结构，所以只能在同一个编译会话期间使用。也就是说，在JMH编译之后混合扩展benchmark类的子类将不起作用。
+注释现在有两个可能的地方，这时采用**就近原则**，离得近的生效。
 ::: details 代码示例
 ```java
 public class JMHSample_24_Inheritance {
@@ -2162,17 +2241,11 @@ public class JMHSample_24_Inheritance {
 ```
 :::
 
-## API_GA
-
-这个例子展示了在复杂场景中利用 JMH API 的一种相当复杂但有趣的方式。
-到目前为止，我们还没有以编程方式使用结果，因此我们错过了所有乐趣。
-
-让我们考虑一下这个简单的代码，它显然受到性能异常的影响，因为当前的 HotSpot 无法进行尾调用优化
-
-我们可能可以通过更好的内联策略来弥补 TCO 的缺失。 但是手动调整策略需要了解很多关于 VM 内部的知识。 相反，让我们构建外行遗传算法，该算法通过内联设置进行筛选，试图找到更好的策略。 如果您不熟悉遗传算法的概念，请先阅读维基百科文章：http://en.wikipedia.org/wiki/Genetic_algorithm VM 专家可以猜测应该调整哪个选项以获得最大性能。 尝试运行示例，看看它是否提高了性能
-
+### API_GA：API方式开发
+上文中大部分案例都是基于注解方式开发JMH程序，这个例子展示了在复杂场景中利用 JMH API 的一种相当复杂但有趣的方式。不过笔者认为注解方式更简单和灵活！
 ::: details 代码示例
 ```java
+
 @State(Scope.Thread)
 public class JMHSample_25_API_GA {
 
@@ -2464,14 +2537,120 @@ public class JMHSample_25_API_GA {
 ```
 :::
 
-## BatchSize
-有时可能需要测试没有稳定状态的操作。基准操作的成本在不同调用时差异会很大。
+### BlackholeHelper
+有时我们不需要将BlackHole注入到每个基准测试方法中。而是使用增加辅助类（方法），在辅助方法中直接使用Blackhole对象即可。这适用于@Setup和@TearDown方法，也适用于其他JMH基础设施对象，如Control。
+以下是{@link com.cxd.benchmark.JMHSample_08_DeadCode}的变种，但是他被包装在匿名类中。
+::: details 代码示例
+```java
+    @BenchmarkMode(Mode.AverageTime)
+    @OutputTimeUnit(TimeUnit.NANOSECONDS)
+    @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+    @Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+    @Fork(1)
+    @State(Scope.Thread)
+    public class JMHSample_28_BlackholeHelpers {
+    
+        /**
+         * Sometimes you need the black hole not in @Benchmark method, but in
+         * helper methods, because you want to pass it through to the concrete
+         * implementation which is instantiated in helper methods. In this case,
+         * you can request the black hole straight in the helper method signature.
+         * This applies to both @Setup and @TearDown methods, and also to other
+         * JMH infrastructure objects, like Control.
+         *
+         * Below is the variant of {@link org.openjdk.jmh.samples.JMHSample_08_DeadCode}
+         * test, but wrapped in the anonymous classes.
+         */
+    
+        public interface Worker {
+            void work();
+        }
+    
+        private Worker workerBaseline;
+        private Worker workerRight;
+        private Worker workerWrong;
+    
+        @Setup
+        public void setup(final Blackhole bh) {
+            workerBaseline = new Worker() {
+                double x;
+    
+                @Override
+                public void work() {
+                    // do nothing
+                }
+            };
+    
+            workerWrong = new Worker() {
+                double x;
+    
+                @Override
+                public void work() {
+                    Math.log(x);
+                }
+            };
+    
+            workerRight = new Worker() {
+                double x;
+    
+                @Override
+                public void work() {
+                    bh.consume(Math.log(x));
+                }
+            };
+    
+        }
+    
+        @Benchmark
+        public void baseline() {
+            workerBaseline.work();
+        }
+    
+        @Benchmark
+        public void measureWrong() {
+            workerWrong.work();
+        }
+    
+        @Benchmark
+        public void measureRight() {
+            workerRight.work();
+        }
+    
+        /*
+         * ============================== HOW TO RUN THIS TEST: ====================================
+         *
+         * You will see measureWrong() running on-par with baseline().
+         * Both measureRight() are measuring twice the baseline, so the logs are intact.
+         *
+         * You can run this test:
+         *
+         * a) Via the command line:
+         *    $ mvn clean install
+         *    $ java -jar target/benchmarks.jar JMHSample_28
+         *
+         * b) Via the Java API:
+         *    (see the JMH homepage for possible caveats when running from IDE:
+         *      http://openjdk.java.net/projects/code-tools/jmh/)
+         */
+    
+        public static void main(String[] args) throws RunnerException {
+            Options opt = new OptionsBuilder()
+                    .include(JMHSample_28_BlackholeHelpers.class.getSimpleName())
+                    .build();
+    
+            new Runner(opt).run();
+        }
+    
+    }
+```
+:::
 
-在这种情况下基于时间来测试非常不靠谱。唯一可以接受的基准测试模式就是 single shot。另一方面，对于可靠的single shot测试，这种操作可能太小。？？？
+### BatchSize：Single Shot + BatchSize 
+有时你需要评估不具备稳定状态的操作。一个基准操作的成本在不同的调用中可能有很大的不同。在这种情况下，使用定时测量并不是一个好主意，唯一可以接受的基准模式是 Single shot。
 
-我们可以使用“batch size”参数来描述每次调用执行的基准调用次数，而无需手动循环方法并防止JMHSample_11_Loops中描述的问题。
+另一方面，操作时间/吞吐量可能太小，无法进行可靠的单次测量。我们可以使用 "BatchSize" 参数来描述每一次调用所要做的基准调用的数量，将多个小的操作合并成一个，而不需要手动循环该方法，这样可以避免JMHSample_11_Loops中描述的问题。
 
-假设我们想测量列表中间的插入操作。
+即使用 @BenchmarkMode(Mode.SingleShotTime) + @Measurement(iterations = 5, batchSize = 5000) 模式。
 
 ::: details 代码示例
 ```java
@@ -2554,390 +2733,6 @@ public class JMHSample_26_BatchSize {
 }
 ```
 :::
-
-## Params 
-在很多场景下，一个基准测试需要再不同的配置下运行。这些需要额外的控制，或者需要验证在不同参数下程序的性能变化。
-
-不同参数是否取笛卡尔积？？？
-
-::: details 代码示例
-```java
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.NANOSECONDS)
-@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
-@Fork(1)
-@State(Scope.Benchmark)
-public class JMHSample_27_Params {
-
-    /**
-     * In many cases, the experiments require walking the configuration space
-     * for a benchmark. This is needed for additional control, or investigating
-     * how the workload performance changes with different settings.
-     */
-
-    @Param({"1", "31", "65", "101", "103"})
-    public int arg;
-
-    @Param({"0", "1", "2", "4", "8", "16", "32"})
-    public int certainty;
-
-    @Benchmark
-    public boolean bench() {
-        return BigInteger.valueOf(arg).isProbablePrime(certainty);
-    }
-
-    /*
-     * ============================== HOW TO RUN THIS TEST: ====================================
-     *
-     * Note the performance is different with different parameters.
-     *
-     * You can run this test:
-     *
-     * a) Via the command line:
-     *    $ mvn clean install
-     *    $ java -jar target/benchmarks.jar JMHSample_27
-     *
-     *    You can juggle parameters through the command line, e.g. with "-p arg=41,42"
-     *
-     * b) Via the Java API:
-     *    (see the JMH homepage for possible caveats when running from IDE:
-     *      http://openjdk.java.net/projects/code-tools/jmh/)
-     */
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(JMHSample_27_Params.class.getSimpleName())
-//                .param("arg", "41", "42") // Use this to selectively constrain/override parameters
-                .build();
-
-        new Runner(opt).run();
-    }
-
-}
-```
-:::
-
-## 
-
-::: details 代码示例
-```java
-/*
- * Copyright (c) 2014, Oracle America, Inc.
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *  * Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- *  * Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- *  * Neither the name of Oracle nor the names of its contributors may be used
- *    to endorse or promote products derived from this software without
- *    specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
- * THE POSSIBILITY OF SUCH DAMAGE.
- */
-package org.openjdk.jmh.samples;
-
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Fork;
-import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.Warmup;
-import org.openjdk.jmh.infra.Blackhole;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
-
-import java.util.concurrent.TimeUnit;
-
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.NANOSECONDS)
-@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
-@Fork(1)
-@State(Scope.Thread)
-public class JMHSample_28_BlackholeHelpers {
-
-    /**
-     * Sometimes you need the black hole not in @Benchmark method, but in
-     * helper methods, because you want to pass it through to the concrete
-     * implementation which is instantiated in helper methods. In this case,
-     * you can request the black hole straight in the helper method signature.
-     * This applies to both @Setup and @TearDown methods, and also to other
-     * JMH infrastructure objects, like Control.
-     *
-     * Below is the variant of {@link org.openjdk.jmh.samples.JMHSample_08_DeadCode}
-     * test, but wrapped in the anonymous classes.
-     */
-
-    public interface Worker {
-        void work();
-    }
-
-    private Worker workerBaseline;
-    private Worker workerRight;
-    private Worker workerWrong;
-
-    @Setup
-    public void setup(final Blackhole bh) {
-        workerBaseline = new Worker() {
-            double x;
-
-            @Override
-            public void work() {
-                // do nothing
-            }
-        };
-
-        workerWrong = new Worker() {
-            double x;
-
-            @Override
-            public void work() {
-                Math.log(x);
-            }
-        };
-
-        workerRight = new Worker() {
-            double x;
-
-            @Override
-            public void work() {
-                bh.consume(Math.log(x));
-            }
-        };
-
-    }
-
-    @Benchmark
-    public void baseline() {
-        workerBaseline.work();
-    }
-
-    @Benchmark
-    public void measureWrong() {
-        workerWrong.work();
-    }
-
-    @Benchmark
-    public void measureRight() {
-        workerRight.work();
-    }
-
-    /*
-     * ============================== HOW TO RUN THIS TEST: ====================================
-     *
-     * You will see measureWrong() running on-par with baseline().
-     * Both measureRight() are measuring twice the baseline, so the logs are intact.
-     *
-     * You can run this test:
-     *
-     * a) Via the command line:
-     *    $ mvn clean install
-     *    $ java -jar target/benchmarks.jar JMHSample_28
-     *
-     * b) Via the Java API:
-     *    (see the JMH homepage for possible caveats when running from IDE:
-     *      http://openjdk.java.net/projects/code-tools/jmh/)
-     */
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(JMHSample_28_BlackholeHelpers.class.getSimpleName())
-                .build();
-
-        new Runner(opt).run();
-    }
-
-}
-```
-:::
-
-## BlackholeHelper
-有时你不需要Blackhole在@Benchmark方法中，而是在helper(辅助？？)方法中，因为你想把它传递给在helper方法中的具体实现的实例. 在这种情况下，你可以通过helper方法签名获取Blackhole。这可以应用在被标注为@Setup和@TearDown的方法上，也包括其他JMH脚手架对象，比如Control。
-
-{@link com.cxd.benchmark.JMHSample_08_DeadCode}是它的变种，但是他被包装在匿名类中。
-
-::: details 代码示例
-```java
-/*
- * Copyright (c) 2014, Oracle America, Inc.
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *  * Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- *  * Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- *  * Neither the name of Oracle nor the names of its contributors may be used
- *    to endorse or promote products derived from this software without
- *    specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
- * THE POSSIBILITY OF SUCH DAMAGE.
- */
-package org.openjdk.jmh.samples;
-
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Fork;
-import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.Warmup;
-import org.openjdk.jmh.infra.Blackhole;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
-
-import java.util.concurrent.TimeUnit;
-
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.NANOSECONDS)
-@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
-@Fork(1)
-@State(Scope.Thread)
-public class JMHSample_28_BlackholeHelpers {
-
-    /**
-     * Sometimes you need the black hole not in @Benchmark method, but in
-     * helper methods, because you want to pass it through to the concrete
-     * implementation which is instantiated in helper methods. In this case,
-     * you can request the black hole straight in the helper method signature.
-     * This applies to both @Setup and @TearDown methods, and also to other
-     * JMH infrastructure objects, like Control.
-     *
-     * Below is the variant of {@link org.openjdk.jmh.samples.JMHSample_08_DeadCode}
-     * test, but wrapped in the anonymous classes.
-     */
-
-    public interface Worker {
-        void work();
-    }
-
-    private Worker workerBaseline;
-    private Worker workerRight;
-    private Worker workerWrong;
-
-    @Setup
-    public void setup(final Blackhole bh) {
-        workerBaseline = new Worker() {
-            double x;
-
-            @Override
-            public void work() {
-                // do nothing
-            }
-        };
-
-        workerWrong = new Worker() {
-            double x;
-
-            @Override
-            public void work() {
-                Math.log(x);
-            }
-        };
-
-        workerRight = new Worker() {
-            double x;
-
-            @Override
-            public void work() {
-                bh.consume(Math.log(x));
-            }
-        };
-
-    }
-
-    @Benchmark
-    public void baseline() {
-        workerBaseline.work();
-    }
-
-    @Benchmark
-    public void measureWrong() {
-        workerWrong.work();
-    }
-
-    @Benchmark
-    public void measureRight() {
-        workerRight.work();
-    }
-
-    /*
-     * ============================== HOW TO RUN THIS TEST: ====================================
-     *
-     * You will see measureWrong() running on-par with baseline().
-     * Both measureRight() are measuring twice the baseline, so the logs are intact.
-     *
-     * You can run this test:
-     *
-     * a) Via the command line:
-     *    $ mvn clean install
-     *    $ java -jar target/benchmarks.jar JMHSample_28
-     *
-     * b) Via the Java API:
-     *    (see the JMH homepage for possible caveats when running from IDE:
-     *      http://openjdk.java.net/projects/code-tools/jmh/)
-     */
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(JMHSample_28_BlackholeHelpers.class.getSimpleName())
-                .build();
-
-        new Runner(opt).run();
-    }
-
-}
-
-
-```
-:::
-
-
 ## StatesDAG
 
 >  THIS IS AN EXPERIMENTAL FEATURE, BE READY FOR IT BECOME REMOVED WITHOUT NOTICE!
@@ -3162,9 +2957,11 @@ public class JMHSample_30_Interrupts {
  通过JMH提供的脚手架获取JMH的一些运行信息
 
 有一种方式用来查JMH并发运行的模型。通过请求注入以下三个脚手架对象我们就可以做到：
-     - BenchmarkParams: 涵盖了benchmark的全局配置
-     - IterationParams: 涵盖了当前迭代的配置
-     - ThreadParams: 涵盖了指定线程的配置
+
+- BenchmarkParams: 涵盖了benchmark的全局配置
+-  IterationParams: 涵盖了当前迭代的配置
+- ThreadParams: 涵盖了指定线程的配置
+
 假设我们想检查ConcurrentHashMap如何在不同的并行级别下差异。我们可以可以把并发级别通过@Param传入， 但有时不方便，比如，我们想让他和@Threads一致。以下是我们如何查询JMH关于当前运行请求的线程数， 并将其放入ConcurrentHashMap构造函数的concurrencyLevel参数中。
 
 ::: details 代码示例
@@ -3282,8 +3079,10 @@ public class JMHSample_31_InfraParams {
 有时你想要一个相反的配置：您可以将它们混合在一起以测试最坏情况，而不是分离不同基准的配置文件。
 
  JMH有一个批量预热特性：它首先预热所有测试，然后测量他们。JMH仍然为每个测试fork出一个JVM，但当新的JVM启动，所有的预热在测量开始前都会执行。
- 这有助于避免类型配置文件偏差，因为每个测试仍然在不同的JVM中执行，我们只“混合”我们想要的预热代码。
+这有助于避免类型配置文件偏差，因为每个测试仍然在不同的JVM中执行，我们只“混合”我们想要的预热代码。
+
 ::: details 代码示例
+
 ```java
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
